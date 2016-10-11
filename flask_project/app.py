@@ -1,12 +1,13 @@
 import sys
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def index():
-    return 'Flask is running!'
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
 
 @app.route('/data')
