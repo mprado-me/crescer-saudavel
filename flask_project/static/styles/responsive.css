@@ -2906,5 +2906,8 @@ ol#compare-items li a.product-name {
 .blog-img .mask {
 	display: none;
 }
+.fl-cart-contain {
+	display: none;
+}
 }
  
