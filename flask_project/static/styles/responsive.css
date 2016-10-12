@@ -1848,6 +1848,16 @@ footer .newsletter-row {
 
 #thm-mart-slideshow {margin-top:68px}
 
+.tp-caption.LargeTitle {
+	font-size: 63px !important;
+	line-height: 0px !important;
+}
+
+.tp-caption.Title[style] {
+	font-size: 14px !important;
+	line-height: 14px !important;
+}
+
 .CollectionGrid img {
     width: 90%;
     margin-bottom: 30px;
@@ -2887,9 +2897,11 @@ ol#compare-items li a.product-name {
     position: relative;
     right:auto;
     top:auto;
-
 }
 .page-not-found img {width:100%}
 .multiple_addresses .title-buttons {text-align: left;}
- }
+#tmg-slideshow {
+	display: none;
+}	
+}
  
