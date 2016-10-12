@@ -2909,5 +2909,20 @@ ol#compare-items li a.product-name {
 .fl-cart-contain {
 	display: none;
 }
+#best-seller .owl-item .item:hover .item-inner .item-img .item-img-info a.product-image:before {
+	left: 0px;
+	top: 0px;
+	margin: 0 0;
+	background: #fff;
+	opacity: 0;
+	cursor: pointer
 }
- 
+#best-seller .owl-item .item:hover .item-inner .item-info .info-inner {
+	border-color: #fff;
+	background: #fff;
+	opacity: 1;
+}
+#best-seller .owl-item .item:hover .item-inner .item-info .info-inner .item-title a {
+	color: #333;
+}
+}
