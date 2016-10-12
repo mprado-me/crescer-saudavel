@@ -2500,7 +2500,7 @@ button.button.btn-proceed-checkout:before {
 	padding: inherit;
 }
 .payment-accept img {  margin-left: 5px;
-  opacity: 0.5;
+  /*opacity: 0.5;*/
   width: 50px;}
   
   

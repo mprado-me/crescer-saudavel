@@ -10334,7 +10334,7 @@ button.button.new-address:before {
 .newsletter-wrap h4 {
 	margin-bottom: 3px;
 	display: inline-block;
-	float: left;
+	/*float: left;*/
 	margin-right: 15px;
 	padding: 0px;
 	padding-top: 10px;
@@ -10941,9 +10941,9 @@ address {
 	margin-right: 10px;
 
 }
-.payment-accept img:hover {
+/*.payment-accept img:hover {
 	opacity: 1
-}
+}*/
 .glyphicon-remove1:before {
 	content: "\e014"
 }
