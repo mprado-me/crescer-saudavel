@@ -193,9 +193,9 @@ html {
   letter-spacing: 0.5px;
   font-family: 'Raleway', sans-serif;
 }
-/*.mobile-menu li a.active {
-	color: #333;
-}*/
+.mobile-menu li a.active {
+	color: #c2c2c2;
+}
 .mobile-menu li li {
 
 }
