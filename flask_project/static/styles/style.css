@@ -10466,7 +10466,7 @@ footer .co-info {
     padding: 0px 30px 10px 0px;
     text-align: left;
     margin-top: 35px;
-	margin-bottom: 25px;
+	margin-bottom: 10px;
 	border-right:1px #e5e5e5 solid
 
 
@@ -11823,6 +11823,15 @@ button.button span span {
 }
 .footer-top .newsletter .validation-advice {
 	left: 106px;
+}
+
+.copyright-text-container {
+	text-align: center;
+	margin-bottom: 6px;
+	font-size: 14px;
+}
+
+.copyright-text {
 }
 /*============ Global Messages  ============*/
 .success {
