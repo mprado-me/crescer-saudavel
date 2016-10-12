@@ -3349,7 +3349,7 @@ ul.pdt-list li.item a img.image-hover {
 .products-grid .item .item-inner .actions {
 	display: inline-block;
     float: left;
-    margin-top: 8px;
+    /*margin-top: 8px;*/
 }
 .products-grid .item .item-inner .item-img {
 	position: relative;
@@ -3470,11 +3470,11 @@ ul.pdt-list li.item a img.image-hover {
 	color: #fff;
 	font-weight: normal;
 	transition: all 0.3s linear;
-	-moz-transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear;
+	/*-moz-transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear;*/
 	border:none;
 	background: none;
-	float: right;
+	float: left;
 	margin-right: 68px;
 }
 
@@ -3788,7 +3788,7 @@ margin: 0 0;
 .products-grid .item:hover .actions button.button.btn-cart {
 	background: #333;
 	border: 1px solid #333;
-	margin: 0 3px 0 3px;
+	/*margin: 0 3px 0 3px;*/
 	padding: 9px 10px 9px 10px;
 	color: #FFFFFF;
 }
@@ -4679,7 +4679,7 @@ text-transform: uppercase
 #best-seller .owl-item .item .item-inner .actions {
 	display: inline-block;
 	float:left;
-	margin-top:8px
+	/*margin-top:8px*/
 }
 #best-seller .owl-item .item .item-inner .item-img {
 	position: relative;
@@ -8056,7 +8056,7 @@ ul.products-grid {
 	padding: 7px 10px;
 	color: #333;
 	line-height: normal;
-	margin-left: 3px;
+	/*margin-left: 3px;*/
 	margin-right: 3px
 }
 .products-grid .item:hover .actions button.button.btn-cart {
@@ -8064,7 +8064,7 @@ ul.products-grid {
 	color: #FFFFFF;
 	padding: 7px 10px;
 	border: 2px #eee solid;
-	margin-left: 3px;
+	/*margin-left: 3px;*/
 	margin-right: 3px
 }
 .products-grid .actions button.button.btn-cart span {
