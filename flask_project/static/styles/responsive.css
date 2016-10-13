@@ -1014,7 +1014,7 @@ footer .newsletter-row {
 
 #top-deals .learnmore {font-size:60%; margin-top:0px; padding:1% 5%}
 
-.navbar-form {display:none}
+/*.navbar-form {display:none}*/
 
 .header-container .fl-header-right {
     z-index: 100;
@@ -1071,7 +1071,7 @@ footer .newsletter-row {
     padding-bottom: 0;
     overflow: visible!important;
     visibility: visible!important;
-	position:absolute;
+	/*position:absolute;*/
 	right:125px;
 	top:9px
 }
@@ -1844,7 +1844,10 @@ footer .newsletter-row {
 .logo-item img {width:100%}
 .logo-brand {min-height: 320px;}
 
-.navbar-collapse.collapse {display:none!important}
+/*.navbar-collapse.collapse {display:none!important}*/
+.search-input-container {
+	width: 150px;
+}
 
 #thm-mart-slideshow {margin-top:68px}
 
@@ -2924,5 +2927,8 @@ ol#compare-items li a.product-name {
 }
 #best-seller .owl-item .item:hover .item-inner .item-info .info-inner .item-title a {
 	color: #333;
+}
+.search-input-container {
+	width: 150px;
 }
 }
