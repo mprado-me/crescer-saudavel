@@ -3,18 +3,19 @@ from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
 
-
 @app.route('/')
 @app.route('/home')
 def home():
     return render_template('home.html')
 
+@app.route('/about_us')
+def about_us():
+    return render_template('about_us.html')
 
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}
     return jsonify(data)
-
 
 if __name__ == '__main__':
 	if len(sys.argv) == 2 and sys.argv[1] == 'local':
