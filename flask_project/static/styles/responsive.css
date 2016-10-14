@@ -2950,3 +2950,15 @@ ol#compare-items li a.product-name {
 	width: 150px;
 }
 }
+
+@media (max-width: 900px) {
+.slider-top-hack-space {
+	display: block;
+}
+}
+
+@media (min-width: 901px) {
+.slider-top-hack-space {
+	display: none;
+}
+}
