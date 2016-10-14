@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="page-heading">
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div>
+					<ul>
+						<li class="home"> <a href="index.html" title="Ir para home">Home</a> <span>&rsaquo; </span> </li>
+						<li class="category1599"> <a href="/products" title="">Produtos</a> <span>&rsaquo; </span> </li>
+						<li class="category1600"> <a href="grid.html" title="">Linha Single</a> <span>&rsaquo; </span> </li>
+						<li class="category1601"> <strong>Sobremesas</strong> </li>
+					</ul>
+				</div>
+				<!--col-xs-12--> 
+				<div class="page-title">
+					<h2>Sobremesas</h2>
+				</div>
+				<!--row--> 
+			</div>
+		</div>
+		<!--container--> 
+	</div>
+</div>
+
+<!--breadcrumbs--> 
+<!-- BEGIN Main Container col2-left -->
+<section class="main-container col2-left-layout bounceInUp animated"> 
+	<!-- For version 1, 2, 3, 8 --> 
+	<!-- For version 1, 2, 3 -->
+	<div class="container">
+		<div class="row">
+			<div class="col-main product-grid">
+				<div class="pro-coloumn">
+					<article class="col-main">
+						<div class="toolbar">
+							<div class="pager">
+								<div id="sort-by">
+									<label class="left">Ordenar por: </label>
+									<ul>
+										<li><a href="#">Nome<span class="right-arrow"></span></a>
+											<ul>
+												<li><a href="#">Menor preço</a></li>
+												<li><a href="#">Maior preço</a></li>
+												<li><a href="#">Mais vendido</a></li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+								<div class="pages">
+									<ul class="pagination">
+										<li><a href="#">&laquo;</a></li>
+										<li class="active"><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li><a href="#">5</a></li>
+										<li><a href="#">&raquo;</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="category-products">
+							<ul class="products-grid">
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+								<li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+									{% include "item-inner.html" %}									
+								</li>
+							</ul>
+						</div>
+						<div class="toolbar">
+							
+							
+							<div class="pager">
+								
+								<div class="pages">
+									<ul class="pagination">
+										<li><a href="#">&laquo;</a></li>
+										<li class="active"><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li><a href="#">5</a></li>
+										<li><a href="#">&raquo;</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+				<!--	///*///======    End article  ========= //*/// --> 
+			</div>
+			
+		</div>
+		<!--row--> 
+	</div>
+	<!--container--> 
+</section>
+<!--main-container col2-left-layout-->
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

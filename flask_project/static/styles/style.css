@@ -3598,7 +3598,7 @@ ul.pdt-list li.item a img.image-hover {
 	opacity: 0.8;
 }
 .products-grid .item:hover .item-inner .item-info .info-inner .item-title a {
-	color: #333333;
+	color: #2edab7;
 }
 /*  End  =*/
 
@@ -12632,9 +12632,7 @@ margin-right: 3px;
   	border-bottom: none;
   	text-align: left;
   	background-repeat: no-repeat;
-  	overflow: hidden;
-
-
+  	/*overflow: hidden;*/
   }
 
   .page-heading .page-title h2 {

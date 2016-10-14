@@ -13,9 +13,9 @@ website:   	http://www.themesground.com/
 
 
 
-@media only screen and (min-width: 320px) and (max-width: 479px) {
+@media only screen and (max-width: 479px) {
 .header-container .fl-nav-menu {
-    display: inline-block;
+    display: block;
     border-radius: 3px;
     /* overflow: hidden; */
     /* top: 150px; */
@@ -982,6 +982,24 @@ footer .newsletter-row {
 .toolbar {padding:15px}
 #fade{ display: none !important; }
 }
+@media only screen and (max-width: 479px) {
+.logo-img {
+	display: none;
+}
+.mini-logo-img {
+	display: block;
+}
+}
+
+@media only screen and (min-width: 480px) {
+.logo-img {
+	display: block;
+}
+.mini-logo-img {
+	display: none;
+}
+}
+
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 #fade{ display: none !important; }
 .logo {
@@ -2895,7 +2913,7 @@ ol#compare-items li a.product-name {
 
 }
  @media (max-width: 767px) {
-.page-heading {margin-top:0px; padding:100px 15px; padding-bottom:40px}
+.page-heading {margin-top:0px; padding:40px 15px; padding-bottom:40px}
 .blog-wrapper .entry-date {
     position: relative;
     right:auto;
