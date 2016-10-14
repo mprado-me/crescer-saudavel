@@ -76,7 +76,7 @@ website:   	http://www.themesground.com/
 
 .footer-banner {margin-left:15px; margin-right:15px}
 
-#sort-by {display:none}
+/*#sort-by {display:none}*/
 
 #right_toolbar {
 	display: none !important;
@@ -628,9 +628,9 @@ top40%
 }
 #limiter {display:none}
 
-.pager .limiter label, .toolbar label {
+/*.pager .limiter label, .toolbar label {
 	display: none;
-}
+}*/
 .category-products ul.products-grid li.item {
 	width: 100%;
 }

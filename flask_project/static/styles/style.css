@@ -7574,19 +7574,30 @@ margin-right: 3px;
 			border-radius: 999px;
 		}
 
-		#sort-by a:hover {background:#333333; color:#fff}
+		#sort-by a:hover {
+			background:#333333; color:#fff
+		}
 
+		#sort-by .active a{
+			background:rgba(0,0,0,0.25);
+			color: #fff;
+			pointer-events: none;
+   			cursor: default;
+		}
 
 		#sort-by li {
-			cursor: pointer;
-			margin: 0 auto;
+			margin-right: 6px;
+			margin-bottom: 6px;
 			outline: medium none;
 			padding:0px;
 			position: relative;
-			width: 120px;
+			/*width: 120px;*/
 			float: left;
 			color: #333;
+		}
 
+		#sort-by li:not(.active) {
+			cursor: pointer;
 		}
 		#sort-by li li {
 			width: 120px;
