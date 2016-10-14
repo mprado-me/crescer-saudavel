@@ -2220,7 +2220,7 @@ ul.level1 {
 	margin-bottom: 7px;
 	padding-top: 20px;
 	font-size: 12px;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	overflow: hidden;
 	letter-spacing: 0.5px
 }
@@ -3561,7 +3561,7 @@ ul.pdt-list li.item a img.image-hover {
 	margin-bottom: 7px;
 	padding-top: 20px;
 	font-size: 15px;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	overflow: hidden;
 	letter-spacing: 1px;
 	font-weight: normal;
@@ -4327,7 +4327,7 @@ ul.pdt-list li.item a img.image-hover {
 		margin-bottom: 5px;
 		padding-top: 16px;
 		font-size: 14px;
-		white-space: nowrap;
+		/*white-space: nowrap;*/
 		overflow: hidden;
 	}
 	.col-item .info .info-inner .item-title a {
@@ -4872,6 +4872,7 @@ text-transform: uppercase
 	-o-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
 	padding-left:20px;
+	padding-right:20px;
 	padding-bottom:15px
 }
 #best-seller .owl-item .item .item-inner .item-info .info-inner .item-content .no-rating, #best-seller-slider .owl-item .item .item-inner .item-info .info-inner .item-content .ratings {
@@ -4889,7 +4890,7 @@ text-transform: uppercase
 	margin-bottom: 7px;
 	padding-top: 20px;
 	font-size: 15px;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	overflow: hidden;
 	letter-spacing:1px;
 	font-weight:normal;
@@ -5084,7 +5085,7 @@ text-transform: uppercase
 	margin-bottom: 5px;
 	padding-top: 16px;
 	font-size: 14px;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
