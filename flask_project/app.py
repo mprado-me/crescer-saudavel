@@ -8,9 +8,13 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
-@app.route('/about_us')
+@app.route('/about-us')
 def about_us():
     return render_template('about_us.html')
+
+@app.route('/products')
+def products():
+    return render_template('products.html')
 
 @app.route('/data')
 def names():
