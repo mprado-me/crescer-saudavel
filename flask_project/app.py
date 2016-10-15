@@ -20,6 +20,10 @@ def products():
 def product_detail():
     return render_template('product-detail.html')
 
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}

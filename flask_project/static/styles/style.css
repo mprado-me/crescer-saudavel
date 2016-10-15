@@ -5133,7 +5133,7 @@ text-transform: uppercase
 /* blog-post */
 .blog-wrapper {
 	position: relative;
-	margin: 30px 0px;
+	margin: 30px 100px;
 }
 
 .blog_block {    overflow-y: auto;
@@ -5158,7 +5158,11 @@ text-transform: uppercase
 
 .blog-wrapper header{ z-index:auto}
 
-.blog-wrapper .featured-thumb {margin:0px -30px;  margin-bottom:30px; }
+.blog-wrapper .featured-thumb {
+	margin:0px -30px;  
+	margin-bottom:30px; 
+	text-align: center;
+}
 
 .blog-wrapper .entry-date{background:#333333; color:#fff; padding:7px 20px; font-family:'Montserrat', sans-serif; text-transform:uppercase; position:absolute; right:25px; top:25px; border-radius:999px }
 
@@ -12863,4 +12867,17 @@ margin-right: 3px;
 
   .pull-left {
   	margin-bottom: 6px;
+  }
+
+  .blog_entry-header-inner {
+  	display: block;
+  }
+
+  .blog_entry-title {
+  	float: left;
+  	margin-right: 140px;
+  }
+
+  .entry-meta {
+  	float: right;
   }

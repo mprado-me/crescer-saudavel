@@ -2914,11 +2914,11 @@ ol#compare-items li a.product-name {
 }
  @media (max-width: 767px) {
 .page-heading {margin-top:0px; padding:40px 15px; padding-bottom:40px}
-.blog-wrapper .entry-date {
+/*.blog-wrapper .entry-date {
     position: relative;
     right:auto;
     top:auto;
-}
+}*/
 .page-not-found img {width:100%}
 .multiple_addresses .title-buttons {text-align: left;}
 #tmg-slideshow {
@@ -2951,14 +2951,26 @@ ol#compare-items li a.product-name {
 }
 }
 
+@media (min-width: 901px) {
+.slider-top-hack-space {
+	display: none;
+}
+}
+
+@media (max-width: 1249px) {
+.blog-wrapper {
+	margin: 30px 50px;
+}
+}
+
 @media (max-width: 900px) {
 .slider-top-hack-space {
 	display: block;
 }
 }
 
-@media (min-width: 901px) {
-.slider-top-hack-space {
-	display: none;
+@media (max-width: 991px) {
+.blog-wrapper {
+	margin: 30px 0px;
 }
 }
