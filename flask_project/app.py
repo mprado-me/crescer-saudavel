@@ -16,6 +16,10 @@ def about_us():
 def products():
     return render_template('products.html')
 
+@app.route('/product-detail')
+def product_detail():
+    return render_template('product-detail.html')
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}
