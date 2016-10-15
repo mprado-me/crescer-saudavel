@@ -927,8 +927,8 @@ footer address span {
 .product-view .product-shop .add-to-box .btn-cart {
   font-size: 16px;
   padding: 7px 30px;
-  margin-top: 10px;
-  margin-left:0px
+  /*margin-top: 10px;*/
+  /*margin-left:0px*/
 
 }
 .nav-tabs.product-tabs > li > a {
