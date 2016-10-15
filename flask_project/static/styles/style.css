@@ -8456,6 +8456,7 @@ margin-right: 3px;
 
 		}
 		.product-view .product-name h1 {
+			border-bottom: 1px #ddd dotted;
 			font-size: 42px;
 			margin: 0 0 2px;
 			text-align: left;
@@ -8489,9 +8490,10 @@ margin-right: 3px;
 			overflow: hidden;
 			text-align: left;
 			margin: 0 0 4px;
-			border-bottom: 1px #ddd dotted;
+			/*border-bottom: 1px #ddd dotted;*/
 		}
 		.product-view .product-shop .add-to-box .btn-cart {
+			width: 300px;
 			background: #fdd922;
 			color: #333333;
 			font-size: 18px;
@@ -12857,4 +12859,8 @@ margin-right: 3px;
   .mobile-menu .home i {
   	padding-right: 5px;
   	display: none;
+  }
+
+  .pull-left {
+  	margin-bottom: 6px;
   }
