@@ -8,193 +8,208 @@
       <div id='thm_slider_wrapper' class='thm_slider_wrapper fullwidthbanner-container' >
         <div id='thm-rev-slider' class='rev_slider fullwidthabanner'>
           <ul>
-            <li data-transition='random' data-slotamount='7' data-masterspeed='1000' data-thumb='static/images/slide-img1.jpg'><img src='static/images/slide-img2.jpg'  data-bgposition='left top'  data-bgfit='cover' data-bgrepeat='no-repeat' alt="slider-image1" />
+            <li data-transition='random' data-slotamount='7' data-masterspeed='1000' data-thumb='static/images/slide-img1.jpg'>
+              <img src='static/images/slide-img2.jpg'  data-bgposition='left top'  data-bgfit='cover' data-bgrepeat='no-repeat' alt="slider-image1" />
               <div class="info">
-               <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-x='0'  data-y='230'  data-endspeed='500'  data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3;max-width:auto;max-height:auto;white-space:nowrap;'><span>Título 1</span></div>
-               <div    class='tp-caption Title sft  tp-resizeme ' data-x='0'  data-y='320'  data-endspeed='500'  data-speed='500' data-start='1500' data-easing='Power2.easeInOut' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'>Lorem ipsum dolor sit amet, consectetur adipiscing elit <br> Nam facilisis, nisi in convallis dignissim.</div>
-             </div>
-           </li>
-           <li data-transition='random' data-slotamount='7' data-masterspeed='1000' data-thumb='static/images/slide-img2.jpg'><img src='static/images/slide-img1.jpg'  data-bgposition='left top'  data-bgfit='cover' data-bgrepeat='no-repeat' alt="slider-image2"  />
-            <div class="info">
-              <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-x='0'  data-y='230'  data-endspeed='500'  data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3;max-width:auto;max-height:auto;white-space:nowrap;'><span>Título 2</span></div>
-              <div    class='tp-caption Title sft  tp-resizeme ' data-x='0'  data-y='320'  data-endspeed='500'  data-speed='500' data-start='1500' data-easing='Power2.easeInOut' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'>Lorem ipsum dolor sit amet, consectetur adipiscing elit <br> Nam facilisis, nisi in convallis dignissim.</div>
+                <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-x='0'  data-y='230'  data-endspeed='500'  data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3;max-width:auto;max-height:auto;white-space:nowrap;'>
+                  <span>Título 1</span>
+                </div>
+                <div    class='tp-caption Title sft  tp-resizeme ' data-x='0'  data-y='320'  data-endspeed='500'  data-speed='500' data-start='1500' data-easing='Power2.easeInOut' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit <br> Nam facilisis, nisi in convallis dignissim.
+                </div>
+              </div>
+            </li>
+            <li data-transition='random' data-slotamount='7' data-masterspeed='1000' data-thumb='static/images/slide-img2.jpg'>
+              <img src='static/images/slide-img1.jpg'  data-bgposition='left top'  data-bgfit='cover' data-bgrepeat='no-repeat' alt="slider-image2"  />
+              <div class="info">
+                <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-x='0'  data-y='230'  data-endspeed='500'  data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3;max-width:auto;max-height:auto;white-space:nowrap;'>
+                  <span>Título 2</span>
+                </div>
+                <div    class='tp-caption Title sft  tp-resizeme ' data-x='0'  data-y='320'  data-endspeed='500'  data-speed='500' data-start='1500' data-easing='Power2.easeInOut' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit <br> Nam facilisis, nisi in convallis dignissim.
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- best Pro Slider -->
+  <section class=" wow bounceInUp animated">
+    <div class="best-pro slider-items-products container">
+      <div class="new_title">
+        <h2>Novidades</h2>
+      </div>
+
+      <div id="best-seller" class="product-flexslider hidden-buttons">
+        <div class="slider-items slider-width-col4 products-grid">
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->        
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- best Pro Slider -->
+  <section class=" wow bounceInUp animated">
+    <div class="best-pro slider-items-products container">
+      <div class="new_title">
+        <h2>Mais Vendidos</h2>
+      </div>
+      <div id="best-seller" class="product-flexslider hidden-buttons">
+        <div class="slider-items slider-width-col4 products-grid">
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="item">
+            {% include "item-inner.html" %}
+          </div>
+          <!-- End Item -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Home Lastest Blog Block -->
+  <div class="latest-blog wow bounceInUp animated animated container">
+    <!--exclude For version 6 -->
+    <div class="new_title">
+      <h2>Últimas postagens do blog</h2>
+    </div>
+    <!--blog-title-->
+    <!--For version 1,2,3,4,5,6,8 -->
+
+    <div class="blog_block">
+      <div class="blog_block_inner">
+        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6 blog-post">
+          <div class="blog_inner">
+            <div class="blog-img"> 
+              <a href="/blog-detail"> <img src="static/images/blog-img1.jpg" alt="blog image"> </a>
+              <div class="mask"> <a class="info" href="blog-detail.html">Leia mais</a> </div>
             </div>
-          </li>
-        </ul>
+            <!--blog-img-->
+            <div class="blog-info">
+              <div class="post-date">
+                <time class="entry-date" datetime="2015-05-11T11:07:27+00:00"><span>19</span> <br> Março</time>
+              </div>
+              <h3><a href="blog-detail.html">Lorem ipsum dolor sit amet, consectetur adipiscing</a></h3>
+              <p>Pellentesque habitant morbi tristique senectus et netus et malesuada ...</p>
+              <a class="readmore" href="/blog-detail">Leia mais</a> 
+            </div>
+          </div>
+          <!--blog_inner-->
+        </div>
+        <!--col-lg-4 col-md-4 col-xs-12 col-sm-4-->
+        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6 blog-post">
+          <div class="blog_inner">
+            <div class="blog-img"> 
+              <a href="/blog-detail"> <img src="static/images/blog-img2.jpg" alt="blog image"> </a>
+              <div class="mask"> <a class="info" href="blog-detail.html">Leia mais</a> </div>
+            </div>
+            <!--blog-img-->
+            <div class="blog-info">
+              <div class="post-date">
+                <time class="entry-date" datetime="2015-05-11T11:07:27+00:00"><span>21</span> <br> Março</time>
+              </div>
+              <h3><a href="blog-detail.html">Lorem ipsum dolor sit amet, consectetur adipiscing</a></h3>
+              <p>Pellentesque habitant morbi tristique senectus et netus et malesuada ...</p>
+              <a class="readmore" href="/blog-detail">Leia mais</a> 
+            </div>
+          </div>
+          <!--blog_inner-->
+        </div>
       </div>
     </div>
+    <!--END For version 1,2,3,4,5,6,8 -->
+    <!--exclude For version 6 -->
+    <!--container-->
   </div>
-</div>
-
-<!-- best Pro Slider -->
-<section class=" wow bounceInUp animated">
-  <div class="best-pro slider-items-products container">
-    <div class="new_title">
-      <h2>Novidades</h2>
-    </div>
-
-    <div id="best-seller" class="product-flexslider hidden-buttons">
-      <div class="slider-items slider-width-col4 products-grid">
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->        
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- best Pro Slider -->
-<section class=" wow bounceInUp animated">
-  <div class="best-pro slider-items-products container">
-    <div class="new_title">
-      <h2>Mais Vendidos</h2>
-    </div>
-    <div id="best-seller" class="product-flexslider hidden-buttons">
-      <div class="slider-items slider-width-col4 products-grid">
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-        <!-- Item -->
-        <div class="item">
-          {% include "item-inner.html" %}
-        </div>
-        <!-- End Item -->
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Home Lastest Blog Block -->
-<div class="latest-blog wow bounceInUp animated animated container">
-  <!--exclude For version 6 -->
-  <div class="new_title">
-    <h2>Últimas postagens do blog</h2>
-  </div>
-  <!--blog-title-->
-  <!--For version 1,2,3,4,5,6,8 -->
-
-  <div class="blog_block">
-   <div class="blog_block_inner">
-    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6 blog-post">
-      <div class="blog_inner">
-        <div class="blog-img"> <a href="/blog-detail"> <img src="static/images/blog-img1.jpg" alt="blog image"> </a>
-          <div class="mask"> <a class="info" href="blog-detail.html">Leia mais</a> </div>
-        </div>
-        <!--blog-img-->
-        <div class="blog-info">
-         <div class="post-date">
-          <time class="entry-date" datetime="2015-05-11T11:07:27+00:00"><span>19</span> <br> Março</time>
-        </div>
-        <h3><a href="blog-detail.html">Lorem ipsum dolor sit amet, consectetur adipiscing</a></h3>
-        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada ...</p>
-        <a class="readmore" href="/blog-detail">Leia mais</a> </div>
-      </div>
-      <!--blog_inner-->
-    </div>
-    <!--col-lg-4 col-md-4 col-xs-12 col-sm-4-->
-    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6 blog-post">
-      <div class="blog_inner">
-        <div class="blog-img"> <a href="/blog-detail"> <img src="static/images/blog-img2.jpg" alt="blog image"> </a>
-          <div class="mask"> <a class="info" href="blog-detail.html">Leia mais</a> </div>
-        </div>
-        <!--blog-img-->
-        <div class="blog-info">
-         <div class="post-date">
-          <time class="entry-date" datetime="2015-05-11T11:07:27+00:00"><span>21</span> <br> Março</time>
-        </div>
-        <h3><a href="blog-detail.html">Lorem ipsum dolor sit amet, consectetur adipiscing</a></h3>
-
-        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada ...</p>
-        <a class="readmore" href="/blog-detail">Leia mais</a> </div>
-      </div>
-      <!--blog_inner-->
-    </div>
-  </div>
-</div>
-<!--END For version 1,2,3,4,5,6,8 -->
-<!--exclude For version 6 -->
-<!--container-->
 </div>
 {% endblock %}
+
 {% block scripts %}
 <script type="text/javascript">
   jQuery(document).ready(function(){
