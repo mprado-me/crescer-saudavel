@@ -10,8 +10,6 @@ website:   	http://www.themesground.com/
 #Site Styles
 #Media Queries
 */
-
-
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
@@ -9770,7 +9768,9 @@ margin-right: 3px;
 			}
 			.totals {
 				margin-top: 25px;
-				min-height: 360px;
+				margin-left: auto;
+				margin-right: auto;
+				width: 300px;
 			}
 			#discount-coupon-form {
 				padding:15px 0px;
@@ -12884,4 +12884,8 @@ margin-right: 3px;
 
   .centered-content-container {
   	text-align: center;
+  }
+
+  .total-cart {
+  	width: 360px;
   }

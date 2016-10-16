@@ -28,6 +28,10 @@ def blog():
 def blog_post():
     return render_template('blog-post.html')
 
+@app.route('/shopping-cart')
+def shopping_cart():
+    return render_template('shopping-cart.html')
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}

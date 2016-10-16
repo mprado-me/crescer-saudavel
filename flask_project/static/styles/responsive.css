@@ -989,6 +989,12 @@ footer .newsletter-row {
 .mini-logo-img {
 	display: block;
 }
+.totals {
+	width: 260px;
+}
+.total-cart {
+  	width: 290px;
+  }
 }
 
 @media only screen and (min-width: 480px) {
