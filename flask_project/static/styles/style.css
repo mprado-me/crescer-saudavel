@@ -12881,3 +12881,7 @@ margin-right: 3px;
   .entry-meta {
   	float: right;
   }
+
+  .back-to-blog-button-container {
+  	text-align: center;
+  }
