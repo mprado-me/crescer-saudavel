@@ -1,4 +1,8 @@
-<table id="shopping-cart-table" class="data-table cart-table table-striped">
+{% if cart_table_editable %}
+  <table id="shopping-cart-table" class="data-table cart-table table-striped">
+{% else %}
+  <table id="shopping-cart-table" class="data-table cart-table table-striped not-editable">
+{% endif %}
   <thead>
     <tr class="first last">
       <th rowspan="1">&nbsp;</th>

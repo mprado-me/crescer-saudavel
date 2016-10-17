@@ -34,7 +34,7 @@ def shopping_cart():
 
 @app.route('/checkout')
 def checkout():
-    return render_template('checkout.html')
+    return render_template('checkout.html', cart_table_editable=False)
 
 @app.route('/data')
 def names():
