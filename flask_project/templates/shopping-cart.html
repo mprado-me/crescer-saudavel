@@ -15,48 +15,52 @@
         <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
         <fieldset>
           {% include "cart-table.html" %}
-         </fieldset>
-       </form>
-     </div>
+        </fieldset>
+        <div class="cart-buttons-container">
+            <button type="button" title="Continue Shopping" class="button btn-continue" onClick=""><span><span>Continuar comprando</span></span></button>
+            <button type="submit" name="update_cart_action" value="empty_cart" title="Clear Cart" class="button btn-empty" id="empty_cart_button"><span><span>Limpar carrinho</span></span></button>
+          </div>
+      </form>
+    </div>
 
-     <!-- BEGIN CART COLLATERALS -->
+    <!-- BEGIN CART COLLATERALS -->
 
-     <div class="cart-collaterals container total-cart"> 
-       <div class="totals">
-         <h3>Total da compra</h3>
-         <div class="inner">
+    <div class="cart-collaterals container total-cart"> 
+     <div class="totals">
+       <h3>Total da compra</h3>
+       <div class="inner">
 
-          <table id="shopping-cart-totals-table" class="table shopping-cart-table-total">
-           <tfoot>
-            <tr>
-              <td style="" class="a-left" colspan="1">
-                <strong>Total</strong>
-              </td>
-              <td style="" class="a-right">
-                <strong><span class="price">R$ 37,60</span></strong>
-              </td>
-            </tr>
-          </tfoot>
-          <tbody>
-            <tr>
-              <td style="" class="a-left" colspan="1">Produtos</td>
-              <td style="" class="a-right"><span class="price">R$ 32,60</span></td>
-            </tr>
-            <tr>
-              <td style="" class="a-left" colspan="1">Frete</td>
-              <td style="" class="a-right"><span class="price">R$ 5,00</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <table id="shopping-cart-totals-table" class="table shopping-cart-table-total">
+         <tfoot>
+          <tr>
+            <td style="" class="a-left" colspan="1">
+              <strong>Total</strong>
+            </td>
+            <td style="" class="a-right">
+              <strong><span class="price">R$ 37,60</span></strong>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr>
+            <td style="" class="a-left" colspan="1">Produtos</td>
+            <td style="" class="a-right"><span class="price">R$ 32,60</span></td>
+          </tr>
+          <tr>
+            <td style="" class="a-left" colspan="1">Frete</td>
+            <td style="" class="a-right"><span class="price">R$ 5,00</span></td>
+          </tr>
+        </tbody>
+      </table>
 
-        <ul class="checkout">           
-          <li>
-            <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout" onClick=""><span>Finalizar Compra</span></button>
-          </li>
-        </ul>                
-      </div><!--inner-->
-    </div><!--totals-->
-  </div> <!--cart-collaterals-->
+      <ul class="checkout">           
+        <li>
+          <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout" onClick=""><span>Finalizar Compra</span></button>
+        </li>
+      </ul>                
+    </div><!--inner-->
+  </div><!--totals-->
+</div> <!--cart-collaterals-->
 </div>  <!--cart-->
 </div><!--main-container-->
 </div>

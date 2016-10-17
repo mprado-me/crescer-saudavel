@@ -12911,3 +12911,15 @@ margin-right: 3px;
   .total-cart {
   	width: 360px;
   }
+
+  .cart-buttons-container {
+  	margin-top: 12px;
+  }
+
+  .cart-buttons-container .btn-continue {
+  	float: left;
+  }
+
+  .cart-buttons-container .btn-empty {
+  	float: right;
+  }
