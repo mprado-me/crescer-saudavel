@@ -32,6 +32,10 @@ def blog_post():
 def shopping_cart():
     return render_template('shopping-cart.html')
 
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html')
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}
