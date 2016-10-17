@@ -9575,6 +9575,18 @@ margin-right: 3px;
 			.cart-table .btn-continue {
 				float: left;
 			}
+			.cart-table.not-editable .qty {
+				display: none;
+			}
+			.cart-table.not-editable .exclude-item-col {
+				display: none;
+			}
+			.cart-table .not-editable-qty {
+				display: none;
+			}
+			.cart-table.not-editable .not-editable-qty {
+				display: block !important;
+			}
 			button.button span {
 				font-weight: 600;
 				font-size: 12px;
