@@ -7,13 +7,21 @@
 <div class="main-container col2-right-layout">
   <div class="main container">
     <div class="row">
-      <section class="col-main col-sm-9 wow bounceInUp animated animated" style="visibility: visible;">
+      <section class="col-main wow bounceInUp animated animated" style="visibility: visible;">
         <ol class="one-page-checkout" id="checkoutSteps">
-          <li id="opc-billing" class="section allow">
+          {% if step==1 %}
+            <li id="opc-billing" class="section allow active">
+          {% else %}
+            <li id="opc-billing" class="section allow">
+          {% endif %}
             <div class="step-title"> <span class="number">1</span>
               <h3 class="one_page_heading">Endereço de entrega</h3>
             </div>
-            <div id="checkout-step-billing" class="step a-item" style="display:none;">
+            {% if step==1 %}
+              <div id="checkout-step-billing" class="step a-item" ">
+            {% else %}
+              <div id="checkout-step-billing" class="step a-item" style="display:none;">
+            {% endif %}
               <form id="co-billing-form" action="#">
                 <fieldset class="group-select">
                   <ul class="">
@@ -126,11 +134,19 @@
 
                 </div>
               </li>
-              <li id="opc-shipping" class="section active">
+              {% if step==2 %}
+                <li id="opc-shipping" class="section active">
+              {% else %}
+                <li id="opc-shipping" class="section">
+              {% endif %}
                 <div class="step-title"> <span class="number">2</span>
                   <h3 class="one_page_heading"> Confirmar compra</h3>
                 </div>
-                <div id="checkout-step-shipping" class="step a-item">
+                {% if step==2 %}
+                  <div id="checkout-step-shipping" class="step a-item">
+                {% else %}
+                  <div id="checkout-step-shipping" class="step a-item" style="display: none;">
+                {% endif %}
                   {% with cart_table_editable=cart_table_editable %}
                     {% include "cart-table.html" %}
                   {% endwith %}
@@ -141,49 +157,26 @@
                   <button type="button" title="Continue" class="button continue" onClick="billing.save()"><span>Continuar</span></button>
                 </div>
               </li>
-              <li id="opc-shipping_method" class="section">
+              {% if step==3 %}
+                <li id="opc-shipping_method" class="section active">
+              {% else %}
+                <li id="opc-shipping_method" class="section">
+              {% endif %}
                 <div class="step-title"> <span class="number">3</span>
                   <h3 class="one_page_heading"> Pagamento</h3>
                 </div>
-                <div id="checkout-step-shipping_method" class="step a-item" style="display:none;">
-                  <form id="co-shipping-method-form" action="#">
-                    <div id="checkout-shipping-method-load">
-                      <p>Sorry, no quotes are available for this order at this time.</p>
-                    </div>
-
-                    <div id="onepage-checkout-shipping-method-additional-load"> 
-
-                    </div>
-                    <div class="buttons-set" id="shipping-method-buttons-container">
-                      <button type="button" class="button continue" onClick="shippingMethod.save()"><span>Continue</span></button>
-                      <a href="#" onClick="checkout.back(); return false;"><small>« </small>Back</a> <span id="shipping-method-please-wait" class="please-wait" style="display:none;"> <img src="images/opc-ajax-loader.gif" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step... </span> </div>
-                    </form>
+                {% if step==3 %}
+                  <div id="checkout-step-shipping_method" class="step a-item">
+                {% else %}
+                  <div id="checkout-step-shipping_method" class="step a-item" style="display:none;">
+                {% endif %}
+                    <p>...</p>
                   </div>
                 </li>
                 </ol>
 
                 <br>
               </section>
-              <aside class="col-right sidebar col-sm-3 wow bounceInUp animated animated" style="visibility: visible;">
-                <div id="checkout-progress-wrapper">
-                  <div class="block block-progress">
-                    <div class="block-title"> Passos </div>
-                    <div class="block-content">
-                      <div>
-                        <div id="billing-progress-opcheckout">
-                          <span> Endereço de entrega</span>
-                        </div>
-                        <div id="shipping-progress-opcheckout">
-                          <span> Confirmar compra</span>
-                        </div>
-                        <div id="shipping_method-progress-opcheckout">
-                          <span> Pagamento</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </aside>
               <!--col-right sidebar--> 
             </div>
             <!--row--> 

@@ -1,5 +1,5 @@
 import sys
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
 
@@ -34,7 +34,9 @@ def shopping_cart():
 
 @app.route('/checkout')
 def checkout():
-    return render_template('checkout.html', cart_table_editable=False)
+    step = request.args.get('step')
+    step = int(step)
+    return render_template('checkout.html', cart_table_editable=False, step=step)
 
 @app.route('/data')
 def names():
