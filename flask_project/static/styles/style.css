@@ -6405,6 +6405,16 @@ margin-right: 3px;
 			width: 50%;
 		}
 
+		.group-select li .input-box-address {
+			float: left;
+			width: 80%;
+		}
+
+		.group-select li .input-box-number {
+			float: left;
+			width: 18%;
+		}
+
 		.group-select .require {
 			color: #FF0000;
 			font-family: 'Open Sans', sans-serif;
