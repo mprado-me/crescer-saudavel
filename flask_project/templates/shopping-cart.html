@@ -14,7 +14,9 @@
       <form action="#" method="post">
         <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
         <fieldset>
-          {% include "cart-table.html" %}
+          {% with cart_table_editable=cart_table_editable %}
+            {% include "cart-table.html" %}
+          {% endwith %}
         </fieldset>
         <div class="cart-buttons-container">
             <button type="button" title="Continue Shopping" class="button btn-continue" onClick=""><span><span>Continuar comprando</span></span></button>

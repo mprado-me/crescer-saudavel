@@ -12923,3 +12923,38 @@ margin-right: 3px;
   .cart-buttons-container .btn-empty {
   	float: right;
   }
+
+  #checkout-step-shipping #shopping-cart-totals-table {
+  	float: none;
+  	width: 200px;
+  	margin-left: 0;
+  	margin-bottom: 0;
+  }
+
+  #checkout-step-shipping #shopping-cart-totals-table {
+  	border-collapse: collapse;
+  }
+
+  #checkout-step-shipping #shopping-cart-totals-table th {
+  	border: 1px solid #E5E5E5;
+  }
+
+   #checkout-step-shipping #shopping-cart-totals-table td {
+  	border: 1px solid #E5E5E5;
+  }
+
+  #shopping-cart-table {
+  	margin-bottom: 20px;
+  }
+
+  #checkout-step-shipping {
+  	text-align: left;
+  }
+
+  #checkout-step-shipping .btn-edit-items {
+  	margin-bottom: 16px;
+  }
+
+  #checkout-step-shipping .continue {
+  	margin-top: 16px;
+  }

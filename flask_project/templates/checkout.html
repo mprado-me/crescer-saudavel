@@ -134,6 +134,11 @@
                   {% with cart_table_editable=cart_table_editable %}
                     {% include "cart-table.html" %}
                   {% endwith %}
+                  <button type="button" title="Continue Shopping" class="button btn-edit-items" onClick=""><span><span>Editar items</span></span></button>
+                  <div class="total">
+                    {% include "total-table.html" %}
+                  </div>
+                  <button type="button" title="Continue" class="button continue" onClick="billing.save()"><span>Continuar</span></button>
                 </div>
               </li>
               <li id="opc-shipping_method" class="section">

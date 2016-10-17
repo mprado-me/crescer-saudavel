@@ -30,7 +30,7 @@ def blog_post():
 
 @app.route('/shopping-cart')
 def shopping_cart():
-    return render_template('shopping-cart.html')
+    return render_template('shopping-cart.html', cart_table_editable=True)
 
 @app.route('/checkout')
 def checkout():
