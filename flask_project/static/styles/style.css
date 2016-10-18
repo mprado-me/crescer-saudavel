@@ -10219,7 +10219,7 @@ margin-right: 3px;
 				font-weight: 300;
 				letter-spacing:1px
 			}
-			.account-login .col2-set .col-2 strong {
+			.account-login .registered-users strong {
 				font-size: 16px;
 				text-transform: none;
 				margin-bottom: 8px;
@@ -10231,12 +10231,12 @@ margin-right: 3px;
 				font-weight:300;
 				letter-spacing:1px
 			}
-			.account-login .col2-set .col-2 {
-				float: right;
+			.account-login .registered-users {
+				/*float: right;*/
 				padding-bottom: 0;
 				padding:25px;
 				text-align: left;
-				width: 48%;
+				/*width: 48%;*/
 				margin-top: 10px;
 			}
 
@@ -12957,4 +12957,20 @@ margin-right: 3px;
 
   #checkout-step-shipping .continue {
   	margin-top: 16px;
+  }
+
+  .account-login .create-account {
+  	display: none;
+  }
+
+  .account-login .buttons-set .create-account {
+  	display: block;
+  	float: right;
+  	margin-right: 0;
+  }
+
+  .registered-users {
+  	width: 440px;
+  	margin-right: auto;
+  	margin-left: auto;
   }

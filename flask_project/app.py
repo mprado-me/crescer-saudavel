@@ -38,6 +38,10 @@ def checkout():
     step = int(step)
     return render_template('checkout.html', cart_table_editable=False, step=step)
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}

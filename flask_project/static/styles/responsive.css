@@ -955,7 +955,7 @@ footer address span {
 
 .cart-collaterals {padding:0px}
 
-.buttons-set .login {float:none; display:block}
+/*.buttons-set .login {float:none; display:block}*/
 
 .col-main {
   margin-top: 10px;
@@ -2955,6 +2955,24 @@ ol#compare-items li a.product-name {
 .search-input-container {
 	width: 150px;
 }
+
+.account-login .create-account {
+	/*margin-top: 12px;*/
+	float: none;
+}
+
+.registered-users {
+	width: 70%;
+}
+
+.account-login .create-account {
+	display: block;
+	margin-top: 8px;
+}
+
+.account-login .buttons-set .create-account {
+	display: none;
+}
 }
 
 @media (min-width: 901px) {
@@ -2978,5 +2996,11 @@ ol#compare-items li a.product-name {
 @media (max-width: 991px) {
 .blog-wrapper {
 	margin: 30px 0px;
+}
+}
+
+@media (max-width: 479px) {
+.registered-users {
+	width: 90%;
 }
 }
