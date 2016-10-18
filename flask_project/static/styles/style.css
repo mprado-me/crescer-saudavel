@@ -11057,7 +11057,7 @@ margin-right: 3px;
 		border: 2px #ddd solid;
 
 	}
-	.button:hover, .button:focus, .btn:hover, .btn:focus, .button-inverse, .button-vote:hover, .sidebar .button:hover, .sidebar .button:focus, .sidebar .btn:hover, .sidebar .btn:focus, .form-list .bootstrap-select.btn-group .btn:hover .caret, .form-list .bootstrap-select.btn-group .btn:focus .caret, .buttons-set .back-link a:hover, .buttons-set .back-link a:focus, .scrolltop, .button-tabs li a:hover, .button-tabs li a:focus {
+	.button:hover, .btn:hover, .btn:focus, .button-inverse, .button-vote:hover, .sidebar .button:hover, .sidebar .button:focus, .sidebar .btn:hover, .sidebar .btn:focus, .form-list .bootstrap-select.btn-group .btn:hover .caret, .form-list .bootstrap-select.btn-group .btn:focus .caret, .buttons-set .back-link a:hover, .buttons-set .back-link a:focus, .scrolltop, .button-tabs li a:hover, .button-tabs li a:focus {
 		border: 2px #333333 solid;
 		color: #FFF;
 	}
