@@ -12974,3 +12974,11 @@ margin-right: 3px;
   	margin-right: auto;
   	margin-left: auto;
   }
+
+  .account-login .buttons-set .forgot-word {
+  	margin-left: 8px;
+  }
+
+  .account-login .buttons-set .already-has-account {
+  	margin-left: 8px;
+  }

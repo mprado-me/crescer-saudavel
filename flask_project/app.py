@@ -42,6 +42,10 @@ def checkout():
 def login():
     return render_template('login.html')
 
+@app.route('/create-account')
+def create_account():
+    return render_template('create-account.html')
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}
