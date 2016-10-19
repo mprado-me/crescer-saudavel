@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Meu Carrinho{% endblock %}
+{% block content %}
+
+{% include "page-heading.html" %}
+
+<!-- BEGIN Main Container -->  
+
+<div class="main-container col1-layout wow bounceInUp animated">     
+
+ <div class="main container">                     
+   <div class="cart wow bounceInUp animated">
+     <div class="table-responsive shopping-cart-tbl  container">
+      <form action="#" method="post">
+        <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
+        <fieldset>
+          {% with cart_table_editable=cart_table_editable %}
+            {% include "cart-table.html" %}
+          {% endwith %}
+        </fieldset>
+      </form>
+    </div>
+
+    <!-- BEGIN CART COLLATERALS -->
+
+    <div class="cart-collaterals container total-cart"> 
+     <div class="totals">
+       <h3>Total da compra</h3>
+       <div class="inner">
+        {% include "total-table.html" %}
+    </div><!--inner-->
+  </div><!--totals-->
+</div> <!--cart-collaterals-->
+ <div class="back-to-my-account-btn-container">
+          <button type="submit" class="button login" title="Login" name="send" id="send2"><span>Voltar para minha conta</span></button>
+        </div> <!--buttons-set-->
+
+</div>  <!--cart-->
+</div><!--main-container-->
+</div>
+
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}
