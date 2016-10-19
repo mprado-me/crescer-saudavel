@@ -26,81 +26,14 @@
                 <fieldset class="group-select">
                   <ul class="">
                     <li id="billing-new-address-form">
-                      <fieldset>
-                        <input type="hidden" name="billing[address_id]" value="27006" id="billing:address_id">
-                        <ul>
-                          <li class="fields">
-                            <div class="customer-name">
-                              <div class="input-box name-firstname">
-                                <label for="billing:firstname">Nome<span class="required">*</span></label>
-                                <div class="input-box1">
-                                  <input type="text" id="billing:firstname" name="billing[firstname]" value="john" title="First Name" maxlength="255" class="input-text required-entry">
-                                </div>
-                              </div>
-                              <div class="input-box name-lastname">
-                                <label for="billing:lastname">Sobrenome<span class="required">*</span></label>
-                                <div class="input-box1">
-                                  <input type="text" id="billing:lastname" name="billing[lastname]" value="doe" title="Last Name" maxlength="255" class="input-text required-entry">
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="fields">
-                            <div>
-                              <div class="input-box-address">
-                                <label for="billing:city">Endereço<em class="required">*</em></label>
-                                <input type="text" title="City" name="billing[city]" value="AL" class="input-text  required-entry" id="billing:city">
-                              </div>
-                              <div class="input-box-number">
-                                <label for="billing:city">Número<em class="required">*</em></label>
-                                <input type="text" title="City" name="billing[city]" value="AL" class="input-text  required-entry" id="billing:city">
-                              </div>
-                            </div>
-                          </li>
-                          <li class="wide">
-                            <label for="billing:street1">Complemento</label>
-                            <br>
-                            <input type="text" title="Street Address 2" name="billing[street][]" id="billing:street2" value="" class="input-text ">
-                          </li>
-                          <li class="fields">
-                            <div class="input-box">
-                              <label for="billing:country_id">Estado<em class="required">*</em></label>
-                              <select name="billing[country_id]" id="billing:country_id" class="validate-select" title="Country">
-                                <option value="">Selecione um estado</option>
-                                <option value="AF">SP</option>
-                                <option value="AX">RJ</option>
-                                <option value="AL">MG</option>
-                              </select>
-                            </div>
-                            <div class="input-box">
-                              <label for="billing:country_id">Cidade<em class="required">*</em></label>
-                              <select name="billing[country_id]" id="billing:country_id" class="validate-select" title="Country">
-                                <option value="">Selecione uma cidade</option>
-                                <option value="AF">São José dos Campos</option>
-                                <option value="AX">Jacarei</option>
-                              </select>
-                            </div>
-                          </li>
-                          <li class="fields">
-                            <div class="input-box">
-                              <label for="billing:fax">CEP<em class="required">*</em></label>
-                              <input type="text" name="billing[fax]" value="00000-000" title="Fax" class="input-text " id="billing:fax">
-                            </div>
-                            <div class="input-box">
-                              <label for="billing:telephone">Telefone<em class="required">*</em></label>
-                              <input type="text" name="billing[telephone]" value="(11) 98140-5682" title="Telephone" class="input-text  required-entry" id="billing:telephone">
-                            </div>
-                          </li>
-                        </ul>
-                        </fieldset>
-                      </li>
+                      {% include "user-info.html" %}
+                    </li>
                     </ul>
                     <div class="buttons-set" id="billing-buttons-container">
                       <p class="required">* Campos obrigatórios</p>
                       <button type="button" title="Continue" class="button continue" onClick="billing.save()"><span>Continuar</span></button>
                     </fieldset>
                   </form>
-
                 </div>
               </li>
               {% if step==2 %}
