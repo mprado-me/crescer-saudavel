@@ -35,6 +35,8 @@ def shopping_cart():
 @app.route('/checkout')
 def checkout():
     step = request.args.get('step')
+    if not step:
+        step = "1"
     step = int(step)
     data = {
         "in_edit_info_mode": True,
