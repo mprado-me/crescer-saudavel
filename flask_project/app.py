@@ -60,6 +60,13 @@ def my_account():
     }
     return render_template('my-account.html', data=data)
 
+@app.route('/forgot-password')
+def forgot_password():
+    data = {
+        "in_edit_info_mode": False,
+    }
+    return render_template('forgot-password.html', data=data)
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}
