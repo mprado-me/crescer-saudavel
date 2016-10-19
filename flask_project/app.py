@@ -36,7 +36,10 @@ def shopping_cart():
 def checkout():
     step = request.args.get('step')
     step = int(step)
-    return render_template('checkout.html', cart_table_editable=False, step=step)
+    data = {
+        "in_edit_info_mode": True,
+    }
+    return render_template('checkout.html', cart_table_editable=False, step=step, data=data)
 
 @app.route('/login')
 def login():
@@ -49,6 +52,13 @@ def create_account():
 @app.route('/faq')
 def faq():
     return render_template('faq.html')
+
+@app.route('/my-account')
+def my_account():
+    data = {
+        "in_edit_info_mode": False,
+    }
+    return render_template('my-account.html', data=data)
 
 @app.route('/data')
 def names():

@@ -1,67 +1,87 @@
+{% import "macros.html" as macros %}
+
 <fieldset>
-                        <input type="hidden" name="billing[address_id]" value="27006" id="billing:address_id">
-                        <ul>
-                          <li class="fields">
-                            <div class="customer-name">
-                              <div class="input-box name-firstname">
-                                <label for="billing:firstname">Nome<span class="required">*</span></label>
-                                <div class="input-box1">
-                                  <input type="text" id="billing:firstname" name="billing[firstname]" value="john" title="First Name" maxlength="255" class="input-text required-entry">
-                                </div>
-                              </div>
-                              <div class="input-box name-lastname">
-                                <label for="billing:lastname">Sobrenome<span class="required">*</span></label>
-                                <div class="input-box1">
-                                  <input type="text" id="billing:lastname" name="billing[lastname]" value="doe" title="Last Name" maxlength="255" class="input-text required-entry">
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="fields">
-                            <div>
-                              <div class="input-box-address">
-                                <label for="billing:city">Endereço<em class="required">*</em></label>
-                                <input type="text" title="City" name="billing[city]" value="AL" class="input-text  required-entry" id="billing:city">
-                              </div>
-                              <div class="input-box-number">
-                                <label for="billing:city">Número<em class="required">*</em></label>
-                                <input type="text" title="City" name="billing[city]" value="AL" class="input-text  required-entry" id="billing:city">
-                              </div>
-                            </div>
-                          </li>
-                          <li class="wide">
-                            <label for="billing:street1">Complemento</label>
-                            <br>
-                            <input type="text" title="Street Address 2" name="billing[street][]" id="billing:street2" value="" class="input-text ">
-                          </li>
-                          <li class="fields">
-                            <div class="input-box">
-                              <label for="billing:country_id">Estado<em class="required">*</em></label>
-                              <select name="billing[country_id]" id="billing:country_id" class="validate-select" title="Country">
-                                <option value="">Selecione um estado</option>
-                                <option value="AF">SP</option>
-                                <option value="AX">RJ</option>
-                                <option value="AL">MG</option>
-                              </select>
-                            </div>
-                            <div class="input-box">
-                              <label for="billing:country_id">Cidade<em class="required">*</em></label>
-                              <select name="billing[country_id]" id="billing:country_id" class="validate-select" title="Country">
-                                <option value="">Selecione uma cidade</option>
-                                <option value="AF">São José dos Campos</option>
-                                <option value="AX">Jacarei</option>
-                              </select>
-                            </div>
-                          </li>
-                          <li class="fields">
-                            <div class="input-box">
-                              <label for="billing:fax">CEP<em class="required">*</em></label>
-                              <input type="text" name="billing[fax]" value="00000-000" title="Fax" class="input-text " id="billing:fax">
-                            </div>
-                            <div class="input-box">
-                              <label for="billing:telephone">Telefone<em class="required">*</em></label>
-                              <input type="text" name="billing[telephone]" value="(11) 98140-5682" title="Telephone" class="input-text  required-entry" id="billing:telephone">
-                            </div>
-                          </li>
-                        </ul>
-                        </fieldset>
+  <li class="wide">
+    <label>Email</label>
+    <br>
+    <input type="text" title="Street Address 2" name="billing[street][]" id="billing:street2" value="email@email.com" class="input-text " readonly>
+  </li>
+  <input type="hidden" name="billing[address_id]" value="27006" id="billing:address_id">
+  <ul>
+    <li class="fields">
+      <div class="customer-name">
+        <div class="input-box name-firstname">
+          <label>{{macros.mandatory_mark(editable)}}Nome:</label>
+          <div class="input-box1">
+            {{macros.input(name="firstname", id="firstname", class="input-text required-entry", type="text", title="First name", value="Aline", maxlength="255", editable=editable)}}
+          </div>
+        </div>
+        <div class="input-box name-lastname">
+          <label>{{macros.mandatory_mark(editable)}}Sobrenome:</label>
+          <div class="input-box1">
+            {{macros.input(name="lastname", id="lastname", class="input-text required-entry", type="text", title="Last name", value="Souza", maxlength="255", editable=editable)}}
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="fields">
+      <div>
+        <div class="input-box-address">
+          <label>{{macros.mandatory_mark(editable)}}Endereço:</label>
+          {{macros.input(name="address", id="address", class="input-text required-entry", type="text", title="Cidade", value="Rua das esmeraldas - Vila Jurema", editable=editable)}}
+        </div>
+        <div class="input-box-number">
+          <label>{{macros.mandatory_mark(editable)}}Número:</label>
+          {{macros.input(name="address_number", id="address_number", class="input-text required-entry", type="number", title="Número", value="39", editable=editable)}}
+        </div>
+      </div>
+    </li>
+    <li class="wide">
+      <label for="billing:street1">Complemento:</label>
+      <br>
+      {{macros.input(name="address_complement", id="address_complement", class="input-text", type="text", title="Complemento", value="Ed. das Amoeiras, Apt 72", editable=editable)}}
+    </li>
+    <li class="fields">
+      <div class="input-box">
+        <label>{{macros.mandatory_mark(editable)}}Estado:</label>
+        {% if editable %}
+        <select name="address_state" id="address_state" class="validate-select" title="Estado">
+          <option value="">Selecione um estado</option>
+          <option value="AF">SP</option>
+          <option value="AX">RJ</option>
+          <option value="AL">MG</option>
+        </select>
+        {% else %}
+        {{macros.input(name="address_state", id="address_state", class="input-text required-entry", type="text", title="Estado", value="SP", editable=False)}}
+        {% endif %}
+      </div>
+      <div class="input-box">
+        <label>{{macros.mandatory_mark(editable)}}Cidade:</label>
+        {% if editable %}
+        <select name="address_city" id="address_city" class="validate-select" title="Cidade">
+          <option value="">Selecione uma cidade</option>
+          <option value="AF">São José dos Campos</option>
+          <option value="AX">Jacarei</option>
+        </select>
+        {% else %}
+        {{macros.input(name="address_city", id="address_city", class="input-text required-entry", type="text", title="Cidade", value="São José dos Campos", editable=False)}}
+        {% endif %}
+      </div>
+    </li>
+    <li class="fields">
+      <div class="input-box">
+        <label>{{macros.mandatory_mark(editable)}}CEP:</label>
+        {{macros.input(name="address_cep", id="address_cep", class="input-text required-entry", type="text", pattern="\d\d\d\d\d-\d\d\d|\d\d\d\d\d\d\d\d|\d\d\d\d\d \d\d\d", title="CEP - Formatos aceitos: 00000-000, 00000000, 00000 000", value="00000-000", editable=editable)}}
+      </div>
+      <div class="input-box">
+        <label>{{macros.mandatory_mark(editable)}}Telefone:</label>
+        {{macros.input(name="tel_number", id="tel_number", class="input-text required-entry", type="text", title="Número de telefone residencial ou celular", value="(12) 98213-6721", editable=editable)}}
+      </div>
+    </li>
+    {% if editable %}
+      <li>
+          <p class="required">* Campos obrigatórios</p>
+      </li>
+    {% endif %}
+  </ul>
+</fieldset>

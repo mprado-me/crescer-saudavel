@@ -6520,7 +6520,7 @@ margin-right: 3px;
 			outline: none;
 		}
 		.box-account {
-			margin-top: 15px;
+			/*margin-top: 15px;*/
 			font-size: 14px;
 		}
 		.col2-right-layout {
@@ -6528,7 +6528,8 @@ margin-right: 3px;
 		}
 		.box-account .page-title h2 {
 			font-size: 14px;
-			margin-top:15px
+			/*margin-top:15px*/
+			margin-bottom: 12px;
 		}
 		.col2-set {
 			overflow: hidden;
@@ -12994,4 +12995,21 @@ margin-right: 3px;
 
   .faq-container ol li p:last-child{
   	color: #999;
+  }
+
+  .recent-orders .title-buttons {
+  	/*margin-top: 50px;*/
+  }
+
+  .account-info-buttons-container .button.edit {
+  	margin-bottom: 16px;
+  }
+
+  .account-info-buttons-container .button.save {
+  	margin-bottom: 16px;
+  }
+
+  .account-info-buttons-container .button.cancel {
+  	float: right;
+	margin-left: 12px;  	
   }

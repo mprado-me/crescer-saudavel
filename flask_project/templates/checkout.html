@@ -26,12 +26,14 @@
                 <fieldset class="group-select">
                   <ul class="">
                     <li id="billing-new-address-form">
-                      {% include "user-info.html" %}
+                      {% with editable=data["in_edit_info_mode"] %}
+                        {% include "user-info.html" %}
+                      {% endwith %}
                     </li>
                     </ul>
                     <div class="buttons-set" id="billing-buttons-container">
-                      <p class="required">* Campos obrigatórios</p>
                       <button type="button" title="Continue" class="button continue" onClick="billing.save()"><span>Continuar</span></button>
+                      </div>
                     </fieldset>
                   </form>
                 </div>

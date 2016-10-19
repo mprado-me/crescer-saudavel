@@ -1,0 +1,13 @@
+{% macro mandatory_mark(show_mark=False) -%}
+		{% if show_mark %}
+    	<span class="required">*</span>
+    {% endif %}
+{%- endmacro %}
+
+{%- macro input(name, id="", class="", type="text", pattern=".*", title="", value="", maxlength=255, editable=False) -%}
+		{% if not editable %}
+			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value }}" maxlength="{{ maxlength }}" class="{{ class }}" readonly>
+		{% else %}
+			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value }}" maxlength="{{ maxlength }}" class="{{ class }}">
+		{% endif %}
+{%- endmacro %}
