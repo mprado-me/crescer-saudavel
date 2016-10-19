@@ -62,10 +62,11 @@ def my_account():
 
 @app.route('/forgot-password')
 def forgot_password():
-    data = {
-        "in_edit_info_mode": False,
-    }
-    return render_template('forgot-password.html', data=data)
+    return render_template('forgot-password.html')
+
+@app.route('/forgot-password-email-sending')
+def forgot_password_email_sending():
+    return render_template('forgot-password-email-sending.html')
 
 @app.route('/data')
 def names():

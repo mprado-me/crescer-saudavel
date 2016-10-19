@@ -13013,3 +13013,8 @@ margin-right: 3px;
   	float: right;
 	margin-left: 12px;  	
   }
+
+  .registered-users .ok-icon-container {
+  	text-align: center;
+  	margin-bottom: 24px;
+  }
