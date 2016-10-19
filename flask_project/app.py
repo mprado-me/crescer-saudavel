@@ -68,6 +68,10 @@ def forgot_password():
 def forgot_password_email_sending():
     return render_template('forgot-password-email-sending.html')
 
+@app.route('/new-password')
+def new_password():
+    return render_template('new-password.html')
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}
