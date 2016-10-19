@@ -12687,7 +12687,7 @@ margin-right: 3px;
   	padding:25px;
   	position: relative;
   	margin-top: 0px;
-  	padding-bottom: 45px;
+  	/*padding-bottom: 45px;*/
   	background-color: #fff;
   	box-shadow: 0px 3px 8px -4px rgba(0,0,0,0.15);
   	margin-top: 30px;
@@ -12981,4 +12981,17 @@ margin-right: 3px;
 
   .account-login .buttons-set .already-has-account {
   	margin-left: 8px;
+  }
+
+  .faq-container ol li{
+  	font-weight: bold;
+  	font-size: 14px;
+  }
+
+  .faq-container ol li p{
+  	font-weight: normal;
+  }
+
+  .faq-container ol li p:last-child{
+  	color: #999;
   }

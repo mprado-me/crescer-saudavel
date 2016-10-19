@@ -46,6 +46,10 @@ def login():
 def create_account():
     return render_template('create-account.html')
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 @app.route('/data')
 def names():
     data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}

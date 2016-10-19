@@ -3003,4 +3003,8 @@ ol#compare-items li a.product-name {
 .registered-users {
 	width: 92%;
 }
+
+.faq-container ol li{
+	font-size: 13px;
+}
 }
