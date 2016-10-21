@@ -1,39 +1,44 @@
 import sys
+
 from flask import Flask, jsonify, render_template, request
+
+from data_providers.about_us_data_provider import get_about_us_data
+from data_providers.blog_data_provider import get_blog_data
+from data_providers.cart_data_provider import get_cart_data
+from data_providers.checkout_data_provider import get_checkout_data
+from data_providers.create_account_data_provider import get_create_account_data
+from data_providers.faq_data_provider import get_faq_data
+from data_providers.forgot_password_data_provider import get_forgot_password_data
+from data_providers.forgot_password_email_sending_data_provider import get_forgot_password_email_sending_data
+from data_providers.home_data_provider import get_home_data
+from data_providers.login_data_provider import get_login_data
+from data_providers.my_account_data_provider import get_my_account_data
+from data_providers.new_password_data_provider import get_new_password_data
+from data_providers.order_data_provider import get_order_data
+from data_providers.post_data_provider import get_post_data
+from data_providers.product_data_provider import get_product_data
+from data_providers.products_data_provider import get_products_data
 
 app = Flask(__name__)
 
-@app.route('/')
-@app.route('/home')
-def home():
-    return render_template('home.html')
-
 @app.route('/sobre-nos')
 def about_us():
-    return render_template('about-us.html')
-
-@app.route('/produtos')
-def products():
-    return render_template('products.html')
-
-@app.route('/produto')
-def product_detail():
-    return render_template('product-detail.html')
+    data = get_about_us_data()
+    return render_template('about-us.html', data=data)
 
 @app.route('/blog')
 def blog():
-    return render_template('blog.html')
-
-@app.route('/post')
-def blog_post():
-    return render_template('blog-post.html')
+    data = get_blog_data()
+    return render_template('blog.html', data=data)
 
 @app.route('/carrinho')
-def shopping_cart():
-    return render_template('shopping-cart.html', cart_table_editable=True)
+def cart():
+    data = get_cart_data()
+    return render_template('cart.html', cart_table_editable=True, data=data)
 
 @app.route('/finalizacao-de-compra')
 def checkout():
+    data = get_checkout_data()
     step = request.args.get('step')
     if not step:
         step = "1"
@@ -43,40 +48,69 @@ def checkout():
     }
     return render_template('checkout.html', cart_table_editable=False, step=step, data=data)
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
 @app.route('/criar-conta')
 def create_account():
-    return render_template('create-account.html')
+    data = get_create_account_data()
+    return render_template('create-account.html', data=data)
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html')
+    data = get_faq_data()
+    return render_template('faq.html', data=data)
+
+@app.route('/recuperacao-de-senha')
+def forgot_password():
+    data = get_forgot_password_data()
+    return render_template('forgot-password.html', data=data)
+
+@app.route('/envio-do-email-de-recuperacao-de-senha')
+def forgot_password_email_sending():
+    data = get_forgot_password_email_sending_data()
+    return render_template('forgot-password-email-sending.html', data=data)
+
+@app.route('/')
+@app.route('/home')
+def home():
+    data = get_home_data()
+    return render_template('home.html', data=data)
+
+@app.route('/entrar')
+def login():
+    data = get_login_data()
+    return render_template('login.html', data=data)
 
 @app.route('/minha-conta')
 def my_account():
+    data = get_my_account_data()
     data = {
         "in_edit_info_mode": False,
     }
     return render_template('my-account.html', data=data)
 
-@app.route('/recuperaçao-de-senha')
-def forgot_password():
-    return render_template('forgot-password.html')
-
-@app.route('/envio-do-email-de-recuperacao-de-senha')
-def forgot_password_email_sending():
-    return render_template('forgot-password-email-sending.html')
-
 @app.route('/nova-senha')
 def new_password():
-    return render_template('new-password.html')
+    data = get_new_password_data()
+    return render_template('new-password.html', data=data)
 
 @app.route('/pedido')
 def order():
-    return render_template('order.html')
+    data = get_order_data()
+    return render_template('order.html', data=data)
+
+@app.route('/post')
+def blog_post():
+    data = get_post_data()
+    return render_template('blog-post.html', data=data)
+
+@app.route('/produto')
+def product():
+    data = get_product_data()
+    return render_template('product.html', data=data)
+
+@app.route('/produtos')
+def products():
+    data = get_products_data()
+    return render_template('products.html', data=data)
 
 if __name__ == '__main__':
 	if len(sys.argv) == 2 and sys.argv[1] == 'local':
