@@ -4,6 +4,7 @@ from flask import Flask, jsonify, render_template, request
 
 from data_providers.about_us_data_provider import get_about_us_data
 from data_providers.blog_data_provider import get_blog_data
+from data_providers.blog_post_data_provider import get_blog_post_data
 from data_providers.cart_data_provider import get_cart_data
 from data_providers.checkout_data_provider import get_checkout_data
 from data_providers.create_account_data_provider import get_create_account_data
@@ -15,9 +16,10 @@ from data_providers.login_data_provider import get_login_data
 from data_providers.my_account_data_provider import get_my_account_data
 from data_providers.new_password_data_provider import get_new_password_data
 from data_providers.order_data_provider import get_order_data
-from data_providers.post_data_provider import get_post_data
 from data_providers.product_data_provider import get_product_data
-from data_providers.products_data_provider import get_products_data
+from data_providers.products_data_provider import get_all_products_data, get_products_data_by_category, get_products_data_by_category_and_subcategory, get_products_data_by_search
+
+from enums.sort_method import SortMethod
 
 app = Flask(__name__)
 
@@ -26,23 +28,19 @@ def about_us():
     data = get_about_us_data()
     return render_template('about-us.html', data=data)
 
-@app.route('/blog')
-def blog():
-    data = get_blog_data()
-    return render_template('blog.html', data=data)
+@app.route('/blog/<int:page>')
+def blog(page):
+    data = get_blog_data(page=page)
+    return render_template('blog.html')
 
 @app.route('/carrinho')
 def cart():
     data = get_cart_data()
     return render_template('cart.html', cart_table_editable=True, data=data)
 
-@app.route('/finalizacao-de-compra')
-def checkout():
+@app.route('/finalizacao-de-compra/<int:step>')
+def checkout(step):
     data = get_checkout_data()
-    step = request.args.get('step')
-    if not step:
-        step = "1"
-    step = int(step)
     data = {
         "in_edit_info_mode": True,
     }
@@ -92,24 +90,40 @@ def new_password():
     data = get_new_password_data()
     return render_template('new-password.html', data=data)
 
-@app.route('/pedido')
-def order():
-    data = get_order_data()
+@app.route('/pedido/<int:order_id>')
+def order(order_id):
+    data = get_order_data(order_id)
     return render_template('order.html', data=data)
 
-@app.route('/post')
-def blog_post():
-    data = get_post_data()
+@app.route('/post/<int:post_id>')
+def blog_post(blog_post_id):
+    data = get_blog_post_data(blog_post_id)
     return render_template('blog-post.html', data=data)
 
-@app.route('/produto')
-def product():
-    data = get_product_data()
+@app.route('/produto/<int:product_id>')
+def product(product_id):
+    data = get_product_data(product_id)
     return render_template('product.html', data=data)
 
-@app.route('/produtos')
-def products():
-    data = get_products_data()
+@app.route('/produtos/pagina/<int:page>/ordenacao/<int:sort_method>')
+def all_products(page, sort_method):
+    data = get_all_products_data(page=page, sort_method=sort_method)
+    return render_template('products.html', data=data)
+
+@app.route('/produtos/categoria/<int:category_id>/pagina/<int:page>/ordenacao/<int:sort_method>')
+def products_by_category(category_id, page, sort_method):
+    data = get_products_data_by_category(category_id=category_id, page=page, sort_method=sort_method)
+    return render_template('products.html', data=data)
+
+@app.route('/produtos/categoria/<int:category_id>/subcategoria/<int:subcategory_id>/pagina/<int:page>/ordenacao/<int:sort_method>')
+def products_by_category_and_subcategory(category_id, subcategory_id, page, sort_method):
+    data = get_products_data_by_category_and_subcategory(category_id=category_id, subcategory_id=subcategory_id, page=page, sort_method=sort_method)
+    return render_template('products.html', data=data)
+
+@app.route('/produtos/busca/pagina/<int:page>/ordenacao/<int:sort_method>')
+def products_by_search(page, sort_method):
+    q = request.args.get('q')
+    data = get_products_data_by_search(page=page, sort_method=sort_method, q=q)
     return render_template('products.html', data=data)
 
 if __name__ == '__main__':

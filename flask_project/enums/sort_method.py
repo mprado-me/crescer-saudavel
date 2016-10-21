@@ -1,0 +1,2 @@
+class SortMethod:
+    NAME, LOWEST_PRICE, BIGGEST_PRICE, BEST_SELLER, UNDEFINED = range(5)
