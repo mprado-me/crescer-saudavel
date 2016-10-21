@@ -8,15 +8,15 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
-@app.route('/about-us')
+@app.route('/sobre-nos')
 def about_us():
     return render_template('about-us.html')
 
-@app.route('/products')
+@app.route('/produtos')
 def products():
     return render_template('products.html')
 
-@app.route('/product-detail')
+@app.route('/produto')
 def product_detail():
     return render_template('product-detail.html')
 
@@ -24,15 +24,15 @@ def product_detail():
 def blog():
     return render_template('blog.html')
 
-@app.route('/blog-post')
+@app.route('/post')
 def blog_post():
     return render_template('blog-post.html')
 
-@app.route('/shopping-cart')
+@app.route('/carrinho')
 def shopping_cart():
     return render_template('shopping-cart.html', cart_table_editable=True)
 
-@app.route('/checkout')
+@app.route('/finalizacao-de-compra')
 def checkout():
     step = request.args.get('step')
     if not step:
@@ -47,7 +47,7 @@ def checkout():
 def login():
     return render_template('login.html')
 
-@app.route('/create-account')
+@app.route('/criar-conta')
 def create_account():
     return render_template('create-account.html')
 
@@ -55,33 +55,28 @@ def create_account():
 def faq():
     return render_template('faq.html')
 
-@app.route('/my-account')
+@app.route('/minha-conta')
 def my_account():
     data = {
         "in_edit_info_mode": False,
     }
     return render_template('my-account.html', data=data)
 
-@app.route('/forgot-password')
+@app.route('/recuperaçao-de-senha')
 def forgot_password():
     return render_template('forgot-password.html')
 
-@app.route('/forgot-password-email-sending')
+@app.route('/envio-do-email-de-recuperacao-de-senha')
 def forgot_password_email_sending():
     return render_template('forgot-password-email-sending.html')
 
-@app.route('/new-password')
+@app.route('/nova-senha')
 def new_password():
     return render_template('new-password.html')
 
-@app.route('/order')
+@app.route('/pedido')
 def order():
     return render_template('order.html')
-
-@app.route('/data')
-def names():
-    data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}
-    return jsonify(data)
 
 if __name__ == '__main__':
 	if len(sys.argv) == 2 and sys.argv[1] == 'local':
