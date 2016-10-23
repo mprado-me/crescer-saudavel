@@ -63,15 +63,16 @@
 					<div class="footer-column">
 						<a href="{{url_for('all_products', page=1, sort_method=0)}}"><h4>Produtos</h4></a>
 						{% if data["products"] and data["products"]|length > 0 %}
-						<ul class="links">
-							{% for item in data["products"] %}
-								{% if loop.first %}
-									{{macros.product(title=item["name"].decode("utf-8"), href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0), class="first")}}
-								{% else %}
-									{{macros.product(title=item["name"].decode('utf-8'), href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0))}}
-								{% endif %}
-							{% endfor %}
-						</ul>
+							<ul class="links">
+								{% for item in data["products"] %}
+									{% if loop.first %}
+										{{macros.product(title=item["name"].decode("utf-8"), href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0), class="first")}}
+									{% else %}
+										{{macros.product(title=item["name"].decode('utf-8'), href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0))}}
+									{% endif %}
+								{% endfor %}
+								{{macros.product(title="...", href=url_for('all_products', page=1, sort_method=0))}}
+							</ul>
 						{% endif %}
 					</div>
 
