@@ -21,7 +21,9 @@
 		{% block content %}
 		{% endblock %}
 
-		{% include "footer.html" %}
+		{% with data=data["footer_data"] %}
+			{% include "footer.html" %}
+		{% endwith %}
 	</div>
 
 {% include "mobile-menu.html" %}

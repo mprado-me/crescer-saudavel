@@ -1,16 +1,17 @@
+{% import "macros.html" as macros %}
+
 <footer>
-	<!-- BEGIN INFORMATIVE FOOTER -->
+
 	<div class="footer-inner">
+
 		<div class="newsletter-row">
 			<div class="container">
 				<div class="row"> 
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 col"> 
-						<!-- Footer Payment Link -->
 						<div class="payment-accept">
-							<div><img src="/static/images/payment-2.png" alt="payment2"> <img src="/static/images/payment-4.png" alt="payment4"></div>
+							<div><img src="/static/images/payment-2.png" alt="Cartões Visa"> <img src="/static/images/payment-4.png" alt="Cartões Master Card"></div>
 						</div>
 					</div>
-					<!-- Footer Newsletter -->
 					<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 col1">
 						<div class="newsletter-wrap">
 							<form action="#" method="post" id="newsletter-validate-detail1">
@@ -18,43 +19,35 @@
 									<div id="container_form_news2">
 										<h4>Assine nossa newsletter</h4>
 										<input type="text" name="email" id="newsletter1" title="Assine nossa newsletter" class="input-text required-entry validate-email" placeholder="Entre com seu email">
-										<button type="submit" title="Subscribe" class="button subscribe"><span>Assinar</span></button>
+										<button type="submit" title="Assinar newsletter" class="button subscribe"><span>Assinar</span></button>
 									</div>
-									<!--container_form_news2--> 
 								</div>
-								<!--container_form_news-->
 							</form>
-
 						</div>
-						<!--newsletter-wrap--> 
 					</div>
-
 				</div>
 			</div>
-			<!--footer-column-last--> 
 		</div>
+
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4 col-xs-12 col-lg-4">
 					<div class="co-info">
 						<h4>Contato</h4>
 						<address>
-							<div><em class="icon-location-arrow"></em> <span>Rua ..., n 25, SJC - SP</span></div>
-							<div> <em class="icon-mobile-phone"></em><span> (11) 1234-5678</span></div>
-							<div> <em class="icon-envelope"></em><span>email@email.com</span></div>
+							<div><em class="icon-location-arrow"></em> <span>{{data["address"].decode('utf-8')}}</span></div>
+							<div><em class="icon-mobile-phone"></em><span>{{data["tel"].decode('utf-8')}}</span></div>
+							<div><em class="icon-envelope"></em><span>{{data["email"].decode('utf-8')}}</span></div>
 						</address>
-						<div class="social">
-
-							<ul class="link">
-								<li class="fb pull-left"><a target="_blank" rel="nofollow" href="#" title="Facebook"></a></li>
-								<li class="tw pull-left"><a target="_blank" rel="nofollow" href="#" title="Twitter"></a></li>
-								<li class="googleplus pull-left"><a target="_blank" rel="nofollow" href="#" title="GooglePlus"></a></li>
-								<li class="rss pull-left"><a target="_blank" rel="nofollow" href="#" title="RSS"></a></li>
-								<li class="pintrest pull-left"><a target="_blank" rel="nofollow" href="#" title="PInterest"></a></li>
-								<li class="linkedin pull-left"><a target="_blank" rel="nofollow" href="#" title="Linkedin"></a></li>
-								<li class="youtube pull-left"><a target="_blank" rel="nofollow" href="#" title="Youtube"></a></li>
-							</ul>
-						</div>
+						{% if data["social_networks"] and data["social_networks"]|length > 0 %}
+							<div class="social">
+								<ul class="link">
+									{% for item in data["social_networks"] %}
+										{{macros.social_network(title=item["title"].decode('utf-8'), class=item["class"], href=item["href"])}}
+									{% endfor %}
+								</ul>
+							</div>
+						{% endif %}
 					</div>
 				</div>
 
@@ -62,46 +55,43 @@
 					<div class="footer-column">
 						<h4>Empresa</h4>
 						<ul class="links">
-							<li class="first"><a title="Your Account" href="/about-us">Sobre nós</a></li>
-							<li class="first"><a title="Your Account" href="/faq">FAQ</a></li>
+							<li class="first"><a title="Sobre nós" href="{{url_for('about_us')}}">Sobre nós</a></li>
+							<li><a title="FAQ" href="{{url_for('faq')}}">FAQ</a></li>
 						</ul>
 					</div>
+
 					<div class="footer-column">
-						<a href="/products?q=all"><h4>Produtos</h4></a>
+						<a href="{{url_for('all_products', page=1, sort_method=0)}}"><h4>Produtos</h4></a>
+						{% if data["products"] and data["products"]|length > 0 %}
 						<ul class="links">
-							<li class="first"><a href="#" title="About us">Frutas</a></li>
-							<li><a href="#" title="Blog">Sopa creme</a></li>
-							<li><a href="#" title="Company">Sopa com pedaços</a></li>
-							<li><a href="#" title="Investor Relations">Linha Single</a></li>
-							<li><a href="#" title="Investor Relations">Linha Emporinho</a></li>
-							<li class=" last"><a href="contact-us.html" title="Suppliers"><b>...</b></a></li>
+							{% for item in data["products"] %}
+								{% if loop.first %}
+									{{macros.product(title=item["name"].decode("utf-8"), href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0), class="first")}}
+								{% else %}
+									{{macros.product(title=item["name"].decode('utf-8'), href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0))}}
+								{% endif %}
+							{% endfor %}
 						</ul>
+						{% endif %}
 					</div>
+
 					<div class="footer-column">
-						<a href="/blog"><h4>Blog</h4></a>
+						<a href="{{url_for('blog', page=1)}}"><h4>Blog</h4></a>
 						<ul class="links">
-							<li class="first"><a href="#" title="Contact us">Título do post 0</a></li>
-							<li><a href="#" title="About us">Título do post 1</a></li>
-							<li><a href="#" title="faq">Título do post 2</a></li>
-							<li><a href="#" title="Popular Searches">Título do post 3</a></li>
-							<li class="last"><a href="#" title="Where is my order?">Título do post 4</a></li>
+							{% for item in data["blog_posts"] %}
+								{% if loop.first %}
+									{{macros.blog_post_link(title=item["title"].decode("utf-8"), href=url_for("blog_post", blog_post_id=item["blog_post_id"]), class="first")}}
+								{% else %}
+									{{macros.blog_post_link(title=item["title"].decode("utf-8"), href=url_for("blog_post", blog_post_id=item["blog_post_id"]))}}
+								{% endif %}
+							{% endfor %}
 						</ul>
 					</div>
 				</div>
-
-				<!--col-sm-12 col-xs-12 col-lg-8-->
-				<!--col-xs-12 col-lg-4-->
 			</div>
-			<!--row-->
-
 		</div>
-
-		<!--container-->
 		<div class="copyright-text-container">
-			<span class="copyright-text">Copyright © 2016 - Crescer Saudável</span>
+			<span class="copyright-text">{{data["copyright_text"].decode('utf-8')}}</span>
 		</div>
 	</div>
-	<!--footer-inner-->
-
-	<!-- BEGIN SIMPLE FOOTER -->
 </footer>

@@ -11,3 +11,15 @@
 			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value }}" maxlength="{{ maxlength }}" class="{{ class }}">
 		{% endif %}
 {%- endmacro %}
+
+{%- macro social_network(title, class, href) -%}
+		<li class="pull-left {{ class }}"><a target="_blank" rel="nofollow" href="{{ href }}" title="{{ title }}"></a></li>
+{%- endmacro %}
+
+{%- macro product(title, href, class="") -%}
+		<li class="{{ class }}"><a href="{{ href }}" title="{{ title }}">{{ title }}</a></li>
+{%- endmacro %}
+
+{%- macro blog_post_link(title, href, class="") -%}
+		<li class="{{ class }}"><a href="{{ href }}" title="{{ title }}">{{ title }}</a></li>
+{%- endmacro %}

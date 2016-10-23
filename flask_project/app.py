@@ -28,6 +28,11 @@ def about_us():
     data = get_about_us_data()
     return render_template('about-us.html', data=data)
 
+@app.route('/blog-post/<int:blog_post_id>')
+def blog_post(blog_post_id):
+    data = get_blog_post_data(blog_post_id)
+    return render_template('blog-post.html', data=data)
+
 @app.route('/blog/<int:page>')
 def blog(page):
     data = get_blog_data(page=page)
@@ -94,11 +99,6 @@ def new_password():
 def order(order_id):
     data = get_order_data(order_id)
     return render_template('order.html', data=data)
-
-@app.route('/post/<int:post_id>')
-def blog_post(blog_post_id):
-    data = get_blog_post_data(blog_post_id)
-    return render_template('blog-post.html', data=data)
 
 @app.route('/produto/<int:product_id>')
 def product(product_id):
