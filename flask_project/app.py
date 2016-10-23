@@ -1,6 +1,6 @@
 import sys
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, url_for
 
 from data_providers.about_us_data_provider import get_about_us_data
 from data_providers.blog_data_provider import get_blog_data
@@ -30,7 +30,10 @@ def about_us():
 
 @app.route('/blog-post/<int:blog_post_id>')
 def blog_post(blog_post_id):
-    data = get_blog_post_data(blog_post_id)
+    blog_page_to_return = request.args.get('blog-page-to-return')
+    if not blog_page_to_return:
+        blog_page_to_return = 1
+    data = get_blog_post_data(blog_post_id=blog_post_id, blog_page_to_return=blog_page_to_return)
     return render_template('blog-post.html', data=data)
 
 @app.route('/blog/<int:page>')

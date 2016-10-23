@@ -2,8 +2,10 @@
 {% block title %}Blog Post{% endblock %}
 {% block content %}
 
-{% include "page-heading.html" %}
-<!-- BEGIN Main Container -->
+{% with data=data["page_heading_data"] %}
+  {% include "page-heading.html" %}
+{% endwith %}
+
 <div class="main-container col2-right-layout">
   <div class="main container">
     <div id="main" class="blog-wrapper">
@@ -12,52 +14,29 @@
           <article id="post-29" class="blog_entry clearfix wow bounceInUp animated animated" style="visibility: visible;">
             <div class="blog_entry-header clearfix">
               <div class="blog_entry-header-inner row">
-                <h2 class="blog_entry-title">Lorem ipsum dolor sit amet</h2>
-                <div class="entry-meta">
-                  <div class="entry-date">15/10/2016</div>
-                </div>
+                <!-- <h2 class="blog_entry-title">{{ data["title"].decode("utf-8") }}</h2> -->
               </div>
-              <!--blog_entry-header-inner--> 
             </div>
             <div class="entry-content">
               <div class="featured-thumb">
                 <img src="/static/images/blog-img3.jpg" alt="blog-img3">
               </div>
               <div class="entry-content">
-                <p>Fusce ac pharetra urna. Duis non lacus sit amet lacus interdum facilisis sed non est. Ut mi metus, semper eu dictum nec, condimentum sed sapien. Nullam lobortis nunc semper ipsum luctus ut viverra ante eleifend. Nunc pretium velit sed augue luctus accumsan.</p>
-                <p>Aliquam laoreet consequat malesuada. Integer vitae diam sed dolor euismod laoreet eget ac felis. Donec non erat sed elit bibendum sodales. Donec eu cursus velit. Proin nunc lacus, gravida mollis dictum ut, vulputate eu turpis. Sed felis sapien, commodo in iaculis in, feugiat sed enim. Sed nunc ipsum, fermentum varius dignissim vitae, blandit et ante.Maecenas sagittis, lorem sed congue egestas, lectus purus congue nisl, ac molestie enim ligula nec eros. Sed leo tortor, tincidunt sit amet elementum vel, eleifend at orci. Maecenas ut turpis felis. Donec sit amet quam sem, et aliquet est.</p>
-                <p>Quisque nisl lectus, accumsan et euismod eu, sollicitudin ac augue. In sit amet urna magna. Curabitur imperdiet urna nec purus egestas eget aliquet purus iaculis. Nunc porttitor blandit imperdiet. Nulla facilisi. Cras odio ipsum, vehicula nec vehicula sed, convallis scelerisque quam. Phasellus ut odio dui, ut fermentum neque.</p>
-                <blockquote>Lorem ipsum dolor sit amet, consecte adipiscing elit. Integer aliquam mi nec dolor placerat a condimentum diam mollis. Ut pulvinar neque eget massa dapibus dolor.</blockquote>
-                <p>Curabitur at vestibulum sem. Aliquam vehicula neque ac nibh suscipit ultrices. Morbi interdum accumsan arcu nec scelerisque. Phasellus eget purus nulla. Suspendisse quam est, tempor quis consectetur non, interdum vitae diam. Pellentesque volutpat mollis ligula in laoreet. Aenean est dui, sagittis in consequat at, adipiscing at risus. Sed suscipit, est vitae aliquam molestie, sem dolor dignissim leo, eget imperdiet enim urna in justo. Mauris pulvinar tortor lorem. Aliquam sed nisl in ipsum tincidunt ultrices.</p>
-                <h2>Heading</h2>
-                Pellentesque volutpat mollis ligula in laoreet. Aenean est dui, sagittis in consequat at, adipiscing at risus. Sed suscipit, est vitae aliquam molestie, sem dolor dignissim leo, eget imperdiet enim urna in justo. Mauris pulvinar tortor lorem. Aliquam sed nisl in ipsum tincidunt ultrices.
-                <ul>
-                  <li> Integer vitae diam sed dolor euismod laoreet eget ac felis</li>
-                  <li> Integer vitae diam sed dolor euismod laoreet eget ac felis</li>
-                  <li> Integer vitae diam sed dolor euismod laoreet eget ac felis</li>
-                  <li> Integer vitae diam sed dolor euismod laoreet eget ac felis</li>
-                  <li> Integer vitae diam sed dolor euismod laoreet eget ac felis</li>
-                </ul>
-                <h3>Heading</h3>
-                Pellentesque volutpat mollis ligula in laoreet. Aenean est dui, sagittis in consequat at, adipiscing at risus. Sed suscipit, est vitae aliquam molestie, sem dolor dignissim leo, eget imperdiet enim urna in justo. Mauris pulvinar tortor lorem. Aliquam sed nisl in ipsum tincidunt ultrices.
-                <h4>Heading</h4>
-                <p>Nullam commodo lobortis nibh, vitae accumsan velit dapibus sed. Nunc ac sem eu libero pretium faucib. Quisque et semper odio. Praesent tortor ligula, imperdiet sed aliquet ut, pharetra at nisi. Etiam sit amet molestie est. Donec id turpis vitae leo viverra adipiscing at sed nisi. Donec ut justo nunc. Vivamu bibendum erat ac nunc sollicitudin lacinia. Phasellus sed lacus magna.</p>
-                <h5>Heading</h5>
-                <p>Nullam commodo lobortis nibh, vitae accumsan velit dapibus sed. Nunc ac sem eu libero pretium faucib. Quisque et semper odio. Praesent tortor ligula, imperdiet sed aliquet ut, pharetra at nisi. Etiam sit amet molestie est. Donec id turpis vitae leo viverra adipiscing at sed nisi. Donec ut justo nunc. Vivamu bibendum erat ac nunc sollicitudin lacinia. Phasellus sed lacus magna.</p>
+                <div class="admin-content-container">
+                  {{ data["content"].decode('utf-8')|safe }}
+                </div>
               </div>
               <div class="centered-content-container">
-                <a href="/blog"><button title="Voltar ao blog" class="button"><span>Voltar ao blog</span></button></a>
+                <a href="{{data['blog_url_to_return']}}"><button title="Voltar ao blog" class="button"><span>Voltar ao blog</span></button></a>
               </div>
             </div>
           </article>
         </div>
       </div>
     </div>
-    <!--#main wrapper grid_8--> 
   </div>
 </div>
-<!--main-container--> 
 {% endblock %}
 {% block scripts %}
-
+<script type="text/javascript" src="/static/js/image-video-resizer.js"></script>
 {% endblock %}

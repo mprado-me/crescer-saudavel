@@ -5162,7 +5162,17 @@ text-transform: uppercase
 	text-align: center;
 }
 
-.blog-wrapper .entry-date{background:#333333; color:#fff; padding:7px 20px; font-family:'Montserrat', sans-serif; text-transform:uppercase; position:absolute; right:25px; top:25px; border-radius:999px }
+.blog-wrapper .entry-date{
+	background:#333333; 
+	color:#fff;
+	padding:7px 20px; 
+	font-family:'Montserrat', sans-serif;
+	text-transform:uppercase;
+	position:absolute; 
+	right:25px; 
+	top:25px; 
+	border-radius:999px 
+}
 
 .blog-wrapper .entry-content {padding-top:0px}
 
@@ -13036,7 +13046,7 @@ margin-right: 3px;
 
   .admin-content-container .image-container {
   	text-align: center;
-  	margin-bottom: 8px;
+  	margin-bottom: 12px;
   	margin-left: auto;
   	margin-right: auto;
   }
@@ -13044,4 +13054,14 @@ margin-right: 3px;
 .admin-content-container .image-container img {
     width: 100%; 
     height: auto;
+}
+
+.blog-post-date {
+	background:#333333; 
+	color:#fff;
+	padding:7px 20px; 
+	font-family:'Montserrat', sans-serif;
+	text-transform:uppercase;
+	margin-left: 8px;
+	border-radius:99px 
 }
