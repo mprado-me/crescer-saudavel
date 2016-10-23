@@ -1,9 +1,22 @@
 <div class="pager">
 	<div class="pages"> 
 		<ol class="pagination">
-			<li class="active"><a href="">1</a></li>
+			{% if data["previous_href"] %}
+				<li><a class="button" href="{{data['previous_href']}}" title="Páginas anteriores"> « </a></li>
+			{% endif %}
+			{% for page in data["pages"] %}
+				{% if page["active"] %}
+					<li class="active"><a class="button" href="{{page['href']}}">{{page['number']}}</a></li>
+				{% else %}
+					<li><a class="button" href="{{page['href']}}">{{page['number']}}</a></li>
+				{% endif %}
+			{% endfor %}
+			{% if data["next_href"] %}
+				<li><a class="button" href="{{data['next_href']}}" title="Próximas páginas"> » </a></li>
+			{% endif %}
+			<!-- <li class="active"><a href="">1</a></li>
 			<li><a class="button" href="blog.html?p=2">2</a></li>
-			<li><a class="button next i-next" href="blog.html?p=2" title="Next"> » </a> </li>
+			<li><a class="button next i-next" href="blog.html?p=2" title="Próximo"> » </a> </li> -->
 		</ol>
 	</div>
 </div>

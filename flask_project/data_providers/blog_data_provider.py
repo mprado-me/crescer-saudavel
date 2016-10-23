@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
 import json
 from flask import url_for
 from footer_data_provider import get_footer_data
 
 def get_blog_data(page=1):
-	return sample_data_1()
+	return sample_data_0()
 
 def sample_data_0():
 	n_pages_in_paginator = None
@@ -33,9 +32,31 @@ def sample_data_0():
 		},
 		"footer_data": get_footer_data(),
 		"paginator_data": {
-			"n_total_pages": 10,
-			"current_page": 1,
-			"n_pages_in_paginator": n_pages_in_paginator
+			"previous_href": url_for("blog", page=5),
+			"next_href": url_for("blog", page=11),
+			"pages": [
+				{
+					"number": 6,
+					"href": url_for("blog", page=6),
+				},
+				{
+					"number": 7,
+					"href": url_for("blog", page=7),
+					"active": True,
+				},
+				{
+					"number": 8,
+					"href": url_for("blog", page=8),
+				},
+				{
+					"number": 9,
+					"href": url_for("blog", page=9),
+				},
+				{
+					"number": 10,
+					"href": url_for("blog", page=10),
+				},
+			],
 		},
 		# posts list contains only the the posts of this page
 		"posts": [
