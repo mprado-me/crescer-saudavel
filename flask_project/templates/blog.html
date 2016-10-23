@@ -2,87 +2,51 @@
 {% block title %}Blog{% endblock %}
 {% block content %}
 
-{% include "page-heading.html" %}
-<!-- BEGIN Main Container -->
+{% with data=data["page_heading_data"] %}
+  {% include "page-heading.html" %}
+{% endwith %}
 <div class="main-container col2-right-layout">
   <div class="main container">
-        <div id="main" class="blog-wrapper">
-          <div id="primary" class="site-content">
-            <div id="content" role="main">
+    <div id="main" class="blog-wrapper">
+      <div id="primary" class="site-content">
+        {% if data["posts"] and data["posts"]|length > 0 %}
+          <div id="content" role="main">
+            {% for post in data["posts"] %}
               <article id="post-29" class="blog_entry clearfix wow bounceInUp animated animated" style="visibility: visible;">
                 <div class="blog_entry-header clearfix">
                   <div class="blog_entry-header-inner row">
-                    <h2 class="blog_entry-title"> <a href="blog-detail.html" rel="bookmark">Lorem ipsum dolor sit amet</a> </h2>
+                    <h2 class="blog_entry-title"><a href="{{url_for('blog_post', blog_post_id=post['id'])}}">{{ post["title"].decode("utf-8") }}</a></h2>
                     <div class="entry-meta">
-                        <div class="entry-date">15/10/2016</div></div>
-                    </div>
-                    <!--blog_entry-header-inner--> 
+                      <div class="entry-date">{{ post["date"] }}</div></div>
                   </div>
+                </div>
+                <div class="entry-content">
+                  <div class="featured-thumb"><a href="{{url_for('blog_post', blog_post_id=post['id'])}}"><img src="{{post['thumbnail_href']}}" alt="Thumbnail da postagem"></a></div>
                   <div class="entry-content">
-                    <div class="featured-thumb"><a href="#"><img src="/static/images/blog-img3.jpg" alt="blog-img3"></a></div>
-                    <div class="entry-content">
-                      <p>Fusce ac pharetra urna. Duis non lacus sit amet lacus interdum facilisis sed non est. Ut mi metus, semper eu dictum nec, condimentum sed sapien. Nullam lobortis nunc semper ipsum luctus ut viverra ante eleifend. Nunc pretium velit sed augue luctus accumsan.</p>
-                      <p>Aliquam laoreet consequat malesuada. Integer vitae diam sed dolor euismod laoreet eget ac felis. Donec non erat sed elit bibendum sodales. Donec eu cursus velit. Proin nunc lacus, gravida mollis dictum ut, vulputate eu turpis. Sed felis sapien, commodo in iaculis in, feugiat sed enim. Sed nunc ipsum, fermentum varius dignissim vitae, blandit et ante.Maecenas sagittis, lorem sed congue egestas, lectus purus congue nisl, ac molestie enim ligula nec eros. Sed leo tortor, tincidunt sit amet elementum vel, eleifend at orci. Maecenas ut turpis felis. Donec sit amet quam sem, et aliquet est.</p>
-                      <p>Quisque nisl lectus, accumsan et euismod eu, sollicitudin ac augue. In sit amet urna magna. Curabitur imperdiet urna nec purus egestas eget aliquet purus iaculis. Nunc porttitor blandit imperdiet. Nulla facilisi. Cras odio ipsum, vehicula nec vehicula sed, convallis scelerisque quam. Phasellus ut odio dui, ut fermentum neque.</p>
-                    </div>
-                    <div class="centered-content-container">
-                      <a href="/blog-post"><button title="Ler mais" class="button"><span>Ler mais</span></button></a>
-                    </div>
+                    {{ post["summary"].decode("utf-8")|safe }}
                   </div>
-                </article>
-                <article id="post-30" class="blog_entry clearfix wow bounceInUp animated animated" style="visibility: visible;">
-                  <div class="blog_entry-header clearfix">
-                    <h2 class="blog_entry-title"> <a href="blog-detail.html" rel="bookmark">Lorem ipsum dolor sit amet</a> </h2>
-                    <div class="entry-meta">
-                      <div class="entry-date">22/09/2016</div></div>
-                      <!--blog_entry-header-inner--> 
-                    </div>
-                    <div class="entry-content">
-                      <div class="featured-thumb"><a href="#"><img src="/static/images/blog-img2.jpg" alt="blog-img2"></a></div>
-                      <div class="entry-content">
-                        <p>Fusce ac pharetra urna. Duis non lacus sit amet lacus interdum facilisis sed non est. Ut mi metus, semper eu dictum nec, condimentum sed sapien. Nullam lobortis nunc semper ipsum luctus ut viverra ante eleifend. Nunc pretium velit sed augue luctus accumsan.</p>
-                        <p>Aliquam laoreet consequat malesuada. Integer vitae diam sed dolor euismod laoreet eget ac felis. Donec non erat sed elit bibendum sodales. Donec eu cursus velit. Proin nunc lacus, gravida mollis dictum ut, vulputate eu turpis. Sed felis sapien, commodo in iaculis in, feugiat sed enim. Sed nunc ipsum, fermentum varius dignissim vitae, blandit et ante.Maecenas sagittis, lorem sed congue egestas, lectus purus congue nisl, ac molestie enim ligula nec eros. Sed leo tortor, tincidunt sit amet elementum vel, eleifend at orci. Maecenas ut turpis felis. Donec sit amet quam sem, et aliquet est.</p>
-                      </div>
-                      <div class="centered-content-container">
-                        <a href="/blog-post"><button title="Ler mais" class="button"><span>Ler mais</span></button></a>
-                      </div>
-                    </div>
-                  </article>
-                  <article id="post-31" class="blog_entry clearfix wow bounceInUp animated animated" style="visibility: visible;">
-                    <div class="blog_entry-header clearfix">
-                      <h2 class="blog_entry-title"> <a href="blog-detail.html" rel="bookmark">Lorem ipsum dolor sit amet</a> </h2>
-                      <div class="entry-meta">
-                        <div class="entry-date">10/07/2016</div></div>
-                        <!--blog_entry-header-inner--> 
-                      </div>
-                      <div class="entry-content">
-                        <div class="featured-thumb"><a href="#"><img src="/static/images/blog-img1.jpg" alt="blog-img1"></a></div>
-                        <div class="entry-content">
-                          <p>Fusce ac pharetra urna. Duis non lacus sit amet lacus interdum facilisis sed non est. Ut mi metus, semper eu dictum nec, condimentum sed sapien. Nullam lobortis nunc semper ipsum luctus ut viverra ante eleifend. Nunc pretium velit sed augue luctus accumsan.</p>
-                          <p>Aliquam laoreet consequat malesuada. Integer vitae diam sed dolor euismod laoreet eget ac felis. Donec non erat sed elit bibendum sodales. Donec eu cursus velit. Proin nunc lacus, gravida mollis dictum ut, vulputate eu turpis. Sed felis sapien, commodo in iaculis in, feugiat sed enim. Sed nunc ipsum, fermentum varius dignissim vitae, blandit et ante.Maecenas sagittis, lorem sed congue egestas, lectus purus congue nisl, ac molestie enim ligula nec eros. Sed leo tortor, tincidunt sit amet elementum vel, eleifend at orci. Maecenas ut turpis felis. Donec sit amet quam sem, et aliquet est.</p>
-                        </div>
-                        <div class="centered-content-container">
-                          <a href="/blog-post"><button title="Ler mais" class="button"><span>Ler mais</span></button></a>
-                        </div>
-                      </div>
-                    </article>              
+                  <div class="centered-content-container">
+                    <a href="{{url_for('blog_post', blog_post_id=post['id'])}}"><button title="Ler mais" class="button"><span>Ler mais</span></button></a>
                   </div>
                 </div>
-                <div class="pager">
-                  <div class="pages"> 
-                    <!--<strong></strong>-->
-                    <ol class="pagination">
-                      <li class="active"><a href="">1</a></li>
-                      <li><a class="button" href="blog.html?p=2">2</a></li>
-                      <li> <a class="button next i-next" href="blog.html?p=2" title="Next"> » </a> </li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-              <!--#main wrapper grid_8--> 
+              </article>
+            {% endfor %}       
           </div>
-        <!--main-container--> 
-        {% endblock %}
-        {% block scripts %}
-
-        {% endblock %}
+          {% with data=data["paginator_data"] %}
+            {% include "paginator.html" %}
+          {% endwith %}
+        {% else %}
+          <div class="no-posts-container">
+            <h3>Nenhuma postagem encontrada!</h3>
+            <a href="{{url_for('home')}}"><button type="button" title="Voltar para home" class="button create-account"><span><span>Voltar para Home</span></span></button></a>
+          </div>
+        {% endif %}
+      </div>
+     
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="/static/js/image-video-resizer.js"></script>
+{% endblock %}

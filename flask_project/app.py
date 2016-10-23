@@ -36,10 +36,10 @@ def blog_post(blog_post_id):
     data = get_blog_post_data(blog_post_id=blog_post_id, blog_page_to_return=blog_page_to_return)
     return render_template('blog-post.html', data=data)
 
-@app.route('/blog/<int:page>')
+@app.route('/blog/pagina/<int:page>')
 def blog(page):
     data = get_blog_data(page=page)
-    return render_template('blog.html')
+    return render_template('blog.html', data=data)
 
 @app.route('/carrinho')
 def cart():
