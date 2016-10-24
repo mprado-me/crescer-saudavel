@@ -1,6 +1,6 @@
 import sys
 
-from flask import Flask, jsonify, render_template, request, url_for
+from flask import Flask, jsonify, render_template, request, url_for, redirect
 
 from data_providers.about_us_data_provider import get_about_us_data
 from data_providers.blog_data_provider import get_blog_data
@@ -45,6 +45,18 @@ def blog(page):
 def cart():
     data = get_cart_data()
     return render_template('cart.html', cart_table_editable=True, data=data)
+
+@app.route('/adicionar-ao-carrinho/produto/<int:product_id>/quantidade/<int:quantity>', methods=['POST'])
+def cart_add_product(product_id, quantity):
+    return redirect(url_for('cart'))
+
+@app.route('/remover-do-carrinho/produto/<int:product_id>/quantidade/<int:quantity>', methods=['POST'])
+def cart_remove_product(product_id, quantity):
+    return redirect(url_for('cart'))
+
+@app.route('/deletar-do-carrinho/produto/<int:product_id>', methods=['POST'])
+def cart_delete_product(product_id):
+    return redirect(url_for('cart'))
 
 @app.route('/finalizacao-de-compra/<int:step>')
 def checkout(step):

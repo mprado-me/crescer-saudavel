@@ -2,30 +2,27 @@
 {% block title %}Meu Carrinho{% endblock %}
 {% block content %}
 
-{% include "page-heading.html" %}
-
-<!-- BEGIN Main Container -->  
+{% with data=data["page_heading_data"] %}
+  {% include "page-heading.html" %}
+{% endwith %}
 
 <div class="main-container col1-layout wow bounceInUp animated">     
-
  <div class="main container">                     
    <div class="cart wow bounceInUp animated">
      <div class="table-responsive shopping-cart-tbl  container">
       <form action="#" method="post">
         <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
         <fieldset>
-          {% with cart_table_editable=cart_table_editable %}
+          {% with data=data["cart_table_data"] %}
             {% include "cart-table.html" %}
           {% endwith %}
         </fieldset>
         <div class="cart-buttons-container">
-            <button type="button" title="Continue Shopping" class="button btn-continue" onClick=""><span><span>Continuar comprando</span></span></button>
-            <button type="submit" name="update_cart_action" value="empty_cart" title="Clear Cart" class="button btn-empty" id="empty_cart_button"><span><span>Limpar carrinho</span></span></button>
-          </div>
+          <button type="button" title="Continue Shopping" class="button btn-continue" onClick=""><span><span>Continuar comprando</span></span></button>
+          <button type="submit" name="update_cart_action" value="empty_cart" title="Clear Cart" class="button btn-empty" id="empty_cart_button"><span><span>Limpar carrinho</span></span></button>
+        </div>
       </form>
     </div>
-
-    <!-- BEGIN CART COLLATERALS -->
 
     <div class="cart-collaterals container total-cart"> 
      <div class="totals">
@@ -34,16 +31,16 @@
 
         {% include "total-table.html" %}
 
-      <ul class="checkout">           
-        <li>
-          <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout" onClick=""><span>Finalizar Compra</span></button>
-        </li>
-      </ul>                
-    </div><!--inner-->
-  </div><!--totals-->
-</div> <!--cart-collaterals-->
-</div>  <!--cart-->
-</div><!--main-container-->
+        <ul class="checkout">           
+          <li>
+            <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout" onClick=""><span>Finalizar Compra</span></button>
+          </li>
+        </ul>                
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 </div>
 
 {% endblock %}

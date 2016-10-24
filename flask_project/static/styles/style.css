@@ -9653,7 +9653,7 @@ margin-right: 3px;
 			#shopping-cart-table.data-table .price {
 				font-weight: bold;
 			}
-			#shopping-cart-table input.qty {
+			/*#shopping-cart-table input.qty {
 				background: none repeat scroll 0 0 #FFFFFF;
 				border: 1px solid #ddd;
 				font-size: 14px;
@@ -9663,7 +9663,7 @@ margin-right: 3px;
 				padding: 6px 10px;
 				width: 40px;
 				text-align: center;
-			}
+			}*/
 			#shopping-cart-table .edit-bnt {
 				float: left;
 				margin-top: 0px;
@@ -13072,4 +13072,24 @@ margin-right: 3px;
 
 .no-posts-container button {
 	margin-top: 12px;
+}
+
+.qty-container li{
+	float: left;
+	list-style-type: none;
+	margin-left: 6px;
+}
+
+.qty-container ul{
+	padding: 0px;
+}
+
+.qty-container .qty{
+	padding: 16px;
+}
+
+.qty-container li{
+	float: left;
+	list-style-type: none;
+	margin-left: 6px;
 }
