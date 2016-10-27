@@ -1,93 +1,97 @@
 {% extends "base.html" %}
-{% block title %}{% endblock %}
+{% block title %}Finalização de compra{% endblock %}
 {% block content %}
 
+{% with data=data["page_heading_data"] %}
 {% include "page-heading.html" %}
-<!-- BEGIN Main Container col2-right -->
+{% endwith %}
+
 <div class="main-container col2-right-layout">
   <div class="main container">
     <div class="row">
       <section class="col-main wow bounceInUp animated animated" style="visibility: visible;">
         <ol class="one-page-checkout" id="checkoutSteps">
-          {% if step==1 %}
-            <li id="opc-billing" class="section allow active">
+          {% if data["step"] == 1 %}
+          <li id="opc-billing" class="section allow active">
           {% else %}
-            <li id="opc-billing" class="section allow">
+          <li id="opc-billing" class="section allow">
           {% endif %}
             <div class="step-title"> <span class="number">1</span>
               <h3 class="one_page_heading">Endereço de entrega</h3>
             </div>
-            {% if step==1 %}
-              <div id="checkout-step-billing" class="step a-item" ">
+            {% if data["step"] == 1 %}
+            <div id="checkout-step-billing" class="step a-item" ">
             {% else %}
-              <div id="checkout-step-billing" class="step a-item" style="display:none;">
+            <div id="checkout-step-billing" class="step a-item" style="display:none;">
             {% endif %}
-              <form id="co-billing-form" action="#">
+              <form id="co-billing-form" action="{{url_for('checkout', step=1)}}" method="post">
                 <fieldset class="group-select">
                   <ul class="">
                     <li id="billing-new-address-form">
                       {% with editable=data["in_edit_info_mode"] %}
-                        {% include "user-info.html" %}
+                      {% include "user-info.html" %}
                       {% endwith %}
                     </li>
-                    </ul>
-                    <div class="buttons-set" id="billing-buttons-container">
-                      <button type="button" title="Continue" class="button continue" onClick="billing.save()"><span>Continuar</span></button>
-                      </div>
-                    </fieldset>
-                  </form>
-                </div>
-              </li>
-              {% if step==2 %}
-                <li id="opc-shipping" class="section active">
-              {% else %}
-                <li id="opc-shipping" class="section">
-              {% endif %}
-                <div class="step-title"> <span class="number">2</span>
-                  <h3 class="one_page_heading"> Confirmar compra</h3>
-                </div>
-                {% if step==2 %}
-                  <div id="checkout-step-shipping" class="step a-item">
-                {% else %}
-                  <div id="checkout-step-shipping" class="step a-item" style="display: none;">
-                {% endif %}
-                  {% with cart_table_editable=cart_table_editable %}
-                    {% include "cart-table.html" %}
-                  {% endwith %}
-                  <button type="button" title="Continue Shopping" class="button btn-edit-items" onClick=""><span><span>Editar items</span></span></button>
-                  <div class="total">
-                    {% include "total-table.html" %}
+                  </ul>
+                  <div class="buttons-set checkout-user-info-buttons-container account-info-buttons-container">
+                    {% if data["in_edit_info_mode"] %}
+                    <button type="submit" title="Salvar" class="button save first"><span>Salvar</span></button>
+                    <a href="{{url_for('checkout', step=1)}}"><button type="button" title="Cancelar" class="button cancel"><span>Cancelar</span></button></a>
+                    {% else %}
+                    <a href="{{url_for('checkout', step=2)}}"><button type="button" title="Continuar" class="button continue first"><span>Continuar</span></button></a>
+                    <a href="{{url_for('checkout', step=1, editar='sim')}}"><button type="button" title="Editar" class="button edit"><span>Editar</span></button></a>
+                    {% endif %}
                   </div>
-                  <button type="button" title="Continue" class="button continue" onClick="billing.save()"><span>Continuar</span></button>
-                </div>
-              </li>
-              {% if step==3 %}
-                <li id="opc-shipping_method" class="section active">
-              {% else %}
-                <li id="opc-shipping_method" class="section">
-              {% endif %}
-                <div class="step-title"> <span class="number">3</span>
-                  <h3 class="one_page_heading"> Pagamento</h3>
-                </div>
-                {% if step==3 %}
-                  <div id="checkout-step-shipping_method" class="step a-item">
-                {% else %}
-                  <div id="checkout-step-shipping_method" class="step a-item" style="display:none;">
-                {% endif %}
-                    <p>...</p>
-                  </div>
-                </li>
-                </ol>
-
-                <br>
-              </section>
-              <!--col-right sidebar--> 
+                </fieldset>
+              </form>
             </div>
-            <!--row--> 
-          </div>
-          <!--main-container-inner--> 
-        </div>
-
-        {% endblock %}
-        {% block scripts %}
-        {% endblock %}
+          </li>
+          {% if data["step"] == 2 %}
+          <li id="opc-shipping" class="section active">
+          {% else %}
+          <li id="opc-shipping" class="section">
+          {% endif %}
+            <div class="step-title"> <span class="number">2</span>
+              <h3 class="one_page_heading"> Confirmar compra</h3>
+            </div>
+            {% if data["step"] == 2 %}
+            <div id="checkout-step-shipping" class="step a-item">
+            {% else %}
+            <div id="checkout-step-shipping" class="step a-item" style="display: none;">
+            {% endif %}
+              {% with data=data["cart_table_data"] %}
+              {% include "cart-table.html" %}
+              {% endwith %}
+              <a href="{{url_for('cart')}}"><button type="button" title="Editar items" class="button btn-edit-items"><span>Editar items</span></button></a>
+              <div class="total">
+                {% with data=data["total_table_data"] %}
+                {% include "total-table.html" %}
+                {% endwith %}
+              </div>
+              <a href="{{url_for('checkout', step=3)}}"><button type="button" title="Continuar" class="button continue"><span>Continuar</span></button></a>
+            </div>
+          </li>
+          {% if data["step"] == 3 %}
+          <li id="opc-shipping_method" class="section active">
+          {% else %}
+          <li id="opc-shipping_method" class="section">
+          {% endif %}
+            <div class="step-title"> <span class="number">3</span>
+              <h3 class="one_page_heading"> Pagamento</h3>
+            </div>
+            {% if data["step"] == 3 %}
+            <div id="checkout-step-shipping_method" class="step a-item">
+            {% else %}
+            <div id="checkout-step-shipping_method" class="step a-item" style="display:none;">
+            {% endif %}
+              <p>...</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

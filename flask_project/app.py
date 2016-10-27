@@ -66,8 +66,13 @@ def cart_delete_all_products():
 
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 def checkout(step):
+    in_edit_info_mode = request.args.get("editar")
+    if in_edit_info_mode and in_edit_info_mode == "sim":
+        in_edit_info_mode = True
+    else:
+        in_edit_info_mode = False
     if is_user_registred():
-        data = get_checkout_data(step)
+        data = get_checkout_data(step, in_edit_info_mode)
         return render_template('checkout.html', data=data)
     else:
         return redirect(url_for('login', finalizando_compra="sim"))
@@ -104,6 +109,10 @@ def login():
         return redirect(url_for('my_account'))
     else:
         finalizando_compra = request.args.get('finalizando_compra')
+        if finalizando_compra and finalizando_compra == "sim":
+            finalizando_compra = True
+        else:
+            finalizando_compra = False
         data = get_login_data(finalizando_compra)
         return render_template('login.html', data=data)
 

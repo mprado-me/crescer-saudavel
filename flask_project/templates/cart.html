@@ -29,7 +29,9 @@
           <div class="totals">
             <h3>Total da compra</h3>
             <div class="inner">
-              {% include "total-table.html" %}
+              {% with data=data["total_table_data"] %}
+                {% include "total-table.html" %}
+              {% endwith %}
               <form action="{{url_for('checkout', step=1)}}" method="get">
                 <button type="submit" title="Finalizar compra" class="button btn-proceed-checkout"><span>Finalizar Compra</span></button>
               </form>

@@ -7,10 +7,6 @@ def get_login_data(finalizando_compra):
 	return sample_data_0(finalizando_compra)
 
 def sample_data_0(finalizando_compra):
-	if finalizando_compra and finalizando_compra == "sim":
-		finalizando_compra = True
-	else:
-		finalizando_compra = False
 	data = {
 		"page_heading_data": {
 			"path": [

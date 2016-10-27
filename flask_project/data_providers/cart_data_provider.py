@@ -42,8 +42,10 @@ def sample_data_0():
 				},
 			],
 		},
-		"products_total": "R$ 32,60",
-		"frete": "R$ 5,00",
-		"total": "R$ 37,60",
+		"total_table_data": {
+			"products_total": "R$ 32,60",
+			"frete": "R$ 5,00",
+			"total": "R$ 37,60",
+		},
 	}
 	return data
