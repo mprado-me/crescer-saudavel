@@ -1,30 +1,34 @@
 {% extends "base.html" %}
 {% block title %}Sobre nós{% endblock %}
 {% block content %}
-<!-- BEGIN Main Container -->  
-{% include "page-heading.html" %}
+
+{% with data=data["page_heading_data"] %}
+	{% include "page-heading.html" %}
+{% endwith %}
 
 <div class="main container">                     
 	<div class="std">
 		<div class="wrapper_bl" style="margin-top: 1px;">
 			<div class="form_background faq-container">
-				<ol>
-					<li>
-						<p>Pergunta 1?</p>
-						<p>Resposta 1</p>
-					</li>
-					<li>
-						<p>Pergunta 2?</p>
-						<p>Resposta 2</p>
-					</li>
-					<li>
-						<p>Pergunta 3?</p>
-						<p>Resposta 3</p>
-					</li>
-				</ol>
+				{% if data["perguntas_e_respostas"] and data["perguntas_e_respostas"]|length > 0 %}
+					<ol>
+						{% for pergunta_e_respota in data["perguntas_e_respostas"] %}
+							{% if pergunta_e_respota["pergunta"] and pergunta_e_respota["resposta"] %}
+								<li>
+									<p>{{pergunta_e_respota["pergunta"].decode('utf-8')}}</p>
+									<p>{{pergunta_e_respota["resposta"].decode('utf-8')}}</p>
+								</li>
+							{% else %}
+								<li>
+									<p></p>
+									<p></p>
+								</li>
+							{% endif %}
+						{% endfor %}
+					</ol>
+				{% endif %}
 			</div>
 		</div>
 	</div>          
 </div>
-<!--main-container-->
 {% endblock %}
