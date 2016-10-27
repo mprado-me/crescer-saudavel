@@ -21,6 +21,8 @@ from data_providers.products_data_provider import get_all_products_data, get_pro
 
 from enums.sort_method import SortMethod
 
+from utils.mock import is_user_registred
+
 app = Flask(__name__)
 
 @app.route('/sobre-nos')
@@ -64,12 +66,12 @@ def cart_delete_all_products():
 
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 def checkout(step):
-    data = get_checkout_data()
-    data = {
-        "in_edit_info_mode": True,
-    }
-    return render_template('checkout.html', cart_table_editable=False, step=step, data=data)
-
+    if is_user_registred():
+        data = get_checkout_data(step)
+        return render_template('checkout.html', data=data)
+    else:
+        return redirect(url_for('login', finalizando_compra="sim"))
+    
 @app.route('/criar-conta')
 def create_account():
     data = get_create_account_data()
@@ -98,8 +100,12 @@ def home():
 
 @app.route('/entrar')
 def login():
-    data = get_login_data()
-    return render_template('login.html', data=data)
+    if is_user_registred():
+        return redirect(url_for('my_account'))
+    else:
+        finalizando_compra = request.args.get('finalizando_compra')
+        data = get_login_data(finalizando_compra)
+        return render_template('login.html', data=data)
 
 @app.route('/minha-conta')
 def my_account():
