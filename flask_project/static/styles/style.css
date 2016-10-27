@@ -13093,3 +13093,17 @@ margin-right: 3px;
 	list-style-type: none;
 	margin-left: 6px;
 }
+
+.empty-container {
+	text-align: center;
+	font-size: 18px;
+	margin-top: 32px;
+}
+
+.empty-container h3 {
+	font-size: 18px;
+}
+
+.empty-container button {
+	margin-top: 12px;
+}

@@ -58,7 +58,11 @@ def cart_remove_product(product_id, quantity):
 def cart_delete_product(product_id):
     return redirect(url_for('cart'))
 
-@app.route('/finalizacao-de-compra/<int:step>')
+@app.route('/deletar-tudo-do-carrinho', methods=['POST'])
+def cart_delete_all_products():
+    return redirect(url_for('cart'))
+
+@app.route('/finalizacao-de-compra/passo/<int:step>')
 def checkout(step):
     data = get_checkout_data()
     data = {

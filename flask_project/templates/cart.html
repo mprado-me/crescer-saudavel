@@ -7,40 +7,42 @@
 {% endwith %}
 
 <div class="main-container col1-layout wow bounceInUp animated">     
- <div class="main container">                     
-   <div class="cart wow bounceInUp animated">
-     <div class="table-responsive shopping-cart-tbl  container">
-      <form action="#" method="post">
-        <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
-        <fieldset>
-          {% with data=data["cart_table_data"] %}
-            {% include "cart-table.html" %}
-          {% endwith %}
-        </fieldset>
-        <div class="cart-buttons-container">
-          <button type="button" title="Continue Shopping" class="button btn-continue" onClick=""><span><span>Continuar comprando</span></span></button>
-          <button type="submit" name="update_cart_action" value="empty_cart" title="Clear Cart" class="button btn-empty" id="empty_cart_button"><span><span>Limpar carrinho</span></span></button>
+  <div class="main container">
+    {% if data["cart_table_data"]["products"] and data["cart_table_data"]["products"]|length > 0 %}              
+      <div class="cart wow bounceInUp animated">
+        <div class="table-responsive shopping-cart-tbl  container">
+          <fieldset>
+            {% with data=data["cart_table_data"] %}
+              {% include "cart-table.html" %}
+            {% endwith %}
+          </fieldset>
+          <div class="cart-buttons-container">
+            <form action="{{url_for('all_products', page=1, sort_method=0)}}">
+              <button type="submit" title="Continuar comprando" class="button btn-continue"><span>Continuar comprando</span></button>
+            </form>
+            <form action="{{url_for('cart_delete_all_products')}}" method="post">
+              <button type="submit" title="Limpar carrinho" class="button btn-empty"><span>Limpar carrinho</span></button>
+            </form>
+          </div>
         </div>
-      </form>
-    </div>
-
-    <div class="cart-collaterals container total-cart"> 
-     <div class="totals">
-       <h3>Total da compra</h3>
-       <div class="inner">
-
-        {% include "total-table.html" %}
-
-        <ul class="checkout">           
-          <li>
-            <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout" onClick=""><span>Finalizar Compra</span></button>
-          </li>
-        </ul>                
+        <div class="cart-collaterals container total-cart">
+          <div class="totals">
+            <h3>Total da compra</h3>
+            <div class="inner">
+              {% include "total-table.html" %}
+              <form action="{{url_for('checkout', step=1)}}" method="get">
+                <button type="submit" title="Finalizar compra" class="button btn-proceed-checkout"><span>Finalizar Compra</span></button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    {% else %}
+      {% with msg="Carrinho vazio" %}
+        {% include "empty.html" %}
+      {% endwith %}
+    {% endif %}
   </div>
-</div>
-</div>
 </div>
 
 {% endblock %}
