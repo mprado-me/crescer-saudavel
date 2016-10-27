@@ -36,10 +36,9 @@
             {% include "paginator.html" %}
           {% endwith %}
         {% else %}
-          <div class="no-posts-container">
-            <h3>Nenhuma postagem encontrada!</h3>
-            <a href="{{url_for('home')}}"><button type="button" title="Voltar para home" class="button create-account"><span><span>Voltar para Home</span></span></button></a>
-          </div>
+          {% with msg="Nenhuma postagem encontrada!" %}
+            {% include "empty.html" %}
+          {% endwith %}
         {% endif %}
       </div>
      
