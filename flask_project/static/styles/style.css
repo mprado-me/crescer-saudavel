@@ -91,7 +91,7 @@ small {
 	float: right;
 }
 .main-container {
-	min-height: 400px;
+	/*min-height: 400px;*/
 	padding: 0px;
 }
 
