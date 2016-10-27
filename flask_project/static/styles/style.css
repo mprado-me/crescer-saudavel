@@ -13099,3 +13099,8 @@ margin-right: 3px;
 	margin-bottom: 8px;
 	margin-right: 8px;
 }
+
+.email-label {
+	padding: 14px;
+	color: #fff;
+}
