@@ -3,6 +3,7 @@
 
 import json
 from flask import url_for
+from header_data_provider import get_header_data
 from footer_data_provider import get_footer_data
 
 def get_blog_data(page=1):
@@ -18,6 +19,7 @@ def sample_data_0():
 	if not n_pages_in_paginator:
 		n_pages_in_paginator = 3
 	data = {
+		"header_data": get_header_data(),
 		"page_heading_data": {
 			"path": [
 				{
@@ -104,6 +106,7 @@ def sample_data_1():
 	if not n_pages_in_paginator:
 		n_pages_in_paginator = 3
 	data = {
+		"header_data": get_header_data(),
 		"page_heading_data": {
 			"path": [
 				{

@@ -4657,7 +4657,7 @@ text-transform: uppercase
 
 .cate-banner-img {position:absolute; z-index:100; margin-top:-9px; margin-left:-9px}
 
-#best-seller .owl-item .item {margin-left:14px; margin-right:14px; margin-bottom:10px}
+#best-seller .owl-item .item {margin-left:14px; margin-right:14px; margin-bottom:16px}
 
 .best-pro {
 	position: relative;
@@ -4679,11 +4679,11 @@ text-transform: uppercase
 	margin-bottom: 0px;
 	padding: 15px 0px 0px 0px;
 	position: relative;
-	display: inline-block;
+	/*display: inline-block;*/
 	font-family: 'Raleway', sans-serif;
 	letter-spacing: 1px;
 	margin-top:0px;
-	min-width:250px;
+	min-width:auto;
 	/* text-transform: uppercase; */
 }
 
@@ -13107,4 +13107,10 @@ margin-right: 3px;
 
 .fl-mini-cart-content {
 	min-width: 240px;
+}
+
+.blog_block_inner h3 {
+	margin: 12px;
+	margin-bottom: 0px;
+	margin-top: 16px;
 }

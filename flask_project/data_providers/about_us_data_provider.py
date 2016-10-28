@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from footer_data_provider import get_footer_data
 from header_data_provider import get_header_data
+from footer_data_provider import get_footer_data
 
 def get_about_us_data():
 	return sample_data_0()

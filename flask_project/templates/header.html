@@ -72,7 +72,7 @@
 					<div class="fl-header-right">
 						<div class="fl-cart-contain">
 							<div class="mini-cart">
-								<div class="basket"> <a href="/shopping-cart"> </a> </div>
+								<div class="basket"><a href="{{url_for('cart')}}"></a></div>
 								<div class="fl-mini-cart-content">
 									<div class="block-subtitle">
 										<div class="top-subtotal">{{data["cart_data"]["n_items"]}} items, <span class="price">{{data["cart_data"]["total_price"]}}</span></div>

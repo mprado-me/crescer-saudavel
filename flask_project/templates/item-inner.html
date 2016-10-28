@@ -1,23 +1,23 @@
 <div class="item-inner">
   <div class="item-img">
-    <div class="item-img-info"><a href="product-detail" title="Retis lapen casen" class="product-image"><img src="/static/images/products/p1.jpg" alt="Retis lapen casen"></a>
+    <div class="item-img-info"><a href="{{ data['href'] }}" title="{{ data['title'].decode('utf-8') }}" class="product-image"><img src="{{ data['img_src'] }}" alt="{{ data['title'].decode('utf-8') }}"></a>
     </div>
   </div>
   <div class="item-info">
     <div class="info-inner">
       <div class="item-title">
-      <a href="product-detail.html" title="Retis lapen casen">Nome do produto</a> 
+      <a href="{{ data['href'] }}" title="{{ data['title'] }}">{{ data["title"].decode('utf-8') }}</a> 
       </div>
       <div class="add_cart_container">
         <div class="add_cart">
-          <form method="post" action="/shopping-cart">
+          <form method="post" action="{{ url_for('cart_add_product', product_id=data['product_id'], quantity=1) }}">
             <button class="button btn-cart" type="submit" title="Adicionar ao carrinho" alt="Adicionar ao carrinho"></button>
           </form>
         </div>
       </div>
       <div class="item-content">
         <div class="item-price">
-          <div class="price-box"><span class="regular-price" ><span class="price">R$ 0,00</span> </span> </div>
+          <div class="price-box"><span class="regular-price" ><span class="price">{{ data["price"].decode('utf-8') }}</span> </span> </div>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@
 <div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">     
   <div class="main">                     
     <div class="account-login container">
-      <form action="#" method="post" id="login-form">
+      <form action="#" method="post">
         <div class="registered-users">
           <strong>Novo cliente</strong>             
           <div class="content">
@@ -37,8 +37,8 @@
             </ul>
             <p class="required">* Campos obrigatórios</p>
             <div class="buttons-set">
-              <button type="submit" class="button login" title="Login" name="send" id="send2"><span>Cadastrar</span></button>
-              <a href="#" class="already-has-account">Já possui conta?</a>
+              <button type="submit" class="button" title="Cadastrar"><span>Cadastrar</span></button>
+              <a href="{{url_for('login')}}" class="already-has-account">Já possui conta?</a>
             </div>
           </div>                            
         </div>
