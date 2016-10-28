@@ -28,7 +28,9 @@
 		{% endwith %}
 	</div>
 
-{% include "mobile-menu.html" %}
+{% with data=data["header_data"]["menu_data"] %}
+	{% include "mobile-menu.html" %}
+{% endwith %}
 
 {% include "common-scripts.html" %}
 {% block scripts %}

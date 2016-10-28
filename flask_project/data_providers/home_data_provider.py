@@ -6,7 +6,7 @@ from header_data_provider import get_header_data
 from footer_data_provider import get_footer_data
 
 def get_home_data():
-	return sample_data_2()
+	return sample_data_0()
 
 def sample_data_0():
 	data = {
