@@ -8,7 +8,7 @@ def get_header_data():
 
 def get_sample_data_0():
 	data = {
-		"logged": True,
+		"logged": False,
 		"first_name": "João",
 		"menu_data":[
 			{
