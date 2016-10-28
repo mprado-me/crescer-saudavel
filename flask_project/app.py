@@ -116,13 +116,21 @@ def login():
         data = get_login_data(finalizando_compra)
         return render_template('login.html', data=data)
 
-@app.route('/minha-conta')
+@app.route('/minha-conta', methods=['GET', 'POST'])
 def my_account():
-    data = get_my_account_data()
-    data = {
-        "in_edit_info_mode": False,
-    }
-    return render_template('my-account.html', data=data)
+    if request.method == 'GET':
+        editable = request.args.get("editar")
+        if editable and editable == "sim":
+            editable = True
+        else:
+            editable = False
+        data = get_my_account_data(editable)
+        return render_template('my-account.html', data=data)
+    elif request.method == 'POST':
+        print request.form
+        # TODO: Deal with post
+        return redirect(url_for('my_account'))
+    return None
 
 @app.route('/nova-senha')
 def new_password():
