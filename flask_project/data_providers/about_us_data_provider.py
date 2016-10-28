@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from footer_data_provider import get_footer_data
+from header_data_provider import get_header_data
 
 def get_about_us_data():
-	return sample_data_1()
+	return sample_data_0()
 
 def sample_data_0():
 	data = {
+		"header_data": get_header_data(),
 		"page_heading_data": {
 			"path": [
 				{
@@ -33,6 +35,7 @@ def sample_data_0():
 
 def sample_data_1():
 	data = {
+		"header_data": get_header_data(),
 		"page_heading_data": {
 			"path": [
 				{

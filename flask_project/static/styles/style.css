@@ -139,7 +139,7 @@ header {
 	float: left;
 }
 
-.header-account-row-login-or-signir-text {
+.header-account-row-right-part {
 	float: right;
 	margin-left: 15px;
 }
@@ -13103,4 +13103,8 @@ margin-right: 3px;
 .email-label {
 	padding: 14px;
 	color: #fff;
+}
+
+.fl-mini-cart-content {
+	min-width: 240px;
 }

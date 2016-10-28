@@ -16,7 +16,9 @@
 </head>
 <body>
 	<div id="page">
-		{% include "header.html" %}
+		{% with data=data["header_data"] %}
+			{% include "header.html" %}
+		{% endwith %}
 
 		{% block content %}
 		{% endblock %}

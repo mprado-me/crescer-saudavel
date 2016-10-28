@@ -160,6 +160,10 @@ def products_by_search(page, sort_method):
     data = get_products_data_by_search(page=page, sort_method=sort_method, q=q)
     return render_template('products.html', data=data)
 
+@app.route('/teste')
+def test():
+    return render_template('test.html')
+
 if __name__ == '__main__':
 	if len(sys.argv) == 2 and sys.argv[1] == 'local':
 		app.debug = True

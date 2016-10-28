@@ -4,19 +4,22 @@
 			<div class="header-container container">
 				<div class="row">
 					<span class="header-account-row-welcome-text"><b>Seja bem vindo</b></span>
-					<span class="header-account-row-login-or-signir-text"><a href="/login"><b><u>Entre</u></b></a> ou <a href="/signin"><b><u>Cadastre-se</u></b></a></span>
+					{% if not data["logged"] %}
+						<span class="header-account-row-right-part"><a href="{{url_for('login')}}"><b><u>Entre</u></b></a> ou <a href="{{url_for('create_account')}}"><b><u>Cadastre-se</u></b></a></span>
+					{% else %}
+						<span class="header-account-row-right-part"><a href="{{url_for('my_account')}}"><b><u>Minha conta</u></b></a></span>
+					{% endif %}
 				</div>
 			</div>
-
 			<div class="header-main">
 				<div class="header-container container">
 					<div class="row">
 						<div class="logo"> 
 							<a href="/" title="Home">
-								<div>
-									<img class="logo-img" src="/static/images/logo.png" alt="Logo da loja">
-									<img class="mini-logo-img" src="/static/images/mini-logo.png" alt="Logo da loja">
-								</div>
+							<div>
+								<img class="logo-img" src="/static/images/logo.png" alt="Logo da loja">
+								<img class="mini-logo-img" src="/static/images/mini-logo.png" alt="Logo da loja">
+							</div>
 							</a> 
 						</div>
 						<div class="fl-nav-menu">
@@ -27,68 +30,44 @@
 									</div>
 								</div>
 								<div class="nav-inner">
-									<!-- BEGIN NAV -->
-									<ul id="nav" class="hidden-xs">
-										<li class="mega-menu"><a href="/products" class="level-top"><span>Produtos</span></a>
-											<div class="level0-wrapper dropdown-6col">
-												<div class="container">
-													<div class="level0-wrapper2">
-														<div class="nav-block nav-block-center">
-															<ul class="level0">
-																<li class="level1 nav-6-1 parent item"><a href="#/mobiles.html"><span>Frutas</span></a>
-																</li>
-																<li class="level1 nav-6-1 parent item"><a href="#.html" class=""><span>Sopa creme</span></a>
-																</li>
-																<li class="level1 nav-6-1 parent item"><a href="#/cameras.html"><span>Sopa com pedaços</span></a>
-																</li>
-																<li class="level1 nav-6-1 parent item"><a href="#/audio-video.html"><span>Linha Single</span></a>
-																	<ul class="level1">
-																		<li class="level2 nav-6-1-1"><a href="#/audio-video/video-players.html"><span>Sobremesas</span></a></li>
-																	</ul>
-																</li>
-																<li class="level1 nav-6-1 parent item">
-																	<a href="#/computer.html"><span>Linha Emporinho</span></a>
-																	<ul class="level1">
-																		<li class="level2 nav-6-1-1">
-																			<a href="#/external-hard-disk.html"><span>Risotos</span></a>
-																		</li>
-																		<li class="level2 nav-6-1-1">
-																			<a href="#/computer/pendrives.html"><span>Massas</span></a>
-																		</li>
-																		<li class="level2 nav-6-1-1">
-																			<a href="#/computer/headphones.html"><span>Escondidinhos</span></a>
-																		</li>
-																		<li class="level2 nav-6-1-1">
-																			<a href="#/computer/pc-components.html"><span>Arroz</span></a>
-																		</li>
-																		<li class="level2 nav-6-1-1">
-																			<a href="#/computer/pc-components.html"><span>Legumes</span></a>
-																		</li>
-																		<li class="level2 nav-6-1-1">
-																			<a href="#/computer/pc-components.html"><span>Sopas/Cremes</span></a>
-																		</li>
-																		<li class="level2 nav-6-1-1">
-																			<a href="#/computer/pc-components.html"><span>Refeições Combinadas</span></a>
-																		</li>
-																	</ul>
-																</li>
-																<li class="level1 nav-6-1 parent item"><a href="#/home-appliances.html"><span>Acessórios</span></a>
-																</li>
-															</ul>
+									{% if data["menu_data"] and data["menu_data"]|length > 0 %}
+										<ul id="nav" class="hidden-xs">
+											{% for menu_item in data["menu_data"] %}
+												<li class="mega-menu">
+													<a href="{{ menu_item['href'] }}" class="level-top"><span>{{ menu_item["name"].decode('utf-8') }}</span></a>
+													{% if menu_item["children"] and menu_item["children"]|length > 0 %}
+														<div class="level0-wrapper dropdown-6col">
+															<div class="container">
+																<div class="level0-wrapper2">
+																	<div class="nav-block nav-block-center">
+																		<ul class="level0">
+																			{% for children1 in menu_item["children"] %}
+																				<li class="level1 nav-6-1 parent item">
+																					<a href="{{children1['href']}}"><span>{{children1['name'].decode('utf-8')}}</span></a>
+																					{% if children1["children"] and children1["children"]|length > 0 %}
+																						<ul class="level1">
+																							{% for children2 in children1["children"] %}
+																								<li class="level2 nav-6-1-1">
+																									<a href="{{children2['href']}}"><span>{{children2['name'].decode('utf-8')}}</span></a>
+																								</li>
+																							{% endfor %}
+																						</ul>
+																					{% endif %}
+																				</li>
+																			{% endfor %}
+																		</ul>
+																	</div>
+																</div>
+															</div>
 														</div>
-													</div>
-													<!--level0-wrapper2--> 
-
-												</div>
-											</div>
-										</li>
-										<li class="mega-menu"> <a class="level-top" href="/blog"><span>Blog</span></a> </li>
-									</ul>
-									<!--nav-->
+													{% endif %}
+												</li>
+											{% endfor %}
+										</ul>
+										{% endif %}
 								</div>
 							</nav>
 						</div>
-						<!--row-->
 					</div>
 					<div class="fl-header-right">
 						<div class="fl-cart-contain">
@@ -96,52 +75,38 @@
 								<div class="basket"> <a href="/shopping-cart"> </a> </div>
 								<div class="fl-mini-cart-content">
 									<div class="block-subtitle">
-										<div class="top-subtotal">5 items, <span class="price">R$ 32,60</span></div>
-										<!--top-subtotal-->
-										<!--pull-right-->
+										<div class="top-subtotal">{{data["cart_data"]["n_items"]}} items, <span class="price">{{data["cart_data"]["total_price"]}}</span></div>
 									</div>
-									<!--block-subtitle-->
-									<ul class="mini-products-list" id="cart-sidebar">
-										<li class="item first">
-											<div class="item-inner"><a class="product-image" title="timi &amp; leslie Sophia Diaper Bag, Lemon Yellow/Shadow White" href="#l"><img alt="timi &amp; leslie Sophia Diaper Bag, Lemon Yellow/Shadow White" src="/static/images/products/p4.jpg"></a>
-												<div class="product-details">
-													<div class="access"><a class="btn-remove1" title="Remover esse item" href="#">Remover</a> <a class="btn-edit" title="Editar item" href="#"><i class="icon-pencil"></i><span class="hidden">Editar item</span></a> </div>
-													<!--access-->
-													<strong>2</strong> x <span class="price">R$ 10,00</span>
-													<p class="product-name"><a href="product-detail.html">Papinha de maça - 500g</a></p>
-												</div>
-											</div>
-										</li>
-										<li class="item last">
-											<div class="item-inner"><a class="product-image" title="timi &amp; leslie Sophia Diaper Bag, Lemon Yellow/Shadow White" href="#l"><img alt="timi &amp; leslie Sophia Diaper Bag, Lemon Yellow/Shadow White" src="/static/images/products/p4.jpg"></a>
-												<div class="product-details">
-													<div class="access"><a class="btn-remove1" title="Remover esse item" href="#">Remover</a> <a class="btn-edit" title="Editar item" href="#"><i class="icon-pencil"></i><span class="hidden">Editar item</span></a> </div>
-													<!--access-->
-													<strong>3</strong> x <span class="price">R$ 4,20</span>
-													<p class="product-name"><a href="product-detail.html">Papinha de arroz doce - 200g</a></p>
-												</div>
-											</div>
-										</li>
-									</ul>
-									<div class="actions">
-										<button class="btn-checkout" title="Checkout" type="button" onClick="window.location=checkout.html"><span>Finalizar compra</span></button>
-										<button class="view-cart" title="Checkout" type="button" onClick="window.location=checkout.html"><span>Ver Carrinho</span></button>
-									</div>
-									<!--actions-->
+									{% if data["cart_data"]["products"] and data["cart_data"]["products"]|length > 0 %}
+										<ul class="mini-products-list" id="cart-sidebar">
+											{% for product in data["cart_data"]["products"] %}
+												<li class="item first">
+													<div class="item-inner">
+														<a class="product-image" title="{{product['title'].decode('utf-8')}}" href="{{product['href']}}"><img alt="{{product['title'].decode('utf-8')}}" src="{{product['img_src']}}"></a>
+														<div class="product-details">
+															<strong>{{product["quantity"]}}</strong> x <span class="price">{{product["unity_price"]}}</span>
+															<p class="product-name"><a href="product-detail.html">{{product['title'].decode('utf-8')}}</a></p>
+														</div>
+													</div>
+												</li>
+											{% endfor %}
+										</ul>
+										<div class="actions">
+											<a href="{{url_for('checkout', step=1)}}"><button class="btn-checkout" title="Finalizar compra" type="button" ><span>Finalizar compra</span></button></a>
+											<a href="{{url_for('cart')}}"><button class="view-cart" title="Ver carrinho" type="button"><span>Ver Carrinho</span></button></a>
+										</div>
+									{% endif %}
 								</div>
-								<!--fl-mini-cart-content-->
 							</div>
 						</div>
-						<!--mini-cart-->
 						<div class="collapse navbar-collapse search-input-container">
-							<form class="navbar-form" role="search">
+							<form action="{{url_for('products_by_search', page=1, sort_method=0)}}" class="navbar-form" role="search" method="get">
 								<div class="input-group">
-									<input class="GlobalNavSearch js-globalSearchInput " placeholder="Buscar" id="desktopSearchInput"  data-reactid=".1.0.0.0">
+									<input class="GlobalNavSearch js-globalSearchInput " placeholder="Buscar" id="desktopSearchInput"  data-reactid=".1.0.0.0" name="q">
 									<label class="GlobalNavSearch-searchIcon" for="desktopSearchInput" data-reactid=".1.0.0.1"></label>  
 								</div>
 							</form>
 						</div>
-						<!--links-->
 					</div>
 				</div>
 			</div>
