@@ -28,8 +28,8 @@
                 <fieldset class="group-select">
                   <ul class="">
                     <li id="billing-new-address-form">
-                      {% with editable=data["in_edit_info_mode"] %}
-                      {% include "user-info.html" %}
+                      {% with data=data["user_info_data"] %}
+                        {% include "user-info.html" %}
                       {% endwith %}
                     </li>
                   </ul>

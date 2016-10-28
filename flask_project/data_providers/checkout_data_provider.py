@@ -3,6 +3,7 @@
 
 from header_data_provider import get_header_data
 from footer_data_provider import get_footer_data
+from user_info_data_provider import get_user_info_data
 
 def get_checkout_data(step, in_edit_info_mode):
 	return sample_data_0(step, in_edit_info_mode)
@@ -24,7 +25,7 @@ def sample_data_0(step, in_edit_info_mode):
 		},
 		"footer_data": get_footer_data(),
 		"step": step,
-		"in_edit_info_mode": in_edit_info_mode,
+		"user_info_data": get_user_info_data(in_edit_info_mode),
 		"cart_table_data": {
 			"editable": False,
 			"products": [
