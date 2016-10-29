@@ -32,7 +32,7 @@
   {% if data["sections"] and data["sections"]|length > 0 %}
     {% for section in data["sections"] %}
       {% with data=section %}
-        {% include "products_section.html" %}
+        {% include "products-section.html" %}
       {% endwith %}
     {% endfor %}
   {% endif %}

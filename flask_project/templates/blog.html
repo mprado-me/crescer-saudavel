@@ -32,9 +32,11 @@
               </article>
             {% endfor %}       
           </div>
-          {% with data=data["paginator_data"] %}
-            {% include "paginator.html" %}
-          {% endwith %}
+          <div class="pager">
+            {% with data=data["paginator_data"] %}
+              {% include "paginator.html" %}
+            {% endwith %}
+          </div>
         </div>
       </div>
     {% else %}

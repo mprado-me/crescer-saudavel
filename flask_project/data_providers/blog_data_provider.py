@@ -10,14 +10,7 @@ def get_blog_data(page=1):
 	return sample_data_0()
 
 def sample_data_0():
-	n_pages_in_paginator = None
-	settings = None
-	with open('/vagrant/flask_project/settings.json') as data_file:    
-		settings = json.load(data_file)
-	if settings:
-		n_pages_in_paginator = settings["n_pages_in_paginator"]
-	if not n_pages_in_paginator:
-		n_pages_in_paginator = 3
+	n_pages_in_paginator = 4
 	data = {
 		"header_data": get_header_data(),
 		"page_heading_data": {

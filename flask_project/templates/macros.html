@@ -1,7 +1,7 @@
 {% macro mandatory_mark(show_mark=False) -%}
-		{% if show_mark %}
-    	<span class="required">*</span>
-    {% endif %}
+	{% if show_mark %}
+  	<span class="required">*</span>
+  {% endif %}
 {%- endmacro %}
 
 {%- macro input(name, id="", class="", type="text", pattern=".*", title="", value="", maxlength=255, editable=False) -%}
@@ -22,4 +22,23 @@
 
 {%- macro blog_post_link(title, href, class="") -%}
 		<li class="{{ class }}"><a href="{{ href }}" title="{{ title }}">{{ title }}</a></li>
+{%- endmacro %}
+
+{%- macro sort_method_li(this_sort_method, current_sort_method, route, name) -%}
+	{% if this_sort_method == current_sort_method %}
+		<li class="active">
+			<a>{{name}}</a>
+	{% else %}
+		<li>
+			{% if route["handler_func"] == "all_products" %}
+				<a href="{{url_for('all_products', page=1, sort_method=this_sort_method)}}">{{name}}</a>
+			{% elif route["handler_func"] == "products_by_category" %}
+				<a href="{{url_for('products_by_category', page=1, sort_method=this_sort_method, category_id=route['category_id'])}}">{{name}}</a>
+			{% elif route["handler_func"] == "products_by_category_and_subcategory" %}
+				<a href="{{url_for('products_by_category_and_subcategory', page=1, sort_method=this_sort_method, category_id=route['category_id'], subcategory_id=route['subcategory_id'])}}">{{name}}</a>
+			{% elif route["handler_func"] == "products_by_search" %}
+				<a href="{{url_for('products_by_search', page=1, sort_method=this_sort_method, q=route['q'])}}">{{name}}</a>
+			{% endif %}
+	{% endif %}
+		</li>
 {%- endmacro %}
