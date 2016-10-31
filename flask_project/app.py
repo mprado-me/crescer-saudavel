@@ -23,7 +23,9 @@ from enums.sort_method import SortMethod
 
 from utils.mock import is_user_registred
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_object('config')
+app.config.from_pyfile('config.py')
 
 @app.route('/sobre-nos')
 def about_us():
@@ -172,9 +174,14 @@ def products_by_search(page, sort_method):
 def test():
     return render_template('test.html')
 
+# print "app.config['MAIL_FROM_EMAIL']: " + app.config["MAIL_FROM_EMAIL"]
+# print "app.config['SECRET_KEY']: " + app.config["SECRET_KEY"]
+
 if __name__ == '__main__':
 	if len(sys.argv) == 2 and sys.argv[1] == 'local':
 		app.debug = True
 		app.run(host='0.0.0.0', port=5000)
 	else:
+		app.debug = False
 		app.run()
+		

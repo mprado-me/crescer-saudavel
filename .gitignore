@@ -2,3 +2,4 @@
 Vagrantfile
 env/
 *.pyc
+instance/
