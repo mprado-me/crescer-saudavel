@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
 
 from flask import Flask, jsonify, render_template, request, url_for, redirect
@@ -7,6 +10,7 @@ from data_providers.blog_data_provider import get_blog_data
 from data_providers.blog_post_data_provider import get_blog_post_data
 from data_providers.cart_data_provider import get_cart_data
 from data_providers.checkout_data_provider import get_checkout_data
+from data_providers.confirmation_email_sending_data_provider import get_confirmation_email_sending_data
 from data_providers.create_account_data_provider import get_create_account_data
 from data_providers.faq_data_provider import get_faq_data
 from data_providers.forgot_password_data_provider import get_forgot_password_data
@@ -22,6 +26,8 @@ from data_providers.products_data_provider import get_all_products_data, get_pro
 from enums.sort_method import SortMethod
 
 from utils.mock import is_user_registred
+
+from utils.forms import CreateAccountForm
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
@@ -78,11 +84,26 @@ def checkout(step):
         return render_template('checkout.html', data=data)
     else:
         return redirect(url_for('login', finalizando_compra="sim"))
+
+@app.route('/confirmacao-do-email')
+def confirmation_email_sending():
+    email = request.args.get("email")
+    if not email:
+        abort(422)
+    data = get_confirmation_email_sending_data(email)
+    return render_template("confirmation-email-sending.html", data=data)
     
-@app.route('/criar-conta')
+@app.route('/criar-conta', methods=['GET', 'POST'])
 def create_account():
-    data = get_create_account_data()
-    return render_template('create-account.html', data=data)
+    form = CreateAccountForm()
+    if request.method == "GET":
+        data = get_create_account_data(form)
+        return render_template('create-account.html', data=data)
+    else:
+        if form.validate_on_submit():
+            return redirect(url_for("confirmation_email_sending", email=request.form["email"]))
+        data = get_create_account_data(form)
+        return render_template('create-account.html', data=data)
 
 @app.route('/faq')
 def faq():

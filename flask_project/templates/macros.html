@@ -4,11 +4,22 @@
   {% endif %}
 {%- endmacro %}
 
-{%- macro input(name, id="", class="", type="text", pattern=".*", title="", value="", maxlength=255, editable=False) -%}
+{%- macro input(name, id="", class="", type="text", pattern=".*", title="", value="", maxlength=255, editable=False, errors=None) -%}
 		{% if not editable %}
-			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value }}" maxlength="{{ maxlength }}" class="{{ class }}" readonly>
+			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value.decode('utf-8') if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}" readonly>
 		{% else %}
-			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value }}" maxlength="{{ maxlength }}" class="{{ class }}">
+			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value.decode('utf-8') if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}">
+			{% if errors and errors|length > 0 %}
+				<div class="input-errors-container">
+					<ul>
+						{% for error in errors %}
+							<li>
+								<div class="alert alert-danger input-error" role="alert">{{error.decode('utf-8')}}</div>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
 		{% endif %}
 {%- endmacro %}
 

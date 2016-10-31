@@ -1,0 +1,35 @@
+{% import "macros.html" as macros %}
+
+{% extends "base.html" %}
+{% block title %}Confirmação do email{% endblock %}
+{% block content %}
+
+{% with data=data["page_heading_data"] %}
+  {% include "page-heading.html" %}
+{% endwith %}
+
+<div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">     
+  <div class="main">                     
+    <div class="account-login container">
+      <form action="#" method="post">
+        <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
+        <div class="registered-users">
+          <strong>Confirmação do email</strong>             
+          <div class="content">
+            <p>Para concluir a criação da conta, abra o link no email que acabamos de enviar para:</p>
+            <div class="centered">
+              <ul class="form-list">
+                <li>
+                  <span class="label label-default email-label">{{data["email"]}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>        
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

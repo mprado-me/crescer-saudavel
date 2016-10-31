@@ -11,27 +11,28 @@
 <div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">     
   <div class="main">                     
     <div class="account-login container">
-      <form action="#" method="post">
+      <form action="{{url_for('create_account')}}" method="post">
+        {{ data["form"].csrf_token }}
         <div class="registered-users">
-          <strong>Novo cliente</strong>             
+          <strong>Novo cliente</strong>
           <div class="content">
             <ul class="form-list">
               <li>
                 <label>{{macros.mandatory_mark(True)}}Email:</label>
                 <div class="input-box1">
-                  {{macros.input(name="email", id="email", class="input-text required-entry", type="text", title="Email", maxlength="255", editable=True)}}
+                  {{macros.input(name="email", id="email", class="input-text required-entry", type="text", title="Email", maxlength="255", editable=True, errors=data["form"].email.errors, value=data.form.email.data)}}
                 </div>
               </li>
               <li>
                 <label>{{macros.mandatory_mark(True)}}Senha:</label>
                 <div class="input-box1">
-                  {{macros.input(name="password", id="password", class="input-text required-entry", type="password", title="Senha", maxlength="255", editable=True)}}
+                  {{macros.input(name="password", id="password", class="input-text required-entry", type="password", title="Senha", maxlength="32", editable=True, errors=data["form"].password.errors)}}
                 </div>
               </li>
               <li>
                 <label>{{macros.mandatory_mark(True)}}Confirmar senha:</label>
                 <div class="input-box1">
-                  {{macros.input(name="password_confirmation", id="password_confirmation", class="input-text required-entry", type="password", title="Confirmação da senha", maxlength="255", editable=True)}}
+                  {{macros.input(name="password_confirmation", id="password_confirmation", class="input-text required-entry", type="password", title="Confirmação da senha", maxlength="32", editable=True, errors=data["form"].password_confirmation.errors)}}
                 </div>
               </li>
             </ul>
