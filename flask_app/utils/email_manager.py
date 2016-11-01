@@ -18,8 +18,8 @@ def send_create_account_confirmation_email(receiver_email):
 		"email":receiver_email,
 	}
 	html=render_template("email/activate-account.html", data=data)
-	send_email(receiver_email, subject, html)
-
-def send_email(receiver_email, subject, html):
 	msg = Message(sender=app.config["MAIL_USERNAME"], recipients=[receiver_email], subject=subject, html=html)
-	mail.send(msg)
+	try:
+		mail.send(msg)
+	except:
+		raise

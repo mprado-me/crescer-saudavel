@@ -1,0 +1,17 @@
+<div class="centered">
+  <ul class="form-list">
+    <li>
+    	{% if data["type"] == "default" %}
+      	<span class="label label-default email-label">{{data["content"].decode('utf-8')|safe}}</span>
+      {% elif data["type"] == "success" %}
+      	<span class="label label-success email-label">{{data["content"].decode('utf-8')|safe}}</span>
+      {% elif data["type"] == "info" %}
+      	<span class="label label-info email-label">{{data["content"].decode('utf-8')|safe}}</span>
+      {% elif data["type"] == "warning" %}
+      	<span class="label label-warning email-label">{{data["content"].decode('utf-8')|safe}}</span>
+      {% elif data["type"] == "danger" %}
+      	<span class="label label-danger email-label">{{data["content"].decode('utf-8')|safe}}</span>
+      {% endif %}
+    </li>
+  </ul>
+</div>

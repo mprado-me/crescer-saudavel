@@ -98,18 +98,55 @@ def create_account():
         data = get_create_account_data(form)
         return render_template('create-account.html', data=data)
     else:
-        if form.validate_on_submit():
-            user = User(
-                email = form.email.data,
-                password = form.password.data
-            )
+        invalid_form = not form.validate_on_submit()
+
+        # Checking if the email is already registered
+        email_registered = False
+        try:
+            if db.session.query(User).filter_by(email=form.email.data).first():
+                email_registered = True
+        except:
+            db.session.rollback()
+            return create_account_db_error(form)
+            
+        if invalid_form or email_registered:
+            data = get_create_account_data(form)
+            if email_registered:
+                data["form"].email.errors.append('Email já registrado')
+            return render_template('create-account.html', data=data)
+
+        user = User(
+            email = form.email.data,
+            password = form.password.data
+        )
+
+        # Adding user in db
+        try:
             db.session.add(user)
             db.session.commit()
-            # TODO: Check if send_create_account_confirmation_email can fail
+        except:
+            db.session.rollback()
+            return create_account_db_error(form)
+
+        # Sending confirmation message
+        try:
             send_create_account_confirmation_email(user.email)
             return redirect(url_for("confirmation_email_sending", email=request.form["email"]))
-        data = get_create_account_data(form)
-        return render_template('create-account.html', data=data)
+        except:
+            msg = {
+                "type": "danger",
+                "content": "Falha! Ocorreu um erro ao enviar o email de confirmação. Tente novamente.",
+            }
+            data = get_create_account_data(form=form, msg=msg)
+            return render_template('create-account.html', data=data)
+
+def create_account_db_error(form):
+    msg = {
+        "type": "danger",
+        "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
+    }
+    data = get_create_account_data(form=form, msg=msg)
+    return render_template('create-account.html', data=data)
 
 @app.route('/email-confirmado/<token>')
 def email_confirmed(token):
