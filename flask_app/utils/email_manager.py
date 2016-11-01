@@ -12,7 +12,12 @@ def send_create_account_confirmation_email(receiver_email):
 	token = ts.dumps(receiver_email, salt='email-confirm-key')
 	confirm_url = url_for('email_confirmed', token=token, _external=True)
 	logo_url = url_for('static', filename="images/logo.png", _external=True)
-	html=render_template("email/activate_account.html", confirm_url=confirm_url, logo_url=logo_url, email=receiver_email)
+	data = {
+		"confirm_url":confirm_url, 
+		"logo_url":logo_url, 
+		"email":receiver_email,
+	}
+	html=render_template("email/activate-account.html", data=data)
 	send_email(receiver_email, subject, html)
 
 def send_email(receiver_email, subject, html):
