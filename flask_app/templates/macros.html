@@ -4,7 +4,7 @@
   {% endif %}
 {%- endmacro %}
 
-{%- macro input(name, id="", class="", type="text", pattern=".*", title="", value="", maxlength=255, editable=False, errors=None) -%}
+{%- macro input(name, id="", class="", type="text", pattern=".*", title="", value="", maxlength=256, editable=False, errors=None) -%}
 		{% if not editable %}
 			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value.decode('utf-8') if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}" readonly>
 		{% else %}

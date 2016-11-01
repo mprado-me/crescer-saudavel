@@ -12,13 +12,13 @@
         <div class="input-box name-firstname">
           <label>{{macros.mandatory_mark(data["editable"])}}Nome:</label>
           <div class="input-box1">
-            {{macros.input(name="first_name", class="input-text required-entry", type="text", title="Nome", value=data['first_name'].decode('utf-8'), maxlength="255", editable=data["editable"])}}
+            {{macros.input(name="first_name", class="input-text required-entry", type="text", title="Nome", value=data['first_name'].decode('utf-8'), maxlength="256", editable=data["editable"])}}
           </div>
         </div>
         <div class="input-box name-lastname">
           <label>{{macros.mandatory_mark(data["editable"])}}Sobrenome:</label>
           <div class="input-box1">
-            {{macros.input(name="last_name", class="input-text required-entry", type="text", title="Sobrenome", value=data['last_name'].decode('utf-8'), maxlength="255", editable=data["editable"])}}
+            {{macros.input(name="last_name", class="input-text required-entry", type="text", title="Sobrenome", value=data['last_name'].decode('utf-8'), maxlength="256", editable=data["editable"])}}
           </div>
         </div>
       </div>
