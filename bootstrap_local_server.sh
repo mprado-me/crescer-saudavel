@@ -12,6 +12,7 @@ sudo pip install Flask-WTF;
 sudo pip install Flask-SQLAlchemy;
 sudo pip install flask-bcrypt;
 sudo pip install psycopg2;
+sudo pip install Flask-Mail;
 
 # To create database user and the database for the user:
 # >> sudo su - postgres

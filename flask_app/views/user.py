@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import render_template, request, url_for, redirect
 
-from flask_app import app
+from flask_app import app, db
 
 from flask_app.data_providers.about_us_data_provider import get_about_us_data
 from flask_app.data_providers.blog_data_provider import get_blog_data
@@ -22,7 +25,11 @@ from flask_app.data_providers.products_data_provider import get_all_products_dat
 
 from flask_app.utils.mock import is_user_registred
 
+from flask_app.utils.email_manager import send_create_account_confirmation_email
+
 from flask_app.forms import CreateAccountForm
+
+from flask_app.models import User
 
 @app.route('/sobre-nos')
 def about_us():
@@ -92,9 +99,22 @@ def create_account():
         return render_template('create-account.html', data=data)
     else:
         if form.validate_on_submit():
+            user = User(
+                email = form.email.data,
+                password = form.password.data
+            )
+            db.session.add(user)
+            db.session.commit()
+            # TODO: Check if send_create_account_confirmation_email can fail
+            send_create_account_confirmation_email(user.email)
             return redirect(url_for("confirmation_email_sending", email=request.form["email"]))
         data = get_create_account_data(form)
         return render_template('create-account.html', data=data)
+
+@app.route('/email-confirmado/<token>')
+def email_confirmed(token):
+    # TODO: Login can receive a msg (alert bootstrap component)
+    redirect(url_for('login'))
 
 @app.route('/faq')
 def faq():
