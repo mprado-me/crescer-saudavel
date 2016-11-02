@@ -35,6 +35,8 @@ from flask_app.models import User
 
 from flask_app.utils.security import ts
 
+from flask_login import login_user, login_required
+
 @app.route('/sobre-nos')
 def about_us():
     data = get_about_us_data()
@@ -237,6 +239,13 @@ def login():
                 email_registered = True
                 incorrect_password = not user.is_correct_password(form.password.data)
                 email_confirmed = user.email_confirmed
+
+                if not incorrect_password and email_confirmed:
+                    user.authenticated = True
+                    db.session.add(user)
+                    db.session.commit()
+                    login_user(user)
+                    return redirect(url_for('my_account'))
             else:
                 email_registered = False
         except:
@@ -258,7 +267,6 @@ def login():
             data["form"].email.errors.append("Email não registrado")
             return render_template('login.html', data=data)
 
-        # TODO: Implement resent of confirmation email
         if not email_confirmed:
             data = get_login_data(form=form)
             data["form"].email.errors.append("Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for("resend_confirmation_email") )
@@ -269,11 +277,10 @@ def login():
             data["form"].password.errors.append("Senha incorreta")
             return render_template('login.html', data=data)
 
-        # TODO: Use Flask-Login
-
-        return redirect(url_for('home'))
+        return None
 
 @app.route('/minha-conta', methods=['GET', 'POST'])
+@login_required
 def my_account():
     if request.method == 'GET':
         editable = request.args.get("editar")
