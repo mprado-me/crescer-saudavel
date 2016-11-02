@@ -23,12 +23,13 @@ from flask_app.data_providers.new_password_data_provider import get_new_password
 from flask_app.data_providers.order_data_provider import get_order_data
 from flask_app.data_providers.product_data_provider import get_product_data
 from flask_app.data_providers.products_data_provider import get_all_products_data, get_products_data_by_category, get_products_data_by_category_and_subcategory, get_products_data_by_search
+from flask_app.data_providers.resend_confirmation_email_data_provider import get_resend_confirmation_email_data
 
 from flask_app.utils.mock import is_user_registred
 
 from flask_app.utils.email_manager import send_create_account_confirmation_email
 
-from flask_app.forms import CreateAccountForm, LoginForm
+from flask_app.forms import CreateAccountForm, LoginForm, EmailForm
 
 from flask_app.models import User
 
@@ -177,7 +178,7 @@ def email_confirmed(token):
         data = get_fail_data(msg=msg, button=button)
         return render_template('fail.html', data=data)
 
-    return redirect(url_for('login', msg_content="Email registrado com sucesso.", msg_type="success"))
+    return redirect(url_for('login', msg_content="Email confirmado com sucesso.", msg_type="success"))
 
 @app.route('/faq')
 def faq():
@@ -260,7 +261,7 @@ def login():
         # TODO: Implement resent of confirmation email
         if not email_confirmed:
             data = get_login_data(form=form)
-            data["form"].email.errors.append("Email não confirmado. Para reenviar o email de confirmação clique <a href='#'>aqui</a>.")
+            data["form"].email.errors.append("Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for("resend_confirmation_email") )
             return render_template('login.html', data=data)
 
         if incorrect_password:
@@ -285,7 +286,7 @@ def my_account():
     elif request.method == 'POST':
         # TODO: Deal with post
         return redirect(url_for('my_account'))
-    return None
+    abort(404)
 
 @app.route('/nova-senha')
 def new_password():
@@ -322,6 +323,64 @@ def products_by_search(page, sort_method):
     q = request.args.get('q')
     data = get_products_data_by_search(page=page, sort_method=sort_method, q=q)
     return render_template('products.html', data=data)
+
+@app.route('/reenviar-email-de-confirmacao', methods=['GET', 'POST'])
+def resend_confirmation_email():
+    form = EmailForm()
+    if request.method == 'GET':
+        data = get_resend_confirmation_email_data(form)
+        return render_template('resend-confirmation-email.html', data=data)
+    elif request.method == 'POST':
+        invalid_form = not form.validate_on_submit()
+        email_registered = None
+        email_confirmed = None
+
+        try:
+            user = db.session.query(User).filter_by(email=form.email.data).first()
+
+            if user:
+                email_registered = True
+                email_confirmed = user.email_confirmed
+            else:
+                email_registered = False
+        except:
+            db.session.rollback()
+            msgs = []
+            msgs.append({
+                "type": "danger",
+                "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
+            })
+            data = get_resend_confirmation_email_data(form=form, msgs=msgs)
+            return render_template('resend-confirmation-email.html', data=data)
+
+        if invalid_form:
+            data = get_resend_confirmation_email_data(form=form)
+            return render_template('resend-confirmation-email.html', data=data)
+
+        if not email_registered:
+            data = get_resend_confirmation_email_data(form=form)
+            data["form"].email.errors.append("Email não registrado. Clique <a href='%s'>aqui</a> para criar uma nova conta." % url_for("create_account"))
+            return render_template('resend-confirmation-email.html', data=data)
+
+        if email_confirmed:
+            data = get_resend_confirmation_email_data(form=form)
+            data["form"].email.errors.append("Email já confirmado. Clique <a href='%s'>aqui</a> para entrar na conta." % url_for("login"))
+            return render_template('resend-confirmation-email.html', data=data)
+
+        # Sending confirmation message
+        # TODO: Restrict the resend of the same email to one hour using a new table
+        try:
+            send_create_account_confirmation_email(form.email.data)
+            return redirect(url_for("confirmation_email_sending", email=form.email.data))
+        except:
+            msgs = []
+            msgs.append({
+                "type": "danger",
+                "content": "Falha! Ocorreu um erro ao reenviar o email de confirmação. Tente novamente.",
+            })
+            data = get_resend_confirmation_email_data(form=form, msgs=msgs)
+            return render_template('resend-confirmation-email.html', data=data)
+    abort(404)
 
 @app.route('/teste')
 def test():

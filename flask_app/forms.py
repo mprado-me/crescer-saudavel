@@ -19,3 +19,6 @@ class CreateAccountForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(message=data_required_msg), Email(message=email_invalid_format_msg)])
     password = PasswordField('Senha', validators=[DataRequired(message=data_required_msg), Length(min=6, max=32, message=password_length_msg)])
+
+class EmailForm(FlaskForm):
+	email = StringField('Email', validators=[DataRequired(message=data_required_msg), Email(message=email_invalid_format_msg)])
