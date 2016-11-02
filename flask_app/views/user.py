@@ -28,7 +28,7 @@ from flask_app.utils.mock import is_user_registred
 
 from flask_app.utils.email_manager import send_create_account_confirmation_email
 
-from flask_app.forms import CreateAccountForm
+from flask_app.forms import CreateAccountForm, LoginForm
 
 from flask_app.models import User
 
@@ -200,11 +200,13 @@ def home():
     data = get_home_data()
     return render_template('home.html', data=data)
 
-@app.route('/entrar')
+@app.route('/entrar', methods=['GET', 'POST'])
 def login():
     if is_user_registred():
         return redirect(url_for('my_account'))
-    else:
+
+    form = LoginForm()
+    if request.method == "GET":
         msgs = []
         msg_content = request.args.get("msg_content")
         msg_type = request.args.get("msg_type")
@@ -219,8 +221,56 @@ def login():
                 "type": "info",
                 "content": "Para finalizar a compra, entre ou cadastre-se.",
             })
-        data = get_login_data(msgs)
+        data = get_login_data(form=form, msgs=msgs)
         return render_template('login.html', data=data)
+    else:
+        invalid_form = not form.validate_on_submit()
+        incorrect_password = None
+        email_registered = None
+        email_confirmed = None
+
+        try:
+            user = db.session.query(User).filter_by(email=form.email.data).first()
+
+            if user:
+                email_registered = True
+                incorrect_password = not user.is_correct_password(form.password.data)
+                email_confirmed = user.email_confirmed
+            else:
+                email_registered = False
+        except:
+            db.session.rollback()
+            msgs = []
+            msgs.append({
+                "type": "danger",
+                "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
+            })
+            data = get_login_data(form=form, msgs=msgs)
+            return render_template('login.html', data=data)
+
+        if invalid_form:
+            data = get_login_data(form=form)
+            return render_template('login.html', data=data)
+
+        if not email_registered:
+            data = get_login_data(form=form)
+            data["form"].email.errors.append("Email não registrado")
+            return render_template('login.html', data=data)
+
+        # TODO: Implement resent of confirmation email
+        if not email_confirmed:
+            data = get_login_data(form=form)
+            data["form"].email.errors.append("Email não confirmado. Para reenviar o email de confirmação clique <a href='#'>aqui</a>.")
+            return render_template('login.html', data=data)
+
+        if incorrect_password:
+            data = get_login_data(form=form)
+            data["form"].password.errors.append("Senha incorreta")
+            return render_template('login.html', data=data)
+
+        # TODO: Use Flask-Login
+
+        return redirect(url_for('home'))
 
 @app.route('/minha-conta', methods=['GET', 'POST'])
 def my_account():
@@ -233,7 +283,6 @@ def my_account():
         data = get_my_account_data(editable)
         return render_template('my-account.html', data=data)
     elif request.method == 'POST':
-        print request.form
         # TODO: Deal with post
         return redirect(url_for('my_account'))
     return None

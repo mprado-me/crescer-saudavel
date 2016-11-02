@@ -15,3 +15,7 @@ class CreateAccountForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(message=data_required_msg), Email(message=email_invalid_format_msg)])
     password = PasswordField('Senha', validators=[DataRequired(message=data_required_msg), Length(min=6, max=32, message=password_length_msg), EqualTo('password_confirmation', message=password_mismatch_msg)])
     password_confirmation = PasswordField('Confirmação de senha', validators=[DataRequired(message=data_required_msg)])
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(message=data_required_msg), Email(message=email_invalid_format_msg)])
+    password = PasswordField('Senha', validators=[DataRequired(message=data_required_msg), Length(min=6, max=32, message=password_length_msg)])

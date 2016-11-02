@@ -1,5 +1,7 @@
+{% import "macros.html" as macros %}
+
 {% extends "base.html" %}
-{% block title %}{% endblock %}
+{% block title %}Entrar{% endblock %}
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
@@ -9,8 +11,8 @@
 <div class="main-container wow bounceInUp animated animated" style="visibility: visible;">     
   <div class="main">                     
     <div class="account-login container">
-      <form action="#" method="post" id="login-form">
-        <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
+      <form action="{{url_for('login')}}" method="post">
+        {{ data["form"].csrf_token }}
         <div class="registered-users">
           <div class="login-alerts-container">
             {% if data["msgs"] %}
@@ -25,21 +27,21 @@
           <div class="content">
             <ul class="form-list">
               <li>
-                <label for="email"><em class="required">*</em>Email</label>
+                <label for="email">{{macros.mandatory_mark(True)}}Email</label>
                 <div class="input-box">
-                  <input type="text" name="login[username]" value="" id="email" class="input-text required-entry validate-email" title="Email Address">
+                  {{macros.input(name="email", id="email", class="input-text required-entry", type="text", title="Email", maxlength="256", editable=True, errors=data["form"].email.errors, value=data.form.email.data)}}
                 </div>
               </li>
               <li>
-                <label for="pass"><em class="required">*</em>Senha</label>
+                <label for="pass">{{macros.mandatory_mark(True)}}Senha</label>
                   <div class="input-box">
-                    <input type="password" name="login[password]" class="input-text required-entry validate-password" id="pass" title="Password">
+                    {{macros.input(name="password", id="password", class="input-text required-entry", type="password", title="Senha", maxlength="32", editable=True, errors=data["form"].password.errors)}}
                 </div>
               </li>
             </ul>
-            <p class="required">* Campos requeridos</p>
+            <p class="required">* Campos obrigatórios</p>
             <div class="buttons-set">
-              <button type="submit" class="button login" title="Login" name="send" id="send2"><span>Entrar</span></button>
+              <button type="submit" class="button login" title="Entrar"><span>Entrar</span></button>
               <a href="{{url_for('forgot_password')}}" class="forgot-word">Esqueceu sua senha?</a>
               <a href="{{url_for('create_account')}}"><button type="button" title="Create an Account" class="button create-account"><span>Criar conta</span></button></a>
             </div>

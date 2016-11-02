@@ -6,15 +6,15 @@
 
 {%- macro input(name, id="", class="", type="text", pattern=".*", title="", value="", maxlength=256, editable=False, errors=None) -%}
 		{% if not editable %}
-			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value.decode('utf-8') if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}" readonly>
+			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}" readonly>
 		{% else %}
-			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value.decode('utf-8') if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}">
+			<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}" value="{{ value if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}">
 			{% if errors and errors|length > 0 %}
 				<div class="input-errors-container">
 					<ul>
 						{% for error in errors %}
 							<li>
-								<div class="alert alert-danger input-error" role="alert">{{error.decode('utf-8')}}</div>
+								<div class="alert alert-danger input-error" role="alert">{{error.decode('utf-8')|safe}}</div>
 							</li>
 						{% endfor %}
 					</ul>
@@ -24,7 +24,7 @@
 {%- endmacro %}
 
 {%- macro social_network(title, class, href) -%}
-		<li class="pull-left {{ class }}"><a target="_blank" rel="nofollow" href="{{ href }}" title="{{ title }}"></a></li>
+		<li class="pull-left {{ class.decode('utf-8') }}"><a target="_blank" rel="nofollow" href="{{ href.decode('utf-8') }}" title="{{ title.decode('utf-8') }}"></a></li>
 {%- endmacro %}
 
 {%- macro product(title, href, class="") -%}
@@ -38,17 +38,17 @@
 {%- macro sort_method_li(this_sort_method, current_sort_method, route, name) -%}
 	{% if this_sort_method == current_sort_method %}
 		<li class="active">
-			<a>{{name}}</a>
+			<a>{{name.decode('utf-8')}}</a>
 	{% else %}
 		<li>
 			{% if route["handler_func"] == "all_products" %}
-				<a href="{{url_for('all_products', page=1, sort_method=this_sort_method)}}">{{name}}</a>
+				<a href="{{url_for('all_products', page=1, sort_method=this_sort_method)}}">{{name.decode('utf-8')}}</a>
 			{% elif route["handler_func"] == "products_by_category" %}
-				<a href="{{url_for('products_by_category', page=1, sort_method=this_sort_method, category_id=route['category_id'])}}">{{name}}</a>
+				<a href="{{url_for('products_by_category', page=1, sort_method=this_sort_method, category_id=route['category_id'])}}">{{name.decode('utf-8')}}</a>
 			{% elif route["handler_func"] == "products_by_category_and_subcategory" %}
-				<a href="{{url_for('products_by_category_and_subcategory', page=1, sort_method=this_sort_method, category_id=route['category_id'], subcategory_id=route['subcategory_id'])}}">{{name}}</a>
+				<a href="{{url_for('products_by_category_and_subcategory', page=1, sort_method=this_sort_method, category_id=route['category_id'], subcategory_id=route['subcategory_id'])}}">{{name.decode('utf-8')}}</a>
 			{% elif route["handler_func"] == "products_by_search" %}
-				<a href="{{url_for('products_by_search', page=1, sort_method=this_sort_method, q=route['q'])}}">{{name}}</a>
+				<a href="{{url_for('products_by_search', page=1, sort_method=this_sort_method, q=route['q'])}}">{{name.decode('utf-8')}}</a>
 			{% endif %}
 	{% endif %}
 		</li>
