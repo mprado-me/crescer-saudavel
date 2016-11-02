@@ -13138,3 +13138,12 @@ margin-right: 3px;
 .centered {
 	text-align: center;
 }
+
+.login-alerts-container span {
+	width: 100%;
+}
+
+.fail-container {
+	text-align: center;
+	padding: 32px;
+}

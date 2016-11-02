@@ -12,21 +12,26 @@
       <form action="#" method="post" id="login-form">
         <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
         <div class="registered-users">
-          {% if data["finalizando_compra"] %}
-            <div class="alert alert-info" role="alert">Entre ou cadastre-se para finalizar o pedido.</div>
-          {% else %}
-            <strong>Cliente registrado</strong>
-          {% endif %}
+          <div class="login-alerts-container">
+            {% if data["msgs"] %}
+              {% for msg in data["msgs"] %}
+                {% with data=msg %}
+                  {% include "alert-msg.html" %}
+                {% endwith %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          <strong>Entrar</strong>
           <div class="content">
             <ul class="form-list">
               <li>
-                <label for="email">Email<em class="required">*</em></label>
+                <label for="email"><em class="required">*</em>Email</label>
                 <div class="input-box">
                   <input type="text" name="login[username]" value="" id="email" class="input-text required-entry validate-email" title="Email Address">
                 </div>
               </li>
               <li>
-                <label for="pass">Senha<em class="required">*</em></label>
+                <label for="pass"><em class="required">*</em>Senha</label>
                   <div class="input-box">
                     <input type="password" name="login[password]" class="input-text required-entry validate-password" id="pass" title="Password">
                 </div>

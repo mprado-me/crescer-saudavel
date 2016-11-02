@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, abort
 
 from flask_app import app, db
 
@@ -12,6 +12,7 @@ from flask_app.data_providers.cart_data_provider import get_cart_data
 from flask_app.data_providers.checkout_data_provider import get_checkout_data
 from flask_app.data_providers.confirmation_email_sending_data_provider import get_confirmation_email_sending_data
 from flask_app.data_providers.create_account_data_provider import get_create_account_data
+from flask_app.data_providers.fail_data_provider import get_fail_data
 from flask_app.data_providers.faq_data_provider import get_faq_data
 from flask_app.data_providers.forgot_password_data_provider import get_forgot_password_data
 from flask_app.data_providers.forgot_password_email_sending_data_provider import get_forgot_password_email_sending_data
@@ -30,6 +31,8 @@ from flask_app.utils.email_manager import send_create_account_confirmation_email
 from flask_app.forms import CreateAccountForm
 
 from flask_app.models import User
+
+from flask_app.utils.security import ts
 
 @app.route('/sobre-nos')
 def about_us():
@@ -150,8 +153,31 @@ def create_account_db_error(form):
 
 @app.route('/email-confirmado/<token>')
 def email_confirmed(token):
-    # TODO: Login can receive a msg (alert bootstrap component)
-    redirect(url_for('login'))
+    try:
+        email = ts.loads(token, salt="email-confirm-key")
+    except:
+        abort(404)
+
+    user = User.query.filter_by(email=email).first_or_404()
+    user.email_confirmed = True
+
+    try:
+        db.session.add(user)
+        db.session.commit()
+    except:
+        db.session.rollback()
+        msg = {
+            "type": "danger",
+            "content": "Falha! Ocorreu um erro ao acessar o banco de dados.",
+        }
+        button = {
+            "title": "Tentar novamente",
+            "href": url_for('email_confirmed', token=token)
+        }
+        data = get_fail_data(msg=msg, button=button)
+        return render_template('fail.html', data=data)
+
+    return redirect(url_for('login', msg_content="Email registrado com sucesso.", msg_type="success"))
 
 @app.route('/faq')
 def faq():
@@ -179,12 +205,21 @@ def login():
     if is_user_registred():
         return redirect(url_for('my_account'))
     else:
+        msgs = []
+        msg_content = request.args.get("msg_content")
+        msg_type = request.args.get("msg_type")
+        if msg_content and msg_type:
+            msgs.append({
+                "type": msg_type,
+                "content": msg_content,
+            })
         finalizando_compra = request.args.get('finalizando_compra')
         if finalizando_compra and finalizando_compra == "sim":
-            finalizando_compra = True
-        else:
-            finalizando_compra = False
-        data = get_login_data(finalizando_compra)
+            msgs.append({
+                "type": "info",
+                "content": "Para finalizar a compra, entre ou cadastre-se.",
+            })
+        data = get_login_data(msgs)
         return render_template('login.html', data=data)
 
 @app.route('/minha-conta', methods=['GET', 'POST'])
