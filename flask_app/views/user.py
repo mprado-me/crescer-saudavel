@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+
 from flask import render_template, request, url_for, redirect, abort
 
 from flask_app import app, db
@@ -162,10 +164,9 @@ def email_confirmed(token):
     except:
         abort(404)
 
-    user = User.query.filter_by(email=email).first_or_404()
-    user.email_confirmed = True
-
     try:
+        user = User.query.filter_by(email=email).first_or_404()
+        user.email_confirmed = True
         db.session.add(user)
         db.session.commit()
     except:
@@ -388,9 +389,42 @@ def products_by_search(page, sort_method):
 
 @app.route('/redefinir-senha/<token>', methods=["GET", "POST"])
 def redefine_password(token):
+    try:
+        email = ts.loads(token, salt="recover-key")
+    except:
+        abort(404)
+
     form = RedefinePasswordForm()
-    data = get_redefine_password_data(form=form, email="joao@gmail.com", msgs=[])
-    return render_template('redefine-password.html', data=data)
+
+    if request.method == "GET":
+        data = get_redefine_password_data(form=form, email=email, token=token, msgs=[])
+        return render_template('redefine-password.html', data=data)
+    elif request.method == "POST":
+        invalid_form = not form.validate_on_submit()
+
+        if invalid_form:
+            data = get_redefine_password_data(form=form, email=email, token=token, msgs=[])
+            return render_template('redefine-password.html', data=data)
+
+        # Changing user password
+        try:
+            user = User.query.filter_by(email=email).first_or_404()
+            user.password = form.password.data
+            db.session.add(user)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            msgs = []
+            msgs.append({
+                "type": "danger",
+                "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
+            })
+            data = get_redefine_password_data(form=form, email=email, token=token, msgs=msgs)
+            return render_template('redefine-password.html', data=data)
+
+        return redirect(url_for('login', msg_type="success", msg_content="Senha redefinida com sucesso."))
+    return None
+    
 
 @app.route('/reenviar-email-de-confirmacao', methods=['GET', 'POST'])
 def resend_confirmation_email():
