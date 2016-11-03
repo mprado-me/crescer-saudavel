@@ -6,7 +6,7 @@ from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 data_required_msg = "Campo obrigatório"
-email_invalid_format_msg = "Formato do email inválido"
+email_invalid_format_msg = "Formato de email inválido"
 email_already_registered_msg = "Email já cadastrado"
 password_length_msg = "A senha deve possuir entre 6 e 32 caracteres"
 password_mismatch_msg = "As senhas digitadas não são iguais"

@@ -188,10 +188,51 @@ def faq():
     data = get_faq_data()
     return render_template('faq.html', data=data)
 
-@app.route('/recuperacao-de-senha')
+@app.route('/recuperacao-de-senha', methods=["GET", "POST"])
 def forgot_password():
-    data = get_forgot_password_data()
-    return render_template('forgot-password.html', data=data)
+    form = EmailForm()
+    if request.method == "GET":
+        data = get_forgot_password_data(form=form)
+        return render_template('forgot-password.html', data=data)
+    elif request.method == "POST":
+        invalid_form = not form.validate_on_submit()
+        email_registered = None
+        email_confirmed = None
+
+        try:
+            user = db.session.query(User).filter_by(email=form.email.data).first()
+
+            if user:
+                email_registered = True
+                email_confirmed = user.email_confirmed
+            else:
+                email_registered = False
+        except:
+            db.session.rollback()
+            msgs = []
+            msgs.append({
+                "type": "danger",
+                "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
+            })
+            data = get_forgot_password_data(form=form, msgs=msgs)
+            return render_template('forgot-password.html', data=data)
+
+        if invalid_form:
+            data = get_forgot_password_data(form=form)
+            return render_template('forgot-password.html', data=data)
+
+        if not email_registered:
+            data = get_forgot_password_data(form=form)
+            data["form"].email.errors.append("Email não registrado")
+            return render_template('forgot-password.html', data=data)
+
+        if not email_confirmed:
+            data = get_forgot_password_data(form=form)
+            data["form"].email.errors.append("Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for("resend_confirmation_email") )
+            return render_template('forgot-password.html', data=data)
+
+        return redirect(url_for('forgot_password_email_sending'))
+    abort(404)
 
 @app.route('/envio-do-email-de-recuperacao-de-senha')
 def forgot_password_email_sending():
@@ -278,7 +319,7 @@ def login():
             data["form"].password.errors.append("Senha incorreta")
             return render_template('login.html', data=data)
 
-        return None
+        abort(404)
 
 @app.route('/minha-conta', methods=['GET', 'POST'])
 @login_required
