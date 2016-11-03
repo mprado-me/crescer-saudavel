@@ -28,7 +28,7 @@ from flask_app.data_providers.resend_confirmation_email_data_provider import get
 
 from flask_app.utils.mock import is_user_registred
 
-from flask_app.utils.email_manager import send_create_account_confirmation_email
+from flask_app.utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
 
 from flask_app.forms import CreateAccountForm, LoginForm, EmailForm, RedefinePasswordForm
 
@@ -135,7 +135,7 @@ def create_account():
             db.session.rollback()
             return create_account_db_error(form)
 
-        # Sending confirmation message
+        # Sending confirmation email message
         try:
             send_create_account_confirmation_email(user.email)
             return redirect(url_for("confirmation_email_sending", email=request.form["email"]))
@@ -198,6 +198,7 @@ def forgot_password():
         invalid_form = not form.validate_on_submit()
         email_registered = None
         email_confirmed = None
+        user = None
 
         try:
             user = db.session.query(User).filter_by(email=form.email.data).first()
@@ -231,7 +232,19 @@ def forgot_password():
             data["form"].email.errors.append("Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for("resend_confirmation_email") )
             return render_template('forgot-password.html', data=data)
 
-        return redirect(url_for('forgot_password_email_sending'))
+        # Sending redefine password email message
+        try:
+            send_redefine_password_email(user.email)
+            return redirect(url_for("forgot_password_email_sending", email=user.email))
+        except:
+            msgs = []
+            msgs.append({
+                "type": "danger",
+                "content": "Falha! Ocorreu um erro ao enviar o email de redefinição de senha. Tente novamente.",
+            })
+            data = get_forgot_password_data(form=form, msgs=msgs)
+            return render_template('forgot-password.html', data=data)
+
     abort(404)
 
 @app.route('/envio-do-email-de-recuperacao-de-senha')
