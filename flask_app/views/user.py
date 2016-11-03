@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
-
-from flask import render_template, request, url_for, redirect, abort
+from flask import render_template, request, url_for, redirect, abort, session
 
 from flask_app import app, db
 
@@ -38,7 +36,7 @@ from flask_app.models import User
 
 from flask_app.utils.security import ts
 
-from flask_login import login_user, login_required
+from flask_login import login_user, login_required, logout_user
 
 @app.route('/sobre-nos')
 def about_us():
@@ -484,9 +482,10 @@ def resend_confirmation_email():
             return render_template('resend-confirmation-email.html', data=data)
     abort(404)
 
-@app.route('/teste')
-def test():
-    return render_template('test.html')
+@app.route('/sair')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 # print "app.config['MAIL_FROM_EMAIL']: " + app.config["MAIL_FROM_EMAIL"]
 # print "app.config['SECRET_KEY']: " + app.config["SECRET_KEY"]

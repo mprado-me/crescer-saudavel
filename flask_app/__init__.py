@@ -32,5 +32,6 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 import flask_app.views.user
+import flask_app.views.admin
 
 import models
