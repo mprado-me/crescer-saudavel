@@ -23,13 +23,14 @@ from flask_app.data_providers.new_password_data_provider import get_new_password
 from flask_app.data_providers.order_data_provider import get_order_data
 from flask_app.data_providers.product_data_provider import get_product_data
 from flask_app.data_providers.products_data_provider import get_all_products_data, get_products_data_by_category, get_products_data_by_category_and_subcategory, get_products_data_by_search
+from flask_app.data_providers.redefine_password_data_provider import get_redefine_password_data
 from flask_app.data_providers.resend_confirmation_email_data_provider import get_resend_confirmation_email_data
 
 from flask_app.utils.mock import is_user_registred
 
 from flask_app.utils.email_manager import send_create_account_confirmation_email
 
-from flask_app.forms import CreateAccountForm, LoginForm, EmailForm
+from flask_app.forms import CreateAccountForm, LoginForm, EmailForm, RedefinePasswordForm
 
 from flask_app.models import User
 
@@ -330,6 +331,12 @@ def products_by_search(page, sort_method):
     q = request.args.get('q')
     data = get_products_data_by_search(page=page, sort_method=sort_method, q=q)
     return render_template('products.html', data=data)
+
+@app.route('/redefinir-senha/<token>', methods=["GET", "POST"])
+def redefine_password(token):
+    form = RedefinePasswordForm()
+    data = get_redefine_password_data(form=form, email="joao@gmail.com", msgs=[])
+    return render_template('redefine-password.html', data=data)
 
 @app.route('/reenviar-email-de-confirmacao', methods=['GET', 'POST'])
 def resend_confirmation_email():

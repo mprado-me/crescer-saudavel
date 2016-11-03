@@ -13147,3 +13147,7 @@ margin-right: 3px;
 	text-align: center;
 	padding: 32px;
 }
+
+.width100 {
+	width: 100%;
+}

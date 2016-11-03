@@ -22,16 +22,16 @@ def sample_data_0():
 					"href": url_for("login"),
 				},
 				{
-					"name": "Recuperar senha",
+					"name": "Redefinir senha",
 					"href": url_for("forgot_password"),
 				},
 				{
-					"name": "Envio do email de recuperação de senha",
+					"name": "Envio do email de redefinição de senha",
 				},
 			],
-			"title": "Envio do email de recuperação de senha",
+			"title": "Envio do email de redefinição de senha",
 		},
-		"footer_data": get_footer_data(),
 		"email": "joao@gmail.com",
+		"footer_data": get_footer_data(),
 	}
 	return data
