@@ -1,19 +1,22 @@
 #!/bin/bash
 
 sudo apt-get update;
-sudo apt-get install -y python python-pip;
+sudo apt-get install -y python python-pip python-virtualenv;
 sudo apt-get install -y postgresql postgresql-contrib
 sudo apt-get install -y python-psycopg2
 sudo apt-get install -y libpq-dev
 sudo apt-get install -y python-dev
-sudo pip install --upgrade pip;
-sudo pip install Flask;
-sudo pip install Flask-WTF;
-sudo pip install Flask-SQLAlchemy;
-sudo pip install flask-bcrypt;
-sudo pip install psycopg2;
-sudo pip install Flask-Mail;
-sudo pip install Flask-Login;
+cd /vagrant;
+sudo virtualenv env --always-copy;
+source env/bin/activate;
+pip install --upgrade pip;
+pip install Flask;
+pip install Flask-WTF;
+pip install Flask-SQLAlchemy;
+pip install flask-bcrypt;
+pip install psycopg2;
+pip install Flask-Mail;
+pip install Flask-Login;
 
 # To create database user and the database for the user:
 # >> sudo su - postgres
