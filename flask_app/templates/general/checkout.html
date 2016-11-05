@@ -65,7 +65,7 @@
               <a href="{{url_for('cart')}}"><button type="button" title="Editar items" class="button btn-edit-items"><span>Editar items</span></button></a>
               <div class="total">
                 {% with data=data["total_table_data"] %}
-                {% include "total-table.html" %}
+                {% include "shared/total-table.html" %}
                 {% endwith %}
               </div>
               <a href="{{url_for('checkout', step=3)}}"><button type="button" title="Continuar" class="button continue"><span>Continuar</span></button></a>

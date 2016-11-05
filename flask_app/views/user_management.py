@@ -113,7 +113,7 @@ def email_confirmed(token):
             "href": url_for('email_confirmed', token=token)
         }
         data = GetFailDataProvider().get_data(msg=msg, button=button)
-        return render_template('get-fail.html', data=data)
+        return render_template('shared/get-fail.html', data=data)
 
     return redirect(url_for('login', msg_content="Email confirmado com sucesso.", msg_type="success"))
 
