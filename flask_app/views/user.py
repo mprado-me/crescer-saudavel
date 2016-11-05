@@ -7,7 +7,7 @@ from flask_app import app, db
 
 from ..data_providers.about_us import AboutUsDataProvider
 from ..data_providers.blog import BlogDataProvider
-from flask_app.data_providers.blog_post_data_provider import get_blog_post_data
+from ..data_providers.blog_post_data_provider import BlogPostDataProvider
 from flask_app.data_providers.cart_data_provider import get_cart_data
 from flask_app.data_providers.checkout_data_provider import get_checkout_data
 from flask_app.data_providers.confirmation_email_sending_data_provider import get_confirmation_email_sending_data
@@ -48,7 +48,7 @@ def blog_post(blog_post_id):
     blog_page_to_return = request.args.get('blog-page-to-return')
     if not blog_page_to_return:
         blog_page_to_return = 1
-    data = get_blog_post_data(blog_post_id=blog_post_id, blog_page_to_return=blog_page_to_return)
+    data = BlogPostDataProvider().get_data(blog_post_id=blog_post_id, blog_page_to_return=blog_page_to_return)
     return render_template('blog-post.html', data=data)
 
 @app.route('/blog/pagina/<int:page>')
