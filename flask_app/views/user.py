@@ -12,7 +12,7 @@ from ..data_providers.cart import CartDataProvider
 from ..data_providers.checkout import CheckoutDataProvider
 from ..data_providers.sent_confirmation_email import SentConfirmationEmailDataProvider
 from ..data_providers.create_account import CreateAccountDataProvider
-from flask_app.data_providers.fail_data_provider import get_fail_data
+from ..data_providers.get_fail import GetFailDataProvider
 from flask_app.data_providers.faq_data_provider import get_faq_data
 from flask_app.data_providers.forgot_password_data_provider import get_forgot_password_data
 from flask_app.data_providers.forgot_password_email_sending_data_provider import get_forgot_password_email_sending_data
@@ -178,8 +178,8 @@ def email_confirmed(token):
             "title": "Tentar novamente",
             "href": url_for('email_confirmed', token=token)
         }
-        data = get_fail_data(msg=msg, button=button)
-        return render_template('fail.html', data=data)
+        data = GetFailDataProvider().get_data(msg=msg, button=button)
+        return render_template('get-fail.html', data=data)
 
     return redirect(url_for('login', msg_content="Email confirmado com sucesso.", msg_type="success"))
 
