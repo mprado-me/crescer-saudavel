@@ -21,7 +21,7 @@ from ..data_providers.login import LoginDataProvider
 from ..data_providers.my_account import MyAccountDataProvider
 from ..data_providers.order import OrderDataProvider
 from ..data_providers.product import ProductDataProvider
-from flask_app.data_providers.products_data_provider import get_all_products_data, get_products_data_by_category, get_products_data_by_category_and_subcategory, get_products_data_by_search
+from ..data_providers.products import ProductsDataProvider
 from flask_app.data_providers.redefine_password_data_provider import get_redefine_password_data
 from flask_app.data_providers.resend_confirmation_email_data_provider import get_resend_confirmation_email_data
 
@@ -361,23 +361,23 @@ def product(product_id):
 
 @app.route('/produtos/pagina/<int:page>/ordenacao/<int:sort_method>')
 def all_products(page, sort_method):
-    data = get_all_products_data(page=page, sort_method=sort_method)
+    data = ProductsDataProvider().get_all_products_data(page=page, sort_method=sort_method)
     return render_template('products.html', data=data)
 
 @app.route('/produtos/categoria/<int:category_id>/pagina/<int:page>/ordenacao/<int:sort_method>')
 def products_by_category(category_id, page, sort_method):
-    data = get_products_data_by_category(category_id=category_id, page=page, sort_method=sort_method)
+    data = ProductsDataProvider().get_products_data_by_category(category_id=category_id, page=page, sort_method=sort_method)
     return render_template('products.html', data=data)
 
 @app.route('/produtos/categoria/<int:category_id>/subcategoria/<int:subcategory_id>/pagina/<int:page>/ordenacao/<int:sort_method>')
 def products_by_category_and_subcategory(category_id, subcategory_id, page, sort_method):
-    data = get_products_data_by_category_and_subcategory(category_id=category_id, subcategory_id=subcategory_id, page=page, sort_method=sort_method)
+    data = ProductsDataProvider().get_products_data_by_category_and_subcategory(category_id=category_id, subcategory_id=subcategory_id, page=page, sort_method=sort_method)
     return render_template('products.html', data=data)
 
 @app.route('/produtos/busca/pagina/<int:page>/ordenacao/<int:sort_method>')
 def products_by_search(page, sort_method):
     q = request.args.get('q')
-    data = get_products_data_by_search(page=page, sort_method=sort_method, q=q)
+    data = ProductsDataProvider().get_products_data_by_search(page=page, sort_method=sort_method, q=q)
     return render_template('products.html', data=data)
 
 @app.route('/redefinir-senha/<token>', methods=["GET", "POST"])
