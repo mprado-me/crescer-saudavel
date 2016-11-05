@@ -15,7 +15,7 @@ from ..data_providers.create_account import CreateAccountDataProvider
 from ..data_providers.get_fail import GetFailDataProvider
 from ..data_providers.faq import FaqDataProvider
 from ..data_providers.recover_password import RecoverPasswordDataProvider
-from flask_app.data_providers.forgot_password_email_sending_data_provider import get_forgot_password_email_sending_data
+from ..data_providers.sent_recover_password_email import SentRecoverPasswordEmailDataProvider
 from flask_app.data_providers.home_data_provider import get_home_data
 from flask_app.data_providers.login_data_provider import get_login_data
 from flask_app.data_providers.my_account_data_provider import get_my_account_data
@@ -235,7 +235,7 @@ def recover_password():
         # Sending redefine password email message
         try:
             send_redefine_password_email(user.email)
-            return redirect(url_for("forgot_password_email_sending", email=user.email))
+            return redirect(url_for("sent_recover_password_email", email=user.email))
         except:
             msgs = []
             msgs.append({
@@ -247,10 +247,13 @@ def recover_password():
 
     abort(404)
 
-@app.route('/envio-do-email-de-recuperacao-de-senha')
-def forgot_password_email_sending():
-    data = get_forgot_password_email_sending_data()
-    return render_template('forgot-password-email-sending.html', data=data)
+@app.route('/email-de-recuperacao-de-senha-enviado')
+def sent_recover_password_email():
+    email = request.args.get("email")
+    if not email:
+        abort(422)
+    data = SentRecoverPasswordEmailDataProvider().get_data(email=email)
+    return render_template('sent-recover-password-email.html', data=data)
 
 @app.route('/')
 @app.route('/home')
