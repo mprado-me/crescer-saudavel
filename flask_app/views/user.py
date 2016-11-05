@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, url_for, redirect, abort, session
+from flask import render_template, request, url_for, redirect, abort
 
-from flask_app import app, db
+from flask_app import app
 
 from ..data_providers.about_us import AboutUsDataProvider
 from ..data_providers.blog import BlogDataProvider
 from ..data_providers.blog_post_data_provider import BlogPostDataProvider
-from ..data_providers.cart import CartDataProvider
 from ..data_providers.checkout import CheckoutDataProvider
 from ..data_providers.faq import FaqDataProvider
 from ..data_providers.home import HomeDataProvider
@@ -36,27 +35,6 @@ def blog_post(blog_post_id):
 def blog(page):
     data = BlogDataProvider().get_data(page=page)
     return render_template('blog.html', data=data)
-
-@app.route('/carrinho')
-def cart():
-    data = CartDataProvider().get_data()
-    return render_template('cart.html', cart_table_editable=True, data=data)
-
-@app.route('/adicionar-ao-carrinho/produto/<int:product_id>/quantidade/<int:quantity>', methods=['POST'])
-def cart_add_product(product_id, quantity):
-    return redirect(url_for('cart'))
-
-@app.route('/remover-do-carrinho/produto/<int:product_id>/quantidade/<int:quantity>', methods=['POST'])
-def cart_remove_product(product_id, quantity):
-    return redirect(url_for('cart'))
-
-@app.route('/deletar-do-carrinho/produto/<int:product_id>', methods=['POST'])
-def cart_delete_product(product_id):
-    return redirect(url_for('cart'))
-
-@app.route('/deletar-tudo-do-carrinho', methods=['POST'])
-def cart_delete_all_products():
-    return redirect(url_for('cart'))
 
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 def checkout(step):
