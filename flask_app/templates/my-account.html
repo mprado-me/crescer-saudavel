@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "shared/base.html" %}
 {% block title %}Minha conta{% endblock %}
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
-  {% include "page-heading.html" %}
+  {% include "shared/page-heading.html" %}
 {% endwith %}
 
 <div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">
@@ -19,7 +19,7 @@
 								<form action="{{url_for('my_account')}}" method="post">
 									<div class="group-select">
 										{% with data=data["user_info_data"] %}
-											{% include "user-info.html" %}
+											{% include "shared/user-info.html" %}
 										{% endwith %}
 										<div class="buttons-set account-info-buttons-container">
 											{% if data["user_info_data"]["editable"] %}

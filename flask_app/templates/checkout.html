@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "shared/base.html" %}
 {% block title %}Finalização de compra{% endblock %}
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
-{% include "page-heading.html" %}
+{% include "shared/page-heading.html" %}
 {% endwith %}
 
 <div class="main-container col2-right-layout">
@@ -29,7 +29,7 @@
                   <ul class="">
                     <li id="billing-new-address-form">
                       {% with data=data["user_info_data"] %}
-                        {% include "user-info.html" %}
+                        {% include "shared/user-info.html" %}
                       {% endwith %}
                     </li>
                   </ul>

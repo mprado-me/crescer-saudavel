@@ -1,11 +1,11 @@
 {% import "macros.html" as macros %}
 
-{% extends "base.html" %}
+{% extends "shared/base.html" %}
 {% block title %}Criar conta{% endblock %}
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
-  {% include "page-heading.html" %}
+  {% include "shared/page-heading.html" %}
 {% endwith %}
 
 <div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">     
@@ -16,7 +16,7 @@
         <div class="registered-users">
           {% if data["msg"] %}
               {% with data=data["msg"] %}
-                {% include "alert-msg.html" %}
+                {% include "shared/alert-msg.html" %}
               {% endwith %}
           {% endif %}
           <strong>Novo cliente</strong>

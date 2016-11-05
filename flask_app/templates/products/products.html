@@ -1,11 +1,11 @@
 {% import "macros.html" as macros %}
 
-{% extends "base.html" %}
+{% extends "shared/base.html" %}
 {% block title %}{% endblock %}
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
-	{% include "page-heading.html" %}
+	{% include "shared/page-heading.html" %}
 {% endwith %}
 
 <section class="main-container col2-left-layout bounceInUp animated"> 
@@ -26,7 +26,7 @@
 									</ul>
 								</div>
 		            {% with data=data["paginator_data"] %}
-		              {% include "paginator.html" %}
+		              {% include "shared/paginator.html" %}
 		            {% endwith %}
 							</div>
 						</div>
@@ -67,7 +67,7 @@
 						<div class="toolbar">
 							<div class="pager">
 								{% with data=data["paginator_data"] %}
-		              {% include "paginator.html" %}
+		              {% include "shared/paginator.html" %}
 		            {% endwith %}
 							</div>
 						</div>

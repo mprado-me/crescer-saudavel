@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "shared/base.html" %}
 {% block title %}Detalhes do Produto{% endblock %}
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
-  {% include "page-heading.html" %}
+  {% include "shared/page-heading.html" %}
 {% endwith %}
 
 <div class="main-container col1-layout wow bounceInUp animated">

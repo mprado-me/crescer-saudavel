@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "shared/base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
 
@@ -32,7 +32,7 @@
   {% if data["sections"] and data["sections"]|length > 0 %}
     {% for section in data["sections"] %}
       {% with data=section %}
-        {% include "products-section.html" %}
+        {% include "products/products-section.html" %}
       {% endwith %}
     {% endfor %}
   {% endif %}

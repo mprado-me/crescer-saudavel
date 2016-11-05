@@ -17,14 +17,14 @@
 <body>
 	<div id="page">
 		{% with data=data["header_data"] %}
-			{% include "header.html" %}
+			{% include "shared/header.html" %}
 		{% endwith %}
 
 		{% block content %}
 		{% endblock %}
 
 		{% with data=data["footer_data"] %}
-			{% include "footer.html" %}
+			{% include "shared/footer.html" %}
 		{% endwith %}
 	</div>
 
