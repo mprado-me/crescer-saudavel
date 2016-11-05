@@ -13,7 +13,7 @@ from ..data_providers.checkout import CheckoutDataProvider
 from ..data_providers.sent_confirmation_email import SentConfirmationEmailDataProvider
 from ..data_providers.create_account import CreateAccountDataProvider
 from ..data_providers.get_fail import GetFailDataProvider
-from flask_app.data_providers.faq_data_provider import get_faq_data
+from ..data_providers.faq import FaqDataProvider
 from flask_app.data_providers.forgot_password_data_provider import get_forgot_password_data
 from flask_app.data_providers.forgot_password_email_sending_data_provider import get_forgot_password_email_sending_data
 from flask_app.data_providers.home_data_provider import get_home_data
@@ -185,7 +185,7 @@ def email_confirmed(token):
 
 @app.route('/faq')
 def faq():
-    data = get_faq_data()
+    data = FaqDataProvider().get_data()
     return render_template('faq.html', data=data)
 
 @app.route('/recuperacao-de-senha', methods=["GET", "POST"])
