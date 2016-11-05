@@ -20,7 +20,7 @@ from ..data_providers.home import HomeDataProvider
 from ..data_providers.login import LoginDataProvider
 from ..data_providers.my_account import MyAccountDataProvider
 from ..data_providers.order import OrderDataProvider
-from flask_app.data_providers.product_data_provider import get_product_data
+from ..data_providers.product import ProductDataProvider
 from flask_app.data_providers.products_data_provider import get_all_products_data, get_products_data_by_category, get_products_data_by_category_and_subcategory, get_products_data_by_search
 from flask_app.data_providers.redefine_password_data_provider import get_redefine_password_data
 from flask_app.data_providers.resend_confirmation_email_data_provider import get_resend_confirmation_email_data
@@ -356,7 +356,7 @@ def order(order_id):
 
 @app.route('/produto/<int:product_id>')
 def product(product_id):
-    data = get_product_data(product_id)
+    data = ProductDataProvider().get_data(product_id)
     return render_template('product.html', data=data)
 
 @app.route('/produtos/pagina/<int:page>/ordenacao/<int:sort_method>')
