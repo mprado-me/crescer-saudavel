@@ -22,7 +22,7 @@ from ..data_providers.my_account import MyAccountDataProvider
 from ..data_providers.order import OrderDataProvider
 from ..data_providers.product import ProductDataProvider
 from ..data_providers.products import ProductsDataProvider
-from flask_app.data_providers.redefine_password_data_provider import get_redefine_password_data
+from ..data_providers.redefine_password import RedefinePasswordData
 from flask_app.data_providers.resend_confirmation_email_data_provider import get_resend_confirmation_email_data
 
 from flask_app.utils.mock import is_user_registred
@@ -390,13 +390,13 @@ def redefine_password(token):
     form = RedefinePasswordForm()
 
     if request.method == "GET":
-        data = get_redefine_password_data(form=form, email=email, token=token, msgs=[])
+        data = RedefinePasswordData().get_data(form=form, email=email, token=token, msgs=[])
         return render_template('redefine-password.html', data=data)
     elif request.method == "POST":
         invalid_form = not form.validate_on_submit()
 
         if invalid_form:
-            data = get_redefine_password_data(form=form, email=email, token=token, msgs=[])
+            data = RedefinePasswordData().get_data(form=form, email=email, token=token, msgs=[])
             return render_template('redefine-password.html', data=data)
 
         # Changing user password
@@ -412,7 +412,7 @@ def redefine_password(token):
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             })
-            data = get_redefine_password_data(form=form, email=email, token=token, msgs=msgs)
+            data = RedefinePasswordData().get_data(form=form, email=email, token=token, msgs=msgs)
             return render_template('redefine-password.html', data=data)
 
         return redirect(url_for('login', msg_type="success", msg_content="Senha redefinida com sucesso."))
