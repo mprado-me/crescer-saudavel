@@ -6,8 +6,6 @@ from flask import render_template, request, url_for, redirect, abort
 from flask_app import app
 
 from ..data_providers.about_us import AboutUsDataProvider
-from ..data_providers.blog import BlogDataProvider
-from ..data_providers.blog_post_data_provider import BlogPostDataProvider
 from ..data_providers.checkout import CheckoutDataProvider
 from ..data_providers.faq import FaqDataProvider
 from ..data_providers.home import HomeDataProvider
@@ -22,19 +20,6 @@ from flask_login import login_required
 def about_us():
     data = AboutUsDataProvider().get_data()
     return render_template('about-us.html', data=data)
-
-@app.route('/blog-post/<int:blog_post_id>')
-def blog_post(blog_post_id):
-    blog_page_to_return = request.args.get('blog-page-to-return')
-    if not blog_page_to_return:
-        blog_page_to_return = 1
-    data = BlogPostDataProvider().get_data(blog_post_id=blog_post_id, blog_page_to_return=blog_page_to_return)
-    return render_template('blog-post.html', data=data)
-
-@app.route('/blog/pagina/<int:page>')
-def blog(page):
-    data = BlogDataProvider().get_data(page=page)
-    return render_template('blog.html', data=data)
 
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 def checkout(step):
