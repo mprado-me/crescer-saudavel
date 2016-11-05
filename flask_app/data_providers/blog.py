@@ -4,7 +4,7 @@
 import json
 from flask import url_for
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 class BlogDataProvider():
 
@@ -27,7 +27,7 @@ class BlogDataProvider():
 				],
 				"title": "Blog",
 			},
-			"footer_data": get_footer_data(),
+			"footer_data": FooterDataProvider().get_data(),
 			"paginator_data": {
 				"previous_href": url_for("blog", page=5),
 				"next_href": url_for("blog", page=11),
@@ -107,7 +107,7 @@ class BlogDataProvider():
 				],
 				"title": "Blog",
 			},
-			"footer_data": get_footer_data(),
+			"footer_data": FooterDataProvider().get_data(),
 			"paginator_data": {
 				"n_total_pages": 10,
 				"current_page": 1,

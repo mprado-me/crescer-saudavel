@@ -3,7 +3,7 @@
 
 from flask import url_for
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 def get_home_data():
 	return sample_data_0()
@@ -11,7 +11,7 @@ def get_home_data():
 def sample_data_0():
 	data = {
 		"header_data": HeaderDataProvider().get_data(),
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 		"carousel": [
 			{
 				"img_src": "static/images/slide-img2.jpg",
@@ -168,7 +168,7 @@ def sample_data_0():
 def sample_data_1():
 	data = {
 		"header_data": HeaderDataProvider().get_data(),
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 		"sections": [
 			{
 				"title": "Novidades",
@@ -220,7 +220,7 @@ def sample_data_1():
 def sample_data_2():
 	data = {
 		"header_data": HeaderDataProvider().get_data(),
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 		"carousel": [
 			{
 				"img_src": "static/images/slide-img2.jpg",

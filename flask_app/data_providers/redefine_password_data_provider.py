@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 def get_redefine_password_data(form, email, token, msgs=[]):
 	return sample_data_0(form=form, email=email, token=token, msgs=msgs)
@@ -26,6 +26,6 @@ def sample_data_0(form, email, token, msgs):
 		"msgs": msgs,
 		"email": email,
 		"form": form,
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 	}
 	return data

@@ -3,7 +3,7 @@
 
 from flask import url_for
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 from user_info_data_provider import get_user_info_data
 
 def get_my_account_data(editable):
@@ -45,7 +45,7 @@ def sample_data_0(editable):
 				"status": "Entregue",
 			},
 		],
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 	}
 	return data
 
@@ -66,6 +66,6 @@ def sample_data_1(editable):
 		},
 		"user_info_data": get_user_info_data(editable),
 		"orders": [],
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 	}
 	return data

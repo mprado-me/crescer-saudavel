@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 class GetFailDataProvider():
 
@@ -17,6 +17,6 @@ class GetFailDataProvider():
 			},
 			"msg": msg,
 			"button": button,
-			"footer_data": get_footer_data(),
+			"footer_data": FooterDataProvider().get_data(),
 		}
 		return data

@@ -3,7 +3,7 @@
 
 from flask import url_for
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 class BlogPostDataProvider():
 	# blog_page_to_return can be None
@@ -32,7 +32,7 @@ class BlogPostDataProvider():
 				"title": post_title,
 				"blog_post_date": "17/10/2016",
 			},
-			"footer_data": get_footer_data(),
+			"footer_data": FooterDataProvider().get_data(),
 			"title": post_title,
 			"blog_url_to_return": blog_url_to_return,
 			"content": """

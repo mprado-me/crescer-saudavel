@@ -3,7 +3,7 @@
 
 from flask import url_for
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 def get_order_data(order_id):
 	return sample_data_0(order_id)
@@ -53,6 +53,6 @@ def sample_data_0(order_id):
 			"frete": "R$ 5,00",
 			"total": "R$ 37,60",
 		},
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 	}
 	return data

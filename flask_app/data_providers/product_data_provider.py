@@ -3,7 +3,7 @@
 
 from flask import url_for
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 def get_product_data(product_id):
 	return sample_data_0(product_id)
@@ -54,6 +54,6 @@ def sample_data_0(product_id):
 				"content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla. Donec a neque libero. Pellentesque aliquet.</p>"
 			},
 		],
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 	}
 	return data

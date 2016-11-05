@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 class CartDataProvider():
 
@@ -24,7 +24,7 @@ class CartDataProvider():
 				],
 				"title": "Meu carrinho",
 			},
-			"footer_data": get_footer_data(),
+			"footer_data": FooterDataProvider().get_data(),
 			"cart_table_data": {
 				"editable": True,
 				"products": [

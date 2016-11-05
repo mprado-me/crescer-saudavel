@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 from user_info_data_provider import get_user_info_data
 
 class CheckoutDataProvider():
@@ -25,7 +25,7 @@ class CheckoutDataProvider():
 				],
 				"title": "Finalização de compra",
 			},
-			"footer_data": get_footer_data(),
+			"footer_data": FooterDataProvider().get_data(),
 			"step": step,
 			"user_info_data": get_user_info_data(in_edit_info_mode),
 			"cart_table_data": {

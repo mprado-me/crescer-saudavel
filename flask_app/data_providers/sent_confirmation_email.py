@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 from flask import url_for
 
 class SentConfirmationEmailDataProvider():
@@ -30,6 +30,6 @@ class SentConfirmationEmailDataProvider():
 				"title": "Confirmação do email",
 			},
 			"email": email,
-			"footer_data": get_footer_data(),
+			"footer_data": FooterDataProvider().get_data(),
 		}
 		return data

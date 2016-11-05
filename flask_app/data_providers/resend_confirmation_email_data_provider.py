@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 def get_resend_confirmation_email_data(form, msgs=[]):
 	return sample_data_0(form, msgs)
@@ -24,6 +24,6 @@ def sample_data_0(form, msgs):
 		},
 		"msgs": msgs,
 		"form": form,
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 	}
 	return data

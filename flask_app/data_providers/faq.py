@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 class FaqDataProvider():
 
@@ -24,7 +24,7 @@ class FaqDataProvider():
 				],
 				"title": "FAQ",
 			},
-			"footer_data": get_footer_data(),
+			"footer_data": FooterDataProvider().get_data(),
 			"perguntas_e_respostas": [
 				{
 					"pergunta": "Essa é a pergunta 1?",

@@ -3,7 +3,7 @@
 
 from flask import url_for
 from header import HeaderDataProvider
-from footer_data_provider import get_footer_data
+from footer import FooterDataProvider
 
 def get_all_products_data(page, sort_method):
 	return sample_data_0(page, sort_method)
@@ -147,6 +147,6 @@ def sample_data_0(page, sort_method, category_id=None, subcategory_id=None):
 				"price": "R$ 0,00",
 			},
 		],
-		"footer_data": get_footer_data(),
+		"footer_data": FooterDataProvider().get_data(),
 	}
 	return data
