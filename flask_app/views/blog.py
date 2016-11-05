@@ -14,9 +14,9 @@ def blog_post(blog_post_id):
     if not blog_page_to_return:
         blog_page_to_return = 1
     data = BlogPostDataProvider().get_data(blog_post_id=blog_post_id, blog_page_to_return=blog_page_to_return)
-    return render_template('blog-post.html', data=data)
+    return render_template('blog/blog-post.html', data=data)
 
 @app.route('/blog/pagina/<int:page>')
 def blog(page):
     data = BlogDataProvider().get_data(page=page)
-    return render_template('blog.html', data=data)
+    return render_template('blog/blog.html', data=data)

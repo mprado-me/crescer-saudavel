@@ -45,11 +45,11 @@
       <div class="blog_block">
         <div class="blog_block_inner">
           {% with data=data["blog_post_0_data"] %}
-            {% include "blog-post-preview.html" %}
+            {% include "blog/blog-post-preview.html" %}
           {% endwith %}
           {% if data["blog_post_1_data"] %}
             {% with data=data["blog_post_1_data"] %}
-              {% include "blog-post-preview.html" %}
+              {% include "blog/blog-post-preview.html" %}
             {% endwith %}
           {% endif %}
         </div>
