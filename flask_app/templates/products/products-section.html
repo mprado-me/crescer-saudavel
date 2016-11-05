@@ -4,7 +4,7 @@
       <h2>{{ data["title"].decode('utf-8') }}</h2>
     </div>
     {% with products=data["products"] %}
-      {% include "product-flexslider.html" %}
+      {% include "products/product-flexslider.html" %}
     {% endwith %}
   </div>
 </section>
