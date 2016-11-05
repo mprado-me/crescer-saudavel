@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import url_for
-from header_data_provider import get_header_data
+from header import HeaderDataProvider
 from footer_data_provider import get_footer_data
 from user_info_data_provider import get_user_info_data
 
@@ -11,7 +11,7 @@ def get_my_account_data(editable):
 
 def sample_data_0(editable):
 	data = {
-		"header_data": get_header_data(),
+		"header_data": HeaderDataProvider().get_data(),
 		"page_heading_data": {
 			"path": [
 				{
@@ -51,7 +51,7 @@ def sample_data_0(editable):
 
 def sample_data_1(editable):
 	data = {
-		"header_data": get_header_data(),
+		"header_data": HeaderDataProvider().get_data(),
 		"page_heading_data": {
 			"path": [
 				{

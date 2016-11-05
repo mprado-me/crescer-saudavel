@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from header_data_provider import get_header_data
+from header import HeaderDataProvider
 from footer_data_provider import get_footer_data
 from flask import url_for
 
@@ -10,7 +10,7 @@ def get_forgot_password_email_sending_data():
 
 def sample_data_0():
 	data = {
-		"header_data": get_header_data(),
+		"header_data": HeaderDataProvider().get_data(),
 		"page_heading_data": {
 			"path": [
 				{

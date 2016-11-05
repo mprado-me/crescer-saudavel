@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import url_for
-from header_data_provider import get_header_data
+from header import HeaderDataProvider
 from footer_data_provider import get_footer_data
 
 class BlogPostDataProvider():
@@ -14,7 +14,7 @@ class BlogPostDataProvider():
 		post_title = "Vc acabou de ler o que seria o título do post =)"
 		blog_url_to_return = url_for("blog", page=blog_page_to_return)
 		data = {
-			"header_data": get_header_data(),
+			"header_data": HeaderDataProvider().get_data(),
 			"page_heading_data": {
 				"path": [
 					{

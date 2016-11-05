@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from header_data_provider import get_header_data
+from header import HeaderDataProvider
 from footer_data_provider import get_footer_data
 from user_info_data_provider import get_user_info_data
 
@@ -12,7 +12,7 @@ class CheckoutDataProvider():
 
 	def sample_data_0(self, step, in_edit_info_mode):
 		data = {
-			"header_data": get_header_data(),
+			"header_data": HeaderDataProvider().get_data(),
 			"page_heading_data": {
 				"path": [
 					{

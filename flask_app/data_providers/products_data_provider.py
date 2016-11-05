@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import url_for
-from header_data_provider import get_header_data
+from header import HeaderDataProvider
 from footer_data_provider import get_footer_data
 
 def get_all_products_data(page, sort_method):
@@ -20,7 +20,7 @@ def get_products_data_by_search(page, sort_method, q):
 def sample_data_0(page, sort_method, category_id=None, subcategory_id=None):
 	n_pages_in_paginator = 4
 	data = {
-		"header_data": get_header_data(),
+		"header_data": HeaderDataProvider().get_data(),
 		"page_heading_data": {
 			"path": [
 				{
