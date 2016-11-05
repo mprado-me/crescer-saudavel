@@ -8,7 +8,7 @@ from flask_app import app, db
 from ..data_providers.about_us import AboutUsDataProvider
 from ..data_providers.blog import BlogDataProvider
 from ..data_providers.blog_post_data_provider import BlogPostDataProvider
-from flask_app.data_providers.cart_data_provider import get_cart_data
+from ..data_providers.cart_data_provider import CartDataProvider
 from flask_app.data_providers.checkout_data_provider import get_checkout_data
 from flask_app.data_providers.confirmation_email_sending_data_provider import get_confirmation_email_sending_data
 from flask_app.data_providers.create_account_data_provider import get_create_account_data
@@ -58,7 +58,7 @@ def blog(page):
 
 @app.route('/carrinho')
 def cart():
-    data = get_cart_data()
+    data = CartDataProvider().get_data()
     return render_template('cart.html', cart_table_editable=True, data=data)
 
 @app.route('/adicionar-ao-carrinho/produto/<int:product_id>/quantidade/<int:quantity>', methods=['POST'])
