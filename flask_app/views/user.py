@@ -23,7 +23,7 @@ from ..data_providers.order import OrderDataProvider
 from ..data_providers.product import ProductDataProvider
 from ..data_providers.products import ProductsDataProvider
 from ..data_providers.redefine_password import RedefinePasswordData
-from flask_app.data_providers.resend_confirmation_email_data_provider import get_resend_confirmation_email_data
+from ..data_providers.resend_confirmation_email import ResendConfirmationEmailDataProvider
 
 from flask_app.utils.mock import is_user_registred
 
@@ -423,7 +423,7 @@ def redefine_password(token):
 def resend_confirmation_email():
     form = EmailForm()
     if request.method == 'GET':
-        data = get_resend_confirmation_email_data(form)
+        data = ResendConfirmationEmailDataProvider().get_data(form)
         return render_template('resend-confirmation-email.html', data=data)
     elif request.method == 'POST':
         invalid_form = not form.validate_on_submit()
@@ -445,20 +445,20 @@ def resend_confirmation_email():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             })
-            data = get_resend_confirmation_email_data(form=form, msgs=msgs)
+            data = ResendConfirmationEmailDataProvider().get_data(form=form, msgs=msgs)
             return render_template('resend-confirmation-email.html', data=data)
 
         if invalid_form:
-            data = get_resend_confirmation_email_data(form=form)
+            data = ResendConfirmationEmailDataProvider().get_data(form=form)
             return render_template('resend-confirmation-email.html', data=data)
 
         if not email_registered:
-            data = get_resend_confirmation_email_data(form=form)
+            data = ResendConfirmationEmailDataProvider().get_data(form=form)
             data["form"].email.errors.append("Email não registrado. Clique <a href='%s'>aqui</a> para criar uma nova conta." % url_for("create_account"))
             return render_template('resend-confirmation-email.html', data=data)
 
         if email_confirmed:
-            data = get_resend_confirmation_email_data(form=form)
+            data = ResendConfirmationEmailDataProvider().get_data(form=form)
             data["form"].email.errors.append("Email já confirmado. Clique <a href='%s'>aqui</a> para entrar na conta." % url_for("login"))
             return render_template('resend-confirmation-email.html', data=data)
 
@@ -473,7 +473,7 @@ def resend_confirmation_email():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao reenviar o email de confirmação. Tente novamente.",
             })
-            data = get_resend_confirmation_email_data(form=form, msgs=msgs)
+            data = ResendConfirmationEmailDataProvider().get_data(form=form, msgs=msgs)
             return render_template('resend-confirmation-email.html', data=data)
     abort(404)
 
