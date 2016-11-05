@@ -10,7 +10,7 @@ from ..data_providers.blog import BlogDataProvider
 from ..data_providers.blog_post_data_provider import BlogPostDataProvider
 from ..data_providers.cart import CartDataProvider
 from ..data_providers.checkout import CheckoutDataProvider
-from flask_app.data_providers.confirmation_email_sending_data_provider import get_confirmation_email_sending_data
+from ..data_providers.sent_confirmation_email import SentConfirmationEmailDataProvider
 from flask_app.data_providers.create_account_data_provider import get_create_account_data
 from flask_app.data_providers.fail_data_provider import get_fail_data
 from flask_app.data_providers.faq_data_provider import get_faq_data
@@ -90,12 +90,12 @@ def checkout(step):
     else:
         return redirect(url_for('login', finalizando_compra="sim"))
 
-@app.route('/confirmacao-do-email')
-def confirmation_email_sending():
+@app.route('/email-de-confirmacao-enviado')
+def sent_confirmation_email():
     email = request.args.get("email")
     if not email:
         abort(422)
-    data = get_confirmation_email_sending_data(email)
+    data = SentConfirmationEmailDataProvider().get_data(email)
     return render_template("confirmation-email-sending.html", data=data)
     
 @app.route('/criar-conta', methods=['GET', 'POST'])
@@ -138,7 +138,7 @@ def create_account():
         # Sending confirmation email message
         try:
             send_create_account_confirmation_email(user.email)
-            return redirect(url_for("confirmation_email_sending", email=request.form["email"]))
+            return redirect(url_for("sent_confirmation_email", email=request.form["email"]))
         except:
             msg = {
                 "type": "danger",
@@ -471,7 +471,7 @@ def resend_confirmation_email():
         # TODO: Restrict the resend of the same email to one hour using a new table
         try:
             send_create_account_confirmation_email(form.email.data)
-            return redirect(url_for("confirmation_email_sending", email=form.email.data))
+            return redirect(url_for("sent_confirmation_email", email=form.email.data))
         except:
             msgs = []
             msgs.append({
