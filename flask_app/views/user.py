@@ -17,7 +17,7 @@ from ..data_providers.faq import FaqDataProvider
 from ..data_providers.recover_password import RecoverPasswordDataProvider
 from ..data_providers.sent_recover_password_email import SentRecoverPasswordEmailDataProvider
 from ..data_providers.home import HomeDataProvider
-from flask_app.data_providers.login_data_provider import get_login_data
+from ..data_providers.login import LoginDataProvider
 from flask_app.data_providers.my_account_data_provider import get_my_account_data
 from flask_app.data_providers.new_password_data_provider import get_new_password_data
 from flask_app.data_providers.order_data_provider import get_order_data
@@ -263,9 +263,6 @@ def home():
 
 @app.route('/entrar', methods=['GET', 'POST'])
 def login():
-    if is_user_registred():
-        return redirect(url_for('my_account'))
-
     form = LoginForm()
     if request.method == "GET":
         msgs = []
@@ -282,7 +279,7 @@ def login():
                 "type": "info",
                 "content": "Para finalizar a compra, entre ou cadastre-se.",
             })
-        data = get_login_data(form=form, msgs=msgs)
+        data = LoginDataProvider().get_data(form=form, msgs=msgs)
         return render_template('login.html', data=data)
     else:
         invalid_form = not form.validate_on_submit()
@@ -313,25 +310,25 @@ def login():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             })
-            data = get_login_data(form=form, msgs=msgs)
+            data = LoginDataProvider().get_data(form=form, msgs=msgs)
             return render_template('login.html', data=data)
 
         if invalid_form:
-            data = get_login_data(form=form)
+            data = LoginDataProvider().get_data(form=form)
             return render_template('login.html', data=data)
 
         if not email_registered:
-            data = get_login_data(form=form)
+            data = LoginDataProvider().get_data(form=form)
             data["form"].email.errors.append("Email não registrado")
             return render_template('login.html', data=data)
 
         if not email_confirmed:
-            data = get_login_data(form=form)
+            data = LoginDataProvider().get_data(form=form)
             data["form"].email.errors.append("Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for("resend_confirmation_email") )
             return render_template('login.html', data=data)
 
         if incorrect_password:
-            data = get_login_data(form=form)
+            data = LoginDataProvider().get_data(form=form)
             data["form"].password.errors.append("Senha incorreta")
             return render_template('login.html', data=data)
 
