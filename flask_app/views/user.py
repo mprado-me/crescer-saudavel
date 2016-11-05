@@ -6,7 +6,7 @@ from flask import render_template, request, url_for, redirect, abort, session
 from flask_app import app, db
 
 from ..data_providers.about_us import AboutUsDataProvider
-from flask_app.data_providers.blog_data_provider import get_blog_data
+from ..data_providers.blog import BlogDataProvider
 from flask_app.data_providers.blog_post_data_provider import get_blog_post_data
 from flask_app.data_providers.cart_data_provider import get_cart_data
 from flask_app.data_providers.checkout_data_provider import get_checkout_data
@@ -53,7 +53,7 @@ def blog_post(blog_post_id):
 
 @app.route('/blog/pagina/<int:page>')
 def blog(page):
-    data = get_blog_data(page=page)
+    data = BlogDataProvider().get_data(page=page)
     return render_template('blog.html', data=data)
 
 @app.route('/carrinho')
