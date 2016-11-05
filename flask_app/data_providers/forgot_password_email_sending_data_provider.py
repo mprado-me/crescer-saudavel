@@ -23,7 +23,7 @@ def sample_data_0():
 				},
 				{
 					"name": "Redefinir senha",
-					"href": url_for("forgot_password"),
+					"href": url_for("recover_password"),
 				},
 				{
 					"name": "Envio do email de redefinição de senha",

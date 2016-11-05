@@ -14,7 +14,7 @@ from ..data_providers.sent_confirmation_email import SentConfirmationEmailDataPr
 from ..data_providers.create_account import CreateAccountDataProvider
 from ..data_providers.get_fail import GetFailDataProvider
 from ..data_providers.faq import FaqDataProvider
-from flask_app.data_providers.forgot_password_data_provider import get_forgot_password_data
+from ..data_providers.recover_password import RecoverPasswordDataProvider
 from flask_app.data_providers.forgot_password_email_sending_data_provider import get_forgot_password_email_sending_data
 from flask_app.data_providers.home_data_provider import get_home_data
 from flask_app.data_providers.login_data_provider import get_login_data
@@ -188,11 +188,11 @@ def faq():
     data = FaqDataProvider().get_data()
     return render_template('faq.html', data=data)
 
-@app.route('/recuperacao-de-senha', methods=["GET", "POST"])
-def forgot_password():
+@app.route('/recuperar-senha', methods=["GET", "POST"])
+def recover_password():
     form = EmailForm()
     if request.method == "GET":
-        data = get_forgot_password_data(form=form)
+        data = RecoverPasswordDataProvider().get_data(form=form)
         return render_template('forgot-password.html', data=data)
     elif request.method == "POST":
         invalid_form = not form.validate_on_submit()
@@ -215,20 +215,20 @@ def forgot_password():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             })
-            data = get_forgot_password_data(form=form, msgs=msgs)
+            data = RecoverPasswordDataProvider().get_data(form=form, msgs=msgs)
             return render_template('forgot-password.html', data=data)
 
         if invalid_form:
-            data = get_forgot_password_data(form=form)
+            data = RecoverPasswordDataProvider().get_data(form=form)
             return render_template('forgot-password.html', data=data)
 
         if not email_registered:
-            data = get_forgot_password_data(form=form)
+            data = RecoverPasswordDataProvider().get_data(form=form)
             data["form"].email.errors.append("Email não registrado")
             return render_template('forgot-password.html', data=data)
 
         if not email_confirmed:
-            data = get_forgot_password_data(form=form)
+            data = RecoverPasswordDataProvider().get_data(form=form)
             data["form"].email.errors.append("Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for("resend_confirmation_email") )
             return render_template('forgot-password.html', data=data)
 
@@ -242,7 +242,7 @@ def forgot_password():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao enviar o email de redefinição de senha. Tente novamente.",
             })
-            data = get_forgot_password_data(form=form, msgs=msgs)
+            data = RecoverPasswordDataProvider().get_data(form=form, msgs=msgs)
             return render_template('forgot-password.html', data=data)
 
     abort(404)
