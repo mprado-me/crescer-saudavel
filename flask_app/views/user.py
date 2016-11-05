@@ -16,7 +16,7 @@ from ..data_providers.get_fail import GetFailDataProvider
 from ..data_providers.faq import FaqDataProvider
 from ..data_providers.recover_password import RecoverPasswordDataProvider
 from ..data_providers.sent_recover_password_email import SentRecoverPasswordEmailDataProvider
-from flask_app.data_providers.home_data_provider import get_home_data
+from ..data_providers.home import HomeDataProvider
 from flask_app.data_providers.login_data_provider import get_login_data
 from flask_app.data_providers.my_account_data_provider import get_my_account_data
 from flask_app.data_providers.new_password_data_provider import get_new_password_data
@@ -258,7 +258,7 @@ def sent_recover_password_email():
 @app.route('/')
 @app.route('/home')
 def home():
-    data = get_home_data()
+    data = HomeDataProvider().get_data()
     return render_template('home.html', data=data)
 
 @app.route('/entrar', methods=['GET', 'POST'])
