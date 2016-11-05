@@ -17,7 +17,7 @@ from flask_login import login_required
 @app.route('/sobre-nos')
 def about_us():
     data = AboutUsDataProvider().get_data()
-    return render_template('about-us.html', data=data)
+    return render_template('general/about-us.html', data=data)
 
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 @login_required
@@ -28,19 +28,19 @@ def checkout(step):
     else:
         in_edit_info_mode = False
     data = CheckoutDataProvider().get_data(step, in_edit_info_mode)
-    return render_template('checkout.html', data=data)
+    return render_template('general/checkout.html', data=data)
 
 
 @app.route('/faq')
 def faq():
     data = FaqDataProvider().get_data()
-    return render_template('faq.html', data=data)
+    return render_template('general/faq.html', data=data)
 
 @app.route('/')
 @app.route('/home')
 def home():
     data = HomeDataProvider().get_data()
-    return render_template('home.html', data=data)
+    return render_template('general/home.html', data=data)
 
 @app.route('/minha-conta', methods=['GET', 'POST'])
 @login_required
@@ -52,7 +52,7 @@ def my_account():
         else:
             editable = False
         data = MyAccountDataProvider().get_data(editable)
-        return render_template('my-account.html', data=data)
+        return render_template('general/my-account.html', data=data)
     elif request.method == 'POST':
         # TODO: Deal with post
         return redirect(url_for('my_account'))
@@ -61,4 +61,4 @@ def my_account():
 @app.route('/pedido/<int:order_id>')
 def order(order_id):
     data = OrderDataProvider().get_data(order_id)
-    return render_template('order.html', data=data)
+    return render_template('general/order.html', data=data)
