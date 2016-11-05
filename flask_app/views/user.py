@@ -11,7 +11,7 @@ from ..data_providers.blog_post_data_provider import BlogPostDataProvider
 from ..data_providers.cart import CartDataProvider
 from ..data_providers.checkout import CheckoutDataProvider
 from ..data_providers.sent_confirmation_email import SentConfirmationEmailDataProvider
-from flask_app.data_providers.create_account_data_provider import get_create_account_data
+from ..data_providers.create_account import CreateAccountDataProvider
 from flask_app.data_providers.fail_data_provider import get_fail_data
 from flask_app.data_providers.faq_data_provider import get_faq_data
 from flask_app.data_providers.forgot_password_data_provider import get_forgot_password_data
@@ -102,7 +102,7 @@ def sent_confirmation_email():
 def create_account():
     form = CreateAccountForm()
     if request.method == "GET":
-        data = get_create_account_data(form)
+        data = CreateAccountDataProvider().get_data(form)
         return render_template('create-account.html', data=data)
     else:
         invalid_form = not form.validate_on_submit()
@@ -117,7 +117,7 @@ def create_account():
             return create_account_db_error(form)
             
         if invalid_form or email_registered:
-            data = get_create_account_data(form)
+            data = CreateAccountDataProvider().get_data(form)
             if email_registered:
                 data["form"].email.errors.append('Email já registrado')
             return render_template('create-account.html', data=data)
@@ -140,11 +140,12 @@ def create_account():
             send_create_account_confirmation_email(user.email)
             return redirect(url_for("sent_confirmation_email", email=request.form["email"]))
         except:
+            # TODO: Redirect to remand confirmation email page, the user has already been registered
             msg = {
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao enviar o email de confirmação. Tente novamente.",
             }
-            data = get_create_account_data(form=form, msg=msg)
+            data = CreateAccountDataProvider().get_data(form, msg=msg)
             return render_template('create-account.html', data=data)
 
 def create_account_db_error(form):
@@ -152,7 +153,7 @@ def create_account_db_error(form):
         "type": "danger",
         "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
     }
-    data = get_create_account_data(form=form, msg=msg)
+    data = CreateAccountDataProvider().get_data(form, msg=msg)
     return render_template('create-account.html', data=data)
 
 @app.route('/email-confirmado/<token>')
