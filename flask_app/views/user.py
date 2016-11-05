@@ -19,7 +19,7 @@ from ..data_providers.sent_recover_password_email import SentRecoverPasswordEmai
 from ..data_providers.home import HomeDataProvider
 from ..data_providers.login import LoginDataProvider
 from ..data_providers.my_account import MyAccountDataProvider
-from flask_app.data_providers.order_data_provider import get_order_data
+from ..data_providers.order import OrderDataProvider
 from flask_app.data_providers.product_data_provider import get_product_data
 from flask_app.data_providers.products_data_provider import get_all_products_data, get_products_data_by_category, get_products_data_by_category_and_subcategory, get_products_data_by_search
 from flask_app.data_providers.redefine_password_data_provider import get_redefine_password_data
@@ -351,7 +351,7 @@ def my_account():
 
 @app.route('/pedido/<int:order_id>')
 def order(order_id):
-    data = get_order_data(order_id)
+    data = OrderDataProvider().get_data(order_id)
     return render_template('order.html', data=data)
 
 @app.route('/produto/<int:product_id>')
