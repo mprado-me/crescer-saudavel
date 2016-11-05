@@ -10,7 +10,7 @@ from ..data_providers.cart import CartDataProvider
 @app.route('/carrinho')
 def cart():
     data = CartDataProvider().get_data()
-    return render_template('cart.html', cart_table_editable=True, data=data)
+    return render_template('cart/cart.html', cart_table_editable=True, data=data)
 
 @app.route('/adicionar-ao-carrinho/produto/<int:product_id>/quantidade/<int:quantity>', methods=['POST'])
 def cart_add_product(product_id, quantity):

@@ -12,8 +12,6 @@ from ..data_providers.home import HomeDataProvider
 from ..data_providers.my_account import MyAccountDataProvider
 from ..data_providers.order import OrderDataProvider
 
-from flask_app.utils.mock import is_user_registred
-
 from flask_login import login_required
 
 @app.route('/sobre-nos')
@@ -22,17 +20,16 @@ def about_us():
     return render_template('about-us.html', data=data)
 
 @app.route('/finalizacao-de-compra/passo/<int:step>')
+@login_required
 def checkout(step):
     in_edit_info_mode = request.args.get("editar")
     if in_edit_info_mode and in_edit_info_mode == "sim":
         in_edit_info_mode = True
     else:
         in_edit_info_mode = False
-    if is_user_registred():
-        data = CheckoutDataProvider().get_data(step, in_edit_info_mode)
-        return render_template('checkout.html', data=data)
-    else:
-        return redirect(url_for('login', finalizando_compra="sim"))
+    data = CheckoutDataProvider().get_data(step, in_edit_info_mode)
+    return render_template('checkout.html', data=data)
+
 
 @app.route('/faq')
 def faq():
