@@ -5,7 +5,7 @@ from flask import render_template, request, url_for, redirect, abort, session
 
 from flask_app import app, db
 
-from flask_app.data_providers.about_us_data_provider import get_about_us_data
+from ..data_providers.about_us import AboutUsDataProvider
 from flask_app.data_providers.blog_data_provider import get_blog_data
 from flask_app.data_providers.blog_post_data_provider import get_blog_post_data
 from flask_app.data_providers.cart_data_provider import get_cart_data
@@ -40,7 +40,7 @@ from flask_login import login_user, login_required, logout_user
 
 @app.route('/sobre-nos')
 def about_us():
-    data = get_about_us_data()
+    data = AboutUsDataProvider().get_data()
     return render_template('about-us.html', data=data)
 
 @app.route('/blog-post/<int:blog_post_id>')
