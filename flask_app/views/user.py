@@ -8,8 +8,8 @@ from flask_app import app, db
 from ..data_providers.about_us import AboutUsDataProvider
 from ..data_providers.blog import BlogDataProvider
 from ..data_providers.blog_post_data_provider import BlogPostDataProvider
-from ..data_providers.cart_data_provider import CartDataProvider
-from flask_app.data_providers.checkout_data_provider import get_checkout_data
+from ..data_providers.cart import CartDataProvider
+from ..data_providers.checkout import CheckoutDataProvider
 from flask_app.data_providers.confirmation_email_sending_data_provider import get_confirmation_email_sending_data
 from flask_app.data_providers.create_account_data_provider import get_create_account_data
 from flask_app.data_providers.fail_data_provider import get_fail_data
@@ -85,7 +85,7 @@ def checkout(step):
     else:
         in_edit_info_mode = False
     if is_user_registred():
-        data = get_checkout_data(step, in_edit_info_mode)
+        data = CheckoutDataProvider().get_data(step, in_edit_info_mode)
         return render_template('checkout.html', data=data)
     else:
         return redirect(url_for('login', finalizando_compra="sim"))
