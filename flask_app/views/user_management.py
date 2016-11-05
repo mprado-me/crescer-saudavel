@@ -302,7 +302,7 @@ def resend_confirmation_email():
     form = EmailForm()
     if request.method == 'GET':
         data = ResendConfirmationEmailDataProvider().get_data(form)
-        return render_template('resend-confirmation-email.html', data=data)
+        return render_template('user_management/resend-confirmation-email.html', data=data)
     elif request.method == 'POST':
         invalid_form = not form.validate_on_submit()
         email_registered = None
@@ -324,24 +324,24 @@ def resend_confirmation_email():
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             })
             data = ResendConfirmationEmailDataProvider().get_data(form=form, msgs=msgs)
-            return render_template('resend-confirmation-email.html', data=data)
+            return render_template('user_management/resend-confirmation-email.html', data=data)
 
         if invalid_form:
             data = ResendConfirmationEmailDataProvider().get_data(form=form)
-            return render_template('resend-confirmation-email.html', data=data)
+            return render_template('user_management/resend-confirmation-email.html', data=data)
 
         if not email_registered:
             data = ResendConfirmationEmailDataProvider().get_data(form=form)
             data["form"].email.errors.append(
                 "Email não registrado. Clique <a href='%s'>aqui</a> para criar uma nova conta." % url_for(
                     "create_account"))
-            return render_template('resend-confirmation-email.html', data=data)
+            return render_template('user_management/resend-confirmation-email.html', data=data)
 
         if email_confirmed:
             data = ResendConfirmationEmailDataProvider().get_data(form=form)
             data["form"].email.errors.append(
                 "Email já confirmado. Clique <a href='%s'>aqui</a> para entrar na conta." % url_for("login"))
-            return render_template('resend-confirmation-email.html', data=data)
+            return render_template('user_management/resend-confirmation-email.html', data=data)
 
         # Sending confirmation message
         # TODO: Restrict the resend of the same email to one hour using a new table
@@ -355,7 +355,7 @@ def resend_confirmation_email():
                 "content": "Falha! Ocorreu um erro ao reenviar o email de confirmação. Tente novamente.",
             })
             data = ResendConfirmationEmailDataProvider().get_data(form=form, msgs=msgs)
-            return render_template('resend-confirmation-email.html', data=data)
+            return render_template('user_management/resend-confirmation-email.html', data=data)
     abort(404)
 
 
