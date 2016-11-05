@@ -35,7 +35,7 @@ import views.user_management
 import views.products
 import views.cart
 import views.blog
-import flask_app.views.user
-import flask_app.views.admin
+import views.general
+import views.admin
 
 import models

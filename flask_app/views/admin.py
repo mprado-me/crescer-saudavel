@@ -14,7 +14,7 @@ def admin(func):
         return func(*args, **kwargs)
     return decorated_function
 
-@app.route('/painel_administrativo')
+@app.route('/painel-administrativo')
 @login_required
 @admin
 def admin_dashboard():

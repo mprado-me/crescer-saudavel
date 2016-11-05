@@ -3,7 +3,7 @@
 
 from flask import render_template, request, url_for, redirect, abort
 
-from flask_app import app
+from .. import app
 
 from ..data_providers.about_us import AboutUsDataProvider
 from ..data_providers.checkout import CheckoutDataProvider
