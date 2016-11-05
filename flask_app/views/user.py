@@ -18,7 +18,7 @@ from ..data_providers.recover_password import RecoverPasswordDataProvider
 from ..data_providers.sent_recover_password_email import SentRecoverPasswordEmailDataProvider
 from ..data_providers.home import HomeDataProvider
 from ..data_providers.login import LoginDataProvider
-from flask_app.data_providers.my_account_data_provider import get_my_account_data
+from ..data_providers.my_account import MyAccountDataProvider
 from flask_app.data_providers.new_password_data_provider import get_new_password_data
 from flask_app.data_providers.order_data_provider import get_order_data
 from flask_app.data_providers.product_data_provider import get_product_data
@@ -343,7 +343,7 @@ def my_account():
             editable = True
         else:
             editable = False
-        data = get_my_account_data(editable)
+        data = MyAccountDataProvider().get_data(editable)
         return render_template('my-account.html', data=data)
     elif request.method == 'POST':
         # TODO: Deal with post
