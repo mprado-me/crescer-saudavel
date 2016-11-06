@@ -4,6 +4,8 @@
 from flask import url_for
 from header import HeaderDataProvider
 from footer import FooterDataProvider
+from paginator import PaginatorDataProvider
+from .. import app
 
 class ProductsDataProvider():
 
@@ -20,7 +22,6 @@ class ProductsDataProvider():
 		return self.sample_data_0(page, sort_method)
 
 	def sample_data_0(self, page, sort_method, category_id=0, subcategory_id=0):
-		n_pages_in_paginator = 4
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
 			"page_heading_data": {
@@ -41,28 +42,16 @@ class ProductsDataProvider():
 				"subcategory_id": subcategory_id,
 			},
 			"sort_method": sort_method,
-			"paginator_data": {
-				"next_href": url_for("all_products", page=5, sort_method=0),
-				"pages": [
-					{
-						"number": 1,
-						"href": url_for("all_products", page=1, sort_method=0),
-					},
-					{
-						"number": 2,
-						"href": url_for("all_products", page=2, sort_method=0),
-						"active": True,
-					},
-					{
-						"number": 3,
-						"href": url_for("all_products", page=3, sort_method=0),
-					},
-					{
-						"number": 4,
-						"href": url_for("all_products", page=4, sort_method=0),
-					},
-				],
-			},
+			"paginator_data": PaginatorDataProvider().get_data(
+				current_page=page,
+				n_pages=app.config["N_PAGES_IN_PRODUCTS_PAGINATOR"],
+				total_n_pages=10,
+				url_endpoint="products_by_category",
+				other_url_params = {
+					"sort_method": 0,
+					"category_id": 0,
+				}
+			),
 			"products": [
 				{
 					"title": "Nome do produto",

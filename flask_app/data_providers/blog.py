@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
-from flask import url_for
 from header import HeaderDataProvider
 from footer import FooterDataProvider
+from paginator import PaginatorDataProvider
+from .. import app
 
 class BlogDataProvider():
 
 	def get_data(self, page=1):
-		return self.sample_data_0()
+		return self.sample_data_0(page=page)
 
-	def sample_data_0(self):
-		n_pages_in_paginator = 4
+	def sample_data_0(self, page):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
 			"page_heading_data": {
@@ -28,33 +27,12 @@ class BlogDataProvider():
 				"title": "Blog",
 			},
 			"footer_data": FooterDataProvider().get_data(),
-			"paginator_data": {
-				"previous_href": url_for("blog", page=5),
-				"next_href": url_for("blog", page=11),
-				"pages": [
-					{
-						"number": 6,
-						"href": url_for("blog", page=6),
-					},
-					{
-						"number": 7,
-						"href": url_for("blog", page=7),
-						"active": True,
-					},
-					{
-						"number": 8,
-						"href": url_for("blog", page=8),
-					},
-					{
-						"number": 9,
-						"href": url_for("blog", page=9),
-					},
-					{
-						"number": 10,
-						"href": url_for("blog", page=10),
-					},
-				],
-			},
+			"paginator_data": PaginatorDataProvider().get_data(
+				current_page=page,
+				n_pages=app.config["N_PAGES_IN_BLOG_PAGINATOR"],
+				total_n_pages=7,
+				url_endpoint="blog",
+			),
 			# posts list contains only the the posts of this page
 			"posts": [
 				{
