@@ -8,7 +8,7 @@ from flask_login import login_user, logout_user
 from .. import app, db
 
 from ..forms import CreateAccountForm, LoginForm, EmailForm, RedefinePasswordForm
-from ..models import User
+from ..models.user import User
 from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
 from ..utils.security import ts
 

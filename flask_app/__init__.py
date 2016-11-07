@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -25,7 +23,7 @@ login_manager.init_app(app)
 login_manager.login_view =  "login"
 
 # The order of this import matter. models.py uses bcrypt and db
-from .models import User
+from models.user import User
 
 @login_manager.user_loader
 def load_user(user_id):
