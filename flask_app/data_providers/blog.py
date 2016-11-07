@@ -9,7 +9,7 @@ from .. import app
 class BlogDataProvider():
 
 	def get_data(self, page=1):
-		return self.sample_data_0(page=page)
+		return self.sample_data_1(page=page)
 
 	def get_page_heading_data(self):
 		return {
@@ -72,8 +72,7 @@ class BlogDataProvider():
 		}
 		return data
 
-	def sample_data_1(self):
-		n_pages_in_paginator = 4
+	def sample_data_1(self, page):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
 			"page_heading_data": {
@@ -89,11 +88,12 @@ class BlogDataProvider():
 				"title": "Blog",
 			},
 			"footer_data": FooterDataProvider().get_data(),
-			"paginator_data": {
-				"n_total_pages": 10,
-				"current_page": 1,
-				"n_pages_in_paginator": n_pages_in_paginator
-			},
+			"paginator_data": PaginatorDataProvider().get_data(
+				current_page=page,
+				n_pages=app.config["N_PAGES_IN_BLOG_PAGINATOR"],
+				total_n_pages=7,
+				url_endpoint="blog",
+			),
 			# posts list contains only the the posts of this page
 			"posts": [
 
