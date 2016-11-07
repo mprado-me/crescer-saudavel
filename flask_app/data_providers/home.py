@@ -10,6 +10,69 @@ class HomeDataProvider():
 	def get_data(self):
 		return self.sample_data_0()
 
+	def get_section(self, section_title):
+		return {
+			"title": section_title,
+			"products": [
+				{
+					"title": "Nome do produto",
+					"product_id": 0,
+					"href": url_for("product", product_id=0),
+					"img_src": "/static/images/products/p1.jpg",
+					"price": "R$ 0,00",
+				},
+				{
+					"title": "Nome do produto",
+					"product_id": 0,
+					"href": url_for("product", product_id=0),
+					"img_src": "/static/images/products/p1.jpg",
+					"price": "R$ 0,00",
+				},
+				{
+					"title": "Nome do produto",
+					"product_id": 0,
+					"href": url_for("product", product_id=0),
+					"img_src": "/static/images/products/p1.jpg",
+					"price": "R$ 0,00",
+				},
+				{
+					"title": "Nome do produto",
+					"product_id": 0,
+					"href": url_for("product", product_id=0),
+					"img_src": "/static/images/products/p1.jpg",
+					"price": "R$ 0,00",
+				},
+				{
+					"title": "Nome do produto",
+					"product_id": 0,
+					"href": url_for("product", product_id=0),
+					"img_src": "/static/images/products/p1.jpg",
+					"price": "R$ 0,00",
+				},
+				{
+					"title": "Nome do produto",
+					"product_id": 0,
+					"href": url_for("product", product_id=0),
+					"img_src": "/static/images/products/p1.jpg",
+					"price": "R$ 0,00",
+				},
+				{
+					"title": "Nome do produto",
+					"product_id": 0,
+					"href": url_for("product", product_id=0),
+					"img_src": "/static/images/products/p1.jpg",
+					"price": "R$ 0,00",
+				},
+				{
+					"title": "Nome do produto",
+					"product_id": 0,
+					"href": url_for("product", product_id=0),
+					"img_src": "/static/images/products/p1.jpg",
+					"price": "R$ 0,00",
+				},
+			]
+		}
+
 	def sample_data_0(self):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
@@ -27,128 +90,9 @@ class HomeDataProvider():
 				},
 			],
 			"sections": [
-				{
-					"title": "Novidades",
-					"products": [
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-					]
-				},
-				{
-					"title": "Mais vendidos",
-					"products": [
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-					]
-				},
+				self.get_section("Ofertas"),
+				self.get_section("Novidades"),
+				self.get_section("Mais vendidos"),
 			],
 			"blog_post_0_data": {
 				"title": "Lorem ipsum dolor sit amet, consectetur adipiscing",
@@ -167,47 +111,14 @@ class HomeDataProvider():
 		}
 		return data
 
-	def sample_data_1():
+	def sample_data_1(self):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
 			"footer_data": FooterDataProvider().get_data(),
 			"sections": [
-				{
-					"title": "Novidades",
-					"products": [
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-					]
-				},
-				{
-					"title": "Novidades",
-					"products": [
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-					]
-				},
-				{
-					"title": "Mais vendidos",
-					"products": [
-					]
-				},
+				self.get_section("Ofertas"),
+				self.get_section("Novidades"),
+				self.get_section("Mais vendidos"),
 			],
 			"blog_post_0_data": {
 				"title": "Lorem ipsum dolor sit amet, consectetur adipiscing",
@@ -219,7 +130,7 @@ class HomeDataProvider():
 		}
 		return data
 
-	def sample_data_2():
+	def sample_data_2(self):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
 			"footer_data": FooterDataProvider().get_data(),
@@ -231,37 +142,9 @@ class HomeDataProvider():
 				},
 			],
 			"sections": [
-				{
-					"title": "Novidades",
-					"products": [
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-					]
-				},
-				{
-					"title": "Novidades",
-					"products": [
-						{
-							"title": "Nome do produto",
-							"product_id": 0,
-							"href": url_for("product", product_id=0),
-							"img_src": "/static/images/products/p1.jpg",
-							"price": "R$ 0,00",
-						},
-					]
-				},
+				self.get_section("Ofertas"),
+				self.get_section("Novidades"),
+				self.get_section("Mais vendidos"),
 			],
 		}
 		return data
