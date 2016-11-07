@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, url_for, redirect, abort
+from flask import render_template, request, url_for, redirect, abort, session
 
 from .. import app
 
@@ -22,12 +22,13 @@ def about_us():
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 @login_required
 def checkout(step):
+    user_email=session["user_id"]
     in_edit_info_mode = request.args.get("editar")
     if in_edit_info_mode and in_edit_info_mode == "sim":
         in_edit_info_mode = True
     else:
         in_edit_info_mode = False
-    data = CheckoutDataProvider().get_data(step, in_edit_info_mode)
+    data = CheckoutDataProvider().get_data(step, in_edit_info_mode, user_email=user_email)
     return render_template('general/checkout.html', data=data)
 
 
