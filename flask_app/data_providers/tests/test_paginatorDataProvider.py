@@ -1,5 +1,6 @@
-from unittest import TestCase
 from ..paginator import PaginatorDataProvider
+
+from unittest import TestCase
 
 class TestPaginatorDataProvider(TestCase):
     def test_get_pages_n_pages_1_total_9(self):
