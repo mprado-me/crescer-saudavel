@@ -20,7 +20,7 @@ from ..data_providers.redefine_password import RedefinePasswordData
 from ..data_providers.resend_confirmation_email import ResendConfirmationEmailDataProvider
 
 from flask import abort, redirect, render_template, request, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_required, login_user, logout_user
 
 @app.route('/email-de-confirmacao-enviado')
 def sent_confirmation_email():
@@ -361,6 +361,7 @@ def resend_confirmation_email():
 
 
 @app.route('/sair')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))

@@ -59,6 +59,7 @@ def my_account():
     abort(404)
 
 @app.route('/pedido/<int:order_id>')
+@login_required
 def order(order_id):
     data = OrderDataProvider().get_data(order_id)
     return render_template('general/order.html', data=data)
