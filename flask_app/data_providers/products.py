@@ -19,7 +19,7 @@ class ProductsDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Produtos",
@@ -38,7 +38,7 @@ class ProductsDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Produtos",
@@ -63,7 +63,7 @@ class ProductsDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Produtos",
@@ -88,7 +88,7 @@ class ProductsDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Busca",
@@ -122,84 +122,84 @@ class ProductsDataProvider():
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 			],

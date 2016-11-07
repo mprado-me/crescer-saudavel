@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from flask import url_for
+
 class CartTableDataProvider():
     def get_fresh_order_data(self, user_email, editable):
         return self.get_sample_data_0(editable)
@@ -11,7 +13,7 @@ class CartTableDataProvider():
             "products": [
                 {
                     "id": 1,
-                    "image_href": "/static/images/products/p8.jpg",
+                    "image_href": url_for("static", filename="images/products/p8.jpg"),
                     "title": "Papinha de maça - 500g",
                     "unit_price": "R$ 10,00",
                     "quantity": 2,
@@ -19,7 +21,7 @@ class CartTableDataProvider():
                 },
                 {
                     "id": 2,
-                    "image_href": "/static/images/products/p8.jpg",
+                    "image_href": url_for("static", filename="images/products/p8.jpg"),
                     "title": "Papinha de arroz doce - 200g",
                     "unit_price": "R$ 4,20",
                     "quantity": 3,
@@ -37,7 +39,7 @@ class CartTableDataProvider():
             "products": [
                 {
                     "id": 1,
-                    "image_href": "/static/images/products/p8.jpg",
+                    "image_href": url_for("static", filename="images/products/p8.jpg"),
                     "title": "Papinha de maça - 500g",
                     "unit_price": "R$ 10,00",
                     "quantity": 2,
@@ -45,7 +47,7 @@ class CartTableDataProvider():
                 },
                 {
                     "id": 2,
-                    "image_href": "/static/images/products/p8.jpg",
+                    "image_href": url_for("static", filename="images/products/p8.jpg"),
                     "title": "Papinha de arroz doce - 200g",
                     "unit_price": "R$ 4,20",
                     "quantity": 3,

@@ -5,6 +5,8 @@ from header import HeaderDataProvider
 from user_info import UserInfoDataProvider
 from footer import FooterDataProvider
 
+from flask import url_for
+
 class MyAccountDataProvider():
 
 	def get_data(self, editable):
@@ -15,7 +17,7 @@ class MyAccountDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Minha conta",
@@ -60,7 +62,7 @@ class MyAccountDataProvider():
 				"path": [
 					{
 						"name": "Home",
-						"href": "/",
+						"href": url_for("home"),
 					},
 					{
 						"name": "Minha conta",

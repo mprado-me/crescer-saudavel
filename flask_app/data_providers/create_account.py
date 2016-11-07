@@ -4,6 +4,8 @@
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
+from flask import url_for
+
 class CreateAccountDataProvider():
 
 	def get_data(self, form, msg=None):
@@ -14,7 +16,7 @@ class CreateAccountDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Criar conta",

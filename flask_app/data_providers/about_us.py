@@ -4,6 +4,8 @@
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
+from flask import url_for
+
 class AboutUsDataProvider():
 
 	def get_data(self):
@@ -14,7 +16,7 @@ class AboutUsDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Sobre nós",
@@ -41,18 +43,7 @@ class AboutUsDataProvider():
 	def sample_data_1(self):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Sobre nós",
-					},
-				],
-				"title": "Sobre nós",
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"footer_data": FooterDataProvider().get_data(),
 			"content":
 				"""	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>

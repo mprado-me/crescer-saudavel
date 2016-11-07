@@ -18,7 +18,7 @@ class OrderDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Minha conta",

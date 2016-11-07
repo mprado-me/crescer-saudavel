@@ -4,6 +4,8 @@
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
+from flask import url_for
+
 class ProductDataProvider():
 
 	def get_data(self, product_id):
@@ -14,7 +16,7 @@ class ProductDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Produto",
@@ -27,7 +29,7 @@ class ProductDataProvider():
 		product_title = "Papinha de maça - 500g"
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": self.get_page_heading_data(),
+			"page_heading_data": self.get_page_heading_data(product_title=product_title),
 			"title": product_title,
 			"in_stock": True,
 			"price": "R$ 9,80",

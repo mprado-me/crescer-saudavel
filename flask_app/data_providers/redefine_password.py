@@ -4,6 +4,8 @@
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
+from flask import url_for
+
 class RedefinePasswordData():
 
 	def get_data(self, form, email, token, msgs=[]):
@@ -14,7 +16,7 @@ class RedefinePasswordData():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Redefinir senha",

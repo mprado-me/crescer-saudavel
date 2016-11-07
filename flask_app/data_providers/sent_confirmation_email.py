@@ -16,7 +16,7 @@ class SentConfirmationEmailDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Criar conta",

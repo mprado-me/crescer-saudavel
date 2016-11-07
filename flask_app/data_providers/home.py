@@ -19,56 +19,56 @@ class HomeDataProvider():
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 				{
 					"title": "Nome do produto",
 					"product_id": 0,
 					"href": url_for("product", product_id=0),
-					"img_src": "/static/images/products/p1.jpg",
+					"img_src": url_for("static", filename="images/products/p1.jpg"),
 					"price": "R$ 0,00",
 				},
 			]
@@ -80,12 +80,12 @@ class HomeDataProvider():
 			"footer_data": FooterDataProvider().get_data(),
 			"carousel": [
 				{
-					"img_src": "static/images/slide-img2.jpg",
+					"img_src": url_for("static", filename="images/slide-img2.jpg"),
 					"title": "Título 1",
 					"subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam facilisis, nisi in convallis dignissim."
 				},
 				{
-					"img_src": "static/images/slide-img2.jpg",
+					"img_src": url_for("static", filename="images/slide-img2.jpg"),
 					"title": "Título 2",
 					"subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam facilisis, nisi in convallis dignissim."
 				},
@@ -97,14 +97,14 @@ class HomeDataProvider():
 			],
 			"blog_post_0_data": {
 				"title": "Lorem ipsum dolor sit amet, consectetur adipiscing",
-				"img_src": "static/images/blog-img1.jpg",
+				"img_src": url_for("static", filename="images/blog-img1.jpg"),
 				"href": url_for('blog_post', blog_post_id=0),
 				"day": "19",
 				"month": "Março",
 			},
 			"blog_post_1_data": {
 				"title": "Lorem ipsum dolor sit amet, consectetur adipiscing",
-				"img_src": "static/images/blog-img1.jpg",
+				"img_src": url_for("static", filename="images/blog-img1.jpg"),
 				"href": url_for('blog_post', blog_post_id=0),
 				"day": "06",
 				"month": "Março",
@@ -123,7 +123,7 @@ class HomeDataProvider():
 			],
 			"blog_post_0_data": {
 				"title": "Lorem ipsum dolor sit amet, consectetur adipiscing",
-				"img_src": "static/images/blog-img1.jpg",
+				"img_src": url_for("static", filename="images/blog-img1.jpg"),
 				"href": url_for('blog_post', blog_post_id=0),
 				"day": "19",
 				"month": "Março",
@@ -137,7 +137,7 @@ class HomeDataProvider():
 			"footer_data": FooterDataProvider().get_data(),
 			"carousel": [
 				{
-					"img_src": "static/images/slide-img2.jpg",
+					"img_src": url_for("static", filename="images/slide-img2.jpg"),
 					"title": "Título 1",
 					"subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam facilisis, nisi in convallis dignissim."
 				},

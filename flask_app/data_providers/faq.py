@@ -4,6 +4,8 @@
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
+from flask import url_for
+
 class FaqDataProvider():
 
 	def get_data(self):
@@ -14,7 +16,7 @@ class FaqDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "FAQ",

@@ -91,14 +91,14 @@ class HeaderDataProvider():
 					{
 						"title": "Papinha de maça - 500g",
 						"href": url_for('product', product_id=0),
-						"img_src": "/static/images/products/p4.jpg",
+						"img_src": url_for("static", filename="images/products/p4.jpg"),
 						"quantity": 2,
 						"unity_price": "R$ 10,00"
 					},
 					{
 						"title": "Papinha de arroz doce - 200g",
 						"href": url_for('product', product_id=1),
-						"img_src": "/static/images/products/p4.jpg",
+						"img_src": url_for("static", filename="images/products/p4.jpg"),
 						"quantity": 3,
 						"unity_price": "R$ 4,20"
 					}

@@ -6,6 +6,8 @@ from cart_table import CartTableDataProvider
 from total_table import TotalTableDataProvider
 from footer import FooterDataProvider
 
+from flask import url_for
+
 class CartDataProvider():
 
 	def get_data(self, user_email):
@@ -16,7 +18,7 @@ class CartDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Meu carrinho",

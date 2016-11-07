@@ -4,6 +4,8 @@
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
+from flask import url_for
+
 class ResendConfirmationEmailDataProvider():
 
 	def get_data(self, form, msgs=[]):
@@ -14,7 +16,7 @@ class ResendConfirmationEmailDataProvider():
 			"path": [
 				{
 					"name": "Home",
-					"href": "/",
+					"href": url_for("home"),
 				},
 				{
 					"name": "Reenviar email de confirmação",
