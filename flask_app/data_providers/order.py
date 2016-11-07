@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import url_for
-
 from header import HeaderDataProvider
 from cart_table import CartTableDataProvider
 from total_table import TotalTableDataProvider
 from footer import FooterDataProvider
+
+from flask import url_for
 
 class OrderDataProvider():
 

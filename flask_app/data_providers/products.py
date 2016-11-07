@@ -3,11 +3,11 @@
 
 from .. import app
 
-from flask import url_for
-
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 from paginator import PaginatorDataProvider
+
+from flask import url_for
 
 class ProductsDataProvider():
 
