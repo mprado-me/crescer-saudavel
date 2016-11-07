@@ -5,6 +5,7 @@ from ..paginator import PaginatorDataProvider
 
 from unittest import TestCase
 
+
 class TestPaginatorDataProvider(TestCase):
     def test_get_pages_n_pages_1_total_9(self):
         self.assertEqual(PaginatorDataProvider().get_pages_number(1, 1, 9), [1])
@@ -27,7 +28,6 @@ class TestPaginatorDataProvider(TestCase):
         self.assertEqual(PaginatorDataProvider().get_pages_number(7, 2, 9), [7, 8])
         self.assertEqual(PaginatorDataProvider().get_pages_number(8, 2, 9), [7, 8])
         self.assertEqual(PaginatorDataProvider().get_pages_number(9, 2, 9), [8, 9])
-
 
     def test_get_pages_n_pages_3_total_9(self):
         self.assertEqual(PaginatorDataProvider().get_pages_number(1, 3, 9), [1, 2, 3])
@@ -61,5 +61,3 @@ class TestPaginatorDataProvider(TestCase):
         self.assertEqual(PaginatorDataProvider().get_pages_number(7, 5, 9), [5, 6, 7, 8, 9])
         self.assertEqual(PaginatorDataProvider().get_pages_number(8, 5, 9), [5, 6, 7, 8, 9])
         self.assertEqual(PaginatorDataProvider().get_pages_number(9, 5, 9), [5, 6, 7, 8, 9])
-
-

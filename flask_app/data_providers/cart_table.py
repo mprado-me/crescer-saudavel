@@ -3,7 +3,11 @@
 
 from flask import url_for
 
-class CartTableDataProvider():
+
+class CartTableDataProvider:
+    def __init__(self):
+        pass
+
     def get_fresh_order_data(self, user_email, editable):
         return self.get_sample_data_0(editable)
 

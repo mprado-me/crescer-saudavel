@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class TotalTableDataProvider():
+
+class TotalTableDataProvider:
+    def __init__(self):
+        pass
+
     def get_fresh_order_data(self, user_email):
         return self.get_sample_data_0()
 
