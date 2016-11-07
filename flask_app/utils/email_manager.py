@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from .. import app, mail
+
 from ..utils.security import ts
 
 from flask import render_template, url_for
