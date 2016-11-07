@@ -10,7 +10,7 @@ class BlogPostDataProvider():
 	def get_data(self, blog_post_id, blog_page_to_return):
 		return self.sample_data_0(blog_page_to_return)
 
-	def get_page_heading_data(self):
+	def get_page_heading_data(self, post_title, blog_url_to_return):
 		return {
 			"path": [
 				{
@@ -34,7 +34,7 @@ class BlogPostDataProvider():
 		blog_url_to_return = url_for("blog", page=blog_page_to_return)
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": self.get_page_heading_data(),
+			"page_heading_data": self.get_page_heading_data(post_title=post_title, blog_url_to_return=blog_url_to_return),
 			"footer_data": FooterDataProvider().get_data(),
 			"title": post_title,
 			"blog_url_to_return": blog_url_to_return,
