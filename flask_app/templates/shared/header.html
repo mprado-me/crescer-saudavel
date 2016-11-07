@@ -15,10 +15,10 @@
 				<div class="header-container container">
 					<div class="row">
 						<div class="logo"> 
-							<a href="/" title="Home">
+							<a href="{{ url_for('home') }}" title="Home">
 							<div>
-								<img class="logo-img" src="/static/images/logo.png" alt="Logo da loja">
-								<img class="mini-logo-img" src="/static/images/mini-logo.png" alt="Logo da loja">
+								<img class="logo-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo da loja">
+								<img class="mini-logo-img" src="{{ url_for('static', filename='images/mini-logo.png') }}" alt="Logo da loja">
 							</div>
 							</a> 
 						</div>
@@ -82,10 +82,12 @@
 											{% for product in data["cart_data"]["products"] %}
 												<li class="item first">
 													<div class="item-inner">
-														<a class="product-image" title="{{product['title']}}" href="{{product['href']}}"><img alt="{{product['title']}}" src="{{product['img_src']}}"></a>
+														<a class="product-image" title="{{product['title']}}" href="{{product['href']}}">
+															<img alt="{{product['title']}}" src="{{product['img_src']}}">
+														</a>
 														<div class="product-details">
-															<strong>{{product["quantity"]}}</strong> x <span class="price">{{product["unity_price"]}}</span>
-															<p class="product-name"><a href="product-detail.html">{{product['title']}}</a></p>
+															<a href="{{product['href']}}"><strong>{{product["quantity"]}}</strong> x <span class="price">{{product["unity_price"]}}</span></a>
+															<p class="product-name"><a href="{{product['href']}}">{{product['title']}}</a></p>
 														</div>
 													</div>
 												</li>

@@ -19,7 +19,7 @@
         <td class="hidden-table"><a href="{{url_for('product', product_id=product['id'])}}" title="{{product['title']}}" class="product-image"><img src="{{product['image_href']}}" width="75" alt="{{product['title']}}"></a></td>
         <td>
           <h2 class="product-name">
-            <a href="product-detail.html">{{ product['title'] }}</a>
+            <a href="{{url_for('product', product_id=product['id'])}}">{{ product['title'] }}</a>
           </h2>
         </td>
         <td class="hidden-table">
