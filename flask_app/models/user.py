@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from .. import bcrypt, db
 
 from sqlalchemy.ext.hybrid import hybrid_property

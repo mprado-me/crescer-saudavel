@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 DEBUG = False
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
