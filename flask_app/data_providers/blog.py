@@ -11,21 +11,24 @@ class BlogDataProvider():
 	def get_data(self, page=1):
 		return self.sample_data_0(page=page)
 
+	def get_page_heading_data(self):
+		return {
+			"path": [
+				{
+					"name": "Home",
+					"href": "/",
+				},
+				{
+					"name": "Blog",
+				},
+			],
+			"title": "Blog",
+		}
+
 	def sample_data_0(self, page):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Blog",
-					},
-				],
-				"title": "Blog",
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"footer_data": FooterDataProvider().get_data(),
 			"paginator_data": PaginatorDataProvider().get_data(
 				current_page=page,

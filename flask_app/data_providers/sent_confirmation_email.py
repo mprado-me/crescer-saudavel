@@ -10,25 +10,28 @@ class SentConfirmationEmailDataProvider():
 	def get_data(self, email):
 		return self.sample_data_0(email)
 
+	def get_page_heading_data(self):
+		return {
+			"path": [
+				{
+					"name": "Home",
+					"href": "/",
+				},
+				{
+					"name": "Criar conta",
+					"href": url_for("create_account"),
+				},
+				{
+					"name": "Confirmação do email",
+				},
+			],
+			"title": "Confirmação do email",
+		}
+
 	def sample_data_0(self, email):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Criar conta",
-						"href": url_for("create_account"),
-					},
-					{
-						"name": "Confirmação do email",
-					},
-				],
-				"title": "Confirmação do email",
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"email": email,
 			"footer_data": FooterDataProvider().get_data(),
 		}

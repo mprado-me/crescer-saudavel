@@ -9,21 +9,24 @@ class ResendConfirmationEmailDataProvider():
 	def get_data(self, form, msgs=[]):
 		return self.sample_data_0(form, msgs)
 
+	def get_page_heading_data(self):
+		return {
+			"path": [
+				{
+					"name": "Home",
+					"href": "/",
+				},
+				{
+					"name": "Reenviar email de confirmação",
+				},
+			],
+			"title": "Reenviar email de confirmação",
+		}
+
 	def sample_data_0(self, form, msgs):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Reenviar email de confirmação",
-					},
-				],
-				"title": "Reenviar email de confirmação",
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"msgs": msgs,
 			"form": form,
 			"footer_data": FooterDataProvider().get_data(),

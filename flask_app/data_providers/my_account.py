@@ -11,21 +11,24 @@ class MyAccountDataProvider():
 	def get_data(self, editable):
 		return self.sample_data_1(editable)
 
+	def get_page_heading_data(self):
+		return {
+			"path": [
+				{
+					"name": "Home",
+					"href": "/",
+				},
+				{
+					"name": "Minha conta",
+				},
+			],
+			"title": "Minha conta",
+		}
+
 	def sample_data_0(self, editable):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Minha conta",
-					},
-				],
-				"title": "Minha conta",
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"user_info_data": get_user_info_data(editable),
 			"orders": [
 				{

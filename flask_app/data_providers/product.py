@@ -10,22 +10,25 @@ class ProductDataProvider():
 	def get_data(self, product_id):
 		return self.sample_data_0(product_id)
 
+	def get_page_heading_data(self, product_title):
+		return {
+			"path": [
+				{
+					"name": "Home",
+					"href": "/",
+				},
+				{
+					"name": "Produto",
+				},
+			],
+			"title": product_title,
+		}
+
 	def sample_data_0(self, product_id):
 		product_title = "Papinha de maça - 500g"
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Produto",
-					},
-				],
-				"title": product_title,
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"title": product_title,
 			"in_stock": True,
 			"price": "R$ 9,80",

@@ -9,21 +9,24 @@ class CartDataProvider():
 	def get_data(self):
 		return self.sample_data_0()
 
+	def get_page_heading_data(self):
+		return {
+			"path": [
+				{
+					"name": "Home",
+					"href": "/",
+				},
+				{
+					"name": "Meu carrinho",
+				},
+			],
+			"title": "Meu carrinho",
+		}
+
 	def sample_data_0(self):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Meu carrinho",
-					},
-				],
-				"title": "Meu carrinho",
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"footer_data": FooterDataProvider().get_data(),
 			"cart_table_data": {
 				"editable": True,

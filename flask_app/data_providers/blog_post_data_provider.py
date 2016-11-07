@@ -10,28 +10,31 @@ class BlogPostDataProvider():
 	def get_data(self, blog_post_id, blog_page_to_return):
 		return self.sample_data_0(blog_page_to_return)
 
+	def get_page_heading_data(self):
+		return {
+			"path": [
+				{
+					"name": "Home",
+					"href": "/",
+				},
+				{
+					"name": "Blog",
+					"href": blog_url_to_return,
+				},
+				{
+					"name": post_title,
+				},
+			],
+			"title": post_title,
+			"blog_post_date": "17/10/2016",
+		}
+
 	def sample_data_0(self, blog_page_to_return):
 		post_title = "Vc acabou de ler o que seria o título do post =)"
 		blog_url_to_return = url_for("blog", page=blog_page_to_return)
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Blog",
-						"href": blog_url_to_return,
-					},
-					{
-						"name": post_title,
-					},
-				],
-				"title": post_title,
-				"blog_post_date": "17/10/2016",
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"footer_data": FooterDataProvider().get_data(),
 			"title": post_title,
 			"blog_url_to_return": blog_url_to_return,

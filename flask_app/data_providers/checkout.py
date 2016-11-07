@@ -10,21 +10,24 @@ class CheckoutDataProvider():
 	def get_data(self, step, in_edit_info_mode):
 		return self.sample_data_0(step, in_edit_info_mode)
 
+	def get_page_heading_data(self):
+		return {
+			"path": [
+				{
+					"name": "Home",
+					"href": "/",
+				},
+				{
+					"name": "Finalização de compra",
+				},
+			],
+			"title": "Finalização de compra",
+		}
+
 	def sample_data_0(self, step, in_edit_info_mode):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": {
-				"path": [
-					{
-						"name": "Home",
-						"href": "/",
-					},
-					{
-						"name": "Finalização de compra",
-					},
-				],
-				"title": "Finalização de compra",
-			},
+			"page_heading_data": self.get_page_heading_data(),
 			"footer_data": FooterDataProvider().get_data(),
 			"step": step,
 			"user_info_data": get_user_info_data(in_edit_info_mode),
