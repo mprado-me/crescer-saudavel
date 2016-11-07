@@ -1,6 +1,6 @@
-from sqlalchemy.ext.hybrid import hybrid_property
+from .. import bcrypt, db
 
-from flask_app import bcrypt, db
+from sqlalchemy.ext.hybrid import hybrid_property
 
 class User(db.Model):
     email = db.Column(db.String(256), primary_key=True, unique=True)
