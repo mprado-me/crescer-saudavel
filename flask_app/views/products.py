@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request
-
-from flask_app import app
+from .. import app
 
 from ..data_providers.product import ProductDataProvider
 from ..data_providers.products import ProductsDataProvider
+
+from flask import render_template, request
 
 @app.route('/produto/<int:product_id>')
 def product(product_id):

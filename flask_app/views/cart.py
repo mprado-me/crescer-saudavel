@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, url_for, redirect, session
-
-from flask_login import login_required
-
-from flask_app import app
+from .. import app
 
 from ..data_providers.cart import CartDataProvider
+
+from flask import redirect, render_template, session, url_for
+from flask_login import login_required
 
 @app.route('/carrinho')
 @login_required

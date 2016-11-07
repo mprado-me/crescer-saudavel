@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request
-
-from flask_app import app
+from .. import app
 
 from ..data_providers.blog import BlogDataProvider
 from ..data_providers.blog_post_data_provider import BlogPostDataProvider
+
+from flask import render_template, request
 
 @app.route('/blog-post/<int:blog_post_id>')
 def blog_post(blog_post_id):

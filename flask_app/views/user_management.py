@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, url_for, redirect, abort
-
-from flask_login import login_user, logout_user
-
 from .. import app, db
 
 from ..forms import CreateAccountForm, LoginForm, EmailForm, RedefinePasswordForm
+
 from ..models.user import User
+
 from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
 from ..utils.security import ts
 
@@ -20,6 +18,9 @@ from ..data_providers.sent_recover_password_email import SentRecoverPasswordEmai
 from ..data_providers.login import LoginDataProvider
 from ..data_providers.redefine_password import RedefinePasswordData
 from ..data_providers.resend_confirmation_email import ResendConfirmationEmailDataProvider
+
+from flask import abort, redirect, render_template, request, url_for
+from flask_login import login_user, logout_user
 
 @app.route('/email-de-confirmacao-enviado')
 def sent_confirmation_email():

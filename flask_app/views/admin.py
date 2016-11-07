@@ -1,10 +1,8 @@
-from flask import render_template, request, url_for, redirect, abort, session
+from .. import app
 
-from flask_app import app, db
-
-from functools import wraps
-
+from flask import redirect, session, url_for
 from flask_login import login_required
+from functools import wraps
 
 def admin(func):
     @wraps(func)

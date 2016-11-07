@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, url_for, redirect, abort, session
-
 from .. import app
 
 from ..data_providers.about_us import AboutUsDataProvider
@@ -12,6 +10,7 @@ from ..data_providers.home import HomeDataProvider
 from ..data_providers.my_account import MyAccountDataProvider
 from ..data_providers.order import OrderDataProvider
 
+from flask import abort, redirect, render_template, request, url_for, session
 from flask_login import login_required
 
 @app.route('/sobre-nos')
