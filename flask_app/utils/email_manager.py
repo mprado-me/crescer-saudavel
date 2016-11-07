@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, url_for
-from flask_app.utils.security import ts
+from .. import app, mail
+from ..utils.security import ts
 
+from flask import render_template, url_for
 from flask_mail import Message
-from flask_app import app, mail
 
 def send_create_account_confirmation_email(receiver_email):
 	subject = "Crescer Saudável | Confirme seu endereço de e-mail"

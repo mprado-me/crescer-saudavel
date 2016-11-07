@@ -1,5 +1,5 @@
-from itsdangerous import URLSafeTimedSerializer
+from .. import app
 
-from flask_app import app
+from itsdangerous import URLSafeTimedSerializer
 
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
