@@ -5,6 +5,7 @@ from .. import bcrypt, db
 
 from sqlalchemy.ext.hybrid import hybrid_property
 
+
 class User(db.Model):
     email = db.Column(db.String(256), primary_key=True, unique=True)
     _password = db.Column(db.String(128))
@@ -16,7 +17,7 @@ class User(db.Model):
         return self._password
 
     @password.setter
-    def _set_password(self, plaintext):
+    def password(self, plaintext):
         self._password = bcrypt.generate_password_hash(plaintext)
 
     def is_correct_password(self, plaintext):
