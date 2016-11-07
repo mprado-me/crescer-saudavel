@@ -15,8 +15,8 @@
 						{% for pergunta_e_respota in data["perguntas_e_respostas"] %}
 							{% if pergunta_e_respota["pergunta"] and pergunta_e_respota["resposta"] %}
 								<li>
-									<p>{{pergunta_e_respota["pergunta"].decode('utf-8')}}</p>
-									<p>{{pergunta_e_respota["resposta"].decode('utf-8')}}</p>
+									<p>{{pergunta_e_respota["pergunta"]}}</p>
+									<p>{{pergunta_e_respota["resposta"]}}</p>
 								</li>
 							{% else %}
 								<li>

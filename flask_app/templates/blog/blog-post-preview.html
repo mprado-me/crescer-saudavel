@@ -1,5 +1,5 @@
 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6 blog-post">
-  <h3><a href="{{ data['href'] }}">{{ data["title"].decode('utf-8') }}</a></h3>
+  <h3><a href="{{ data['href'] }}">{{ data["title"] }}</a></h3>
   <div class="blog_inner">
     <div class="blog-img"> 
       <a href="{{ data['href'] }}"> <img src="{{ data['img_src'] }}" alt="Thumbnail do post"> </a>
@@ -7,7 +7,7 @@
     </div>
     <div class="blog-info">
       <div class="post-date">
-        <time class="entry-date" datetime="2015-05-11T11:07:27+00:00"><span>{{ data['day'].decode('utf-8') }}</span><br>{{ data['month'].decode('utf-8') }}</time>
+        <time class="entry-date" datetime="2015-05-11T11:07:27+00:00"><span>{{ data['day'] }}</span><br>{{ data['month'] }}</time>
       </div>
     </div>
   </div>

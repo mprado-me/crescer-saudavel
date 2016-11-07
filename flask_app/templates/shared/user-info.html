@@ -12,13 +12,13 @@
         <div class="input-box name-firstname">
           <label>{{macros.mandatory_mark(data["editable"])}}Nome:</label>
           <div class="input-box1">
-            {{macros.input(name="first_name", class="input-text required-entry", type="text", title="Nome", value=data['first_name'].decode('utf-8'), maxlength="256", editable=data["editable"])}}
+            {{macros.input(name="first_name", class="input-text required-entry", type="text", title="Nome", value=data['first_name'], maxlength="256", editable=data["editable"])}}
           </div>
         </div>
         <div class="input-box name-lastname">
           <label>{{macros.mandatory_mark(data["editable"])}}Sobrenome:</label>
           <div class="input-box1">
-            {{macros.input(name="last_name", class="input-text required-entry", type="text", title="Sobrenome", value=data['last_name'].decode('utf-8'), maxlength="256", editable=data["editable"])}}
+            {{macros.input(name="last_name", class="input-text required-entry", type="text", title="Sobrenome", value=data['last_name'], maxlength="256", editable=data["editable"])}}
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
       <div>
         <div class="input-box-address">
           <label>{{macros.mandatory_mark(data["editable"])}}Endereço:</label>
-          {{macros.input(name="address", class="input-text required-entry", type="text", title="Endereço", value=data['address'].decode('utf-8'), editable=data["editable"])}}
+          {{macros.input(name="address", class="input-text required-entry", type="text", title="Endereço", value=data['address'], editable=data["editable"])}}
         </div>
         <div class="input-box-number">
           <label>{{macros.mandatory_mark(data["editable"])}}Número:</label>
@@ -38,7 +38,7 @@
     <li class="wide">
       <label for="billing:street1">Complemento:</label>
       <br>
-      {{macros.input(name="address_complement", class="input-text", type="text", title="Complemento", value=data['address_complement'].decode('utf-8'), editable=data["editable"])}}
+      {{macros.input(name="address_complement", class="input-text", type="text", title="Complemento", value=data['address_complement'], editable=data["editable"])}}
     </li>
     <li class="fields">
       <div class="input-box">
@@ -46,16 +46,16 @@
         {% if data["editable"] and data["state_options"] and data["state_options"]|length > 0 %}
         <select name="address_state" class="validate-select" title="Estado">
           {% if data["current_state"] %}
-            <option value={{data["current_state"]["key"]}}>{{data["current_state"]["value"].decode('utf-8')}}</option>
+            <option value={{data["current_state"]["key"]}}>{{data["current_state"]["value"]}}</option>
           {% endif %}
           {% for state in data["state_options"] %}
             {% if data["current_state"] and state["key"] != data["current_state"]["key"] %}
-              <option value={{state["key"]}}>{{state["value"].decode('utf-8')}}</option>
+              <option value={{state["key"]}}>{{state["value"]}}</option>
             {% endif %}
           {% endfor %}
         </select>
         {% else %}
-          {{macros.input(name="address_state", class="input-text required-entry", type="text", title="Estado", value=data["current_state"]["value"].decode('utf-8'), editable=False)}}
+          {{macros.input(name="address_state", class="input-text required-entry", type="text", title="Estado", value=data["current_state"]["value"], editable=False)}}
         {% endif %}
       </div>
       <div class="input-box">
@@ -63,27 +63,27 @@
         {% if data["editable"] %}
         <select name="address_city" class="validate-select" title="Cidade">
           {% if data["current_city"] %}
-            <option value={{data["current_city"]["key"]}}>{{data["current_city"]["value"].decode('utf-8')}}</option>
+            <option value={{data["current_city"]["key"]}}>{{data["current_city"]["value"]}}</option>
           {% endif %}
           {% for city in data["city_options"] %}
             {% if data["current_city"] and city["key"] != data["current_city"]["key"] %}
-              <option value={{city["key"]}}>{{city["value"].decode('utf-8')}}</option>
+              <option value={{city["key"]}}>{{city["value"]}}</option>
             {% endif %}
           {% endfor %}
         </select>
         {% else %}
-        {{macros.input(name="address_city", class="input-text required-entry", type="text", title="Cidade", value=data["current_city"]["value"].decode('utf-8'), editable=False)}}
+        {{macros.input(name="address_city", class="input-text required-entry", type="text", title="Cidade", value=data["current_city"]["value"], editable=False)}}
         {% endif %}
       </div>
     </li>
     <li class="fields">
       <div class="input-box">
         <label>{{macros.mandatory_mark(data["editable"])}}CEP:</label>
-        {{macros.input(name="address_cep", class="input-text required-entry", type="text", pattern="\d\d\d\d\d-\d\d\d|\d\d\d\d\d\d\d\d|\d\d\d\d\d \d\d\d", title="CEP - Formatos aceitos: 00000-000, 00000000, 00000 000", value=data["cep"].decode('utf-8'), editable=data["editable"])}}
+        {{macros.input(name="address_cep", class="input-text required-entry", type="text", pattern="\d\d\d\d\d-\d\d\d|\d\d\d\d\d\d\d\d|\d\d\d\d\d \d\d\d", title="CEP - Formatos aceitos: 00000-000, 00000000, 00000 000", value=data["cep"], editable=data["editable"])}}
       </div>
       <div class="input-box">
         <label>{{macros.mandatory_mark(data["editable"])}}Telefone:</label>
-        {{macros.input(name="tel_number", class="input-text required-entry", type="text", title="Número de telefone residencial ou celular", value=data["tel"].decode('utf-8'), editable=data["editable"])}}
+        {{macros.input(name="tel_number", class="input-text required-entry", type="text", title="Número de telefone residencial ou celular", value=data["tel"], editable=data["editable"])}}
       </div>
     </li>
     {% if data["editable"] %}

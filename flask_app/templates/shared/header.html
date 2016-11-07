@@ -34,7 +34,7 @@
 										<ul id="nav" class="hidden-xs">
 											{% for menu_item in data["menu_data"] %}
 												<li class="mega-menu">
-													<a href="{{ menu_item['href'] }}" class="level-top"><span>{{ menu_item["name"].decode('utf-8') }}</span></a>
+													<a href="{{ menu_item['href'] }}" class="level-top"><span>{{ menu_item["name"] }}</span></a>
 													{% if menu_item["children"] and menu_item["children"]|length > 0 %}
 														<div class="level0-wrapper dropdown-6col">
 															<div class="container">
@@ -43,12 +43,12 @@
 																		<ul class="level0">
 																			{% for children1 in menu_item["children"] %}
 																				<li class="level1 nav-6-1 parent item">
-																					<a href="{{children1['href']}}"><span>{{children1['name'].decode('utf-8')}}</span></a>
+																					<a href="{{children1['href']}}"><span>{{children1['name']}}</span></a>
 																					{% if children1["children"] and children1["children"]|length > 0 %}
 																						<ul class="level1">
 																							{% for children2 in children1["children"] %}
 																								<li class="level2 nav-6-1-1">
-																									<a href="{{children2['href']}}"><span>{{children2['name'].decode('utf-8')}}</span></a>
+																									<a href="{{children2['href']}}"><span>{{children2['name']}}</span></a>
 																								</li>
 																							{% endfor %}
 																						</ul>
@@ -82,10 +82,10 @@
 											{% for product in data["cart_data"]["products"] %}
 												<li class="item first">
 													<div class="item-inner">
-														<a class="product-image" title="{{product['title'].decode('utf-8')}}" href="{{product['href']}}"><img alt="{{product['title'].decode('utf-8')}}" src="{{product['img_src']}}"></a>
+														<a class="product-image" title="{{product['title']}}" href="{{product['href']}}"><img alt="{{product['title']}}" src="{{product['img_src']}}"></a>
 														<div class="product-details">
 															<strong>{{product["quantity"]}}</strong> x <span class="price">{{product["unity_price"]}}</span>
-															<p class="product-name"><a href="product-detail.html">{{product['title'].decode('utf-8')}}</a></p>
+															<p class="product-name"><a href="product-detail.html">{{product['title']}}</a></p>
 														</div>
 													</div>
 												</li>

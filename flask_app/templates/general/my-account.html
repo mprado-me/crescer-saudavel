@@ -49,9 +49,9 @@
 													{% for order in data["orders"] %}
 														<tr>
 															<td>{{ order["id"] }}</td>
-															<td><span class="nobr">{{ order["date"].decode('utf-8') }}</span></td>
-															<td><span class="price">{{ order["total"].decode('utf-8') }}</span></td>
-															<td><em>{{ order["status"].decode('utf-8') }}</em></td>
+															<td><span class="nobr">{{ order["date"] }}</span></td>
+															<td><span class="price">{{ order["total"] }}</span></td>
+															<td><em>{{ order["status"] }}</em></td>
 															<td class="a-center last"><span class="nobr"> <a href="{{url_for('order', order_id=order['id'])}}">Detalhes</a> </span></td>
 														</tr>
 													{% endfor %}

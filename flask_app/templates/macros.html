@@ -14,7 +14,7 @@
 					<ul>
 						{% for error in errors %}
 							<li>
-								<div class="alert alert-danger input-error" role="alert">{{error.decode('utf-8')|safe}}</div>
+								<div class="alert alert-danger input-error" role="alert">{{error|safe}}</div>
 							</li>
 						{% endfor %}
 					</ul>
@@ -24,7 +24,7 @@
 {%- endmacro %}
 
 {%- macro social_network(title, class, href) -%}
-		<li class="pull-left {{ class.decode('utf-8') }}"><a target="_blank" rel="nofollow" href="{{ href.decode('utf-8') }}" title="{{ title.decode('utf-8') }}"></a></li>
+		<li class="pull-left {{ class }}"><a target="_blank" rel="nofollow" href="{{ href }}" title="{{ title }}"></a></li>
 {%- endmacro %}
 
 {%- macro product(title, href, class="") -%}

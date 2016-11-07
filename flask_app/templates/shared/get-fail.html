@@ -11,7 +11,7 @@
       {% include "shared/alert-msg.html" %}
     {% endwith %}
     {% if data["button"] %}
-      <a href="{{data['button']['href'].decode('utf-8')}}"><button type="button" title="{{data['button']['title'].decode('utf-8')}}" class="button"><span>{{data['button']['title'].decode('utf-8')}}</span></button></a>
+      <a href="{{data['button']['href']}}"><button type="button" title="{{data['button']['title']}}" class="button"><span>{{data['button']['title']}}</span></button></a>
     {% endif %}
   </div>
 </div>

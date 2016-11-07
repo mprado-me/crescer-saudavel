@@ -39,16 +39,16 @@
               {% endif %}
               <div class="product-shop col-sm-6 col-xs-12">
                 <div class="product-name">
-                  <h1 itemprop="name">{{ data["title"].decode('utf-8') }}</h1>
+                  <h1 itemprop="name">{{ data["title"] }}</h1>
                 </div>
                 <div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
                 </div>
                 <div class="price-block">
-                  <div class="price-box"><span class="regular-price"><span class="price">{{ data["price"].decode('utf-8') }}</span></span></div>
+                  <div class="price-box"><span class="regular-price"><span class="price">{{ data["price"] }}</span></span></div>
                 </div>
                 <div class="short-description">
                   <h2>Resumo</h2>
-                  {{data["summary"].decode('utf-8')|safe}}
+                  {{data["summary"]|safe}}
                 </div>
                 {% if data["in_stock"] %}
                   <div class="add-to-box">
@@ -75,9 +75,9 @@
             <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
               {% for section in data["sections"] %}
                 {% if loop.first %}
-                  <li class="active"><a href={{"#" + section["id"]}} data-toggle="tab">{{ section["title"].decode('utf-8') }}</a></li>
+                  <li class="active"><a href={{"#" + section["id"]}} data-toggle="tab">{{ section["title"] }}</a></li>
                 {% else %}
-                  <li><a href={{"#" + section["id"]}} data-toggle="tab">{{ section["title"].decode('utf-8') }}</a></li>
+                  <li><a href={{"#" + section["id"]}} data-toggle="tab">{{ section["title"] }}</a></li>
                 {% endif %}
               {% endfor %}
             </ul>
@@ -86,13 +86,13 @@
                 {% if loop.first %}
                   <div class="tab-pane fade in active" id="{{section['id']}}">
                     <div class="std">
-                      {{ section["content"].decode('utf-8')|safe }}
+                      {{ section["content"]|safe }}
                     </div>
                   </div>
                 {% else %}
                   <div class="tab-pane fade in" id="{{section['id']}}">
                     <div class="std">
-                      {{ section["content"].decode('utf-8')|safe }}
+                      {{ section["content"]|safe }}
                     </div>
                   </div>
                 {% endif %}

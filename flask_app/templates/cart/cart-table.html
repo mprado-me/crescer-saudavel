@@ -16,14 +16,14 @@
   <tbody>
     {% for product in data["products"] %}
       <tr>
-        <td class="hidden-table"><a href="{{url_for('product', product_id=product['id'])}}" title="{{product['title'].decode('utf-8')}}" class="product-image"><img src="{{product['image_href']}}" width="75" alt="{{product['title'].decode('utf-8')}}"></a></td>
+        <td class="hidden-table"><a href="{{url_for('product', product_id=product['id'])}}" title="{{product['title']}}" class="product-image"><img src="{{product['image_href']}}" width="75" alt="{{product['title']}}"></a></td>
         <td>
           <h2 class="product-name">
-            <a href="product-detail.html">{{ product['title'].decode('utf-8') }}</a>
+            <a href="product-detail.html">{{ product['title'] }}</a>
           </h2>
         </td>
         <td class="hidden-table">
-          <span class="price">{{ product['unit_price'].decode('utf-8') }}</span>                
+          <span class="price">{{ product['unit_price'] }}</span>
         </td>
         <td class="a-center movewishlist">
           <div class="custom pull-left add-to-cart qty-container">
@@ -53,7 +53,7 @@
           </div>
         </td>
         <td class="movewishlist">
-            <span class="price">{{ product['subtotal'].decode('utf-8') }}</span>
+            <span class="price">{{ product['subtotal'] }}</span>
         </td>
         {% if data["editable"] %}
           <td class="a-center last exclude-item-col">

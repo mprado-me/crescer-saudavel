@@ -13,9 +13,9 @@
 							{% for item in data["path"] %}
 								<li> 
 									{% if item["href"] %}
-										<a href="{{item['href']}}" title="{{item['name'].decode('utf-8')}}">{{item['name'].decode('utf-8')}}</a>
+										<a href="{{item['href']}}" title="{{item['name']}}">{{item['name']}}</a>
 									{% else %}
-										{{item['name'].decode('utf-8')}}
+										{{item['name']}}
 									{% endif %}
 									{% if not loop.last %}
 										<span>&rsaquo; </span>
@@ -26,7 +26,7 @@
 					</div>
 				{% endif %}
 				<div class="page-title">
-					<h2>{{data['title'].decode('utf-8')}}</h2>
+					<h2>{{data['title']}}</h2>
 				</div>
 			</div>
 		</div>

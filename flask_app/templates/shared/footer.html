@@ -35,15 +35,15 @@
 					<div class="co-info">
 						<h4>Contato</h4>
 						<address>
-							<div><em class="icon-location-arrow"></em> <span>{{data["address"].decode('utf-8')}}</span></div>
-							<div><em class="icon-mobile-phone"></em><span>{{data["tel"].decode('utf-8')}}</span></div>
-							<div><em class="icon-envelope"></em><span>{{data["email"].decode('utf-8')}}</span></div>
+							<div><em class="icon-location-arrow"></em> <span>{{data["address"]}}</span></div>
+							<div><em class="icon-mobile-phone"></em><span>{{data["tel"]}}</span></div>
+							<div><em class="icon-envelope"></em><span>{{data["email"]}}</span></div>
 						</address>
 						{% if data["social_networks"] and data["social_networks"]|length > 0 %}
 							<div class="social">
 								<ul class="link">
 									{% for item in data["social_networks"] %}
-										{{macros.social_network(title=item["title"].decode('utf-8'), class=item["class"], href=item["href"])}}
+										{{macros.social_network(title=item["title"], class=item["class"], href=item["href"])}}
 									{% endfor %}
 								</ul>
 							</div>
@@ -66,9 +66,9 @@
 							<ul class="links">
 								{% for item in data["products"] %}
 									{% if loop.first %}
-										{{macros.product(title=item["name"].decode("utf-8"), href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0), class="first")}}
+										{{macros.product(title=item["name"], href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0), class="first")}}
 									{% else %}
-										{{macros.product(title=item["name"].decode('utf-8'), href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0))}}
+										{{macros.product(title=item["name"], href=url_for("products_by_category", category_id=item["category_id"], page=1, sort_method=0))}}
 									{% endif %}
 								{% endfor %}
 								{{macros.product(title="...", href=url_for('all_products', page=1, sort_method=0))}}
@@ -81,9 +81,9 @@
 						<ul class="links">
 							{% for item in data["blog_posts"] %}
 								{% if loop.first %}
-									{{macros.blog_post_link(title=item["title"].decode("utf-8"), href=url_for("blog_post", blog_post_id=item["blog_post_id"]), class="first")}}
+									{{macros.blog_post_link(title=item["title"], href=url_for("blog_post", blog_post_id=item["blog_post_id"]), class="first")}}
 								{% else %}
-									{{macros.blog_post_link(title=item["title"].decode("utf-8"), href=url_for("blog_post", blog_post_id=item["blog_post_id"]))}}
+									{{macros.blog_post_link(title=item["title"], href=url_for("blog_post", blog_post_id=item["blog_post_id"]))}}
 								{% endif %}
 							{% endfor %}
 						</ul>
@@ -92,7 +92,7 @@
 			</div>
 		</div>
 		<div class="copyright-text-container">
-			<span class="copyright-text">{{data["copyright_text"].decode('utf-8')}}</span>
+			<span class="copyright-text">{{data["copyright_text"]}}</span>
 		</div>
 	</div>
 </footer>

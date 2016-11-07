@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# For don't need digit .decode('utf-8') in all strings in template files
+# http://stackoverflow.com/questions/24566538/flask-rendering-unicode-characters-in-template
+import sys
+if sys.version_info.major < 3:
+    reload(sys)
+sys.setdefaultencoding('utf8')
+
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
