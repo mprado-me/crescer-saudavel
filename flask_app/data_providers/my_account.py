@@ -4,7 +4,7 @@
 from flask import url_for
 from header import HeaderDataProvider
 from footer import FooterDataProvider
-from user_info_data_provider import get_user_info_data
+from user_info import UserInfoDataProvider
 
 class MyAccountDataProvider():
 
@@ -29,7 +29,7 @@ class MyAccountDataProvider():
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
 			"page_heading_data": self.get_page_heading_data(),
-			"user_info_data": get_user_info_data(editable),
+			"user_info_data": UserInfoDataProvider().get_data(editable),
 			"orders": [
 				{
 					"id": 123,
@@ -69,7 +69,7 @@ class MyAccountDataProvider():
 				],
 				"title": "Minha conta",
 			},
-			"user_info_data": get_user_info_data(editable),
+			"user_info_data": UserInfoDataProvider().get_data(editable),
 			"orders": [],
 			"footer_data": FooterDataProvider().get_data(),
 		}

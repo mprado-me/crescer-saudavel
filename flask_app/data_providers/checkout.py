@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from header import HeaderDataProvider
-from user_info_data_provider import get_user_info_data
+from user_info import UserInfoDataProvider
 from cart_table import CartTableDataProvider
 from total_table import TotalTableDataProvider
 from footer import FooterDataProvider
@@ -32,7 +32,7 @@ class CheckoutDataProvider():
 			"page_heading_data": self.get_page_heading_data(),
 			"footer_data": FooterDataProvider().get_data(),
 			"step": step,
-			"user_info_data": get_user_info_data(in_edit_info_mode),
+			"user_info_data": UserInfoDataProvider().get_data(in_edit_info_mode),
 			"cart_table_data": CartTableDataProvider().get_fresh_order_data(user_email=user_email, editable=False),
 			"total_table_data": TotalTableDataProvider().get_fresh_order_data(user_email=user_email),
 		}
