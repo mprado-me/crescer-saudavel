@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from .. import app
+
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 from paginator import PaginatorDataProvider
-from .. import app
 
 class BlogDataProvider():
 

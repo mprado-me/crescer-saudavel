@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import math
+
 from flask import url_for
 
 class PaginatorDataProvider():

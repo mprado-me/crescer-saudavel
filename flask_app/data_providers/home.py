@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import url_for
+
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
