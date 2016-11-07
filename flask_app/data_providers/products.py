@@ -98,7 +98,7 @@ class ProductsDataProvider():
 	def sample_data_0(self, page, sort_method, category_id=0, subcategory_id=0):
 		data = {
 			"header_data": HeaderDataProvider().get_data(),
-			"page_heading_data": self.get_page_heading_data(),
+			"page_heading_data": self.get_page_heading_data_for_products_by_category(category_id=category_id, page=page, sort_method=sort_method),
 			"route": {
 				"handler_func": "products_by_category_and_subcategory",
 				"category_id": category_id,
