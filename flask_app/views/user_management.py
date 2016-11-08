@@ -23,11 +23,8 @@ from flask import abort, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
 
 
-@app.route('/email-de-confirmacao-enviado')
-def sent_confirmation_email():
-    email = request.args.get("email")
-    if not email:
-        abort(422)
+@app.route('/email-de-confirmacao-enviado/<string:email>')
+def sent_confirmation_email(email):
     data = sent_confirmation_email_data_provider.get_data(email)
     return render_template("user_management/sent-confirmation-email.html", data=data)
 
