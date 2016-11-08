@@ -13,15 +13,17 @@ from ..data_providers.order import OrderDataProvider
 from flask import abort, redirect, render_template, request, url_for, session
 from flask_login import login_required
 
+
 @app.route('/sobre-nos')
 def about_us():
     data = AboutUsDataProvider().get_data()
     return render_template('general/about-us.html', data=data)
 
+
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 @login_required
 def checkout(step):
-    user_email=session["user_id"]
+    user_email = session["user_id"]
     in_edit_info_mode = request.args.get("editar")
     if in_edit_info_mode and in_edit_info_mode == "sim":
         in_edit_info_mode = True
@@ -36,11 +38,13 @@ def faq():
     data = FaqDataProvider().get_data()
     return render_template('general/faq.html', data=data)
 
+
 @app.route('/')
 @app.route('/home')
 def home():
     data = HomeDataProvider().get_data()
     return render_template('general/home.html', data=data)
+
 
 @app.route('/minha-conta', methods=['GET', 'POST'])
 @login_required
@@ -57,6 +61,7 @@ def my_account():
         # TODO: Deal with post
         return redirect(url_for('my_account'))
     abort(404)
+
 
 @app.route('/pedido/<int:order_id>')
 @login_required
