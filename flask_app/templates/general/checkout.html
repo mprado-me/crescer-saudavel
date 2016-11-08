@@ -35,7 +35,7 @@
                     </li>
                   </ul>
                   <div class="buttons-set checkout-user-info-buttons-container account-info-buttons-container">
-                    {% if data["in_edit_info_mode"] %}
+                    {% if data["user_info_editable"] %}
                     <button type="submit" title="Salvar" class="button save first"><span>Salvar</span></button>
                     <a href="{{url_for('checkout', step=1)}}">
                       <button type="button" title="Cancelar" class="button cancel"><span>Cancelar</span></button>

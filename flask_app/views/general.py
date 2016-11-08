@@ -23,13 +23,19 @@ def about_us():
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 @login_required
 def checkout(step):
+    # Getting user session identifier. Aka user_email
     user_email = session["user_id"]
-    in_edit_info_mode = request.args.get("editar")
-    if in_edit_info_mode and in_edit_info_mode == "sim":
-        in_edit_info_mode = True
+
+    # Getting optional parameters
+    user_info_editable = request.args.get("editar")
+
+    # Setting default value to optional parameters
+    if step == 1 and user_info_editable and user_info_editable == "sim":
+        user_info_editable = True
     else:
-        in_edit_info_mode = False
-    data = checkout_data_provider.get_data(step, in_edit_info_mode, user_email=user_email)
+        user_info_editable = False
+
+    data = checkout_data_provider.get_data(step=step, user_info_editable=user_info_editable, user_email=user_email)
     return render_template('general/checkout.html', data=data)
 
 
@@ -50,16 +56,23 @@ def home():
 @login_required
 def my_account():
     if request.method == 'GET':
-        editable = request.args.get("editar")
-        if editable and editable == "sim":
-            editable = True
+        # Getting optional parameters
+        user_info_editable = request.args.get("editar")
+
+        # Setting default value to optional parameters
+        if user_info_editable and user_info_editable == "sim":
+            user_info_editable = True
         else:
-            editable = False
-        data = my_account_data_provider.get_data(editable)
+            user_info_editable = False
+
+        data = my_account_data_provider.get_data(user_info_editable)
         return render_template('general/my-account.html', data=data)
+
     elif request.method == 'POST':
-        # TODO: Deal with post
+        # TODO: Implement
+
         return redirect(url_for('my_account'))
+
     abort(404)
 
 
