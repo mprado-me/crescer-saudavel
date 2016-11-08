@@ -84,8 +84,8 @@ class ProductsDataProvider:
             "title": "Produtos",
         }
 
-    def get_products_data_by_search(self, page, sort_method, q):
-        return self.sample_data_0(page, sort_method)
+    def get_products_data_by_search(self, page, q):
+        return self.sample_data_0(page=page, sort_method=0)
 
     def get_page_heading_data_for_products_by_search(self, search_query):
         return {
