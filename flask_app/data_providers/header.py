@@ -153,3 +153,5 @@ class HeaderDataProvider:
             }
         }
         return data
+
+header_data_provider = HeaderDataProvider()

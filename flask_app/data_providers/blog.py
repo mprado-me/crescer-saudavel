@@ -95,3 +95,5 @@ class BlogDataProvider:
             ],
         }
         return data
+
+blog_data_provider = BlogDataProvider()

@@ -53,3 +53,5 @@ class FaqDataProvider:
             ]
         }
         return data
+
+faq_data_provider = FaqDataProvider()

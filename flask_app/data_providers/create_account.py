@@ -37,3 +37,5 @@ class CreateAccountDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+create_account_data_provider = CreateAccountDataProvider()

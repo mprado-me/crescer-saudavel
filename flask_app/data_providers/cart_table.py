@@ -59,3 +59,5 @@ class CartTableDataProvider:
                 },
             ],
         }
+
+cart_table_data_provider = CartTableDataProvider()

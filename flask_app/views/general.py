@@ -3,12 +3,12 @@
 
 from .. import app
 
-from ..data_providers.about_us import AboutUsDataProvider
-from ..data_providers.checkout import CheckoutDataProvider
-from ..data_providers.faq import FaqDataProvider
-from ..data_providers.home import HomeDataProvider
-from ..data_providers.my_account import MyAccountDataProvider
-from ..data_providers.order import OrderDataProvider
+from ..data_providers.about_us import about_us_data_provider
+from ..data_providers.checkout import checkout_data_provider
+from ..data_providers.faq import faq_data_provider
+from ..data_providers.home import home_data_provider
+from ..data_providers.my_account import my_account_data_provider
+from ..data_providers.order import order_data_provider
 
 from flask import abort, redirect, render_template, request, url_for, session
 from flask_login import login_required
@@ -16,7 +16,7 @@ from flask_login import login_required
 
 @app.route('/sobre-nos')
 def about_us():
-    data = AboutUsDataProvider().get_data()
+    data = about_us_data_provider.get_data()
     return render_template('general/about-us.html', data=data)
 
 
@@ -29,20 +29,20 @@ def checkout(step):
         in_edit_info_mode = True
     else:
         in_edit_info_mode = False
-    data = CheckoutDataProvider().get_data(step, in_edit_info_mode, user_email=user_email)
+    data = checkout_data_provider.get_data(step, in_edit_info_mode, user_email=user_email)
     return render_template('general/checkout.html', data=data)
 
 
 @app.route('/faq')
 def faq():
-    data = FaqDataProvider().get_data()
+    data = faq_data_provider.get_data()
     return render_template('general/faq.html', data=data)
 
 
 @app.route('/')
 @app.route('/home')
 def home():
-    data = HomeDataProvider().get_data()
+    data = home_data_provider.get_data()
     return render_template('general/home.html', data=data)
 
 
@@ -55,7 +55,7 @@ def my_account():
             editable = True
         else:
             editable = False
-        data = MyAccountDataProvider().get_data(editable)
+        data = my_account_data_provider.get_data(editable)
         return render_template('general/my-account.html', data=data)
     elif request.method == 'POST':
         # TODO: Deal with post
@@ -66,5 +66,5 @@ def my_account():
 @app.route('/pedido/<int:order_id>')
 @login_required
 def order(order_id):
-    data = OrderDataProvider().get_data(order_id)
+    data = order_data_provider.get_data(order_id)
     return render_template('general/order.html', data=data)

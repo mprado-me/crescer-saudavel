@@ -152,3 +152,5 @@ class HomeDataProvider:
             ],
         }
         return data
+
+home_data_provider = HomeDataProvider()

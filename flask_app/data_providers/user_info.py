@@ -78,3 +78,5 @@ class UserInfoDataProvider:
             "tel": "(12) 98213-6721",
         }
         return data
+
+user_info_data_provider = UserInfoDataProvider()

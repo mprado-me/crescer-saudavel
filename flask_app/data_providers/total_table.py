@@ -25,3 +25,5 @@ class TotalTableDataProvider:
             "frete": "R$ 5,00",
             "total": "R$ 37,60",
         }
+
+total_table_data_provider = TotalTableDataProvider()

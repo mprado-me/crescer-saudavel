@@ -43,3 +43,5 @@ class OrderDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+order_data_provider = OrderDataProvider()

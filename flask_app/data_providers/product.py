@@ -66,3 +66,5 @@ class ProductDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+product_data_provider = ProductDataProvider()

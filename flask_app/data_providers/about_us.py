@@ -61,3 +61,5 @@ class AboutUsDataProvider:
                 """,
         }
         return data
+
+about_us_data_provider = AboutUsDataProvider()

@@ -82,3 +82,5 @@ class FooterDataProvider:
             "copyright_text": "Copyright © 2016 - Crescer Saudável",
         }
         return data
+
+footer_data_provider = FooterDataProvider()

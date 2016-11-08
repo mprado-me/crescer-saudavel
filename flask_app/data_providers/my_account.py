@@ -78,3 +78,6 @@ class MyAccountDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+my_account_data_provider = MyAccountDataProvider()
+

@@ -41,3 +41,5 @@ class RecoverPasswordDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+recover_password_data_provider = RecoverPasswordDataProvider()

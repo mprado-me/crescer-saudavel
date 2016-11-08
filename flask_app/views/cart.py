@@ -3,7 +3,7 @@
 
 from .. import app
 
-from ..data_providers.cart import CartDataProvider
+from ..data_providers.cart import cart_data_provider
 
 from flask import redirect, render_template, session, url_for
 from flask_login import login_required
@@ -13,7 +13,7 @@ from flask_login import login_required
 @login_required
 def cart():
     user_email = session["user_id"]
-    data = CartDataProvider().get_data(user_email=user_email)
+    data = cart_data_provider.get_data(user_email=user_email)
     return render_template('cart/cart.html', cart_table_editable=True, data=data)
 
 

@@ -26,3 +26,5 @@ class GetFailDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+get_fail_data_provider = GetFailDataProvider()

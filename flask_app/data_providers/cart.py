@@ -39,3 +39,5 @@ class CartDataProvider:
             "total_table_data": TotalTableDataProvider().get_fresh_order_data(user_email=user_email),
         }
         return data
+
+cart_data_provider = CartDataProvider()

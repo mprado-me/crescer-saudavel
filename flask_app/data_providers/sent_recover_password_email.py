@@ -44,3 +44,5 @@ class SentRecoverPasswordEmailDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+sent_recover_password_email_data_provider = SentRecoverPasswordEmailDataProvider()

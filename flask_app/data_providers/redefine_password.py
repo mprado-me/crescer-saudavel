@@ -7,7 +7,7 @@ from footer import FooterDataProvider
 from flask import url_for
 
 
-class RedefinePasswordData:
+class RedefinePasswordDataProvider:
     def __init__(self):
         pass
 
@@ -39,3 +39,5 @@ class RedefinePasswordData:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+redefine_password_data_provider = RedefinePasswordDataProvider()

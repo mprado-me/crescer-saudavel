@@ -80,3 +80,5 @@ class PaginatorDataProvider:
             ],
         }
         return data
+
+paginator_data_provider = PaginatorDataProvider()

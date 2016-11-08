@@ -40,3 +40,5 @@ class SentConfirmationEmailDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+sent_confirmation_email_data_provider = SentConfirmationEmailDataProvider()

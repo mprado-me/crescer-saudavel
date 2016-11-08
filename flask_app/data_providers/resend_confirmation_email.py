@@ -37,3 +37,5 @@ class ResendConfirmationEmailDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+resend_confirmation_email_data_provider = ResendConfirmationEmailDataProvider()

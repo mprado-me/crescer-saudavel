@@ -77,3 +77,5 @@ class BlogPostDataProvider:
             """,
         }
         return data
+
+blog_post_data_provider = BlogPostDataProvider()

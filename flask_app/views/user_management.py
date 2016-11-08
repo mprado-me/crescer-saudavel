@@ -10,14 +10,14 @@ from ..models.user import User
 from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
 from ..utils.security import ts
 
-from ..data_providers.sent_confirmation_email import SentConfirmationEmailDataProvider
-from ..data_providers.create_account import CreateAccountDataProvider
-from ..data_providers.get_fail import GetFailDataProvider
-from ..data_providers.recover_password import RecoverPasswordDataProvider
-from ..data_providers.sent_recover_password_email import SentRecoverPasswordEmailDataProvider
-from ..data_providers.login import LoginDataProvider
-from ..data_providers.redefine_password import RedefinePasswordData
-from ..data_providers.resend_confirmation_email import ResendConfirmationEmailDataProvider
+from ..data_providers.sent_confirmation_email import sent_confirmation_email_data_provider
+from ..data_providers.create_account import create_account_data_provider
+from ..data_providers.get_fail import get_fail_data_provider
+from ..data_providers.recover_password import recover_password_data_provider
+from ..data_providers.sent_recover_password_email import sent_recover_password_email_data_provider
+from ..data_providers.login import login_data_provider
+from ..data_providers.redefine_password import redefine_password_data_provider
+from ..data_providers.resend_confirmation_email import resend_confirmation_email_data_provider
 
 from flask import abort, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
@@ -28,7 +28,7 @@ def sent_confirmation_email():
     email = request.args.get("email")
     if not email:
         abort(422)
-    data = SentConfirmationEmailDataProvider().get_data(email)
+    data = sent_confirmation_email_data_provider.get_data(email)
     return render_template("user_management/sent-confirmation-email.html", data=data)
 
 
@@ -36,7 +36,7 @@ def sent_confirmation_email():
 def create_account():
     form = CreateAccountForm()
     if request.method == "GET":
-        data = CreateAccountDataProvider().get_data(form)
+        data = create_account_data_provider.get_data(form)
         return render_template('user_management/create-account.html', data=data)
     else:
         invalid_form = not form.validate_on_submit()
@@ -51,7 +51,7 @@ def create_account():
             return create_account_db_error(form)
 
         if invalid_form or email_registered:
-            data = CreateAccountDataProvider().get_data(form)
+            data = create_account_data_provider.get_data(form)
             if email_registered:
                 data["form"].email.errors.append('Email já registrado')
             return render_template('user_management/create-account.html', data=data)
@@ -79,7 +79,7 @@ def create_account():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao enviar o email de confirmação. Tente novamente.",
             }
-            data = CreateAccountDataProvider().get_data(form, msg=msg)
+            data = create_account_data_provider.get_data(form, msg=msg)
             return render_template('user_management/create-account.html', data=data)
 
 
@@ -88,7 +88,7 @@ def create_account_db_error(form):
         "type": "danger",
         "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
     }
-    data = CreateAccountDataProvider().get_data(form, msg=msg)
+    data = create_account_data_provider.get_data(form, msg=msg)
     return render_template('user_management/create-account.html', data=data)
 
 
@@ -114,7 +114,7 @@ def email_confirmed(token):
             "title": "Tentar novamente",
             "href": url_for('email_confirmed', token=token)
         }
-        data = GetFailDataProvider().get_data(msg=msg, button=button)
+        data = get_fail_data_provider.get_data(msg=msg, button=button)
         return render_template('shared/get-fail.html', data=data)
 
     return redirect(url_for('login', msg_content="Email confirmado com sucesso.", msg_type="success"))
@@ -124,7 +124,7 @@ def email_confirmed(token):
 def recover_password():
     form = EmailForm()
     if request.method == "GET":
-        data = RecoverPasswordDataProvider().get_data(form=form)
+        data = recover_password_data_provider.get_data(form=form)
         return render_template('user_management/recover-password.html', data=data)
     elif request.method == "POST":
         invalid_form = not form.validate_on_submit()
@@ -146,20 +146,20 @@ def recover_password():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             }]
-            data = RecoverPasswordDataProvider().get_data(form=form, msgs=msgs)
+            data = recover_password_data_provider.get_data(form=form, msgs=msgs)
             return render_template('user_management/recover-password.html', data=data)
 
         if invalid_form:
-            data = RecoverPasswordDataProvider().get_data(form=form)
+            data = recover_password_data_provider.get_data(form=form)
             return render_template('user_management/recover-password.html', data=data)
 
         if not email_registered:
-            data = RecoverPasswordDataProvider().get_data(form=form)
+            data = recover_password_data_provider.get_data(form=form)
             data["form"].email.errors.append("Email não registrado")
             return render_template('user_management/recover-password.html', data=data)
 
         if not email_confirmed:
-            data = RecoverPasswordDataProvider().get_data(form=form)
+            data = recover_password_data_provider.get_data(form=form)
             data["form"].email.errors.append(
                 "Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for(
                     "resend_confirmation_email"))
@@ -174,7 +174,7 @@ def recover_password():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao enviar o email de redefinição de senha. Tente novamente.",
             }]
-            data = RecoverPasswordDataProvider().get_data(form=form, msgs=msgs)
+            data = recover_password_data_provider.get_data(form=form, msgs=msgs)
             return render_template('user_management/recover-password.html', data=data)
 
     abort(404)
@@ -185,7 +185,7 @@ def sent_recover_password_email():
     email = request.args.get("email")
     if not email:
         abort(422)
-    data = SentRecoverPasswordEmailDataProvider().get_data(email=email)
+    data = sent_recover_password_email_data_provider.get_data(email=email)
     return render_template('user_management/sent-recover-password-email.html', data=data)
 
 
@@ -207,7 +207,7 @@ def login():
                 "type": "info",
                 "content": "Para finalizar a compra, entre ou cadastre-se.",
             })
-        data = LoginDataProvider().get_data(form=form, msgs=msgs)
+        data = login_data_provider.get_data(form=form, msgs=msgs)
         return render_template('user_management/login.html', data=data)
     else:
         invalid_form = not form.validate_on_submit()
@@ -237,27 +237,27 @@ def login():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             }]
-            data = LoginDataProvider().get_data(form=form, msgs=msgs)
+            data = login_data_provider.get_data(form=form, msgs=msgs)
             return render_template('user_management/login.html', data=data)
 
         if invalid_form:
-            data = LoginDataProvider().get_data(form=form)
+            data = login_data_provider.get_data(form=form)
             return render_template('user_management/login.html', data=data)
 
         if not email_registered:
-            data = LoginDataProvider().get_data(form=form)
+            data = login_data_provider.get_data(form=form)
             data["form"].email.errors.append("Email não registrado")
             return render_template('user_management/login.html', data=data)
 
         if not email_confirmed:
-            data = LoginDataProvider().get_data(form=form)
+            data = login_data_provider.get_data(form=form)
             data["form"].email.errors.append(
                 "Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for(
                     "resend_confirmation_email"))
             return render_template('user_management/login.html', data=data)
 
         if incorrect_password:
-            data = LoginDataProvider().get_data(form=form)
+            data = login_data_provider.get_data(form=form)
             data["form"].password.errors.append("Senha incorreta")
             return render_template('user_management/login.html', data=data)
 
@@ -274,13 +274,13 @@ def redefine_password(token):
     form = RedefinePasswordForm()
 
     if request.method == "GET":
-        data = RedefinePasswordData().get_data(form=form, email=email, token=token, msgs=[])
+        data = redefine_password_data_provider.get_data(form=form, email=email, token=token, msgs=[])
         return render_template('user_management/redefine-password.html', data=data)
     elif request.method == "POST":
         invalid_form = not form.validate_on_submit()
 
         if invalid_form:
-            data = RedefinePasswordData().get_data(form=form, email=email, token=token, msgs=[])
+            data = redefine_password_data_provider.get_data(form=form, email=email, token=token, msgs=[])
             return render_template('user_management/redefine-password.html', data=data)
 
         # Changing user password
@@ -295,7 +295,7 @@ def redefine_password(token):
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             }]
-            data = RedefinePasswordData().get_data(form=form, email=email, token=token, msgs=msgs)
+            data = redefine_password_data_provider.get_data(form=form, email=email, token=token, msgs=msgs)
             return render_template('user_management/redefine-password.html', data=data)
 
         return redirect(url_for('login', msg_type="success", msg_content="Senha redefinida com sucesso."))
@@ -306,7 +306,7 @@ def redefine_password(token):
 def resend_confirmation_email():
     form = EmailForm()
     if request.method == 'GET':
-        data = ResendConfirmationEmailDataProvider().get_data(form)
+        data = resend_confirmation_email_data_provider.get_data(form)
         return render_template('user_management/resend-confirmation-email.html', data=data)
     elif request.method == 'POST':
         invalid_form = not form.validate_on_submit()
@@ -327,22 +327,22 @@ def resend_confirmation_email():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
             }]
-            data = ResendConfirmationEmailDataProvider().get_data(form=form, msgs=msgs)
+            data = resend_confirmation_email_data_provider.get_data(form=form, msgs=msgs)
             return render_template('user_management/resend-confirmation-email.html', data=data)
 
         if invalid_form:
-            data = ResendConfirmationEmailDataProvider().get_data(form=form)
+            data = resend_confirmation_email_data_provider.get_data(form=form)
             return render_template('user_management/resend-confirmation-email.html', data=data)
 
         if not email_registered:
-            data = ResendConfirmationEmailDataProvider().get_data(form=form)
+            data = resend_confirmation_email_data_provider.get_data(form=form)
             data["form"].email.errors.append(
                 "Email não registrado. Clique <a href='%s'>aqui</a> para criar uma nova conta." % url_for(
                     "create_account"))
             return render_template('user_management/resend-confirmation-email.html', data=data)
 
         if email_confirmed:
-            data = ResendConfirmationEmailDataProvider().get_data(form=form)
+            data = resend_confirmation_email_data_provider.get_data(form=form)
             data["form"].email.errors.append(
                 "Email já confirmado. Clique <a href='%s'>aqui</a> para entrar na conta." % url_for("login"))
             return render_template('user_management/resend-confirmation-email.html', data=data)
@@ -357,7 +357,7 @@ def resend_confirmation_email():
                 "type": "danger",
                 "content": "Falha! Ocorreu um erro ao reenviar o email de confirmação. Tente novamente.",
             }]
-            data = ResendConfirmationEmailDataProvider().get_data(form=form, msgs=msgs)
+            data = resend_confirmation_email_data_provider.get_data(form=form, msgs=msgs)
             return render_template('user_management/resend-confirmation-email.html', data=data)
     abort(404)
 

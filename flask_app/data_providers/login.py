@@ -37,3 +37,5 @@ class LoginDataProvider:
             "footer_data": FooterDataProvider().get_data(),
         }
         return data
+
+login_data_provider = LoginDataProvider()
