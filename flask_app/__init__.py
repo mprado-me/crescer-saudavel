@@ -4,6 +4,7 @@
 # For don't need digit .decode('utf-8') in all strings in template files
 # http://stackoverflow.com/questions/24566538/flask-rendering-unicode-characters-in-template
 import sys
+
 if sys.version_info.major < 3:
     reload(sys)
 sys.setdefaultencoding('utf8')
@@ -25,16 +26,18 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view =  "login"
+login_manager.login_view = "login"
 
 mail = Mail(app)
 
 # The order of this import matter. User uses bcrypt and db
 from models.user import User
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
 
 import models.user
 
@@ -44,4 +47,3 @@ import views.cart
 import views.general
 import views.products
 import views.user_management
-
