@@ -1,34 +1,34 @@
 <div class="page-heading">
-	<div class="breadcrumbs">
-		<div class="container">
-			{% if "blog_post_date" in data %}
-				<div class="entry-meta">
-	        <div class="blog-post-date">{{ data["blog_post_date"] }}</div>
-	      </div>
-	    {% endif %}
-			<div class="row">
-				{% if data["path"] and data["path"]|length > 0 %}
-					<div>
-						<ul>
-							{% for item in data["path"] %}
-								<li> 
-									{% if item["href"] %}
-										<a href="{{item['href']}}" title="{{item['name']}}">{{item['name']}}</a>
-									{% else %}
-										{{item['name']}}
-									{% endif %}
-									{% if not loop.last %}
-										<span>&rsaquo; </span>
-									{% endif %}
-								</li>
-							{% endfor %}
-						</ul>
-					</div>
-				{% endif %}
-				<div class="page-title">
-					<h2>{{data['title']}}</h2>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="breadcrumbs">
+    <div class="container">
+      {% if "blog_post_date" in data %}
+      <div class="entry-meta">
+        <div class="blog-post-date">{{ data["blog_post_date"] }}</div>
+      </div>
+      {% endif %}
+      <div class="row">
+        {% if data["path"] and data["path"]|length > 0 %}
+        <div>
+          <ul>
+            {% for item in data["path"] %}
+            <li>
+              {% if item["href"] %}
+              <a href="{{item['href']}}" title="{{item['name']}}">{{item['name']}}</a>
+              {% else %}
+              {{item['name']}}
+              {% endif %}
+              {% if not loop.last %}
+              <span>&rsaquo; </span>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <div class="page-title">
+          <h2>{{data['title']}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

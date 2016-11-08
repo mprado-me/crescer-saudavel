@@ -3,46 +3,48 @@
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
-  {% include "shared/page-heading.html" %}
+{% include "shared/page-heading.html" %}
 {% endwith %}
 
-<div class="main-container col1-layout wow bounceInUp animated">     
+<div class="main-container col1-layout wow bounceInUp animated">
   <div class="main container">
-    {% if data["cart_table_data"]["products"] and data["cart_table_data"]["products"]|length > 0 %}              
-      <div class="cart wow bounceInUp animated">
-        <div class="table-responsive shopping-cart-tbl  container">
-          <fieldset>
-            {% with data=data["cart_table_data"] %}
-              {% include "cart/cart-table.html" %}
-            {% endwith %}
-          </fieldset>
-          <div class="cart-buttons-container">
-            <form action="{{url_for('all_products', page=1, sort_method=0)}}">
-              <button type="submit" title="Continuar comprando" class="button btn-continue"><span>Continuar comprando</span></button>
-            </form>
-            <form action="{{url_for('cart_delete_all_products')}}" method="post">
-              <button type="submit" title="Limpar carrinho" class="button btn-empty"><span>Limpar carrinho</span></button>
-            </form>
-          </div>
+    {% if data["cart_table_data"]["products"] and data["cart_table_data"]["products"]|length > 0 %}
+    <div class="cart wow bounceInUp animated">
+      <div class="table-responsive shopping-cart-tbl  container">
+        <fieldset>
+          {% with data=data["cart_table_data"] %}
+          {% include "cart/cart-table.html" %}
+          {% endwith %}
+        </fieldset>
+        <div class="cart-buttons-container">
+          <form action="{{url_for('all_products', page=1, sort_method=0)}}">
+            <button type="submit" title="Continuar comprando" class="button btn-continue">
+              <span>Continuar comprando</span></button>
+          </form>
+          <form action="{{url_for('cart_delete_all_products')}}" method="post">
+            <button type="submit" title="Limpar carrinho" class="button btn-empty"><span>Limpar carrinho</span></button>
+          </form>
         </div>
-        <div class="cart-collaterals container total-cart">
-          <div class="totals">
-            <h3>Total da compra</h3>
-            <div class="inner">
-              {% with data=data["total_table_data"] %}
-                {% include "shared/total-table.html" %}
-              {% endwith %}
-              <form action="{{url_for('checkout', step=1)}}" method="get">
-                <button type="submit" title="Finalizar compra" class="button btn-proceed-checkout"><span>Finalizar Compra</span></button>
-              </form>
-            </div>
+      </div>
+      <div class="cart-collaterals container total-cart">
+        <div class="totals">
+          <h3>Total da compra</h3>
+          <div class="inner">
+            {% with data=data["total_table_data"] %}
+            {% include "shared/total-table.html" %}
+            {% endwith %}
+            <form action="{{url_for('checkout', step=1)}}" method="get">
+              <button type="submit" title="Finalizar compra" class="button btn-proceed-checkout">
+                <span>Finalizar Compra</span></button>
+            </form>
           </div>
         </div>
       </div>
+    </div>
     {% else %}
-      {% with msg="Carrinho vazio" %}
-        {% include "shared/empty.html" %}
-      {% endwith %}
+    {% with msg="Carrinho vazio" %}
+    {% include "shared/empty.html" %}
+    {% endwith %}
     {% endif %}
   </div>
 </div>

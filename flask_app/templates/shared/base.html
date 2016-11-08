@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>{% block title %}{% endblock %}</title>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
-	<meta name="description" content="Default Description">
-	<meta name="keywords" content="fashion, store, E-commerce">
-	<meta name="robots" content="*">
-	<link rel="icon" href="#" type="image/x-icon">
-	<link rel="shortcut icon" href="#" type="image/x-icon">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
+  <meta name="description" content="Default Description">
+  <meta name="keywords" content="fashion, store, E-commerce">
+  <meta name="robots" content="*">
+  <link rel="icon" href="#" type="image/x-icon">
+  <link rel="shortcut icon" href="#" type="image/x-icon">
 
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/font-awesome.css') }}" media="all">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/revslider.css') }}" >
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/owl.carousel.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/owl.theme.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/jquery.bxslider.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/jquery.mobile-menu.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" media="all">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/flexslider.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/responsive.css') }}" media="all">
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700,800' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,400italic,700,800,900' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/font-awesome.css') }}" media="all">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/revslider.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/owl.carousel.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/owl.theme.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/jquery.bxslider.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/jquery.mobile-menu.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" media="all">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/flexslider.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/responsive.css') }}" media="all">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700,800'
+        rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,400italic,700,800,900'
+        rel='stylesheet' type='text/css'>
 
-	<meta name="viewport" content="initial-scale=1.0, width=device-width">
+  <meta name="viewport" content="initial-scale=1.0, width=device-width">
 </head>
 <body>
-	<div id="page">
-		{% with data=data["header_data"] %}
-			{% include "shared/header.html" %}
-		{% endwith %}
+<div id="page">
+  {% with data=data["header_data"] %}
+  {% include "shared/header.html" %}
+  {% endwith %}
 
-		{% block content %}
-		{% endblock %}
+  {% block content %}
+  {% endblock %}
 
-		{% with data=data["footer_data"] %}
-			{% include "shared/footer.html" %}
-		{% endwith %}
-	</div>
+  {% with data=data["footer_data"] %}
+  {% include "shared/footer.html" %}
+  {% endwith %}
+</div>
 
 {% with data=data["header_data"]["menu_data"] %}
-	{% include "shared/mobile-menu.html" %}
+{% include "shared/mobile-menu.html" %}
 {% endwith %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>

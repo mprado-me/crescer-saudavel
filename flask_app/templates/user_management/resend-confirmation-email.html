@@ -5,22 +5,22 @@
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
-  {% include "shared/page-heading.html" %}
+{% include "shared/page-heading.html" %}
 {% endwith %}
 
-<div class="main-container wow bounceInUp animated animated" style="visibility: visible;">     
-  <div class="main">                     
+<div class="main-container wow bounceInUp animated animated" style="visibility: visible;">
+  <div class="main">
     <div class="account-login container">
       <form action="{{url_for('resend_confirmation_email')}}" method="post">
         {{ data["form"].csrf_token }}
         <div class="registered-users">
           <div class="login-alerts-container">
             {% if data["msgs"] %}
-              {% for msg in data["msgs"] %}
-                {% with data=msg %}
-                  {% include "shared/alert-msg.html" %}
-                {% endwith %}
-              {% endfor %}
+            {% for msg in data["msgs"] %}
+            {% with data=msg %}
+            {% include "shared/alert-msg.html" %}
+            {% endwith %}
+            {% endfor %}
             {% endif %}
           </div>
           <strong>Reenviar email de confirmação</strong>
@@ -29,14 +29,16 @@
               <li>
                 <label for="email">Email</label>
                 <div class="input-box">
-                  {{macros.input(name="email", id="email", class="input-text required-entry", type="text", title="Email", maxlength="256", editable=True, errors=data["form"].email.errors, value=data.form.email.data)}}
+                  {{macros.input(name="email", id="email", class="input-text required-entry", type="text",
+                  title="Email", maxlength="256", editable=True, errors=data["form"].email.errors,
+                  value=data.form.email.data)}}
                 </div>
               </li>
             </ul>
             <div class="buttons-set">
               <button type="submit" class="button login" title="Entrar"><span>Reenviar</span></button>
             </div>
-          </div>                         
+          </div>
         </div>
       </form>
     </div>

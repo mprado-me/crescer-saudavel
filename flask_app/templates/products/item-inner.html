@@ -1,23 +1,26 @@
 <div class="item-inner">
   <div class="item-img">
-    <div class="item-img-info"><a href="{{ data['href'] }}" title="{{ data['title'] }}" class="product-image"><img src="{{ data['img_src'] }}" alt="{{ data['title'] }}"></a>
+    <div class="item-img-info"><a href="{{ data['href'] }}" title="{{ data['title'] }}" class="product-image"><img
+      src="{{ data['img_src'] }}" alt="{{ data['title'] }}"></a>
     </div>
   </div>
   <div class="item-info">
     <div class="info-inner">
       <div class="item-title">
-      <a href="{{ data['href'] }}" title="{{ data['title'] }}">{{ data["title"] }}</a>
+        <a href="{{ data['href'] }}" title="{{ data['title'] }}">{{ data["title"] }}</a>
       </div>
       <div class="add_cart_container">
         <div class="add_cart">
           <form method="post" action="{{ url_for('cart_add_product', product_id=data['product_id'], quantity=1) }}">
-            <button class="button btn-cart" type="submit" title="Adicionar ao carrinho" alt="Adicionar ao carrinho"></button>
+            <button class="button btn-cart" type="submit" title="Adicionar ao carrinho"
+                    alt="Adicionar ao carrinho"></button>
           </form>
         </div>
       </div>
       <div class="item-content">
         <div class="item-price">
-          <div class="price-box"><span class="regular-price" ><span class="price">{{ data["price"] }}</span> </span> </div>
+          <div class="price-box"><span class="regular-price"><span class="price">{{ data["price"] }}</span> </span>
+          </div>
         </div>
       </div>
     </div>

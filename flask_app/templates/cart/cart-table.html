@@ -1,68 +1,71 @@
 <table id="shopping-cart-table" class="data-table cart-table table-striped">
   <thead>
-    <tr class="first last">
-      <th rowspan="1">&nbsp;</th>
-      <th rowspan="1"><span class="nobr">Produto</span></th>
-      <th class="a-center" colspan="1"><span class="nobr">Preço da unid.</span></th>
-      <th rowspan="1" class="a-center">Quantidade</th>
-      <th class="a-center" colspan="1">Subtotal</th>
-      {% if data["editable"] %}
-        <th rowspan="1" class="a-center exclude-item-col">&nbsp;</th>
-      {% endif %}
-    </tr>
+  <tr class="first last">
+    <th rowspan="1">&nbsp;</th>
+    <th rowspan="1"><span class="nobr">Produto</span></th>
+    <th class="a-center" colspan="1"><span class="nobr">Preço da unid.</span></th>
+    <th rowspan="1" class="a-center">Quantidade</th>
+    <th class="a-center" colspan="1">Subtotal</th>
+    {% if data["editable"] %}
+    <th rowspan="1" class="a-center exclude-item-col">&nbsp;</th>
+    {% endif %}
+  </tr>
   </thead>
   <tfoot>
   </tfoot>
   <tbody>
-    {% for product in data["products"] %}
-      <tr>
-        <td class="hidden-table"><a href="{{url_for('product', product_id=product['id'])}}" title="{{product['title']}}" class="product-image"><img src="{{product['image_href']}}" width="75" alt="{{product['title']}}"></a></td>
-        <td>
-          <h2 class="product-name">
-            <a href="{{url_for('product', product_id=product['id'])}}">{{ product['title'] }}</a>
-          </h2>
-        </td>
-        <td class="hidden-table">
-          <span class="price">{{ product['unit_price'] }}</span>
-        </td>
-        <td class="a-center movewishlist">
-          <div class="custom pull-left add-to-cart qty-container">
-            <ul>
-              {% if data["editable"] %}
-                <li>
-                  <form action="{{url_for('cart_add_product', product_id=product['id'], quantity=1)}}" method="post">
-                    <button class="increase items-count" type="submit"><i class="icon-plus"></i></button>
-                  </form>
-                </li>
-              {% endif %}              
-              <li>
-                {% if data["editable"] %}
-                  <input type="text" name="quantity" value="{{product['quantity']}}" title="Quantidade" class="qty" readonly>
-                {% else %}
-                  <span>{{product['quantity']}}</span>
-                {% endif %}
-              </li>
-              {% if data["editable"] %}
-                <li>
-                  <form action="{{url_for('cart_remove_product', product_id=product['id'], quantity=1)}}" method="post">
-                    <button class="increase items-count" type="submit"><i class="icon-minus"></i></button>
-                  </form>
-                </li>
-              {% endif %}
-            </ul>
-          </div>
-        </td>
-        <td class="movewishlist">
-            <span class="price">{{ product['subtotal'] }}</span>
-        </td>
-        {% if data["editable"] %}
-          <td class="a-center last exclude-item-col">
-            <form action="{{url_for('cart_delete_product', product_id=product['id'])}}" method="post">
-              <button class="increase items-count" type="submit"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+  {% for product in data["products"] %}
+  <tr>
+    <td class="hidden-table"><a href="{{url_for('product', product_id=product['id'])}}" title="{{product['title']}}"
+                                class="product-image"><img src="{{product['image_href']}}" width="75"
+                                                           alt="{{product['title']}}"></a></td>
+    <td>
+      <h2 class="product-name">
+        <a href="{{url_for('product', product_id=product['id'])}}">{{ product['title'] }}</a>
+      </h2>
+    </td>
+    <td class="hidden-table">
+      <span class="price">{{ product['unit_price'] }}</span>
+    </td>
+    <td class="a-center movewishlist">
+      <div class="custom pull-left add-to-cart qty-container">
+        <ul>
+          {% if data["editable"] %}
+          <li>
+            <form action="{{url_for('cart_add_product', product_id=product['id'], quantity=1)}}" method="post">
+              <button class="increase items-count" type="submit"><i class="icon-plus"></i></button>
             </form>
-          </td>
-        {% endif %}
-        </tr> 
-    {% endfor %}
-   </tbody>
- </table>
+          </li>
+          {% endif %}
+          <li>
+            {% if data["editable"] %}
+            <input type="text" name="quantity" value="{{product['quantity']}}" title="Quantidade" class="qty" readonly>
+            {% else %}
+            <span>{{product['quantity']}}</span>
+            {% endif %}
+          </li>
+          {% if data["editable"] %}
+          <li>
+            <form action="{{url_for('cart_remove_product', product_id=product['id'], quantity=1)}}" method="post">
+              <button class="increase items-count" type="submit"><i class="icon-minus"></i></button>
+            </form>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </td>
+    <td class="movewishlist">
+      <span class="price">{{ product['subtotal'] }}</span>
+    </td>
+    {% if data["editable"] %}
+    <td class="a-center last exclude-item-col">
+      <form action="{{url_for('cart_delete_product', product_id=product['id'])}}" method="post">
+        <button class="increase items-count" type="submit"><span class="glyphicon glyphicon-trash"
+                                                                 aria-hidden="true"></span></button>
+      </form>
+    </td>
+    {% endif %}
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>

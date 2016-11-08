@@ -3,7 +3,7 @@
 {% block content %}
 
 {% with data=data["page_heading_data"] %}
-  {% include "shared/page-heading.html" %}
+{% include "shared/page-heading.html" %}
 {% endwith %}
 
 <div class="main-container col2-right-layout">
@@ -11,7 +11,8 @@
     <div id="main" class="blog-wrapper">
       <div id="primary" class="site-content">
         <div id="content" role="main">
-          <article id="post-29" class="blog_entry clearfix wow bounceInUp animated animated" style="visibility: visible;">
+          <article id="post-29" class="blog_entry clearfix wow bounceInUp animated animated"
+                   style="visibility: visible;">
             <div class="blog_entry-header clearfix">
               <div class="blog_entry-header-inner row">
                 <!-- <h2 class="blog_entry-title">{{ data["title"] }}</h2> -->
@@ -27,7 +28,9 @@
                 </div>
               </div>
               <div class="centered-content-container">
-                <a href="{{data['blog_url_to_return']}}"><button title="Voltar ao blog" class="button"><span>Voltar ao blog</span></button></a>
+                <a href="{{data['blog_url_to_return']}}">
+                  <button title="Voltar ao blog" class="button"><span>Voltar ao blog</span></button>
+                </a>
               </div>
             </div>
           </article>

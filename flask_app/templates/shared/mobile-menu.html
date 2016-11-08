@@ -1,40 +1,40 @@
-<!-- Mobile Menu--> 
+<!-- Mobile Menu-->
 <div id="mobile-menu">
-	<ul class="mobile-menu">
-		<li>
-			<a class="glyphicon glyphicon-chevron-left" aria-hidden="true" href="#"></a>
-		</li>
-		<li>
-			<a href="{{ url_for('home') }}">Home</a>
-		</li>
-		<li>
-			<a href="{{ url_for('cart') }}">Meu Carrinho</a>
-		</li>
-		{% if data and data|length > 0 %}
-			{% for menu_item in data %}
-				<li>
-					<a href="{{menu_item['href']}}">{{ menu_item["name"] }}</a>
-					{% if menu_item["children"] and menu_item["children"]|length > 0 %}
-						<ul>
-							{% for children1 in menu_item["children"] %}
-								<li>
-									<a href="{{children1['href']}}">{{children1['name']}}</a>
-									{% if children1["children"] and children1["children"]|length > 0 %}
-										<ul>
-											{% for children2 in children1["children"] %}
-												<li>
-													<a href="{{children2['href']}}">{{children2['name']}}
-													</a>
-												</li>
-											{% endfor %}
-										</ul>
-									{% endif %}
-								</li>
-							{% endfor %}
-						</ul>
-					{% endif %}
-				</li>
-			{% endfor %}
-		{% endif %}
-	</ul>
+  <ul class="mobile-menu">
+    <li>
+      <a class="glyphicon glyphicon-chevron-left" aria-hidden="true" href="#"></a>
+    </li>
+    <li>
+      <a href="{{ url_for('home') }}">Home</a>
+    </li>
+    <li>
+      <a href="{{ url_for('cart') }}">Meu Carrinho</a>
+    </li>
+    {% if data and data|length > 0 %}
+    {% for menu_item in data %}
+    <li>
+      <a href="{{menu_item['href']}}">{{ menu_item["name"] }}</a>
+      {% if menu_item["children"] and menu_item["children"]|length > 0 %}
+      <ul>
+        {% for children1 in menu_item["children"] %}
+        <li>
+          <a href="{{children1['href']}}">{{children1['name']}}</a>
+          {% if children1["children"] and children1["children"]|length > 0 %}
+          <ul>
+            {% for children2 in children1["children"] %}
+            <li>
+              <a href="{{children2['href']}}">{{children2['name']}}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </li>
+    {% endfor %}
+    {% endif %}
+  </ul>
 </div>
