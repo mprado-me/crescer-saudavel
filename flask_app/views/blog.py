@@ -17,8 +17,12 @@ def blog(page):
 
 @app.route('/blog-post/<int:blog_post_id>')
 def blog_post(blog_post_id):
+    # Getting optional parameters
     blog_page_to_return = request.args.get('blog-page-to-return')
+
+    # Setting default value to optional parameters
     if not blog_page_to_return:
         blog_page_to_return = 1
+
     data = blog_post_data_provider.get_data(blog_post_id=blog_post_id, blog_page_to_return=blog_page_to_return)
     return render_template('blog/blog-post.html', data=data)
