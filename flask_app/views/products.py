@@ -6,22 +6,27 @@ from .. import app
 from ..data_providers.product import product_data_provider
 from ..data_providers.products import products_data_provider
 
+from ..utils.decorators import log_route
+
 from flask import render_template, request
 
 
 @app.route('/produto/<int:product_id>')
+@log_route
 def product(product_id):
     data = product_data_provider.get_data(product_id)
     return render_template('products/product.html', data=data)
 
 
 @app.route('/produtos/pagina/<int:page>/ordenacao/<int:sort_method>')
+@log_route
 def all_products(page, sort_method):
     data = products_data_provider.get_all_products_data(page=page, sort_method=sort_method)
     return render_template('products/products.html', data=data)
 
 
 @app.route('/produtos/categoria/<int:category_id>/pagina/<int:page>/ordenacao/<int:sort_method>')
+@log_route
 def products_by_category(category_id, page, sort_method):
     data = products_data_provider.get_products_data_by_category(
         category_id=category_id,
@@ -31,6 +36,7 @@ def products_by_category(category_id, page, sort_method):
 
 
 @app.route('/produtos/categoria/<int:category_id>/subcategoria/<int:subcategory_id>/pagina/<int:page>/ordenacao/<int:sort_method>')
+@log_route
 def products_by_category_and_subcategory(category_id, subcategory_id, page, sort_method):
     data = products_data_provider.get_products_data_by_category_and_subcategory(
         category_id=category_id,
@@ -41,6 +47,7 @@ def products_by_category_and_subcategory(category_id, subcategory_id, page, sort
 
 
 @app.route('/produtos/busca/pagina/<int:page>')
+@log_route
 def products_by_search(page):
     # Getting optional parameters
     q = request.args.get("q")

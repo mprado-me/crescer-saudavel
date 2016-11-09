@@ -6,6 +6,7 @@ sudo apt-get install -y postgresql postgresql-contrib
 sudo apt-get install -y python-psycopg2
 sudo apt-get install -y libpq-dev
 sudo apt-get install -y python-dev
+
 cd /vagrant;
 sudo virtualenv env --always-copy;
 source env/bin/activate;
@@ -17,6 +18,9 @@ pip install flask-bcrypt;
 pip install psycopg2;
 pip install Flask-Mail;
 pip install Flask-Login;
+
+cd /vagrant;
+mkdir logs;
 
 # To create database user and the database for the user:
 # >> sudo su - postgres

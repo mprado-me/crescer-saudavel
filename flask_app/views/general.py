@@ -10,11 +10,14 @@ from ..data_providers.home import home_data_provider
 from ..data_providers.my_account import my_account_data_provider
 from ..data_providers.order import order_data_provider
 
+from ..utils.decorators import log_route
+
 from flask import abort, redirect, render_template, request, url_for, session
 from flask_login import login_required
 
 
 @app.route('/sobre-nos')
+@log_route
 def about_us():
     data = about_us_data_provider.get_data()
     return render_template('general/about-us.html', data=data)
@@ -22,6 +25,7 @@ def about_us():
 
 @app.route('/finalizacao-de-compra/passo/<int:step>')
 @login_required
+@log_route
 def checkout(step):
     # Getting user session identifier. Aka user_email
     user_email = session["user_id"]
@@ -40,6 +44,7 @@ def checkout(step):
 
 
 @app.route('/faq')
+@log_route
 def faq():
     data = faq_data_provider.get_data()
     return render_template('general/faq.html', data=data)
@@ -47,6 +52,7 @@ def faq():
 
 @app.route('/')
 @app.route('/home')
+@log_route
 def home():
     data = home_data_provider.get_data()
     return render_template('general/home.html', data=data)
@@ -54,6 +60,7 @@ def home():
 
 @app.route('/minha-conta', methods=['GET', 'POST'])
 @login_required
+@log_route
 def my_account():
     if request.method == 'GET':
         # Getting optional parameters
@@ -78,6 +85,7 @@ def my_account():
 
 @app.route('/pedido/<int:order_id>')
 @login_required
+@log_route
 def order(order_id):
     data = order_data_provider.get_data(order_id)
     return render_template('general/order.html', data=data)

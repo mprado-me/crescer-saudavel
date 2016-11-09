@@ -3,13 +3,6 @@
 
 from .. import app, db
 
-from ..forms import CreateAccountForm, LoginForm, EmailForm, RedefinePasswordForm
-
-from ..models.user import User
-
-from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
-from ..utils.security import ts
-
 from ..data_providers.sent_confirmation_email import sent_confirmation_email_data_provider
 from ..data_providers.create_account import create_account_data_provider
 from ..data_providers.get_fail import get_fail_data_provider
@@ -19,23 +12,34 @@ from ..data_providers.login import login_data_provider
 from ..data_providers.redefine_password import redefine_password_data_provider
 from ..data_providers.resend_confirmation_email import resend_confirmation_email_data_provider
 
+from ..forms import CreateAccountForm, LoginForm, EmailForm, RedefinePasswordForm
+
+from ..models.user import User
+
+from ..utils.decorators import log_route
+from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
+from ..utils.security import ts
+
 from flask import abort, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
 
-
 @app.route('/email-de-confirmacao-enviado/<string:email>')
+@log_route
 def sent_confirmation_email(email):
     data = sent_confirmation_email_data_provider.get_data(email)
     return render_template("user_management/sent-confirmation-email.html", data=data)
 
 
 @app.route('/criar-conta', methods=['GET', 'POST'])
+@log_route
 def create_account():
     form = CreateAccountForm()
+
     if request.method == "GET":
         data = create_account_data_provider.get_data(form)
         return render_template('user_management/create-account.html', data=data)
-    else:
+
+    elif request.method == "POST":
         invalid_form = not form.validate_on_submit()
 
         # Checking if the email is already registered
@@ -79,6 +83,8 @@ def create_account():
             data = create_account_data_provider.get_data(form, msg=msg)
             return render_template('user_management/create-account.html', data=data)
 
+    abort(404)
+
 
 def create_account_db_error(form):
     msg = {
@@ -90,6 +96,7 @@ def create_account_db_error(form):
 
 
 @app.route('/email-confirmado/<token>')
+@log_route
 def email_confirmed(token):
     try:
         email = ts.loads(token, salt="email-confirm-key")
@@ -118,6 +125,7 @@ def email_confirmed(token):
 
 
 @app.route('/recuperar-senha', methods=["GET", "POST"])
+@log_route
 def recover_password():
     form = EmailForm()
     if request.method == "GET":
@@ -178,6 +186,7 @@ def recover_password():
 
 
 @app.route('/email-de-recuperacao-de-senha-enviado')
+@log_route
 def sent_recover_password_email():
     email = request.args.get("email")
     if not email:
@@ -187,6 +196,7 @@ def sent_recover_password_email():
 
 
 @app.route('/entrar', methods=['GET', 'POST'])
+@log_route
 def login():
     form = LoginForm()
     if request.method == "GET":
@@ -262,6 +272,7 @@ def login():
 
 
 @app.route('/redefinir-senha/<token>', methods=["GET", "POST"])
+@log_route
 def redefine_password(token):
     try:
         email = ts.loads(token, salt="recover-key")
@@ -300,6 +311,7 @@ def redefine_password(token):
 
 
 @app.route('/reenviar-email-de-confirmacao', methods=['GET', 'POST'])
+@log_route
 def resend_confirmation_email():
     form = EmailForm()
     if request.method == 'GET':
@@ -361,6 +373,7 @@ def resend_confirmation_email():
 
 @app.route('/sair')
 @login_required
+@log_route
 def logout():
     logout_user()
     return redirect(url_for('login'))

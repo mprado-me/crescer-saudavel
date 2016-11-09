@@ -2,5 +2,7 @@
 env/
 *.pyc
 instance/
+ubuntu-xenial-16.04-cloudimg-console.log_route
 ubuntu-xenial-16.04-cloudimg-console.log
+logs/
 .idea/

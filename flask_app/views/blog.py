@@ -6,16 +6,20 @@ from .. import app
 from ..data_providers.blog import blog_data_provider
 from ..data_providers.blog_post_data_provider import blog_post_data_provider
 
+from ..utils.decorators import log_route
+
 from flask import render_template, request
 
 
 @app.route('/blog/pagina/<int:page>')
+@log_route
 def blog(page):
     data = blog_data_provider.get_data(page=page)
     return render_template('blog/blog.html', data=data)
 
 
 @app.route('/blog-post/<int:blog_post_id>')
+@log_route
 def blog_post(blog_post_id):
     # Getting optional parameters
     blog_page_to_return = request.args.get('blog-page-to-return')

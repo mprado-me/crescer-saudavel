@@ -5,12 +5,15 @@ from .. import app
 
 from ..data_providers.cart import cart_data_provider
 
+from ..utils.decorators import log_route
+
 from flask import redirect, render_template, session, url_for
 from flask_login import login_required
 
 
 @app.route('/carrinho')
 @login_required
+@log_route
 def cart():
     # Getting user session identifier. Aka user_email
     user_email = session["user_id"]
@@ -21,6 +24,7 @@ def cart():
 
 @app.route('/adicionar-ao-carrinho/produto/<int:product_id>/quantidade/<int:quantity>', methods=['POST'])
 @login_required
+@log_route
 def cart_add_product(product_id, quantity):
     # TODO: Implement
 
@@ -29,6 +33,7 @@ def cart_add_product(product_id, quantity):
 
 @app.route('/remover-do-carrinho/produto/<int:product_id>/quantidade/<int:quantity>', methods=['POST'])
 @login_required
+@log_route
 def cart_remove_product(product_id, quantity):
     # TODO: Implement
 
@@ -37,6 +42,7 @@ def cart_remove_product(product_id, quantity):
 
 @app.route('/deletar-do-carrinho/produto/<int:product_id>', methods=['POST'])
 @login_required
+@log_route
 def cart_delete_product(product_id):
     # TODO: Implement
 
@@ -45,6 +51,7 @@ def cart_delete_product(product_id):
 
 @app.route('/deletar-tudo-do-carrinho', methods=['POST'])
 @login_required
+@log_route
 def cart_delete_all_products():
     # TODO: Implement
 
