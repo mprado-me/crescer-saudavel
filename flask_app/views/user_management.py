@@ -18,10 +18,12 @@ from ..models.user import User
 
 from ..utils.decorators import log_route
 from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
+from ..utils.exceptions import DatabaseAccessError
 from ..utils.security import ts
 
 from flask import abort, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
+
 
 @app.route('/email-de-confirmacao-enviado/<string:email>')
 @log_route
@@ -40,21 +42,13 @@ def create_account():
         return render_template('user_management/create-account.html', data=data)
 
     elif request.method == "POST":
-        invalid_form = not form.validate_on_submit()
-
-        # Checking if the email is already registered
-        email_registered = False
         try:
-            if db.session.query(User).filter_by(email=form.email.data).first():
-                email_registered = True
-        except:
-            db.session.rollback()
+            invalid_form = not form.validate_on_submit()
+        except DatabaseAccessError:
             return create_account_db_error(form)
 
-        if invalid_form or email_registered:
+        if invalid_form:
             data = create_account_data_provider.get_data(form)
-            if email_registered:
-                data["form"].email.errors.append('Email já registrado')
             return render_template('user_management/create-account.html', data=data)
 
         user = User(

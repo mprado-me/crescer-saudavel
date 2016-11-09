@@ -16,7 +16,7 @@ def admin(func):
 def log_route(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
-        app.logger.debug("-------------------------------------------------------")
+        app.logger.debug("-*-*-")
         app.logger.debug(str(func.__name__) + " | " + request.method)
         if len(kwargs) > 0:
             app.logger.debug("url_params: " + str(kwargs))

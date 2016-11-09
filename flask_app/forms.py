@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from .models.user import User
+
+from .utils.validators import Unique
+
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
@@ -15,7 +19,8 @@ password_mismatch_msg = "As senhas digitadas não são iguais"
 class CreateAccountForm(FlaskForm):
     email = StringField('Email', validators=[
         DataRequired(message=data_required_msg),
-        Email(message=email_invalid_format_msg)])
+        Email(message=email_invalid_format_msg),
+        Unique(model=User, field=User.email, message=email_already_registered_msg)])
     password = PasswordField('Senha', validators=[
         DataRequired(message=data_required_msg),
         Length(min=6, max=32, message=password_length_msg),
