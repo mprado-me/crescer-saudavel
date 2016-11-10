@@ -16,9 +16,10 @@ from ..forms import CreateAccountForm, LoginForm, EmailForm, RedefinePasswordFor
 
 from ..models.user import User
 
+from ..utils.db_manager import db_manager
 from ..utils.decorators import log_route
 from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
-from ..utils.exceptions import DatabaseAccessError
+from ..utils.exceptions import DatabaseAccessError, EmailSendingError
 from ..utils.security import ts
 
 from flask import abort, redirect, render_template, request, url_for
@@ -43,50 +44,28 @@ def create_account():
 
     elif request.method == "POST":
         try:
-            invalid_form = not form.validate_on_submit()
-        except DatabaseAccessError:
-            return create_account_db_error(form)
+            if not form.validate_on_submit():
+                data = create_account_data_provider.get_data(form)
+                return render_template('user_management/create-account.html', data=data)
 
-        if invalid_form:
-            data = create_account_data_provider.get_data(form)
-            return render_template('user_management/create-account.html', data=data)
+            db_manager.add_user(
+                email=form.email.data,
+                password=form.password.data
+            )
 
-        user = User(
-            email=form.email.data,
-            password=form.password.data
-        )
+            send_create_account_confirmation_email(form.email.data)
 
-        # Adding user in db
-        try:
-            db.session.add(user)
-            db.session.commit()
-        except:
-            db.session.rollback()
-            return create_account_db_error(form)
-
-        # Sending confirmation email message
-        try:
-            send_create_account_confirmation_email(user.email)
+            db_manager.commit()
             return redirect(url_for("sent_confirmation_email", email=request.form["email"]))
-        except:
-            # TODO: Redirect to remand confirmation email page, the user has already been registered
-            msg = {
-                "type": "danger",
-                "content": "Falha! Ocorreu um erro ao enviar o email de confirmação. Tente novamente.",
-            }
-            data = create_account_data_provider.get_data(form, msg=msg)
+        except DatabaseAccessError:
+            db_manager.rollback()
+            data = create_account_data_provider.get_data_when_database_access_error(form=form)
+            return render_template('user_management/create-account.html', data=data)
+        except EmailSendingError:
+            data = create_account_data_provider.get_data_when_email_sending_error(form=form)
             return render_template('user_management/create-account.html', data=data)
 
     abort(404)
-
-
-def create_account_db_error(form):
-    msg = {
-        "type": "danger",
-        "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
-    }
-    data = create_account_data_provider.get_data(form, msg=msg)
-    return render_template('user_management/create-account.html', data=data)
 
 
 @app.route('/email-confirmado/<token>')
