@@ -13,13 +13,7 @@ class DatabaseAccessError(Exception):
 
     def __init__(self, message=""):
         super(DatabaseAccessError, self).__init__(message)
-        app.logger.warning("-*-*-")
-        if message != "":
-            app.logger.warning("DatabaseAccessError | " + message)
-        else:
-            app.logger.warning("DatabaseAccessError")
-        traceback_as_string = "".join(traceback.format_stack())
-        app.logger.warning("\n"+traceback_as_string)
+        log_exception(name="DatabaseAccessError", message=message)
 
 class EmailSendingError(Exception):
     msg = {
@@ -29,10 +23,13 @@ class EmailSendingError(Exception):
 
     def __init__(self, message=""):
         super(EmailSendingError, self).__init__(message)
-        app.logger.warning("-*-*-")
-        if message != "":
-            app.logger.warning("EmailSendingError | " + message)
-        else:
-            app.logger.warning("EmailSendingError")
-        traceback_as_string = "".join(traceback.format_stack())
-        app.logger.warning("\n"+traceback_as_string)
+        log_exception(name="EmailSendingError", message=message)
+
+def log_exception(name, message=""):
+    app.logger.warning("-*-*-")
+    if message != "":
+        app.logger.warning(name + " | " + message)
+    else:
+        app.logger.warning(name)
+    traceback_as_string = "".join(traceback.format_stack())
+    app.logger.warning("\n" + traceback_as_string)

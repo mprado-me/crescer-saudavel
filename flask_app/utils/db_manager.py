@@ -11,13 +11,15 @@ class DbManager:
     def __init__(self):
         pass
 
-    def add_user(self, email, password):
+    def add_user(self, user):
         try:
-            user = User(
-                email=email,
-                password=password
-            )
             db.session.add(user)
+        except:
+            raise DatabaseAccessError()
+
+    def get_user(self, email):
+        try:
+            return User.query.filter_by(email=email).first()
         except:
             raise DatabaseAccessError()
 

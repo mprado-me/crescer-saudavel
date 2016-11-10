@@ -5,12 +5,23 @@ from header import HeaderDataProvider
 from footer import FooterDataProvider
 
 
-class GetFailDataProvider:
+class FailedToGetDataProvider:
     def __init__(self):
         pass
 
     def get_data(self, msg, button):
-        return self.sample_data_0(msg, button)
+        return self.sample_data_0(msg=msg, button=button)
+
+    def get_data_when_database_access_error(self, href):
+        msg = {
+            "type": "danger",
+            "content": "Falha! Ocorreu um erro ao acessar o banco de dados.",
+        }
+        button = {
+            "title": "Tentar novamente",
+            "href": href,
+        }
+        return self.get_data(msg=msg, button=button)
 
     def get_page_heading_data(self):
         return {
@@ -27,4 +38,4 @@ class GetFailDataProvider:
         }
         return data
 
-get_fail_data_provider = GetFailDataProvider()
+failed_to_get_data_provider = FailedToGetDataProvider()

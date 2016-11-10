@@ -5,7 +5,7 @@ from .. import app, db
 
 from ..data_providers.sent_confirmation_email import sent_confirmation_email_data_provider
 from ..data_providers.create_account import create_account_data_provider
-from ..data_providers.get_fail import get_fail_data_provider
+from ..data_providers.failed_to_get import failed_to_get_data_provider
 from ..data_providers.recover_password import recover_password_data_provider
 from ..data_providers.sent_recover_password_email import sent_recover_password_email_data_provider
 from ..data_providers.login import login_data_provider
@@ -19,12 +19,13 @@ from ..models.user import User
 from ..utils.db_manager import db_manager
 from ..utils.decorators import log_route
 from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
-from ..utils.exceptions import DatabaseAccessError, EmailSendingError
+from ..utils.exceptions import DatabaseAccessError, EmailSendingError, log_exception
 from ..utils.security import ts
 
 from flask import abort, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
 
+from itsdangerous import BadSignature
 
 @app.route('/email-de-confirmacao-enviado/<string:email>')
 @log_route
@@ -48,10 +49,11 @@ def create_account():
                 data = create_account_data_provider.get_data(form)
                 return render_template('user_management/create-account.html', data=data)
 
-            db_manager.add_user(
+            user = User(
                 email=form.email.data,
                 password=form.password.data
             )
+            db_manager.add_user(user)
 
             send_create_account_confirmation_email(form.email.data)
 
@@ -65,36 +67,27 @@ def create_account():
             data = create_account_data_provider.get_data_when_email_sending_error(form=form)
             return render_template('user_management/create-account.html', data=data)
 
-    abort(404)
-
 
 @app.route('/email-confirmado/<token>')
 @log_route
 def email_confirmed(token):
     try:
         email = ts.loads(token, salt="email-confirm-key")
-    except:
-        abort(404)
-
-    try:
-        user = User.query.filter_by(email=email).first_or_404()
+        user = db_manager.get_user(email=email)
+        if not user:
+            abort(404)
         user.email_confirmed = True
-        db.session.add(user)
-        db.session.commit()
-    except:
-        db.session.rollback()
-        msg = {
-            "type": "danger",
-            "content": "Falha! Ocorreu um erro ao acessar o banco de dados.",
-        }
-        button = {
-            "title": "Tentar novamente",
-            "href": url_for('email_confirmed', token=token)
-        }
-        data = get_fail_data_provider.get_data(msg=msg, button=button)
-        return render_template('shared/get-fail.html', data=data)
-
-    return redirect(url_for('login', msg_content="Email confirmado com sucesso.", msg_type="success"))
+        db_manager.add_user(user)
+        db_manager.commit()
+        return redirect(url_for('login', msg_content="Email confirmado com sucesso.", msg_type="success"))
+    except BadSignature:
+        log_exception(name="BadSignature")
+        abort(404)
+    except DatabaseAccessError:
+        db_manager.rollback()
+        href = url_for('email_confirmed', token=token)
+        data = failed_to_get_data_provider.get_data_when_database_access_error(href=href)
+        return render_template('shared/failed-to-get.html', data=data)
 
 
 @app.route('/recuperar-senha', methods=["GET", "POST"])
