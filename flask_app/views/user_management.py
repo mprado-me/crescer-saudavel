@@ -12,7 +12,7 @@ from ..data_providers.login import login_data_provider
 from ..data_providers.redefine_password import redefine_password_data_provider
 from ..data_providers.resend_confirmation_email import resend_confirmation_email_data_provider
 
-from ..forms import CreateAccountForm, LoginForm, EmailForm, RedefinePasswordForm
+from ..forms import CreateAccountForm, LoginForm, EmailForm, RecoverPasswordForm, RedefinePasswordForm
 
 from ..models.user import User
 
@@ -39,11 +39,13 @@ def sent_confirmation_email(email):
 def create_account():
     form = CreateAccountForm()
 
+    # GET
     if request.method == "GET":
         data = create_account_data_provider.get_data(form)
         return render_template('user_management/create-account.html', data=data)
 
-    elif request.method == "POST":
+    # POST
+    else:
         try:
             if not form.validate_on_submit():
                 data = create_account_data_provider.get_data(form)
@@ -93,62 +95,28 @@ def email_confirmed(token):
 @app.route('/recuperar-senha', methods=["GET", "POST"])
 @log_route
 def recover_password():
-    form = EmailForm()
+    form = RecoverPasswordForm()
+
+    # GET
     if request.method == "GET":
         data = recover_password_data_provider.get_data(form=form)
         return render_template('user_management/recover-password.html', data=data)
-    elif request.method == "POST":
-        invalid_form = not form.validate_on_submit()
-        email_registered = None
-        email_confirmed = None
-        user = None
 
+    # POST
+    else:
         try:
-            user = db.session.query(User).filter_by(email=form.email.data).first()
+            if not form.validate_on_submit():
+                data = recover_password_data_provider.get_data(form=form)
+                return render_template('user_management/recover-password.html', data=data)
 
-            if user:
-                email_registered = True
-                email_confirmed = user.email_confirmed
-            else:
-                email_registered = False
-        except:
-            db.session.rollback()
-            msgs = [{
-                "type": "danger",
-                "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
-            }]
-            data = recover_password_data_provider.get_data(form=form, msgs=msgs)
+            send_redefine_password_email(form.email.data)
+            return redirect(url_for("sent_recover_password_email", email=form.email.data))
+        except DatabaseAccessError:
+            data = recover_password_data_provider.get_data_when_database_access_error(form=form)
             return render_template('user_management/recover-password.html', data=data)
-
-        if invalid_form:
-            data = recover_password_data_provider.get_data(form=form)
+        except EmailSendingError:
+            data = recover_password_data_provider.get_data_when_email_sending_error(form=form)
             return render_template('user_management/recover-password.html', data=data)
-
-        if not email_registered:
-            data = recover_password_data_provider.get_data(form=form)
-            data["form"].email.errors.append("Email não registrado")
-            return render_template('user_management/recover-password.html', data=data)
-
-        if not email_confirmed:
-            data = recover_password_data_provider.get_data(form=form)
-            data["form"].email.errors.append(
-                "Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for(
-                    "resend_confirmation_email"))
-            return render_template('user_management/recover-password.html', data=data)
-
-        # Sending redefine password email message
-        try:
-            send_redefine_password_email(user.email)
-            return redirect(url_for("sent_recover_password_email", email=user.email))
-        except:
-            msgs = [{
-                "type": "danger",
-                "content": "Falha! Ocorreu um erro ao enviar o email de redefinição de senha. Tente novamente.",
-            }]
-            data = recover_password_data_provider.get_data(form=form, msgs=msgs)
-            return render_template('user_management/recover-password.html', data=data)
-
-    abort(404)
 
 
 @app.route('/email-de-recuperacao-de-senha-enviado')

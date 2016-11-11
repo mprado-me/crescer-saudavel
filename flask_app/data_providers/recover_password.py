@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from ..utils.exceptions import DatabaseAccessError
+from ..utils.exceptions import EmailSendingError
+
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
@@ -11,8 +14,18 @@ class RecoverPasswordDataProvider:
     def __init__(self):
         pass
 
-    def get_data(self, form, msgs=None):
-        return self.sample_data_0(form=form, msgs=msgs)
+    def get_data(self, form):
+        return self.sample_data_0(form=form)
+
+    def get_data_when_database_access_error(self, form):
+        data = self.get_data(form=form)
+        data["msgs"] = [DatabaseAccessError.msg]
+        return data
+
+    def get_data_when_email_sending_error(self, form):
+        data = self.get_data(form=form)
+        data["msgs"] = [EmailSendingError.msg]
+        return data
 
     def get_page_heading_data(self):
         return {
@@ -32,11 +45,10 @@ class RecoverPasswordDataProvider:
             "title": "Recuperar senha",
         }
 
-    def sample_data_0(self, form, msgs):
+    def sample_data_0(self, form):
         data = {
             "header_data": HeaderDataProvider().get_data(),
             "page_heading_data": self.get_page_heading_data(),
-            "msgs": msgs,
             "form": form,
             "footer_data": FooterDataProvider().get_data(),
         }
