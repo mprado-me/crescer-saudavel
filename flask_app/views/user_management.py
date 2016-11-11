@@ -27,6 +27,7 @@ from flask_login import login_required, login_user, logout_user
 
 from itsdangerous import BadSignature
 
+
 @app.route('/email-de-confirmacao-enviado/<string:email>')
 @log_route
 def sent_confirmation_email(email):
@@ -119,12 +120,9 @@ def recover_password():
             return render_template('user_management/recover-password.html', data=data)
 
 
-@app.route('/email-de-recuperacao-de-senha-enviado')
+@app.route('/email-de-recuperacao-de-senha-enviado/<string:email>')
 @log_route
-def sent_recover_password_email():
-    email = request.args.get("email")
-    if not email:
-        abort(422)
+def sent_recover_password_email(email):
     data = sent_recover_password_email_data_provider.get_data(email=email)
     return render_template('user_management/sent-recover-password-email.html', data=data)
 
