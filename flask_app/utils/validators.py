@@ -1,9 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from ..models.user import User
+
 from wtforms.validators import ValidationError
 from exceptions import DatabaseAccessError
 
+class CorrectPassword(object):
+    def __init__(self, message=u'Senha incorreta'):
+        self.message = message
+
+    def __call__(self, form, field):
+        try:
+            user = User.query.filter(User.email == form.email.data).first()
+        except:
+            raise DatabaseAccessError()
+        incorrect_password = False
+        if user:
+            incorrect_password = not user.is_correct_password(field.data)
+        if incorrect_password:
+            raise ValidationError(self.message)
 
 class NotUnique(object):
     def __init__(self, model, field, message=u'Elemento é único'):

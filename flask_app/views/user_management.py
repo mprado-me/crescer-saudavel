@@ -131,76 +131,29 @@ def sent_recover_password_email(email):
 @log_route
 def login():
     form = LoginForm()
+
+    # GET
     if request.method == "GET":
-        msgs = []
-        msg_content = request.args.get("msg_content")
-        msg_type = request.args.get("msg_type")
-        if msg_content and msg_type:
-            msgs.append({
-                "type": msg_type,
-                "content": msg_content,
-            })
-        finalizando_compra = request.args.get('finalizando_compra')
-        if finalizando_compra and finalizando_compra == "sim":
-            msgs.append({
-                "type": "info",
-                "content": "Para finalizar a compra, entre ou cadastre-se.",
-            })
-        data = login_data_provider.get_data(form=form, msgs=msgs)
+        data = login_data_provider.get_data_when_get_request(form=form)
         return render_template('user_management/login.html', data=data)
+
+    # POST
     else:
-        invalid_form = not form.validate_on_submit()
-        incorrect_password = None
-        email_registered = None
-        email_confirmed = None
-
         try:
-            user = db.session.query(User).filter_by(email=form.email.data).first()
+            if not form.validate_on_submit():
+                data = login_data_provider.get_data(form=form)
+                return render_template('user_management/login.html', data=data)
 
-            if user:
-                email_registered = True
-                incorrect_password = not user.is_correct_password(form.password.data)
-                email_confirmed = user.email_confirmed
-
-                if not incorrect_password and email_confirmed:
-                    user.authenticated = True
-                    db.session.add(user)
-                    db.session.commit()
-                    login_user(user)
-                    return redirect(url_for('my_account'))
-            else:
-                email_registered = False
-        except:
-            db.session.rollback()
-            msgs = [{
-                "type": "danger",
-                "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
-            }]
-            data = login_data_provider.get_data(form=form, msgs=msgs)
+            user = db_manager.get_user(form.email.data)
+            user.authenticated = True
+            db_manager.add_user(user)
+            db_manager.commit()
+            login_user(user)
+            return redirect(url_for('my_account'))
+        except DatabaseAccessError:
+            db_manager.rollback()
+            data = login_data_provider.get_data_when_database_access_error(form=form)
             return render_template('user_management/login.html', data=data)
-
-        if invalid_form:
-            data = login_data_provider.get_data(form=form)
-            return render_template('user_management/login.html', data=data)
-
-        if not email_registered:
-            data = login_data_provider.get_data(form=form)
-            data["form"].email.errors.append("Email não registrado")
-            return render_template('user_management/login.html', data=data)
-
-        if not email_confirmed:
-            data = login_data_provider.get_data(form=form)
-            data["form"].email.errors.append(
-                "Email não confirmado. Para reenviar o email de confirmação clique <a href='%s'>aqui</a>." % url_for(
-                    "resend_confirmation_email"))
-            return render_template('user_management/login.html', data=data)
-
-        if incorrect_password:
-            data = login_data_provider.get_data(form=form)
-            data["form"].password.errors.append("Senha incorreta")
-            return render_template('user_management/login.html', data=data)
-
-        abort(404)
 
 
 @app.route('/redefinir-senha/<token>', methods=["GET", "POST"])
