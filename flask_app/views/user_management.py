@@ -159,40 +159,40 @@ def login():
 @app.route('/redefinir-senha/<token>', methods=["GET", "POST"])
 @log_route
 def redefine_password(token):
-    try:
-        email = ts.loads(token, salt="recover-key")
-    except:
-        abort(404)
-
     form = RedefinePasswordForm()
 
+    # GET
     if request.method == "GET":
-        data = redefine_password_data_provider.get_data(form=form, email=email, token=token, msgs=[])
-        return render_template('user_management/redefine-password.html', data=data)
-    elif request.method == "POST":
-        invalid_form = not form.validate_on_submit()
-
-        if invalid_form:
-            data = redefine_password_data_provider.get_data(form=form, email=email, token=token, msgs=[])
-            return render_template('user_management/redefine-password.html', data=data)
-
-        # Changing user password
         try:
-            user = User.query.filter_by(email=email).first_or_404()
-            user.password = form.password.data
-            db.session.add(user)
-            db.session.commit()
-        except:
-            db.session.rollback()
-            msgs = [{
-                "type": "danger",
-                "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
-            }]
-            data = redefine_password_data_provider.get_data(form=form, email=email, token=token, msgs=msgs)
+            email = ts.loads(token, salt="recover-key")
+            data = redefine_password_data_provider.get_data(form=form, email=email, token=token)
             return render_template('user_management/redefine-password.html', data=data)
+        except BadSignature:
+            log_exception(name="BadSignature")
+            abort(404)
 
-        return redirect(url_for('login', msg_type="success", msg_content="Senha redefinida com sucesso."))
-    return None
+    # POST
+    elif request.method == "POST":
+        try:
+            email = ts.loads(token, salt="recover-key")
+
+            if not form.validate_on_submit():
+                data = redefine_password_data_provider.get_data(form=form, email=email, token=token)
+                return render_template('user_management/redefine-password.html', data=data)
+
+            user = db_manager.get_user(email)
+            user.password = form.password.data
+            db_manager.add_user(user)
+            db_manager.commit()
+
+            return redirect(url_for('login', msg_type="success", msg_content="Senha redefinida com sucesso."))
+        except BadSignature:
+            log_exception(name="BadSignature")
+            abort(404)
+        except DatabaseAccessError:
+            db_manager.rollback()
+            data = redefine_password_data_provider.get_data_when_database_access_error(form=form, email=email, token=token)
+            return render_template('user_management/redefine-password.html', data=data)
 
 
 @app.route('/reenviar-email-de-confirmacao', methods=['GET', 'POST'])

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from ..utils.exceptions import DatabaseAccessError
+
 from header import HeaderDataProvider
 from footer import FooterDataProvider
 
@@ -11,8 +13,14 @@ class RedefinePasswordDataProvider:
     def __init__(self):
         pass
 
-    def get_data(self, form, email, token, msgs=None):
-        return self.sample_data_0(form=form, email=email, token=token, msgs=msgs)
+    def get_data(self, form, email, token):
+        return self.sample_data_0(form=form, email=email, token=token)
+
+    def get_data_when_database_access_error(self, form, email, token):
+        data = self.get_data(form=form, email=email, token=token)
+        msgs = [DatabaseAccessError.msg]
+        data["msgs"] = msgs
+        return data
 
     def get_page_heading_data(self):
         return {
@@ -28,12 +36,11 @@ class RedefinePasswordDataProvider:
             "title": "Redefinir senha",
         }
 
-    def sample_data_0(self, form, email, token, msgs):
+    def sample_data_0(self, form, email, token):
         data = {
             "header_data": HeaderDataProvider().get_data(),
             "page_heading_data": self.get_page_heading_data(),
             "token": token,
-            "msgs": msgs,
             "email": email,
             "form": form,
             "footer_data": FooterDataProvider().get_data(),
