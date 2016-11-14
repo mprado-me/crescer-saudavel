@@ -18,7 +18,7 @@ from ..models.user import User
 
 from ..utils.db_manager import db_manager
 from ..utils.decorators import log_route
-from ..utils.email_manager import send_create_account_confirmation_email, send_redefine_password_email
+from ..utils.email_manager import email_manager
 from ..utils.exceptions import DatabaseAccessError, EmailSendingError, log_exception
 from ..utils.security import ts
 
@@ -58,7 +58,7 @@ def create_account():
             )
             db_manager.add_user(user)
 
-            send_create_account_confirmation_email(form.email.data)
+            email_manager.send_create_account_confirmation_email(form.email.data)
 
             db_manager.commit()
             return redirect(url_for("sent_confirmation_email", email=request.form["email"]))
@@ -110,7 +110,7 @@ def recover_password():
                 data = recover_password_data_provider.get_data(form=form)
                 return render_template('user_management/recover-password.html', data=data)
 
-            send_redefine_password_email(form.email.data)
+            email_manager.send_redefine_password_email(form.email.data)
             return redirect(url_for("sent_recover_password_email", email=form.email.data))
         except DatabaseAccessError:
             data = recover_password_data_provider.get_data_when_database_access_error(form=form)
@@ -214,7 +214,7 @@ def resend_confirmation_email():
                 return render_template('user_management/resend-confirmation-email.html', data=data)
 
             # TODO: Restrict the resend of the same email to one hour
-            send_create_account_confirmation_email(form.email.data)
+            email_manager.send_create_account_confirmation_email(form.email.data)
             return redirect(url_for("sent_confirmation_email", email=form.email.data))
         except DatabaseAccessError:
             data = resend_confirmation_email_data_provider.get_data_when_database_access_error(form=form)
