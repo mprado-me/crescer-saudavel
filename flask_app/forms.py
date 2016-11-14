@@ -3,7 +3,7 @@
 
 from .models.user import User
 
-from .utils.validators import CorrectPassword, NotUnique, Unique, VariableTrue
+from .utils.validators import CorrectPassword, NotUnique, Unique, VariableFalse, VariableTrue
 
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
@@ -17,6 +17,7 @@ incorrect_password_msg = "Senha incorreta"
 password_length_msg = "A senha deve possuir entre 6 e 32 caracteres"
 password_mismatch_msg = "As senhas digitadas não são iguais"
 unconfirmed_email_msg = "Email não confirmado"
+confirmed_email_msg = "Email já confirmado"
 
 
 class CreateAccountForm(FlaskForm):
@@ -40,10 +41,12 @@ class RecoverPasswordForm(FlaskForm):
         VariableTrue(model=User, key_field=User.email, var_field=User.email_confirmed, message=unconfirmed_email_msg)])
 
 
-class EmailForm(FlaskForm):
+class ResendConfirmationEmailForm(FlaskForm):
     email = StringField('Email', validators=[
         DataRequired(message=data_required_msg),
-        Email(message=email_invalid_format_msg)])
+        Email(message=email_invalid_format_msg),
+        NotUnique(model=User, field=User.email, message=email_not_registered_msg),
+        VariableFalse(model=User, key_field=User.email, var_field=User.email_confirmed, message=confirmed_email_msg)])
 
 
 class LoginForm(FlaskForm):

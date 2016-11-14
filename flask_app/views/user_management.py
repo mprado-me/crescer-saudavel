@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .. import app, db
+from .. import app
 
 from ..data_providers.sent_confirmation_email import sent_confirmation_email_data_provider
 from ..data_providers.create_account import create_account_data_provider
@@ -12,7 +12,7 @@ from ..data_providers.login import login_data_provider
 from ..data_providers.redefine_password import redefine_password_data_provider
 from ..data_providers.resend_confirmation_email import resend_confirmation_email_data_provider
 
-from ..forms import CreateAccountForm, LoginForm, EmailForm, RecoverPasswordForm, RedefinePasswordForm
+from ..forms import CreateAccountForm, LoginForm, ResendConfirmationEmailForm, RecoverPasswordForm, RedefinePasswordForm
 
 from ..models.user import User
 
@@ -172,7 +172,8 @@ def redefine_password(token):
             abort(404)
 
     # POST
-    elif request.method == "POST":
+    else:
+        email = None
         try:
             email = ts.loads(token, salt="recover-key")
 
@@ -198,62 +199,29 @@ def redefine_password(token):
 @app.route('/reenviar-email-de-confirmacao', methods=['GET', 'POST'])
 @log_route
 def resend_confirmation_email():
-    form = EmailForm()
+    form = ResendConfirmationEmailForm()
+
+    # GET
     if request.method == 'GET':
         data = resend_confirmation_email_data_provider.get_data(form)
         return render_template('user_management/resend-confirmation-email.html', data=data)
-    elif request.method == 'POST':
-        invalid_form = not form.validate_on_submit()
-        email_registered = None
-        email_confirmed = None
 
+    # POST
+    else:
         try:
-            user = db.session.query(User).filter_by(email=form.email.data).first()
+            if not form.validate_on_submit():
+                data = resend_confirmation_email_data_provider.get_data(form=form)
+                return render_template('user_management/resend-confirmation-email.html', data=data)
 
-            if user:
-                email_registered = True
-                email_confirmed = user.email_confirmed
-            else:
-                email_registered = False
-        except:
-            db.session.rollback()
-            msgs = [{
-                "type": "danger",
-                "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
-            }]
-            data = resend_confirmation_email_data_provider.get_data(form=form, msgs=msgs)
-            return render_template('user_management/resend-confirmation-email.html', data=data)
-
-        if invalid_form:
-            data = resend_confirmation_email_data_provider.get_data(form=form)
-            return render_template('user_management/resend-confirmation-email.html', data=data)
-
-        if not email_registered:
-            data = resend_confirmation_email_data_provider.get_data(form=form)
-            data["form"].email.errors.append(
-                "Email não registrado. Clique <a href='%s'>aqui</a> para criar uma nova conta." % url_for(
-                    "create_account"))
-            return render_template('user_management/resend-confirmation-email.html', data=data)
-
-        if email_confirmed:
-            data = resend_confirmation_email_data_provider.get_data(form=form)
-            data["form"].email.errors.append(
-                "Email já confirmado. Clique <a href='%s'>aqui</a> para entrar na conta." % url_for("login"))
-            return render_template('user_management/resend-confirmation-email.html', data=data)
-
-        # Sending confirmation message
-        # TODO: Restrict the resend of the same email to one hour using a new table
-        try:
+            # TODO: Restrict the resend of the same email to one hour
             send_create_account_confirmation_email(form.email.data)
             return redirect(url_for("sent_confirmation_email", email=form.email.data))
-        except:
-            msgs = [{
-                "type": "danger",
-                "content": "Falha! Ocorreu um erro ao reenviar o email de confirmação. Tente novamente.",
-            }]
-            data = resend_confirmation_email_data_provider.get_data(form=form, msgs=msgs)
+        except DatabaseAccessError:
+            data = resend_confirmation_email_data_provider.get_data_when_database_access_error(form=form)
             return render_template('user_management/resend-confirmation-email.html', data=data)
-    abort(404)
+        except EmailSendingError:
+            data = resend_confirmation_email_data_provider.get_data_when_email_sending_error(form=form)
+            return render_template('user_management/resend-confirmation-email.html', data=data)
 
 
 @app.route('/sair')
