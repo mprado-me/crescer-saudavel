@@ -13,13 +13,16 @@ from wtforms.validators import HostnameValidation, ValidationError, Regexp, Stop
 
 
 class AllowedFileFormat(object):
-    def __init__(self, input_file_name, allowed_extensions, message=u'Formato de arquivo inválido', stop=False):
+    def __init__(self, input_file_name, allowed_extensions, message=u"Formato de arquivo inválido" , stop=False):
         self.input_file_name = input_file_name
         self.allowed_extensions = allowed_extensions
         self.message = message
         self.stop = stop
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         current_file = request.files[self.input_file_name]
         filename = current_file.filename
         allowed_file = '.' in filename and filename.rsplit('.', 1)[1] in self.allowed_extensions
@@ -37,6 +40,9 @@ class CorrectPassword(object):
         self.stop = stop
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         try:
             user = User.query.filter(User.email == form.email.data).first()
         except:
@@ -52,7 +58,7 @@ class CorrectPassword(object):
 
 
 class Email(Regexp):
-    def __init__(self, message="Formato de email inválido", stop=False):
+    def __init__(self, message=u"Formato de email inválido", stop=False):
         self.message = message
         self.stop = stop
         self.validate_hostname = HostnameValidation(
@@ -61,6 +67,9 @@ class Email(Regexp):
         super(Email, self).__init__(r'^.+@([^.@][^@]+)$', re.IGNORECASE, message)
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         try:
             match = super(Email, self).__call__(form, field, self.message)
         except ValidationError:
@@ -83,6 +92,9 @@ class HasFilePart(object):
         self.stop = stop
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         has_file_part = self.input_file_name in request.files
         current_file = request.files[self.input_file_name]
         valid_filename = current_file.filename != ''
@@ -104,6 +116,9 @@ class Length(object):
         self.stop = stop
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         l = field.data and len(field.data) or 0
         if l < self.min or self.max != -1 and l > self.max:
             message = self.message
@@ -131,6 +146,9 @@ class NotUnique(object):
         self.stop = stop
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         try:
             check = self.model.query.filter(self.field == field.data).first()
         except:
@@ -150,6 +168,9 @@ class Unique(object):
         self.stop = stop
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         try:
             check = self.model.query.filter(self.field == field.data).first()
         except:
@@ -170,6 +191,9 @@ class VariableFalse(object):
         self.stop = stop
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         try:
             model_instance = self.model.query.filter(self.key_field == field.data).first()
         except:
@@ -190,6 +214,9 @@ class VariableTrue(object):
         self.stop = stop
 
     def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
         try:
             model_instance = self.model.query.filter(self.key_field == field.data).first()
         except:

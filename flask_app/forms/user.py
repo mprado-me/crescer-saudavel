@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from .error_msg_provider import error_msg_provider
+
 from flask_app.models.user import User
 
 from flask_app.utils.validators import CorrectPassword, Email, Length, NotUnique, Unique, VariableFalse, VariableTrue
@@ -9,62 +11,52 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired, EqualTo
 
-data_required_msg = "Campo obrigatório"
-email_already_registered_msg = "Email já cadastrado"
-email_invalid_format_msg = "Formato de email inválido"
-email_not_registered_msg = "Email não cadastrado"
-incorrect_password_msg = "Senha incorreta"
-password_length_msg = "A senha deve possuir entre 6 e 32 caracteres"
-password_mismatch_msg = "As senhas digitadas não são iguais"
-unconfirmed_email_msg = "Email não confirmado"
-confirmed_email_msg = "Email já confirmado"
-
 
 class CreateAccountForm(FlaskForm):
     email = StringField('Email', validators=[
-        DataRequired(message=data_required_msg),
-        Email(message=email_invalid_format_msg, stop=True),
-        Unique(model=User, field=User.email, message=email_already_registered_msg)])
+        DataRequired(message=error_msg_provider.data_required()),
+        Email(message=error_msg_provider.email_invalid_format(), stop=True),
+        Unique(model=User, field=User.email, message=error_msg_provider.email_already_registered())])
     password = PasswordField('Senha', validators=[
-        DataRequired(message=data_required_msg),
-        Length(min_length=6, max_length=32, message=password_length_msg, stop=True),
-        EqualTo('password_confirmation', message=password_mismatch_msg)])
+        DataRequired(message=error_msg_provider.data_required()),
+        Length(min_length=6, max_length=32, message=error_msg_provider.password_length(), stop=True),
+        EqualTo('password_confirmation', message=error_msg_provider.password_mismatch())])
     password_confirmation = PasswordField('Confirmação de senha', validators=[
-        DataRequired(message=data_required_msg)])
+        DataRequired(message=error_msg_provider.data_required())])
 
 
 class RecoverPasswordForm(FlaskForm):
     email = StringField('Email', validators=[
-        DataRequired(message=data_required_msg),
-        Email(message=email_invalid_format_msg, stop=True),
-        NotUnique(model=User, field=User.email, message=email_not_registered_msg, stop=True),
-        VariableTrue(model=User, key_field=User.email, var_field=User.email_confirmed, message=unconfirmed_email_msg)])
+        DataRequired(message=error_msg_provider.data_required()),
+        Email(message=error_msg_provider.email_invalid_format(), stop=True),
+        NotUnique(model=User, field=User.email, message=error_msg_provider.email_not_registered, stop=True),
+        VariableTrue(model=User, key_field=User.email, var_field=User.email_confirmed, message=error_msg_provider.unconfirmed_email)])
 
 
 class ResendConfirmationEmailForm(FlaskForm):
     email = StringField('Email', validators=[
-        DataRequired(message=data_required_msg),
-        Email(message=email_invalid_format_msg, stop=True),
-        NotUnique(model=User, field=User.email, message=email_not_registered_msg, stop=True),
-        VariableFalse(model=User, key_field=User.email, var_field=User.email_confirmed, message=confirmed_email_msg)])
+        DataRequired(message=error_msg_provider.data_required()),
+        Email(message=error_msg_provider.email_invalid_format(), stop=True),
+        NotUnique(model=User, field=User.email, message=error_msg_provider.email_not_registered, stop=True),
+        VariableFalse(model=User, key_field=User.email, var_field=User.email_confirmed, message=error_msg_provider.confirmed_email())])
 
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[
-        DataRequired(message=data_required_msg),
-        Email(message=email_invalid_format_msg, stop=True),
-        NotUnique(model=User, field=User.email, message=email_not_registered_msg, stop=True),
-        VariableTrue(model=User, key_field=User.email, var_field=User.email_confirmed, message=unconfirmed_email_msg)])
+        DataRequired(message=error_msg_provider.data_required()),
+        Email(message=error_msg_provider.email_invalid_format(), stop=True),
+        NotUnique(model=User, field=User.email, message=error_msg_provider.email_not_registered, stop=True),
+        VariableTrue(model=User, key_field=User.email, var_field=User.email_confirmed, message=error_msg_provider.unconfirmed_email)])
     password = PasswordField('Senha', validators=[
-        DataRequired(message=data_required_msg),
-        Length(min_length=6, max_length=32, message=password_length_msg, stop=True),
-        CorrectPassword(message=incorrect_password_msg)])
+        DataRequired(message=error_msg_provider.data_required()),
+        Length(min_length=6, max_length=32, message=error_msg_provider.password_length(), stop=True),
+        CorrectPassword(message=error_msg_provider.incorrect_password())])
 
 
 class RedefinePasswordForm(FlaskForm):
     password = PasswordField('Senha', validators=[
-        DataRequired(message=data_required_msg),
-        Length(min_length=6, max_length=32, message=password_length_msg, stop=True),
-        EqualTo('password_confirmation', message=password_mismatch_msg)])
+        DataRequired(message=error_msg_provider.data_required()),
+        Length(min_length=6, max_length=32, message=error_msg_provider.password_length(), stop=True),
+        EqualTo('password_confirmation', message=error_msg_provider.password_mismatch())])
     password_confirmation = PasswordField('Confirmação de senha', validators=[
-        DataRequired(message=data_required_msg)])
+        DataRequired(message=error_msg_provider.data_required())])
