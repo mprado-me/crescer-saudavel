@@ -12,5 +12,5 @@ invalid_file_format_msg = "Formato de arquivo inválido"
 
 class UploadImageForm(FlaskForm):
     image = FileField('Image', validators=[
-        HasFilePart(input_file_name="file", message=none_file_selected_msg),
+        HasFilePart(input_file_name="file", message=none_file_selected_msg, stop=True),
         AllowedFileFormat(input_file_name="file", allowed_extensions=["png", "jpg", "jpeg"], message=invalid_file_format_msg)])
