@@ -8,7 +8,7 @@ from ..data_providers.admin.add_image import add_image_data_provider
 from ..utils.decorators import admin, log_route
 from ..utils.exceptions import log_unrecognized_exception
 
-from flask import abort, render_template
+from flask import abort, render_template, request
 
 from flask_login import login_required
 
@@ -23,14 +23,25 @@ def admin_dashboard():
         log_unrecognized_exception(e)
         abort(500)
 
-@app.route('/painel-administrativo/adicionar-imagem')
+
+@app.route('/painel-administrativo/adicionar-imagem', methods=['GET', 'POST'])
 @login_required
 @admin
 @log_route
 def add_image():
-    try:
-        data = add_image_data_provider.get_data()
-        return render_template("admin/add-image.html", data=data)
-    except Exception as e:
-        log_unrecognized_exception(e)
-        abort(500)
+    # GET
+    if request.method == "GET":
+        try:
+            data = add_image_data_provider.get_data()
+            return render_template("admin/add-image.html", data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+    # POST
+    else:
+        try:
+            return "Imagem enviada"
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
