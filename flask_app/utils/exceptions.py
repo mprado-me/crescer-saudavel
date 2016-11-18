@@ -33,3 +33,8 @@ def log_exception(name, message=""):
         app.logger.warning(name)
     traceback_as_string = "".join(traceback.format_stack())
     app.logger.warning("\n" + traceback_as_string)
+
+def log_unrecognized_exception(e):
+    app.logger.error("-*-*-")
+    app.logger.error("UnrecognizedException")
+    app.logger.exception(e)

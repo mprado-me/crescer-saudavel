@@ -19,7 +19,7 @@ from ..models.user import User
 from ..utils.db_manager import db_manager
 from ..utils.decorators import log_route
 from ..utils.email_manager import email_manager
-from ..utils.exceptions import DatabaseAccessError, EmailSendingError, log_exception
+from ..utils.exceptions import DatabaseAccessError, EmailSendingError, log_exception, log_unrecognized_exception
 from ..utils.security import ts
 
 
@@ -37,8 +37,12 @@ def create_account():
 
     # GET
     if request.method == "GET":
-        data = create_account_data_provider.get_data(form)
-        return render_template('user_management/create-account.html', data=data)
+        try:
+            data = create_account_data_provider.get_data(form)
+            return render_template('user_management/create-account.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
     # POST
     else:
@@ -64,6 +68,9 @@ def create_account():
         except EmailSendingError:
             data = create_account_data_provider.get_data_when_email_sending_error(form=form)
             return render_template('user_management/create-account.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
 
 @app.route('/email-confirmado/<token>')
@@ -86,6 +93,9 @@ def email_confirmed(token):
         href = url_for('email_confirmed', token=token)
         data = failed_to_get_data_provider.get_data_when_database_access_error(href=href)
         return render_template('shared/failed-to-get.html', data=data)
+    except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
 
 @app.route('/recuperar-senha', methods=["GET", "POST"])
@@ -95,8 +105,12 @@ def recover_password():
 
     # GET
     if request.method == "GET":
-        data = recover_password_data_provider.get_data(form=form)
-        return render_template('user_management/recover-password.html', data=data)
+        try:
+            data = recover_password_data_provider.get_data(form=form)
+            return render_template('user_management/recover-password.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
     # POST
     else:
@@ -113,13 +127,20 @@ def recover_password():
         except EmailSendingError:
             data = recover_password_data_provider.get_data_when_email_sending_error(form=form)
             return render_template('user_management/recover-password.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
 
 @app.route('/email-de-recuperacao-de-senha-enviado/<string:email>')
 @log_route
 def sent_recover_password_email(email):
-    data = sent_recover_password_email_data_provider.get_data(email=email)
-    return render_template('user_management/sent-recover-password-email.html', data=data)
+    try:
+        data = sent_recover_password_email_data_provider.get_data(email=email)
+        return render_template('user_management/sent-recover-password-email.html', data=data)
+    except Exception as e:
+        log_unrecognized_exception(e)
+        abort(500)
 
 
 @app.route('/entrar', methods=['GET', 'POST'])
@@ -129,8 +150,12 @@ def login():
 
     # GET
     if request.method == "GET":
-        data = login_data_provider.get_data_when_get_request(form=form)
-        return render_template('user_management/login.html', data=data)
+        try:
+            data = login_data_provider.get_data_when_get_request(form=form)
+            return render_template('user_management/login.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
     # POST
     else:
@@ -149,6 +174,9 @@ def login():
             db_manager.rollback()
             data = login_data_provider.get_data_when_database_access_error(form=form)
             return render_template('user_management/login.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
 
 @app.route('/redefinir-senha/<token>', methods=["GET", "POST"])
@@ -165,6 +193,9 @@ def redefine_password(token):
         except BadSignature:
             log_exception(name="BadSignature")
             abort(404)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
     # POST
     else:
@@ -189,6 +220,9 @@ def redefine_password(token):
             db_manager.rollback()
             data = redefine_password_data_provider.get_data_when_database_access_error(form=form, email=email, token=token)
             return render_template('user_management/redefine-password.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
 
 @app.route('/reenviar-email-de-confirmacao', methods=['GET', 'POST'])
@@ -198,8 +232,12 @@ def resend_confirmation_email():
 
     # GET
     if request.method == 'GET':
-        data = resend_confirmation_email_data_provider.get_data(form)
-        return render_template('user_management/resend-confirmation-email.html', data=data)
+        try:
+            data = resend_confirmation_email_data_provider.get_data(form)
+            return render_template('user_management/resend-confirmation-email.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
     # POST
     else:
@@ -208,7 +246,7 @@ def resend_confirmation_email():
                 data = resend_confirmation_email_data_provider.get_data(form=form)
                 return render_template('user_management/resend-confirmation-email.html', data=data)
 
-            # TODO: Restrict the resend of the same email to one hour
+            # TODO: Wait one hour to resend for the same email
             email_manager.send_create_account_confirmation_email(form.email.data)
             return redirect(url_for("sent_confirmation_email", email=form.email.data))
         except DatabaseAccessError:
@@ -217,11 +255,18 @@ def resend_confirmation_email():
         except EmailSendingError:
             data = resend_confirmation_email_data_provider.get_data_when_email_sending_error(form=form)
             return render_template('user_management/resend-confirmation-email.html', data=data)
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
 
 
 @app.route('/sair')
 @login_required
 @log_route
 def logout():
-    logout_user()
-    return redirect(url_for('login'))
+    try:
+        logout_user()
+        return redirect(url_for('login'))
+    except Exception as e:
+        log_unrecognized_exception(e)
+        abort(500)
