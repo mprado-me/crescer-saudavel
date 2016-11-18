@@ -21,7 +21,7 @@ pip install Flask-Login;
 
 cd /vagrant;
 mkdir logs;
-mkdir uploads;
+mkdir flask_app/static/uploads;
 
 # To create database user and the database for the user:
 # >> sudo su - postgres
