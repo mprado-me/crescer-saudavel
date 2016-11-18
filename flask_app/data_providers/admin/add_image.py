@@ -8,12 +8,13 @@ class AddImageDataProvider:
     def __init__(self):
         pass
 
-    def get_data(self):
-        return self.sample_data_0()
+    def get_data(self, form):
+        return self.sample_data_0(form=form)
 
-    def sample_data_0(self):
+    def sample_data_0(self, form):
         data = {
             "navbar_data": navbar_data_provider.get_data(),
+            "form": form,
         }
         return data
 

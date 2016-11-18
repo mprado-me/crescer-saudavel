@@ -4,7 +4,19 @@
 
 {% block content %}
   <form action="" method=post enctype=multipart/form-data>
+    {{ data["form"].csrf_token }}
     <input type=file name=file>
+    {% if data["form"].image.errors and data["form"].image.errors|length > 0 %}
+    <div class="input-errors-container">
+      <ul>
+        {% for error in data["form"].image.errors %}
+        <li>
+          <div class="alert alert-danger input-error" role="alert">{{error|safe}}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
     <input type=submit value=Upload>
   </form>
 {% endblock %}

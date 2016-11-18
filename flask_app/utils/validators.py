@@ -3,8 +3,31 @@
 
 from ..models.user import User
 
-from wtforms.validators import ValidationError
 from exceptions import DatabaseAccessError
+
+from flask import request
+
+from wtforms.validators import ValidationError
+
+
+class AllowedFileFormat(object):
+    def __init__(self, input_file_name, allowed_extensions, message=u'Formato de arquivo inválido'):
+        self.input_file_name = input_file_name
+        self.allowed_extensions = allowed_extensions
+        self.message = message
+
+    def __call__(self, form, field):
+        has_file_part = self.input_file_name in request.files
+        if has_file_part:
+            current_file = request.files[self.input_file_name]
+            filename = current_file.filename
+            if filename != '':
+                allowed_file = '.' in filename and \
+                   filename.rsplit('.', 1)[1] in self.allowed_extensions
+
+                if not allowed_file:
+                    raise ValidationError(self.message)
+
 
 class CorrectPassword(object):
     def __init__(self, message=u'Senha incorreta'):
@@ -20,6 +43,21 @@ class CorrectPassword(object):
             incorrect_password = not user.is_correct_password(field.data)
         if incorrect_password:
             raise ValidationError(self.message)
+
+
+class HasFilePart(object):
+    def __init__(self, input_file_name, message=u'Nenhum arquivo foi selecionado'):
+        self.input_file_name = input_file_name
+        self.message = message
+
+    def __call__(self, form, field):
+        has_file_part = self.input_file_name in request.files
+        current_file = request.files[self.input_file_name]
+        valid_filename = current_file.filename != ''
+
+        if (not has_file_part) or (not valid_filename):
+            raise ValidationError(self.message)
+
 
 class NotUnique(object):
     def __init__(self, model, field, message=u'Elemento é único'):
@@ -63,7 +101,7 @@ class VariableFalse(object):
             model_instance = self.model.query.filter(self.key_field == field.data).first()
         except:
             raise DatabaseAccessError()
-        if model_instance and getattr(model_instance, self.var_name) != False:
+        if model_instance and getattr(model_instance, self.var_name) is not False:
             raise ValidationError(self.message)
 
 
@@ -79,5 +117,5 @@ class VariableTrue(object):
             model_instance = self.model.query.filter(self.key_field == field.data).first()
         except:
             raise DatabaseAccessError()
-        if model_instance and getattr(model_instance, self.var_name) != True:
+        if model_instance and getattr(model_instance, self.var_name) is not True:
             raise ValidationError(self.message)
