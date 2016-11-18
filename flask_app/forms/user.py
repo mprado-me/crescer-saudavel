@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .models.user import User
+from flask_app.models.user import User
 
-from .utils.validators import CorrectPassword, NotUnique, Unique, VariableFalse, VariableTrue
+from flask_app.utils.validators import CorrectPassword, NotUnique, Unique, VariableFalse, VariableTrue
 
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField

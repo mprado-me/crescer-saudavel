@@ -14,7 +14,7 @@ from flask_app.data_providers.user_management.resend_confirmation_email import r
 from flask_app.data_providers.user_management.sent_confirmation_email import sent_confirmation_email_data_provider
 from flask_app.data_providers.user_management.sent_recover_password_email import sent_recover_password_email_data_provider
 from .. import app
-from ..forms import CreateAccountForm, LoginForm, ResendConfirmationEmailForm, RecoverPasswordForm, RedefinePasswordForm
+from ..forms.user import CreateAccountForm, LoginForm, ResendConfirmationEmailForm, RecoverPasswordForm, RedefinePasswordForm
 from ..models.user import User
 from ..utils.db_manager import db_manager
 from ..utils.decorators import log_route
