@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from header import HeaderDataProvider
-from user_info import UserInfoDataProvider
-from footer import FooterDataProvider
-
 from flask import url_for
+
+from flask_app.data_providers.shared.footer import FooterDataProvider
+from flask_app.data_providers.shared.header import HeaderDataProvider
+from flask_app.data_providers.shared.user_info import UserInfoDataProvider
 
 
 class MyAccountDataProvider:

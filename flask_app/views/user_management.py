@@ -1,31 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from flask import abort, redirect, render_template, request, url_for
+from flask_login import login_required, login_user, logout_user
+from itsdangerous import BadSignature
+
+from flask_app.data_providers.general.failed_to_get import failed_to_get_data_provider
+from flask_app.data_providers.user_management.create_account import create_account_data_provider
+from flask_app.data_providers.user_management.login import login_data_provider
+from flask_app.data_providers.user_management.recover_password import recover_password_data_provider
+from flask_app.data_providers.user_management.redefine_password import redefine_password_data_provider
+from flask_app.data_providers.user_management.resend_confirmation_email import resend_confirmation_email_data_provider
+from flask_app.data_providers.user_management.sent_confirmation_email import sent_confirmation_email_data_provider
+from flask_app.data_providers.user_management.sent_recover_password_email import sent_recover_password_email_data_provider
 from .. import app
-
-from ..data_providers.sent_confirmation_email import sent_confirmation_email_data_provider
-from ..data_providers.create_account import create_account_data_provider
-from ..data_providers.failed_to_get import failed_to_get_data_provider
-from ..data_providers.recover_password import recover_password_data_provider
-from ..data_providers.sent_recover_password_email import sent_recover_password_email_data_provider
-from ..data_providers.login import login_data_provider
-from ..data_providers.redefine_password import redefine_password_data_provider
-from ..data_providers.resend_confirmation_email import resend_confirmation_email_data_provider
-
 from ..forms import CreateAccountForm, LoginForm, ResendConfirmationEmailForm, RecoverPasswordForm, RedefinePasswordForm
-
 from ..models.user import User
-
 from ..utils.db_manager import db_manager
 from ..utils.decorators import log_route
 from ..utils.email_manager import email_manager
 from ..utils.exceptions import DatabaseAccessError, EmailSendingError, log_exception
 from ..utils.security import ts
-
-from flask import abort, redirect, render_template, request, url_for
-from flask_login import login_required, login_user, logout_user
-
-from itsdangerous import BadSignature
 
 
 @app.route('/email-de-confirmacao-enviado/<string:email>')

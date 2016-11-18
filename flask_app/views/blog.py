@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .. import app
-
-from ..data_providers.blog import blog_data_provider
-from ..data_providers.blog_post_data_provider import blog_post_data_provider
-
-from ..utils.decorators import log_route
-
 from flask import render_template, request
+
+from flask_app.data_providers.blog.blog_post import blog_post_data_provider
+from .. import app
+from ..data_providers.blog.blog import blog_data_provider
+from ..utils.decorators import log_route
 
 
 @app.route('/blog/pagina/<int:page>')

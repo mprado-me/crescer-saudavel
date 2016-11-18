@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from header import HeaderDataProvider
-from cart_table import CartTableDataProvider
-from total_table import TotalTableDataProvider
-from footer import FooterDataProvider
-
 from flask import url_for
+
+from flask_app.data_providers.cart.cart_table import CartTableDataProvider
+from flask_app.data_providers.shared.footer import FooterDataProvider
+from flask_app.data_providers.shared.header import HeaderDataProvider
+from flask_app.data_providers.shared.total_table import TotalTableDataProvider
 
 
 class CartDataProvider:

@@ -1,30 +1,37 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ..utils.exceptions import DatabaseAccessError
-from ..utils.exceptions import EmailSendingError
+from flask import request, url_for
 
-from header import HeaderDataProvider
-from footer import FooterDataProvider
-
-from flask import url_for
+from flask_app.data_providers.shared.footer import FooterDataProvider
+from flask_app.data_providers.shared.header import HeaderDataProvider
+from flask_app.utils.exceptions import DatabaseAccessError
 
 
-class ResendConfirmationEmailDataProvider:
+class LoginDataProvider:
     def __init__(self):
         pass
 
     def get_data(self, form):
         return self.sample_data_0(form=form)
 
-    def get_data_when_database_access_error(self, form):
+    def get_data_when_get_request(self, form):
         data = self.get_data(form=form)
-        data["msgs"] = [DatabaseAccessError.msg]
+        msgs = []
+        msg_content = request.args.get("msg_content")
+        msg_type = request.args.get("msg_type")
+        if msg_content and msg_type:
+            msgs.append({
+                "type": msg_type,
+                "content": msg_content,
+            })
+        data["msgs"] = msgs
         return data
 
-    def get_data_when_email_sending_error(self, form):
+    def get_data_when_database_access_error(self, form):
         data = self.get_data(form=form)
-        data["msgs"] = [EmailSendingError.msg]
+        msgs = [DatabaseAccessError.msg]
+        data["msgs"] = msgs
         return data
 
     def get_page_heading_data(self):
@@ -35,10 +42,10 @@ class ResendConfirmationEmailDataProvider:
                     "href": url_for("home"),
                 },
                 {
-                    "name": "Reenviar email de confirmação",
+                    "name": "Entrar",
                 },
             ],
-            "title": "Reenviar email de confirmação",
+            "title": "Entrar",
         }
 
     def sample_data_0(self, form):
@@ -50,4 +57,4 @@ class ResendConfirmationEmailDataProvider:
         }
         return data
 
-resend_confirmation_email_data_provider = ResendConfirmationEmailDataProvider()
+login_data_provider = LoginDataProvider()

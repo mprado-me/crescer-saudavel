@@ -3,7 +3,7 @@
 
 from .. import app
 
-from ..data_providers.cart import cart_data_provider
+from ..data_providers.cart.cart import cart_data_provider
 
 from ..utils.decorators import log_route
 

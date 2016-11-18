@@ -1,19 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .. import app
-
-from ..data_providers.about_us import about_us_data_provider
-from ..data_providers.checkout import checkout_data_provider
-from ..data_providers.faq import faq_data_provider
-from ..data_providers.home import home_data_provider
-from ..data_providers.my_account import my_account_data_provider
-from ..data_providers.order import order_data_provider
-
-from ..utils.decorators import log_route
-
 from flask import abort, redirect, render_template, request, url_for, session
 from flask_login import login_required
+
+from flask_app.data_providers.general.about_us import about_us_data_provider
+from flask_app.data_providers.general.checkout import checkout_data_provider
+from flask_app.data_providers.general.faq import faq_data_provider
+from flask_app.data_providers.general.home import home_data_provider
+from flask_app.data_providers.general.my_account import my_account_data_provider
+from flask_app.data_providers.general.order import order_data_provider
+from .. import app
+from ..utils.decorators import log_route
 
 
 @app.route('/sobre-nos')

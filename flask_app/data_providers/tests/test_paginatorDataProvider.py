@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ..paginator import PaginatorDataProvider
-
 from unittest import TestCase
+
+from flask_app.data_providers.shared.paginator import PaginatorDataProvider
 
 
 class TestPaginatorDataProvider(TestCase):

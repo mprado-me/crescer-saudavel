@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from header import HeaderDataProvider
-from footer import FooterDataProvider
-
 from flask import url_for
 
+from flask_app.data_providers.shared.footer import FooterDataProvider
+from flask_app.data_providers.shared.header import HeaderDataProvider
 
-class SentConfirmationEmailDataProvider:
+
+class SentRecoverPasswordEmailDataProvider:
     def __init__(self):
         pass
 
     def get_data(self, email):
-        return self.sample_data_0(email)
+        return self.sample_data_0(email=email)
 
     def get_page_heading_data(self):
         return {
@@ -22,14 +22,18 @@ class SentConfirmationEmailDataProvider:
                     "href": url_for("home"),
                 },
                 {
-                    "name": "Criar conta",
-                    "href": url_for("create_account"),
+                    "name": "Entrar",
+                    "href": url_for("login"),
                 },
                 {
-                    "name": "Confirmação do email",
+                    "name": "Recuperar senha",
+                    "href": url_for("recover_password"),
+                },
+                {
+                    "name": "Envio do email de recuperação de senha",
                 },
             ],
-            "title": "Confirmação do email",
+            "title": "Envio do email de recuperação de senha",
         }
 
     def sample_data_0(self, email):
@@ -41,4 +45,4 @@ class SentConfirmationEmailDataProvider:
         }
         return data
 
-sent_confirmation_email_data_provider = SentConfirmationEmailDataProvider()
+sent_recover_password_email_data_provider = SentRecoverPasswordEmailDataProvider()

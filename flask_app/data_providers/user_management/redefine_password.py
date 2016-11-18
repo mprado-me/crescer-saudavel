@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ..utils.exceptions import DatabaseAccessError
-
-from header import HeaderDataProvider
-from footer import FooterDataProvider
-
 from flask import url_for
+
+from flask_app.data_providers.shared.footer import FooterDataProvider
+from flask_app.data_providers.shared.header import HeaderDataProvider
+from flask_app.utils.exceptions import DatabaseAccessError
 
 
 class RedefinePasswordDataProvider:
