@@ -151,7 +151,7 @@ def login():
     # GET
     if request.method == "GET":
         try:
-            data = login_data_provider.get_data_with_request_msg(form=form)
+            data = login_data_provider.get_data(form=form)
             return render_template('customer/user_management/login.html', data=data)
         except Exception as e:
             log_unrecognized_exception(e)

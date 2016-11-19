@@ -32,3 +32,24 @@ def log_route(func):
             app.logger.debug("post_params: " + str(post_params))
         return func(*args, **kwargs)
     return decorated_function
+
+
+def append_request_msg(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        data = func(*args, **kwargs)
+        msgs = []
+        msg_content = request.args.get("msg_content")
+        msg_type = request.args.get("msg_type")
+        if msg_content and msg_type:
+            msgs.append({
+                "type": msg_type,
+                "content": msg_content,
+            })
+        if "msgs" in data:
+            data["msgs"] = data["msgs"] + msgs
+        else:
+            data["msgs"] = msgs
+        return data
+
+    return decorated_function

@@ -4,33 +4,19 @@
 from flask_app.data_providers.customer.shared.footer import footer_data_provider
 from flask_app.data_providers.customer.shared.header import header_data_provider
 
+from flask_app.utils.decorators import append_request_msg
 from flask_app.utils.exceptions import DatabaseAccessError
 
-from flask import request, url_for
+from flask import url_for
 
 
 class LoginDataProvider:
     def __init__(self):
         pass
 
+    @append_request_msg
     def get_data(self, form):
         return self.sample_data_0(form=form)
-
-    def get_data_with_request_msg(self, form):
-        data = self.get_data(form=form)
-        msgs = []
-        msg_content = request.args.get("msg_content")
-        msg_type = request.args.get("msg_type")
-        if msg_content and msg_type:
-            msgs.append({
-                "type": msg_type,
-                "content": msg_content,
-            })
-        if "msgs" in data:
-            data["msgs"] = data["msgs"] + msgs
-        else:
-            data["msgs"] = msgs
-        return data
 
     def get_data_when_database_access_error(self, form):
         data = self.get_data(form=form)
