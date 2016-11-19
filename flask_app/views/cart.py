@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .. import app
-
-from ..data_providers.cart.cart import cart_data_provider
-
-from ..utils.decorators import log_route
-from ..utils.exceptions import log_unrecognized_exception
-
 from flask import abort, redirect, render_template, session, url_for
 from flask_login import login_required
+
+from flask_app.data_providers.customer.cart.cart import cart_data_provider
+from .. import app
+from ..utils.decorators import log_route
+from ..utils.exceptions import log_unrecognized_exception
 
 
 @app.route('/carrinho')

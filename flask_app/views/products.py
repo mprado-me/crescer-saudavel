@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from flask import abort, render_template, request
+from flask_app.data_providers.customer.products.product import product_data_provider
 
-from flask_app.data_providers.products.product import product_data_provider
+from flask_app.data_providers.customer.products.products import products_data_provider
 from .. import app
-from ..data_providers.products.products import products_data_provider
 from ..utils.decorators import log_route
 from ..utils.exceptions import log_unrecognized_exception
 

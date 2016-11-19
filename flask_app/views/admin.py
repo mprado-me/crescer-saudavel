@@ -3,20 +3,15 @@
 
 import os
 
+from flask import abort, render_template, request
+from flask_login import login_required
+from werkzeug.utils import secure_filename
+
+from flask_app.data_providers.admin.images.add_image import add_image_data_provider
 from .. import app
-
-from ..data_providers.admin.add_image import add_image_data_provider
-
 from ..forms.admin import UploadImageForm
-
 from ..utils.decorators import admin, log_route
 from ..utils.exceptions import log_unrecognized_exception
-
-from flask import abort, render_template, request
-
-from flask_login import login_required
-
-from werkzeug.utils import secure_filename
 
 
 @app.route('/painel-administrativo')

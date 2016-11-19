@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import abort, render_template, request
-
-from flask_app.data_providers.blog.blog_post import blog_post_data_provider
 from .. import app
-from ..data_providers.blog.blog import blog_data_provider
+
+from ..data_providers.customer.blog.blog import blog_data_provider
+from ..data_providers.customer.blog.blog_post import blog_post_data_provider
+
 from ..utils.decorators import log_route
 from ..utils.exceptions import log_unrecognized_exception
+
+from flask import abort, render_template, request
 
 
 @app.route('/blog/pagina/<int:page>')
