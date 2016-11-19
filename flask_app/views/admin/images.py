@@ -3,7 +3,7 @@
 
 import os
 
-from flask import abort, render_template, request
+from flask import abort, redirect, render_template, request, url_for
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 
@@ -44,7 +44,10 @@ def admin_add_image():
             filename = secure_filename(file_.filename)
             file_.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            return "Imagem enviada"
+            return redirect(url_for("admin_images",
+                                    page=1,
+                                    msg_content="Imagem %s foi adicionada com sucesso." % filename,
+                                    msg_type="success"))
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
