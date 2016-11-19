@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_app.data_providers.customer.shared.footer import FooterDataProvider
-from flask_app.data_providers.customer.shared.header import HeaderDataProvider
+from flask_app.data_providers.customer.shared.footer import footer_data_provider
+from flask_app.data_providers.customer.shared.header import header_data_provider
 
 from flask import url_for
 
@@ -79,8 +79,8 @@ class HomeDataProvider:
 
     def sample_data_0(self):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
-            "footer_data": FooterDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
+            "footer_data": footer_data_provider.get_data(),
             "carousel": [
                 {
                     "img_src": url_for("static", filename="images/slide-img2.jpg"),
@@ -117,8 +117,8 @@ class HomeDataProvider:
 
     def sample_data_1(self):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
-            "footer_data": FooterDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
+            "footer_data": footer_data_provider.get_data(),
             "sections": [
                 self.get_section("Ofertas"),
                 self.get_section("Novidades"),
@@ -136,8 +136,8 @@ class HomeDataProvider:
 
     def sample_data_2(self):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
-            "footer_data": FooterDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
+            "footer_data": footer_data_provider.get_data(),
             "carousel": [
                 {
                     "img_src": url_for("static", filename="images/slide-img2.jpg"),

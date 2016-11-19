@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_app.data_providers.customer.shared.footer import FooterDataProvider
-from flask_app.data_providers.customer.shared.header import HeaderDataProvider
+from flask_app.data_providers.customer.shared.footer import footer_data_provider
+from flask_app.data_providers.customer.shared.header import header_data_provider
 
 from flask import url_for
 
@@ -31,7 +31,7 @@ class ProductDataProvider:
     def sample_data_0(self, product_id):
         product_title = "Papinha de maça - 500g"
         data = {
-            "header_data": HeaderDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
             "page_heading_data": self.get_page_heading_data(product_title=product_title),
             "title": product_title,
             "in_stock": True,
@@ -63,7 +63,7 @@ class ProductDataProvider:
                     "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla. Donec a neque libero. Pellentesque aliquet.</p>"
                 },
             ],
-            "footer_data": FooterDataProvider().get_data(),
+            "footer_data": footer_data_provider.get_data(),
         }
         return data
 

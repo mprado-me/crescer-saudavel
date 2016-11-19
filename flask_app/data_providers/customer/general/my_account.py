@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_app.data_providers.customer.shared.footer import FooterDataProvider
-from flask_app.data_providers.customer.shared.header import HeaderDataProvider
-from flask_app.data_providers.customer.shared.user_info import UserInfoDataProvider
+from flask_app.data_providers.customer.shared.footer import footer_data_provider
+from flask_app.data_providers.customer.shared.header import header_data_provider
+from flask_app.data_providers.customer.shared.user_info import user_info_data_provider
 
 from flask import url_for
 
@@ -31,9 +31,9 @@ class MyAccountDataProvider:
 
     def sample_data_0(self, editable):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
             "page_heading_data": self.get_page_heading_data(),
-            "user_info_data": UserInfoDataProvider().get_data(editable),
+            "user_info_data": user_info_data_provider.get_data(editable),
             "orders": [
                 {
                     "id": 123,
@@ -54,13 +54,13 @@ class MyAccountDataProvider:
                     "status": "Entregue",
                 },
             ],
-            "footer_data": FooterDataProvider().get_data(),
+            "footer_data": footer_data_provider.get_data(),
         }
         return data
 
     def sample_data_1(self, editable):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
             "page_heading_data": {
                 "path": [
                     {
@@ -73,9 +73,9 @@ class MyAccountDataProvider:
                 ],
                 "title": "Minha conta",
             },
-            "user_info_data": UserInfoDataProvider().get_data(editable),
+            "user_info_data": user_info_data_provider.get_data(editable),
             "orders": [],
-            "footer_data": FooterDataProvider().get_data(),
+            "footer_data": footer_data_provider.get_data(),
         }
         return data
 

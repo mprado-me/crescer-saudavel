@@ -3,9 +3,9 @@
 
 from flask_app import app
 
-from flask_app.data_providers.customer.shared.footer import FooterDataProvider
-from flask_app.data_providers.customer.shared.header import HeaderDataProvider
-from flask_app.data_providers.customer.shared.paginator import PaginatorDataProvider
+from flask_app.data_providers.customer.shared.footer import footer_data_provider
+from flask_app.data_providers.customer.shared.header import header_data_provider
+from flask_app.data_providers.customer.shared.paginator import paginator_data_provider
 
 from flask import url_for
 
@@ -33,10 +33,10 @@ class BlogDataProvider:
 
     def sample_data_0(self, page):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
             "page_heading_data": self.get_page_heading_data(),
-            "footer_data": FooterDataProvider().get_data(),
-            "paginator_data": PaginatorDataProvider().get_data(
+            "footer_data": footer_data_provider.get_data(),
+            "paginator_data": paginator_data_provider.get_data(
                 current_page=page,
                 n_pages=app.config["N_PAGES_IN_BLOG_PAGINATOR"],
                 total_n_pages=7,
@@ -80,10 +80,10 @@ class BlogDataProvider:
 
     def sample_data_1(self, page):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
             "page_heading_data": self.get_page_heading_data(),
-            "footer_data": FooterDataProvider().get_data(),
-            "paginator_data": PaginatorDataProvider().get_data(
+            "footer_data": footer_data_provider.get_data(),
+            "paginator_data": paginator_data_provider.get_data(
                 current_page=page,
                 n_pages=app.config["N_PAGES_IN_BLOG_PAGINATOR"],
                 total_n_pages=7,

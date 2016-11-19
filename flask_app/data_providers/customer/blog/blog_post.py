@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_app.data_providers.customer.shared.footer import FooterDataProvider
-from flask_app.data_providers.customer.shared.header import HeaderDataProvider
+from flask_app.data_providers.customer.shared.footer import footer_data_provider
+from flask_app.data_providers.customer.shared.header import header_data_provider
 
 from flask import url_for
 
@@ -38,10 +38,10 @@ class BlogPostDataProvider:
         post_title = "Vc acabou de ler o que seria o título do post =)"
         blog_url_to_return = url_for("blog", page=blog_page_to_return)
         data = {
-            "header_data": HeaderDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
             "page_heading_data": self.get_page_heading_data(post_title=post_title,
                                                             blog_url_to_return=blog_url_to_return),
-            "footer_data": FooterDataProvider().get_data(),
+            "footer_data": footer_data_provider.get_data(),
             "title": post_title,
             "blog_url_to_return": blog_url_to_return,
             "content": """

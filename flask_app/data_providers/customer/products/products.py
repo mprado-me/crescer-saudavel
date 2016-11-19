@@ -3,9 +3,9 @@
 
 from flask_app import app
 
-from flask_app.data_providers.customer.shared.footer import FooterDataProvider
-from flask_app.data_providers.customer.shared.header import HeaderDataProvider
-from flask_app.data_providers.customer.shared.paginator import PaginatorDataProvider
+from flask_app.data_providers.customer.shared.footer import footer_data_provider
+from flask_app.data_providers.customer.shared.header import header_data_provider
+from flask_app.data_providers.customer.shared.paginator import paginator_data_provider
 
 from flask_app.utils.enums import ProductSortMethod
 
@@ -123,7 +123,7 @@ class ProductsDataProvider:
 
     def sample_data_0(self, page, sort_method, category_id, subcategory_id):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
             "page_heading_data": self.get_page_heading_data_for_products_by_category(
                 category_id=category_id,
                 page=page,
@@ -162,7 +162,7 @@ class ProductsDataProvider:
                     subcategory_id=subcategory_id,
                 ),
             ],
-            "paginator_data": PaginatorDataProvider().get_data(
+            "paginator_data": paginator_data_provider.get_data(
                 current_page=page,
                 n_pages=app.config["N_PAGES_IN_PRODUCTS_PAGINATOR"],
                 total_n_pages=10,
@@ -257,7 +257,7 @@ class ProductsDataProvider:
                     "price": "R$ 0,00",
                 },
             ],
-            "footer_data": FooterDataProvider().get_data(),
+            "footer_data": footer_data_provider.get_data(),
         }
         return data
 

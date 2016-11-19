@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_app.data_providers.customer.cart.cart_table import CartTableDataProvider
+from flask_app.data_providers.customer.cart.cart_table import cart_table_data_provider
 
-from flask_app.data_providers.customer.shared.footer import FooterDataProvider
-from flask_app.data_providers.customer.shared.header import HeaderDataProvider
-from flask_app.data_providers.customer.shared.total_table import TotalTableDataProvider
+from flask_app.data_providers.customer.shared.footer import footer_data_provider
+from flask_app.data_providers.customer.shared.header import header_data_provider
+from flask_app.data_providers.customer.shared.total_table import total_table_data_provider
 
 from flask import url_for
 
@@ -33,11 +33,11 @@ class CartDataProvider:
 
     def sample_data_0(self, user_email):
         data = {
-            "header_data": HeaderDataProvider().get_data(),
+            "header_data": header_data_provider.get_data(),
             "page_heading_data": self.get_page_heading_data(),
-            "footer_data": FooterDataProvider().get_data(),
-            "cart_table_data": CartTableDataProvider().get_fresh_order_data(user_email=user_email, editable=True),
-            "total_table_data": TotalTableDataProvider().get_fresh_order_data(user_email=user_email),
+            "footer_data": footer_data_provider.get_data(),
+            "cart_table_data": cart_table_data_provider.get_fresh_order_data(user_email=user_email, editable=True),
+            "total_table_data": total_table_data_provider.get_fresh_order_data(user_email=user_email),
         }
         return data
 
