@@ -1,3 +1,16 @@
 .page-header {
     margin-top: 10px;
 }
+
+.form input{
+    margin-bottom: 8px;
+}
+
+.no-points {
+    list-style-type:none;
+    padding-left: 0px;
+}
+
+.input-error {
+    margin-bottom: 8px;
+}
