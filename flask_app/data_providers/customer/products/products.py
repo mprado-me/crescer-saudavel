@@ -7,15 +7,21 @@ from flask_app.data_providers.customer.shared.footer import FooterDataProvider
 from flask_app.data_providers.customer.shared.header import HeaderDataProvider
 from flask_app.data_providers.customer.shared.paginator import PaginatorDataProvider
 
+from flask_app.utils.enums import ProductSortMethod
+
 from flask import url_for
 
-
+# For now, products data provider always return the data for products by category
 class ProductsDataProvider:
     def __init__(self):
         pass
 
-    def get_all_products_data(self, page, sort_method):
-        return self.sample_data_0(page, sort_method)
+    def get_products_data(self, page, sort_method, category_id, subcategory_id):
+        return self.sample_data_0(
+            page=page,
+            sort_method=sort_method,
+            category_id=category_id,
+            subcategory_id=subcategory_id)
 
     def get_page_heading_data_for_all_products(self):
         return {
@@ -31,10 +37,7 @@ class ProductsDataProvider:
             "title": "Produtos",
         }
 
-    def get_products_data_by_category(self, category_id, page, sort_method):
-        return self.sample_data_0(page, sort_method)
-
-    def get_page_heading_data_for_products_by_category(self, category_id, page, sort_method):
+    def get_page_heading_data_for_products_by_category(self, page, sort_method, category_id):
         # TODO: Get category name from database
         category_name = "Categoria X"
         return {
@@ -45,20 +48,16 @@ class ProductsDataProvider:
                 },
                 {
                     "name": "Produtos",
-                    "href": url_for("all_products", page=page, sort_method=sort_method)
+                    "href": url_for("products", page=page, sort_method=sort_method)
                 },
                 {
                     "name": category_name,
                 },
             ],
-            "title": "category_name",
+            "title": category_name,
         }
 
-    def get_products_data_by_category_and_subcategory(self, category_id, subcategory_id, page, sort_method):
-        return self.sample_data_0(page, sort_method, category_id, subcategory_id)
-
-    def get_page_heading_data_for_products_by_category_and_subcategory(self, category_id, subcategory_id, page,
-                                                                       sort_method):
+    def get_page_heading_data_for_products_by_category_and_subcategory(self, page, sort_method, category_id, subcategory_id):
         # TODO: Get category name from database
         category_name = "Categoria X"
         # TODO: Get subcategory name from database
@@ -71,21 +70,22 @@ class ProductsDataProvider:
                 },
                 {
                     "name": "Produtos",
-                    "href": url_for("all_products", page=page, sort_method=sort_method)
+                    "href": url_for("products", page=page, sort_method=sort_method)
                 },
                 {
                     "name": category_name,
-                    "href": url_for("products_by_category", category_id=category_id, page=page, sort_method=sort_method)
+                    "href": url_for("products", page=page, sort_method=sort_method, category_id=category_id)
                 },
                 {
                     "name": subcategory_name,
                 },
             ],
-            "title": "Produtos",
+            "title": subcategory_name,
         }
 
     def get_products_data_by_search(self, page, q):
-        return self.sample_data_0(page=page, sort_method=0)
+        # The line below is temporary
+        return self.sample_data_0(page=page, sort_method=ProductSortMethod.NAME, category_id=1, subcategory_id=1)
 
     def get_page_heading_data_for_products_by_search(self, search_query):
         return {
@@ -101,25 +101,74 @@ class ProductsDataProvider:
             "title": search_query,
         }
 
-    def sample_data_0(self, page, sort_method, category_id=0, subcategory_id=0):
+    # Products by search doesn't have sort method options, the items are sorted based on the match with the query search parameter
+    def get_sort_method_selector_data(self, name, sort_method_of_the_selector, page, sort_method, category_id, subcategory_id):
+        active = sort_method_of_the_selector == sort_method
+        href = None
+        if not active:
+            values = {
+                "page": page,
+                "sort_method": int(sort_method_of_the_selector),
+            }
+            if category_id:
+                values["category_id"] = category_id
+            if subcategory_id:
+                values["subcategory_id"] = subcategory_id
+            href = url_for("products", **values)
+        return {
+            "name": name,
+            "active": active,
+            "href": href,
+        }
+
+    def sample_data_0(self, page, sort_method, category_id, subcategory_id):
         data = {
             "header_data": HeaderDataProvider().get_data(),
-            "page_heading_data": self.get_page_heading_data_for_products_by_category(category_id=category_id, page=page,
-                                                                                     sort_method=sort_method),
-            "route": {
-                "handler_func": "products_by_category_and_subcategory",
-                "category_id": category_id,
-                "subcategory_id": subcategory_id,
-            },
-            "sort_method": sort_method,
+            "page_heading_data": self.get_page_heading_data_for_products_by_category(
+                category_id=category_id,
+                page=page,
+                sort_method=sort_method),
+            "sort_method_selectors": [
+                self.get_sort_method_selector_data(
+                    name="Nome",
+                    sort_method_of_the_selector=ProductSortMethod.NAME,
+                    page = page,
+                    sort_method=sort_method,
+                    category_id=category_id,
+                    subcategory_id=subcategory_id,
+                ),
+                self.get_sort_method_selector_data(
+                    name="Menor preço",
+                    sort_method_of_the_selector=ProductSortMethod.LOWEST_PRICE,
+                    page=page,
+                    sort_method=sort_method,
+                    category_id=category_id,
+                    subcategory_id=subcategory_id,
+                ),
+                self.get_sort_method_selector_data(
+                    name="Maior preço",
+                    sort_method_of_the_selector=ProductSortMethod.BIGGEST_PRICE,
+                    page=page,
+                    sort_method=sort_method,
+                    category_id=category_id,
+                    subcategory_id=subcategory_id,
+                ),
+                self.get_sort_method_selector_data(
+                    name="Mais vendido",
+                    sort_method_of_the_selector=ProductSortMethod.BEST_SELLER,
+                    page=page,
+                    sort_method=sort_method,
+                    category_id=category_id,
+                    subcategory_id=subcategory_id,
+                ),
+            ],
             "paginator_data": PaginatorDataProvider().get_data(
                 current_page=page,
                 n_pages=app.config["N_PAGES_IN_PRODUCTS_PAGINATOR"],
                 total_n_pages=10,
-                url_endpoint="products_by_category",
+                url_endpoint="products",
                 other_url_params={
-                    "sort_method": 0,
-                    "category_id": 0,
+                    "sort_method": sort_method,
                 }
             ),
             "products": [

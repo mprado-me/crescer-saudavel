@@ -16,21 +16,18 @@
           <article class="col-main">
             <div class="toolbar">
               <div class="pager">
-                <div id="sort-by">
-                  <label class="left">Ordenar por: </label>
-                  <ul>
-                    {{macros.sort_method_li(this_sort_method=0, current_sort_method=data['sort_method'],
-                    route=data['route'], name="Nome")}}
-                    {{macros.sort_method_li(this_sort_method=1, current_sort_method=data['sort_method'],
-                    route=data['route'], name="Menor preço")}}
-                    {{macros.sort_method_li(this_sort_method=2, current_sort_method=data['sort_method'],
-                    route=data['route'], name="Maior preço")}}
-                    {{macros.sort_method_li(this_sort_method=3, current_sort_method=data['sort_method'],
-                    route=data['route'], name="Mais vendido")}}
-                  </ul>
-                </div>
+                {% if data["sort_method_selectors"] and data["sort_method_selectors"]|length > 0 %}
+                  <div id="sort-by">
+                    <label class="left">Ordenar por: </label>
+                    <ul>
+                      {% for sort_method_selector in data["sort_method_selectors"] %}
+                        {{macros.sort_method_li(name=sort_method_selector["name"], active=sort_method_selector["active"], href=sort_method_selector["href"])}}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
                 {% with data=data["paginator_data"] %}
-                {% include "customer/shared/paginator.html" %}
+                  {% include "customer/shared/paginator.html" %}
                 {% endwith %}
               </div>
             </div>

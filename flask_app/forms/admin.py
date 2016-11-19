@@ -3,7 +3,7 @@
 
 from .error_msg_provider import error_msg_provider
 
-from ..utils.validators import AllowedFileFormat, HasFilePart
+from ..utils.form_field_validators import AllowedFileFormat, HasFilePart
 
 from flask_wtf import FlaskForm
 

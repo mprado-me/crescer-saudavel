@@ -5,7 +5,7 @@ from .error_msg_provider import error_msg_provider
 
 from flask_app.models.user import User
 
-from flask_app.utils.validators import CorrectPassword, Email, Length, NotUnique, Unique, VariableFalse, VariableTrue
+from flask_app.utils.form_field_validators import CorrectPassword, Email, Length, NotUnique, Unique, VariableFalse, VariableTrue
 
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField

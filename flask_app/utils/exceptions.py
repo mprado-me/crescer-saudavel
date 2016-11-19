@@ -3,7 +3,6 @@
 
 from .. import app
 
-import traceback
 
 class DatabaseAccessError(Exception):
     msg = {
@@ -15,6 +14,7 @@ class DatabaseAccessError(Exception):
         super(DatabaseAccessError, self).__init__(message)
         log_exception(name="DatabaseAccessError", message=message, exception=exception)
 
+
 class EmailSendingError(Exception):
     msg = {
         "type": "danger",
@@ -25,6 +25,13 @@ class EmailSendingError(Exception):
         super(EmailSendingError, self).__init__(message)
         log_exception(name="EmailSendingError", message=message, exception=exception)
 
+
+class InvalidQueryParamError(Exception):
+    def __init__(self, message=""):
+        super(InvalidQueryParamError, self).__init__(message)
+        log_exception(name="InvalidQueryParamError", message=message)
+
+
 def log_exception(name, message="", exception=None):
     app.logger.error("-*-*-")
     if message != "":
@@ -33,6 +40,7 @@ def log_exception(name, message="", exception=None):
         app.logger.error(name)
     if exception:
         app.logger.exception(exception)
+
 
 def log_unrecognized_exception(e):
     app.logger.error("-*-*-")

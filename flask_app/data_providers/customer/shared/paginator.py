@@ -58,24 +58,24 @@ class PaginatorDataProvider:
 
     def sample_data_0(self, current_page):
         data = {
-            "next_href": url_for("all_products", page=5, sort_method=0),
+            "next_href": url_for("products", page=5, sort_method=0),
             "pages": [
                 {
                     "number": 1,
-                    "href": url_for("all_products", page=1, sort_method=0),
+                    "href": url_for("products", page=1, sort_method=0),
                 },
                 {
                     "number": 2,
-                    "href": url_for("all_products", page=2, sort_method=0),
+                    "href": url_for("products", page=2, sort_method=0),
                     "active": True,
                 },
                 {
                     "number": 3,
-                    "href": url_for("all_products", page=3, sort_method=0),
+                    "href": url_for("products", page=3, sort_method=0),
                 },
                 {
                     "number": 4,
-                    "href": url_for("all_products", page=4, sort_method=0),
+                    "href": url_for("products", page=4, sort_method=0),
                 },
             ],
         }

@@ -20,75 +20,75 @@ class HeaderDataProvider:
             "menu_data": [
                 {
                     "name": "Produtos",
-                    "href": url_for('all_products', page=1, sort_method=ProductSortMethod.NAME),
+                    "href": url_for('products', page=1, sort_method=ProductSortMethod.NAME),
                     "children": [
                         {
                             "name": "Frutas",
-                            "href": url_for('products_by_category', category_id=0, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=0, page=1, sort_method=ProductSortMethod.NAME),
                         },
                         {
                             "name": "Sopa creme",
-                            "href": url_for('products_by_category', category_id=1, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=1, page=1, sort_method=ProductSortMethod.NAME),
                         },
                         {
                             "name": "Sopa com pedaços",
-                            "href": url_for('products_by_category', category_id=2, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=2, page=1, sort_method=ProductSortMethod.NAME),
                         },
                         {
                             "name": "Linha Single",
-                            "href": url_for('products_by_category', category_id=3, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=3, page=1, sort_method=ProductSortMethod.NAME),
                             "children": [
                                 {
                                     "name": "Sobremesas",
-                                    "href": url_for('products_by_category_and_subcategory', category_id=3,
+                                    "href": url_for('products', category_id=3,
                                                     subcategory_id=0, page=1, sort_method=ProductSortMethod.NAME),
                                 },
                             ]
                         },
                         {
                             "name": "Linha Emporinho",
-                            "href": url_for('products_by_category', category_id=4, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=4, page=1, sort_method=ProductSortMethod.NAME),
                             "children": [
                                 {
                                     "name": "Risotos",
-                                    "href": url_for('products_by_category_and_subcategory', category_id=4,
+                                    "href": url_for('products', category_id=4,
                                                     subcategory_id=0, page=1, sort_method=ProductSortMethod.NAME),
                                 },
                                 {
                                     "name": "Massas",
-                                    "href": url_for('products_by_category_and_subcategory', category_id=4,
+                                    "href": url_for('products', category_id=4,
                                                     subcategory_id=1, page=1, sort_method=ProductSortMethod.NAME),
                                 },
                                 {
                                     "name": "Escondidinhos",
-                                    "href": url_for('products_by_category_and_subcategory', category_id=4,
+                                    "href": url_for('products', category_id=4,
                                                     subcategory_id=2, page=1, sort_method=ProductSortMethod.NAME),
                                 },
                                 {
                                     "name": "Arroz",
-                                    "href": url_for('products_by_category_and_subcategory', category_id=4,
+                                    "href": url_for('products', category_id=4,
                                                     subcategory_id=3, page=1, sort_method=ProductSortMethod.NAME),
                                 },
                                 {
                                     "name": "Legumes",
-                                    "href": url_for('products_by_category_and_subcategory', category_id=4,
+                                    "href": url_for('products', category_id=4,
                                                     subcategory_id=4, page=1, sort_method=ProductSortMethod.NAME),
                                 },
                                 {
                                     "name": "Sopas/Cremes",
-                                    "href": url_for('products_by_category_and_subcategory', category_id=4,
+                                    "href": url_for('products', category_id=4,
                                                     subcategory_id=5, page=1, sort_method=ProductSortMethod.NAME),
                                 },
                                 {
                                     "name": "Refeições combinadas",
-                                    "href": url_for('products_by_category_and_subcategory', category_id=4,
+                                    "href": url_for('products', category_id=4,
                                                     subcategory_id=6, page=1, sort_method=ProductSortMethod.NAME),
                                 },
                             ]
                         },
                         {
                             "name": "Acessórios",
-                            "href": url_for('products_by_category', category_id=5, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=5, page=1, sort_method=ProductSortMethod.NAME),
                         },
                     ]
                 },
@@ -127,19 +127,19 @@ class HeaderDataProvider:
             "menu_data": [
                 {
                     "name": "Produtos",
-                    "href": url_for('all_products', page=1, sort_method=ProductSortMethod.NAME),
+                    "href": url_for('products', page=1, sort_method=ProductSortMethod.NAME),
                     "children": [
                         {
                             "name": "Frutas",
-                            "href": url_for('products_by_category', category_id=0, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=0, page=1, sort_method=ProductSortMethod.NAME),
                         },
                         {
                             "name": "Sopa creme",
-                            "href": url_for('products_by_category', category_id=1, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=1, page=1, sort_method=ProductSortMethod.NAME),
                         },
                         {
                             "name": "Sopa com pedaços",
-                            "href": url_for('products_by_category', category_id=2, page=1, sort_method=ProductSortMethod.NAME),
+                            "href": url_for('products', category_id=2, page=1, sort_method=ProductSortMethod.NAME),
                         },
                     ]
                 },

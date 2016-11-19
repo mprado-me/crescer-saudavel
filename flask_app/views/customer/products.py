@@ -7,7 +7,8 @@ from flask_app.data_providers.customer.products.product import product_data_prov
 from flask_app.data_providers.customer.products.products import products_data_provider
 from flask_app import app
 from flask_app.utils.decorators import log_route
-from flask_app.utils.exceptions import log_unrecognized_exception
+from flask_app.utils.exceptions import InvalidQueryParamError, log_unrecognized_exception
+from flask_app.utils.query_params_validators import ValidCategoryIdSubcategoryId
 
 
 @app.route('/produto/<int:product_id>')
@@ -23,39 +24,23 @@ def product(product_id):
 
 @app.route('/produtos/pagina/<int:page>/ordenacao/<int:sort_method>')
 @log_route
-def all_products(page, sort_method):
+def products(page, sort_method):
     try:
-        data = products_data_provider.get_all_products_data(page=page, sort_method=sort_method)
-        return render_template('customer/products/products.html', data=data)
-    except Exception as e:
-        log_unrecognized_exception(e)
-        abort(500)
+        # Getting query params
+        category_id = request.args.get("category_id")
+        subcategory_id = request.args.get("subcategory_id")
 
+        # Validating query params
+        ValidCategoryIdSubcategoryId(category_id=category_id, subcategory_id=subcategory_id).__call__()
 
-@app.route('/produtos/categoria/<int:category_id>/pagina/<int:page>/ordenacao/<int:sort_method>')
-@log_route
-def products_by_category(category_id, page, sort_method):
-    try:
-        data = products_data_provider.get_products_data_by_category(
-            category_id=category_id,
+        data = products_data_provider.get_products_data(
             page=page,
-            sort_method=sort_method)
-        return render_template('customer/products/products.html', data=data)
-    except Exception as e:
-        log_unrecognized_exception(e)
-        abort(500)
-
-
-@app.route('/produtos/categoria/<int:category_id>/subcategoria/<int:subcategory_id>/pagina/<int:page>/ordenacao/<int:sort_method>')
-@log_route
-def products_by_category_and_subcategory(category_id, subcategory_id, page, sort_method):
-    try:
-        data = products_data_provider.get_products_data_by_category_and_subcategory(
+            sort_method=sort_method,
             category_id=category_id,
-            subcategory_id=subcategory_id,
-            page=page,
-            sort_method=sort_method)
+            subcategory_id=subcategory_id)
         return render_template('customer/products/products.html', data=data)
+    except InvalidQueryParamError:
+        abort(404)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
