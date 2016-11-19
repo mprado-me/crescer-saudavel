@@ -54,7 +54,6 @@ def load_user(user_id):
 
 import models.user
 
-import flask_app.views.admin.content.home
 import flask_app.views.admin.blog
 import flask_app.views.admin.cities
 import flask_app.views.admin.customers
@@ -62,6 +61,11 @@ import flask_app.views.admin.home
 import flask_app.views.admin.images
 import flask_app.views.admin.orders
 import flask_app.views.admin.products
+
+import flask_app.views.admin.content.home
+import flask_app.views.admin.content.about_us
+import flask_app.views.admin.content.contact
+import flask_app.views.admin.content.faq
 
 import flask_app.views.customer.blog
 import flask_app.views.customer.cart

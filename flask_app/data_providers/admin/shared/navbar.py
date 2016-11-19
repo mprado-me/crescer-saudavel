@@ -96,6 +96,18 @@ class NavbarDataProvider:
                             "name": "Home",
                             "href": url_for("admin_content_home"),
                         },
+                        {
+                            "name": "Contato",
+                            "href": url_for("admin_content_contact"),
+                        },
+                        {
+                            "name": "Sobre nós",
+                            "href": url_for("admin_content_about_us"),
+                        },
+                        {
+                            "name": "FAQ",
+                            "href": url_for("admin_content_faq"),
+                        },
                     ],
                 },
                 {
