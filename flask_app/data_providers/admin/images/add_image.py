@@ -4,11 +4,14 @@
 from flask_app.data_providers.admin.shared.navbar import navbar_data_provider
 from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNamesProvider
 
+from flask_app.utils.decorators import append_request_msg
+
 
 class AddImageDataProvider:
     def __init__(self):
         pass
 
+    @append_request_msg
     def get_data(self, form):
         return self.sample_data_0(form=form)
 

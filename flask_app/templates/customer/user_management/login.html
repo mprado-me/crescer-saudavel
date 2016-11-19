@@ -18,7 +18,7 @@
             {% if data["msgs"] %}
             {% for msg in data["msgs"] %}
             {% with data=msg %}
-            {% include "customer/shared/alert-msg.html" %}
+            {% include "shared/alert-msg.html" %}
             {% endwith %}
             {% endfor %}
             {% endif %}

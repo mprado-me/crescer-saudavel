@@ -3,6 +3,14 @@
 {% block title %}Adicionar imagem{% endblock %}
 
 {% block content %}
+  {% if data["msgs"] %}
+    {% for msg in data["msgs"] %}
+      {% with data=msg %}
+        {% include "shared/alert-msg.html" %}
+      {% endwith %}
+    {% endfor %}
+  {% endif %}
+
   <form class="form" action="" method=post enctype=multipart/form-data>
     {{ data["form"].csrf_token }}
     <input type=file name=file>
