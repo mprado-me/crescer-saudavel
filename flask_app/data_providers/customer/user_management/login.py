@@ -16,7 +16,7 @@ class LoginDataProvider:
     def get_data(self, form):
         return self.sample_data_0(form=form)
 
-    def get_data_when_get_request(self, form):
+    def get_data_with_request_msg(self, form):
         data = self.get_data(form=form)
         msgs = []
         msg_content = request.args.get("msg_content")
@@ -26,7 +26,10 @@ class LoginDataProvider:
                 "type": msg_type,
                 "content": msg_content,
             })
-        data["msgs"] = msgs
+        if "msgs" in data:
+            data["msgs"] = data["msgs"] + msgs
+        else:
+            data["msgs"] = msgs
         return data
 
     def get_data_when_database_access_error(self, form):
