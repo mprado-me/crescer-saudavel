@@ -1,0 +1,95 @@
+{% extends "admin/shared/base.html" %}
+
+{% block title %}Imagens{% endblock %}
+
+{% block content %}
+  {% if data["msgs"] %}
+    {% for msg in data["msgs"] %}
+      {% with data=msg %}
+        {% include "shared/alert-msg.html" %}
+      {% endwith %}
+    {% endfor %}
+  {% endif %}
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="img-table-first-col"></th>
+        <th>Nome</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>
+        <td>Doe</td>
+        <td>
+          <!-- TODO: Protect this and other posts against CSRF attacks -->
+          <form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>
+            <input type=submit value=Remover>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>
+        <td>Moe</td>
+        <td>
+          <!-- TODO: Protect this and other posts against CSRF attacks -->
+          <form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>
+            <input type=submit value=Remover>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>
+        <td>Dooley</td>
+        <td>
+          <!-- TODO: Protect this and other posts against CSRF attacks -->
+          <form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>
+            <input type=submit value=Remover>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}

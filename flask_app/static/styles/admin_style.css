@@ -31,3 +31,11 @@
 .input-errors-container {
     display: table;
 }
+
+.img-table-first-col {
+    width: 220px;
+}
+
+.img-in-table {
+    max-width: 200px;
+}

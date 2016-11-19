@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 
 from flask_app import app
 
+from flask_app.data_providers.admin.images.images import images_data_provider
 from flask_app.data_providers.admin.images.add_image import add_image_data_provider
 
 from flask_app.forms.admin import UploadImageForm
@@ -58,17 +59,18 @@ def admin_add_image():
 @log_route
 def admin_images(page):
     try:
-        raise NotImplementedError()
+        data = images_data_provider.get_data(page=page)
+        return render_template("admin/images/images.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
 
 
-@app.route('/painel-administrativo/remover-imagem/<int:image_id>', methods=["POST"])
+@app.route('/painel-administrativo/remover-imagem/<string:image_name>', methods=["POST"])
 @login_required
 @admin
 @log_route
-def admin_remove_image(image_id):
+def admin_remove_image(image_name):
     try:
         raise NotImplementedError()
     except Exception as e:
