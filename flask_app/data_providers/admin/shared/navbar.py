@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNamesProvider
+
 from flask_app.utils.enums import OrderStatus
 
 from flask import url_for
@@ -9,19 +11,25 @@ class NavbarDataProvider:
     def __init__(self):
         pass
 
-    def get_data(self):
-        return self.sample_data_0()
+    def get_data(self, active_tab_name):
+        data = self.sample_data_0()
+        self.set_active_tab(data=data, active_tab_name=active_tab_name)
+        return data
+
+    def set_active_tab(self, data, active_tab_name):
+        for menu_item in data["menu_items"]:
+            if menu_item["name"] == active_tab_name:
+                menu_item["active"] = True
 
     def sample_data_0(self):
         data = {
             "menu_items": [
                 {
-                    "name": "Home",
-                    "active": True,
+                    "name": NavbarTabNamesProvider.home,
                     "href": url_for("admin_dashboard")
                 },
                 {
-                    "name": "Produtos",
+                    "name": NavbarTabNamesProvider.products,
                     "submenu_items": [
                         {
                             "name": "Adicionar produto",
@@ -34,7 +42,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": "Pedidos",
+                    "name": NavbarTabNamesProvider.orders,
                     "submenu_items": [
                         {
                             "name": "Pagos",
@@ -51,7 +59,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": "Blog",
+                    "name": NavbarTabNamesProvider.blog,
                     "submenu_items": [
                         {
                             "name": "Adicionar post",
@@ -64,7 +72,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": "Clientes",
+                    "name": NavbarTabNamesProvider.customers,
                     "submenu_items": [
                         {
                             "name": "Cadastrados",
@@ -77,7 +85,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": "Imagens",
+                    "name": NavbarTabNamesProvider.images,
                     "submenu_items": [
                         {
                             "name": "Adicionar imagem",
@@ -90,7 +98,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": "Conteúdo",
+                    "name": NavbarTabNamesProvider.content,
                     "submenu_items": [
                         {
                             "name": "Home",
@@ -111,7 +119,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": "Cidades atendidas",
+                    "name": NavbarTabNamesProvider.attended_cities,
                     "submenu_items": [
                         {
                             "name": "Adicionar cidade",

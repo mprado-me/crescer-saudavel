@@ -8,6 +8,7 @@
   <link rel="shortcut icon" href="#" type="image/x-icon">
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/admin_style.css') }}">
   <meta name="viewport" content="initial-scale=1.0, width=device-width">
 </head>
 <body>
@@ -15,8 +16,13 @@
   {% include "admin/shared/navbar.html" %}
   {% endwith %}
 
-  {% block content %}
-  {% endblock %}
+  <div class="container">
+    <div class="page-header">
+      <h3>{{self.title()}}</h3>
+    </div>
+    {% block content %}
+    {% endblock %}
+  </div>
 
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js' )}}"></script>

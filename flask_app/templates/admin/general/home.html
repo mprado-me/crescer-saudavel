@@ -1,0 +1,8 @@
+{% extends "admin/shared/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <p>Bem vindo admin!</p>
+  <p>Há <a href="{{data['new_orders_href']}}">{{data["n_new_orders"]}} novos pedidos</a> a serem enviados.</p>
+{% endblock %}
