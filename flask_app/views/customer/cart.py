@@ -5,9 +5,9 @@ from flask import abort, redirect, render_template, session, url_for
 from flask_login import login_required
 
 from flask_app.data_providers.customer.cart.cart import cart_data_provider
-from .. import app
-from ..utils.decorators import log_route
-from ..utils.exceptions import log_unrecognized_exception
+from flask_app import app
+from flask_app.utils.decorators import log_route
+from flask_app.utils.exceptions import log_unrecognized_exception
 
 
 @app.route('/carrinho')

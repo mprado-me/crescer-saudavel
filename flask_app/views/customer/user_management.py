@@ -13,14 +13,14 @@ from flask_login import login_required, login_user, logout_user
 from itsdangerous import BadSignature
 
 from flask_app.data_providers.customer.general.failed_to_get import failed_to_get_data_provider
-from .. import app
-from ..forms.user import CreateAccountForm, LoginForm, ResendConfirmationEmailForm, RecoverPasswordForm, RedefinePasswordForm
-from ..models.user import User
-from ..utils.db_manager import db_manager
-from ..utils.decorators import log_route
-from ..utils.email_manager import email_manager
-from ..utils.exceptions import DatabaseAccessError, EmailSendingError, log_exception, log_unrecognized_exception
-from ..utils.security import ts
+from flask_app import app
+from flask_app.forms.user import CreateAccountForm, LoginForm, ResendConfirmationEmailForm, RecoverPasswordForm, RedefinePasswordForm
+from flask_app.models.user import User
+from flask_app.utils.db_manager import db_manager
+from flask_app.utils.decorators import log_route
+from flask_app.utils.email_manager import email_manager
+from flask_app.utils.exceptions import DatabaseAccessError, EmailSendingError, log_exception, log_unrecognized_exception
+from flask_app.utils.security import ts
 
 
 @app.route('/email-de-confirmacao-enviado/<string:email>')

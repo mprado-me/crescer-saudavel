@@ -5,9 +5,9 @@ from flask import abort, render_template, request
 from flask_app.data_providers.customer.products.product import product_data_provider
 
 from flask_app.data_providers.customer.products.products import products_data_provider
-from .. import app
-from ..utils.decorators import log_route
-from ..utils.exceptions import log_unrecognized_exception
+from flask_app import app
+from flask_app.utils.decorators import log_route
+from flask_app.utils.exceptions import log_unrecognized_exception
 
 
 @app.route('/produto/<int:product_id>')

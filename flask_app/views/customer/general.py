@@ -10,9 +10,9 @@ from flask_app.data_providers.customer.general.faq import faq_data_provider
 from flask_app.data_providers.customer.general.home import home_data_provider
 from flask_app.data_providers.customer.general.my_account import my_account_data_provider
 from flask_app.data_providers.customer.general.order import order_data_provider
-from .. import app
-from ..utils.decorators import log_route
-from ..utils.exceptions import log_unrecognized_exception
+from flask_app import app
+from flask_app.utils.decorators import log_route
+from flask_app.utils.exceptions import log_unrecognized_exception
 
 
 @app.route('/sobre-nos')

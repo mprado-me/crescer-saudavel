@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .. import app
+from flask_app import app
 
-from ..data_providers.customer.blog.blog import blog_data_provider
-from ..data_providers.customer.blog.blog_post import blog_post_data_provider
+from flask_app.data_providers.customer.blog.blog import blog_data_provider
+from flask_app.data_providers.customer.blog.blog_post import blog_post_data_provider
 
-from ..utils.decorators import log_route
-from ..utils.exceptions import log_unrecognized_exception
+from flask_app.utils.decorators import log_route
+from flask_app.utils.exceptions import log_unrecognized_exception
 
 from flask import abort, render_template, request
 

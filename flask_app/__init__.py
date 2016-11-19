@@ -48,17 +48,23 @@ app.logger.addHandler(handler)
 # The order of this import matter. User uses bcrypt and db
 from models.user import User
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
 
-
 import models.user
 
-import views.admin
-import views.blog
-import views.cart
-import views.general
-import views.products
-import views.user_management
+import flask_app.views.admin.content.home
+import flask_app.views.admin.blog
+import flask_app.views.admin.cities
+import flask_app.views.admin.customers
+import flask_app.views.admin.home
+import flask_app.views.admin.images
+import flask_app.views.admin.orders
+import flask_app.views.admin.products
+
+import flask_app.views.customer.blog
+import flask_app.views.customer.cart
+import flask_app.views.customer.general
+import flask_app.views.customer.products
+import flask_app.views.customer.user_management
