@@ -15,7 +15,7 @@ from ..utils.exceptions import log_unrecognized_exception
 def product(product_id):
     try:
         data = product_data_provider.get_data(product_id)
-        return render_template('products/product.html', data=data)
+        return render_template('customer/products/product.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -26,7 +26,7 @@ def product(product_id):
 def all_products(page, sort_method):
     try:
         data = products_data_provider.get_all_products_data(page=page, sort_method=sort_method)
-        return render_template('products/products.html', data=data)
+        return render_template('customer/products/products.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -40,7 +40,7 @@ def products_by_category(category_id, page, sort_method):
             category_id=category_id,
             page=page,
             sort_method=sort_method)
-        return render_template('products/products.html', data=data)
+        return render_template('customer/products/products.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -55,7 +55,7 @@ def products_by_category_and_subcategory(category_id, subcategory_id, page, sort
             subcategory_id=subcategory_id,
             page=page,
             sort_method=sort_method)
-        return render_template('products/products.html', data=data)
+        return render_template('customer/products/products.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -73,7 +73,7 @@ def products_by_search(page):
             q = ""
 
         data = products_data_provider.get_products_data_by_search(page=page, q=q)
-        return render_template('products/products.html', data=data)
+        return render_template('customer/products/products.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

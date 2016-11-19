@@ -19,7 +19,7 @@ def cart():
         user_email = session["user_id"]
 
         data = cart_data_provider.get_data(user_email=user_email)
-        return render_template('cart/cart.html', cart_table_editable=True, data=data)
+        return render_template('customer/cart/cart.html', cart_table_editable=True, data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

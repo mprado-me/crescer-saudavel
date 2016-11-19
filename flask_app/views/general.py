@@ -20,7 +20,7 @@ from ..utils.exceptions import log_unrecognized_exception
 def about_us():
     try:
         data = about_us_data_provider.get_data()
-        return render_template('general/about-us.html', data=data)
+        return render_template('customer/general/about-us.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -44,7 +44,7 @@ def checkout(step):
             user_info_editable = False
 
         data = checkout_data_provider.get_data(step=step, user_info_editable=user_info_editable, user_email=user_email)
-        return render_template('general/checkout.html', data=data)
+        return render_template('customer/general/checkout.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -55,7 +55,7 @@ def checkout(step):
 def faq():
     try:
         data = faq_data_provider.get_data()
-        return render_template('general/faq.html', data=data)
+        return render_template('customer/general/faq.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -67,7 +67,7 @@ def faq():
 def home():
     try:
         data = home_data_provider.get_data()
-        return render_template('general/home.html', data=data)
+        return render_template('customer/general/home.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -90,7 +90,7 @@ def my_account():
                 user_info_editable = False
 
             data = my_account_data_provider.get_data(user_info_editable)
-            return render_template('general/my-account.html', data=data)
+            return render_template('customer/general/my-account.html', data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -111,7 +111,7 @@ def my_account():
 def order(order_id):
     try:
         data = order_data_provider.get_data(order_id)
-        return render_template('general/order.html', data=data)
+        return render_template('customer/general/order.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

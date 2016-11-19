@@ -1,0 +1,21 @@
+{% extends "customer/shared/base.html" %}
+{% block title %}Falha{% endblock %}
+{% block content %}
+
+{% with data=data["page_heading_data"] %}
+{% include "customer/shared/page-heading.html" %}
+{% endwith %}
+<div class="main-container">
+  <div class="main container fail-container">
+    {% with data=data["msg"] %}
+    {% include "customer/shared/alert-msg.html" %}
+    {% endwith %}
+    {% if data["button"] %}
+    <a href="{{data['button']['href']}}">
+      <button type="button" title="{{data['button']['title']}}" class="button"><span>{{data['button']['title']}}</span>
+      </button>
+    </a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

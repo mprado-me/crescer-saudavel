@@ -45,8 +45,8 @@ class CorrectPassword(object):
 
         try:
             user = User.query.filter(User.email == form.email.data).first()
-        except:
-            raise DatabaseAccessError()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
         incorrect_password = False
         if user:
             incorrect_password = not user.is_correct_password(field.data)
@@ -151,8 +151,8 @@ class NotUnique(object):
 
         try:
             check = self.model.query.filter(self.field == field.data).first()
-        except:
-            raise DatabaseAccessError()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
         if not check:
             if self.stop:
                 raise StopValidation(self.message)
@@ -173,8 +173,8 @@ class Unique(object):
 
         try:
             check = self.model.query.filter(self.field == field.data).first()
-        except:
-            raise DatabaseAccessError()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
         if check:
             if self.stop:
                 raise StopValidation(self.message)
@@ -196,8 +196,8 @@ class VariableFalse(object):
 
         try:
             model_instance = self.model.query.filter(self.key_field == field.data).first()
-        except:
-            raise DatabaseAccessError()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
         if model_instance and getattr(model_instance, self.var_name) is not False:
             if self.stop:
                 raise StopValidation(self.message)
@@ -219,8 +219,8 @@ class VariableTrue(object):
 
         try:
             model_instance = self.model.query.filter(self.key_field == field.data).first()
-        except:
-            raise DatabaseAccessError()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
         if model_instance and getattr(model_instance, self.var_name) is not True:
             if self.stop:
                 raise StopValidation(self.message)

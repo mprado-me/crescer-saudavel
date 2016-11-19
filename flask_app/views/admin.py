@@ -289,7 +289,7 @@ def admin_add_image():
     if request.method == "GET":
         try:
             data = add_image_data_provider.get_data(form=form)
-            return render_template("admin/add-image.html", data=data)
+            return render_template("admin/images/add-image.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -299,7 +299,7 @@ def admin_add_image():
         try:
             if not form.validate_on_submit():
                 data = add_image_data_provider.get_data(form=form)
-                return render_template("admin/add-image.html", data=data)
+                return render_template("admin/images/add-image.html", data=data)
 
             file_ = request.files['file']
             filename = secure_filename(file_.filename)

@@ -1,0 +1,64 @@
+{% import "shared/macros.html" as macros %}
+
+{% extends "customer/shared/base.html" %}
+{% block title %}Criar conta{% endblock %}
+{% block content %}
+
+{% with data=data["page_heading_data"] %}
+{% include "customer/shared/page-heading.html" %}
+{% endwith %}
+
+<div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">
+  <div class="main">
+    <div class="account-login container">
+      <form action="{{url_for('create_account')}}" method="post">
+        {{ data["form"].csrf_token }}
+        <div class="registered-users">
+          {% if data["msg"] %}
+          {% with data=data["msg"] %}
+          {% include "customer/shared/alert-msg.html" %}
+          {% endwith %}
+          {% endif %}
+          <strong>Novo cliente</strong>
+          <div class="content">
+            <ul class="form-list">
+              <li>
+                <label>{{macros.mandatory_mark(True)}}Email:</label>
+                <div class="input-box1">
+                  {{macros.input(name="email", id="email", class="input-text required-entry", type="text",
+                  title="Email", maxlength="256", editable=True, errors=data["form"].email.errors,
+                  value=data.form.email.data)}}
+                </div>
+              </li>
+              <li>
+                <label>{{macros.mandatory_mark(True)}}Senha:</label>
+                <div class="input-box1">
+                  {{macros.input(name="password", id="password", class="input-text required-entry", type="password",
+                  title="Senha", maxlength="32", editable=True, errors=data["form"].password.errors)}}
+                </div>
+              </li>
+              <li>
+                <label>{{macros.mandatory_mark(True)}}Confirmar senha:</label>
+                <div class="input-box1">
+                  {{macros.input(name="password_confirmation", id="password_confirmation", class="input-text
+                  required-entry", type="password", title="Confirmação da senha", maxlength="32", editable=True,
+                  errors=data["form"].password_confirmation.errors)}}
+                </div>
+              </li>
+            </ul>
+            <p class="required">* Campos obrigatórios</p>
+            <div class="buttons-set">
+              <button type="submit" class="button" title="Cadastrar"><span>Cadastrar</span></button>
+              <a href="{{url_for('login')}}" class="already-has-account">Já possui conta?</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}
+
+

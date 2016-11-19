@@ -1,0 +1,81 @@
+{% extends "customer/shared/base.html" %}
+{% block title %}Minha conta{% endblock %}
+{% block content %}
+
+{% with data=data["page_heading_data"] %}
+{% include "customer/shared/page-heading.html" %}
+{% endwith %}
+
+<div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">
+  <div class="main container">
+    <div class="std">
+      <div class="wrapper_bl" style="margin-top: 1px;">
+        <div class="form_background">
+          <div class="col-main">
+            <div class="dashboard">
+              <div class="box-account">
+                <div class="page-title">
+                  <h2>Minhas informações</h2>
+                  <form action="{{url_for('my_account')}}" method="post">
+                    <div class="group-select">
+                      {% with data=data["user_info_data"] %}
+                      {% include "customer/shared/user-info.html" %}
+                      {% endwith %}
+                      <div class="buttons-set account-info-buttons-container">
+                        {% if data["user_info_data"]["editable"] %}
+                        <button type="submit" title="Salvar" class="button save"><span>Salvar</span></button>
+                        <a href="{{url_for('my_account')}}">
+                          <button type="button" title="Cancelar" class="button cancel"><span>Cancelar</span></button>
+                        </a>
+                        {% else %}
+                        <a href="{{url_for('my_account', editar='sim')}}">
+                          <button type="button" title="Editar" class="button edit"><span>Editar</span></button>
+                        </a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </form>
+                  <div class="recent-orders">
+                    <div class="title-buttons"><strong>Meus pedidos</strong></div>
+                    {% if data["orders"] and data["orders"]|length > 0 %}
+                    <div class="table-responsive">
+                      <table class="data-table table-striped" id="my-orders-table">
+                        <thead>
+                        <tr class="first last">
+                          <th>Pedido #</th>
+                          <th>Data</th>
+                          <th><span class="nobr">Total</span></th>
+                          <th>Status</th>
+                          <th>&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in data["orders"] %}
+                        <tr>
+                          <td>{{ order["id"] }}</td>
+                          <td><span class="nobr">{{ order["date"] }}</span></td>
+                          <td><span class="price">{{ order["total"] }}</span></td>
+                          <td><em>{{ order["status"] }}</em></td>
+                          <td class="a-center last"><span class="nobr"> <a
+                            href="{{url_for('order', order_id=order['id'])}}">Detalhes</a> </span></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                    {% else %}
+                    <p class="none-order-registered">Nenhum pedido registrado.</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!--main-container-->
+{% endblock %}

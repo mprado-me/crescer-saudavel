@@ -1,0 +1,45 @@
+{% extends "customer/shared/base.html" %}
+{% block title %}Blog Post{% endblock %}
+{% block content %}
+
+{% with data=data["page_heading_data"] %}
+{% include "customer/shared/page-heading.html" %}
+{% endwith %}
+
+<div class="main-container col2-right-layout">
+  <div class="main container">
+    <div id="main" class="blog-wrapper">
+      <div id="primary" class="site-content">
+        <div id="content" role="main">
+          <article id="post-29" class="blog_entry clearfix wow bounceInUp animated animated"
+                   style="visibility: visible;">
+            <div class="blog_entry-header clearfix">
+              <div class="blog_entry-header-inner row">
+                <!-- <h2 class="blog_entry-title">{{ data["title"] }}</h2> -->
+              </div>
+            </div>
+            <div class="entry-content">
+              <div class="featured-thumb">
+                <img src="/static/images/blog-img3.jpg" alt="blog-img3">
+              </div>
+              <div class="entry-content">
+                <div class="admin-content-container">
+                  {{ data["content"]|safe }}
+                </div>
+              </div>
+              <div class="centered-content-container">
+                <a href="{{data['blog_url_to_return']}}">
+                  <button title="Voltar ao blog" class="button"><span>Voltar ao blog</span></button>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{{url_for('static', filename='js/image-video-resizer.js')}}"></script>
+{% endblock %}

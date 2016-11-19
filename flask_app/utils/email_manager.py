@@ -28,8 +28,8 @@ class EmailManager:
             html = render_template("email/activate-account.html", data=data)
             msg = Message(sender=app.config["MAIL_USERNAME"], recipients=[receiver_email], subject=subject, html=html)
             mail.send(msg)
-        except:
-            raise EmailSendingError("Error sending account confirmation email")
+        except Exception as e:
+            raise EmailSendingError(message="Error sending account confirmation email", exception=e)
 
 
     def send_redefine_password_email(self, receiver_email):
@@ -45,7 +45,7 @@ class EmailManager:
             html = render_template("email/redefine-password.html", data=data)
             msg = Message(sender=app.config["MAIL_USERNAME"], recipients=[receiver_email], subject=subject, html=html)
             mail.send(msg)
-        except:
-            raise EmailSendingError("Error sending redefine password email")
+        except Exception as e:
+            raise EmailSendingError(message="Error sending redefine password email", exception=e)
 
 email_manager = EmailManager()

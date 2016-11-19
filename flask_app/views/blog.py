@@ -17,7 +17,7 @@ from flask import abort, render_template, request
 def blog(page):
     try:
         data = blog_data_provider.get_data(page=page)
-        return render_template('blog/blog.html', data=data)
+        return render_template('customer/blog/blog.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -35,7 +35,7 @@ def blog_post(blog_post_id):
             blog_page_to_return = 1
 
         data = blog_post_data_provider.get_data(blog_post_id=blog_post_id, blog_page_to_return=blog_page_to_return)
-        return render_template('blog/blog-post.html', data=data)
+        return render_template('customer/blog/blog-post.html', data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

@@ -1,0 +1,10 @@
+<section class=" wow bounceInUp animated">
+  <div class="best-pro slider-items-products container">
+    <div class="new_title">
+      <h2>{{ data["title"] }}</h2>
+    </div>
+    {% with products=data["products"] %}
+    {% include "customer/products/product-flexslider.html" %}
+    {% endwith %}
+  </div>
+</section>

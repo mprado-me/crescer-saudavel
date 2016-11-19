@@ -11,9 +11,9 @@ class DatabaseAccessError(Exception):
         "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
     }
 
-    def __init__(self, message=""):
+    def __init__(self, message="", exception=None):
         super(DatabaseAccessError, self).__init__(message)
-        log_exception(name="DatabaseAccessError", message=message)
+        log_exception(name="DatabaseAccessError", message=message, exception=exception)
 
 class EmailSendingError(Exception):
     msg = {
@@ -21,18 +21,18 @@ class EmailSendingError(Exception):
         "content": "Falha! Ocorreu um erro ao enviar o email. Tente novamente.",
     }
 
-    def __init__(self, message=""):
+    def __init__(self, message="", exception=None):
         super(EmailSendingError, self).__init__(message)
-        log_exception(name="EmailSendingError", message=message)
+        log_exception(name="EmailSendingError", message=message, exception=exception)
 
-def log_exception(name, message=""):
-    app.logger.warning("-*-*-")
+def log_exception(name, message="", exception=None):
+    app.logger.error("-*-*-")
     if message != "":
-        app.logger.warning(name + " | " + message)
+        app.logger.error(name + " | " + message)
     else:
-        app.logger.warning(name)
-    traceback_as_string = "".join(traceback.format_stack())
-    app.logger.warning("\n" + traceback_as_string)
+        app.logger.error(name)
+    if exception:
+        app.logger.exception(exception)
 
 def log_unrecognized_exception(e):
     app.logger.error("-*-*-")

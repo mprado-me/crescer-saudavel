@@ -14,20 +14,20 @@ class DbManager:
     def add_user(self, user):
         try:
             db.session.add(user)
-        except:
-            raise DatabaseAccessError()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
 
     def get_user(self, email):
         try:
             return User.query.filter_by(email=email).first()
-        except:
-            raise DatabaseAccessError()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
 
     def commit(self):
         try:
             db.session.commit()
-        except:
-            raise DatabaseAccessError()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
 
     def rollback(self):
         db.session.rollback()

@@ -1,0 +1,145 @@
+{% extends "customer/shared/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="content">
+  {% if data["carousel"] and data["carousel"]|length > 0 %}
+  <div id="tmg-slideshow" class="tmg-slideshow">
+    <div class="container">
+      <div id='thm_slider_wrapper' class='thm_slider_wrapper fullwidthbanner-container'>
+        <div id='thm-rev-slider' class='rev_slider fullwidthabanner'>
+          <ul>
+            {% for slide in data["carousel"] %}
+            <li data-transition='random' data-slotamount='7' data-masterspeed='1000'>
+              <img src={{url_for('static', filename="images/slide-img2.jpg" )}} data-bgposition='left top'
+                   data-bgfit='cover' data-bgrepeat='no-repeat' alt="slider-image1"/>
+              <div class="info">
+                <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-x='0' data-y='230' data-endspeed='500'
+                     data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none'
+                     data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1'
+                     style='z-index:3;max-width:auto;max-height:auto;white-space:nowrap;'>
+                  <span>{{ slide["title"] }}</span>
+                </div>
+                <div class='tp-caption Title sft  tp-resizeme ' data-x='0' data-y='320' data-endspeed='500'
+                     data-speed='500' data-start='1500' data-easing='Power2.easeInOut' data-splitin='none'
+                     data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1'
+                     style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'>
+                  {{ slide["subtitle"] }}
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if data["sections"] and data["sections"]|length > 0 %}
+  {% for section in data["sections"] %}
+  {% with data=section %}
+  {% include "customer/products/products-section.html" %}
+  {% endwith %}
+  {% endfor %}
+  {% endif %}
+
+  {% if data["blog_post_0_data"] %}
+  <div class="latest-blog wow bounceInUp animated animated container">
+    <div class="new_title">
+      <h2>Últimas postagens do blog</h2>
+    </div>
+    <div class="blog_block">
+      <div class="blog_block_inner">
+        {% with data=data["blog_post_0_data"] %}
+        {% include "customer/blog/blog-post-preview.html" %}
+        {% endwith %}
+        {% if data["blog_post_1_data"] %}
+        {% with data=data["blog_post_1_data"] %}
+        {% include "customer/blog/blog-post-preview.html" %}
+        {% endwith %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div style="height: 20px;"></div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+    jQuery('#thm-rev-slider').show().revolution({
+      dottedOverlay: 'none',
+      delay: 5000,
+      startwidth: 0,
+      startheight:820,
+
+      hideThumbs: 200,
+      thumbWidth: 200,
+      thumbHeight: 50,
+      thumbAmount: 2,
+
+      navigationType: 'thumb',
+      navigationArrows: 'solo',
+      navigationStyle: 'round',
+
+      touchenabled: 'on',
+      onHoverStop: 'on',
+
+      swipe_velocity: 0.7,
+      swipe_min_touches: 1,
+      swipe_max_touches: 1,
+      drag_block_vertical: false,
+
+      spinner: 'spinner0',
+      keyboardNavigation: 'off',
+
+      navigationHAlign: 'center',
+      navigationVAlign: 'bottom',
+      navigationHOffset: 0,
+      navigationVOffset: 20,
+
+      soloArrowLeftHalign: 'left',
+      soloArrowLeftValign: 'center',
+      soloArrowLeftHOffset: 20,
+      soloArrowLeftVOffset: 0,
+
+      soloArrowRightHalign: 'right',
+      soloArrowRightValign: 'center',
+      soloArrowRightHOffset: 20,
+      soloArrowRightVOffset: 0,
+
+      shadow: 0,
+      fullWidth: 'on',
+      fullScreen: 'on',
+
+      stopLoop: 'off',
+      stopAfterLoops: -1,
+      stopAtSlide: -1,
+
+      shuffle: 'off',
+
+      autoHeight: 'on',
+      forceFullWidth: 'off',
+      fullScreenAlignForce: 'off',
+      minFullScreenHeight: 0,
+      hideNavDelayOnMobile: 1500,
+
+      hideThumbsOnMobile: 'off',
+      hideBulletsOnMobile: 'off',
+      hideArrowsOnMobile: 'off',
+      hideThumbsUnderResolution: 0,
+
+      hideSliderAtLimit: 0,
+      hideCaptionAtLimit: 0,
+      hideAllCaptionAtLilmit: 0,
+      startWithSlide: 0,
+      fullScreenOffsetContainer: ''
+    });
+  });
+
+</script>
+{% endblock %}
