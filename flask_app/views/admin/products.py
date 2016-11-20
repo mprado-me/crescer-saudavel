@@ -143,7 +143,7 @@ def admin_add_product_category():
             db_manager.commit()
 
             return redirect(url_for("admin_add_product_category",
-                                    msg_content="Categoria %s adicionada com sucesso." % form.category.data,
+                                    msg_content="Categoria %s foi adicionada com sucesso." % form.category.data,
                                     msg_type="success"))
         except DatabaseAccessError:
             db_manager.rollback()
@@ -190,11 +190,10 @@ def admin_edit_product_category(category_id):
 
             category.name = form.category.data
             db_manager.add_category(category)
-            db_manager.commit()
 
             return redirect(url_for("admin_product_categories",
                                     page=page_to_return,
-                                    msg_content="Categoria #%s editada com sucesso." % category.id,
+                                    msg_content="Categoria #%s foi editada com sucesso." % category.id,
                                     msg_type="success"))
         except DatabaseAccessError:
             db_manager.rollback()
@@ -209,8 +208,26 @@ def admin_edit_product_category(category_id):
 @admin
 @log_route
 def admin_remove_product_category(category_id):
+    # Getting optional parameters
+    page_to_return = request.args.get('page_to_return')
+
+    # Setting default value to optional parameters
+    if not page_to_return:
+        page_to_return = 1
+
     try:
-        raise NotImplementedError()
+        category = db_manager.get_category(category_id=category_id)
+
+        if not category:
+            raise InvalidUrlParamError("Category not found")
+
+        db_manager.delete_category(category)
+        db_manager.commit()
+
+        return redirect(url_for("admin_product_categories",
+                                page=page_to_return,
+                                msg_content="Categoria #%s (%s) foi removida com sucesso." % (category.id, category.name),
+                                msg_type="success"))
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

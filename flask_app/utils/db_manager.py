@@ -36,6 +36,12 @@ class DbManager:
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 
+    def delete_category(self, category):
+        try:
+            db.session.delete(category)
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
     def commit(self):
         try:
             db.session.commit()
