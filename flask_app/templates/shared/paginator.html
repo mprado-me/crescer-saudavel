@@ -1,3 +1,4 @@
+{% if data["pages"] and ( data["pages"]|length > 1 or (data["pages"]|length == 1 and (data["previous_href"] or data["next_href"] ) ) ) %}
 <div class="pages">
   <ol class="pagination">
     {% if data["previous_href"] %}
@@ -15,3 +16,4 @@
     {% endif %}
   </ol>
 </div>
+{% endif %}
