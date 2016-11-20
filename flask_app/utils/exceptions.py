@@ -32,6 +32,12 @@ class InvalidQueryParamError(Exception):
         log_exception(name="InvalidQueryParamError", message=message)
 
 
+class InvalidParamError(Exception):
+    def __init__(self, message=""):
+        super(InvalidParamError, self).__init__(message)
+        log_exception(name="InvalidParamError", message=message)
+
+
 def log_exception(name, message="", exception=None):
     app.logger.error("-*-*-")
     if message != "":

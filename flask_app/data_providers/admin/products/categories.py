@@ -12,7 +12,9 @@ from flask_app.data_providers.shared.paginator import paginator_data_provider
 
 from flask_app.models.category import Category
 
+from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import append_request_msg
+from flask_app.utils.exceptions import InvalidParamError
 
 
 class CategoriesDataProvider():
@@ -24,13 +26,22 @@ class CategoriesDataProvider():
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "form": form,
+            "title": "Adicionar nova categoria de produto"
         }
         return data
 
-    def get_edit_data(self, form):
+    def get_edit_data(self, form, category_id):
+        category = db_manager.get_category(category_id=category_id)
+
+        if not category:
+            raise InvalidParamError(message="Category not found")
+
+        form.category.data = category.name
+
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "form": form,
+            "title": "Editar categoria de produto"
         }
         return data
 
