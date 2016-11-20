@@ -20,6 +20,15 @@
     <div class="page-header">
       <h3>{{self.title()}}</h3>
     </div>
+
+    {% if data["msgs"] %}
+      {% for msg in data["msgs"] %}
+        {% with data=msg %}
+          {% include "shared/alert-msg.html" %}
+        {% endwith %}
+      {% endfor %}
+    {% endif %}
+
     {% block content %}
     {% endblock %}
   </div>

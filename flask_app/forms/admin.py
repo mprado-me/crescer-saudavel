@@ -1,13 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .error_msg_provider import error_msg_provider
+from flask_app.forms.error_msg_provider import error_msg_provider
 
-from ..utils.form_field_validators import AllowedFileFormat, HasFilePart
+from flask_app.models.category import Category
+
+from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Unique
 
 from flask_wtf import FlaskForm
 
-from wtforms import FileField
+from wtforms import FileField, StringField, SubmitField
+from wtforms.validators import DataRequired
+
+
+class CategoryForm(FlaskForm):
+    category = StringField(label="Nome da categoria", validators=[
+        DataRequired(message=error_msg_provider.data_required()),
+        Unique(model=Category, field=Category.name, message=error_msg_provider.category_already_registered())
+    ])
+
+
+class AddCategoryForm(CategoryForm):
+    add = SubmitField(label="Adicionar")
+
+
+class EditCategoryForm(CategoryForm):
+    edit = SubmitField(label="Editar")
 
 
 class UploadImageForm(FlaskForm):

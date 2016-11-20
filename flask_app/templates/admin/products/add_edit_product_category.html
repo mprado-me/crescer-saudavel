@@ -1,0 +1,12 @@
+{% extends "admin/shared/base.html" %}
+
+{% block title %}Adicionar nova categoria de produto{% endblock %}
+
+{% block content %}
+  <form class="form" action="" method=post enctype=multipart/form-data>
+    {{ data["form"].csrf_token }}
+    {% with form = data["form"] %}
+      {% include "admin/shared/form_fields.html" %}
+    {% endwith %}
+  </form>
+{% endblock %}

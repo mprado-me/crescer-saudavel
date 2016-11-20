@@ -1,0 +1,20 @@
+{% for field in form %}
+    {% if field.type == "BooleanField" %}
+        { field }} {{ field.label }}<br>
+    {% elif field.type == "StringField" %}
+        {{ field.label }}:  {{ field }}<br>
+    {% elif field.type == "SubmitField" %}
+        {{ field }}
+    {% endif %}
+    {% if field.errors and field.errors|length > 0 %}
+        <div class="input-errors-container">
+            <ul class="no-points">
+                {% for error in field.errors %}
+                    <li>
+                      <div class="alert alert-danger input-error" role="alert">{{error|safe}}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endfor %}

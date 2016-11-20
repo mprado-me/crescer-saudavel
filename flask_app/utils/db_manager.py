@@ -5,6 +5,7 @@ from .. import db
 
 from ..utils.exceptions import DatabaseAccessError
 
+from ..models.category import Category
 from ..models.user import User
 
 class DbManager:
@@ -20,6 +21,18 @@ class DbManager:
     def get_user(self, email):
         try:
             return User.query.filter_by(email=email).first()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
+    def add_category(self, category):
+        try:
+            db.session.add(category)
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
+    def get_category(self, category_id):
+        try:
+            return Category.query.filter_by(id=category_id).first()
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 

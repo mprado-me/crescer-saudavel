@@ -1,12 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import abort, request
+from flask import abort, redirect, render_template, request, url_for
 from flask_login import login_required
 
 from flask_app import app
+
+from flask_app.data_providers.admin.products.categories import categories_data_provider
+
+from flask_app.forms.admin import AddCategoryForm, EditCategoryForm
+
+from flask_app.models.category import Category
+
+from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
-from flask_app.utils.exceptions import log_unrecognized_exception
+from flask_app.utils.exceptions import DatabaseAccessError, log_unrecognized_exception
 
 
 @app.route('/painel-administrativo/adicionar-produto', methods=['GET', 'POST'])
@@ -110,12 +118,13 @@ def admin_update_stock(product_id):
 @admin
 @log_route
 def admin_add_product_category():
-    form = None
+    form = AddCategoryForm()
 
     # GET
     if request.method == "GET":
         try:
-            raise NotImplementedError()
+            data = categories_data_provider.get_add_data(form=form)
+            return render_template("admin/products/add_edit_product_category.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -123,7 +132,22 @@ def admin_add_product_category():
     # POST
     else:
         try:
-            raise NotImplementedError()
+            if not form.validate_on_submit():
+                data = categories_data_provider.get_add_data(form=form)
+                return render_template("admin/products/add_edit_product_category.html", data=data)
+
+            category = Category(
+                name=form.category.data
+            )
+            db_manager.add_category(category)
+            db_manager.commit()
+
+            return redirect(url_for("admin_add_product_category",
+                                    msg_content="Categoria %s adicionada com sucesso." % form.category.data,
+                                    msg_type="success"))
+        except DatabaseAccessError:
+            db_manager.rollback()
+            abort(500)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -134,12 +158,13 @@ def admin_add_product_category():
 @admin
 @log_route
 def admin_edit_product_category(category_id):
-    form = None
+    form = EditCategoryForm()
 
     # GET
     if request.method == "GET":
         try:
-            raise NotImplementedError()
+            data = categories_data_provider.get_edit_data(form=form, category_id=category_id)
+            return render_template("admin/products/add_edit_product_category.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
