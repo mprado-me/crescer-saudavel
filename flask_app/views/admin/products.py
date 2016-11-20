@@ -103,3 +103,123 @@ def admin_update_stock(product_id):
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
+
+
+@app.route('/painel-administrativo/adicionar-categoria-de-produto', methods=['GET', 'POST'])
+@login_required
+@admin
+@log_route
+def admin_add_product_category():
+    form = None
+
+    # GET
+    if request.method == "GET":
+        try:
+            raise NotImplementedError()
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+    # POST
+    else:
+        try:
+            raise NotImplementedError()
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+
+@app.route('/painel-administrativo/editar-categoria-de-produto/<int:category_id>', methods=['GET', 'POST'])
+@login_required
+@admin
+@log_route
+def admin_edit_product_category(category_id):
+    form = None
+
+    # GET
+    if request.method == "GET":
+        try:
+            raise NotImplementedError()
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+    # POST
+    else:
+        try:
+            raise NotImplementedError()
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+
+@app.route('/painel-administrativo/categorias-de-produto/pagina/<int:page>')
+@login_required
+@admin
+@log_route
+def admin_product_categories(page):
+    try:
+        raise NotImplementedError()
+    except Exception as e:
+        log_unrecognized_exception(e)
+        abort(500)
+
+
+@app.route('/painel-administrativo/adicionar-subcategoria-de-produto', methods=['GET', 'POST'])
+@login_required
+@admin
+@log_route
+def admin_add_product_subcategory():
+    form = None
+
+    # GET
+    if request.method == "GET":
+        try:
+            raise NotImplementedError()
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+    # POST
+    else:
+        try:
+            raise NotImplementedError()
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+
+@app.route('/painel-administrativo/editar-subcategoria-de-produto/<int:subcategory_id>', methods=['GET', 'POST'])
+@login_required
+@admin
+@log_route
+def admin_edit_product_subcategory(subcategory_id):
+    form = None
+
+    # GET
+    if request.method == "GET":
+        try:
+            raise NotImplementedError()
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+    # POST
+    else:
+        try:
+            raise NotImplementedError()
+        except Exception as e:
+            log_unrecognized_exception(e)
+            abort(500)
+
+
+@app.route('/painel-administrativo/subcategorias-de-produto/pagina/<int:page>')
+@login_required
+@admin
+@log_route
+def admin_product_subcategories(page):
+    try:
+        raise NotImplementedError()
+    except Exception as e:
+        log_unrecognized_exception(e)
+        abort(500)

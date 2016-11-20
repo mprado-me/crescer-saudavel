@@ -41,19 +41,19 @@ class NavbarDataProvider:
                         },
                         {
                             "name": "Adicionar categoria",
-                            "href": "#",
+                            "href": url_for("admin_add_product_category"),
                         },
                         {
-                            "name": "Editar/Remover categorias",
-                            "href": "#",
+                            "name": "Visualizar/Editar/Remover categorias",
+                            "href": url_for("admin_product_categories", page=1),
                         },
                         {
                             "name": "Adicionar subcategoria",
-                            "href": "#",
+                            "href": url_for("admin_add_product_subcategory")
                         },
                         {
-                            "name": "Editar/Remover subcategorias",
-                            "href": "#",
+                            "name": "Visualizar/Editar/Remover subcategorias",
+                            "href": url_for("admin_product_subcategories", page=1),
                         },
                     ],
                 },
