@@ -22,7 +22,7 @@ class ImagesDataProvider:
         return self.sample_data_0(page=page)
 
     def get_images_name(self, page):
-        return os.listdir(app.config["UPLOAD_FOLDER"])
+        return os.listdir(app.config["UPLOADED_IMAGES_FOLDER"])
 
     def sample_data_0(self, page):
         data = {

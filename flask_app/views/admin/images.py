@@ -43,7 +43,7 @@ def admin_add_image():
 
             file_ = request.files['file']
             filename = secure_filename(file_.filename)
-            file_.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file_.save(os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], filename))
 
             return redirect(url_for("admin_add_image",
                                     msg_content="Imagem %s foi adicionada com sucesso." % filename,

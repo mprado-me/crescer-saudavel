@@ -19,4 +19,4 @@ LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 LOGGING_FILENAME = 'logs/log'
 LOGGING_LEVEL = logging.DEBUG
 
-UPLOAD_FOLDER = '/vagrant/flask_app/static/uploads'
+UPLOADED_IMAGES_FOLDER = '/vagrant/flask_app/static/uploads/images'
