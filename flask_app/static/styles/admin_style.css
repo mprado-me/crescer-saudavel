@@ -33,10 +33,10 @@
 }
 
 .img-table-first-col {
-    width: 170px;
+    width: 110px;
 }
 
 .img-in-table {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 100px;
+    max-height: 100px;
 }

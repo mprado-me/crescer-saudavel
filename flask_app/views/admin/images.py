@@ -71,8 +71,21 @@ def admin_images(page):
 @admin
 @log_route
 def admin_remove_image(image_name):
+    # Getting optional parameters
+    page_to_return = request.args.get('page_to_return')
+
+    # Setting default value to optional parameters
+    if not page_to_return:
+        page_to_return = 1
+
     try:
-        raise NotImplementedError()
+        path_to_file = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], image_name)
+        if os.path.exists(path_to_file):
+            os.remove(path_to_file)
+        return redirect(url_for("admin_images",
+                                page=page_to_return,
+                                msg_content="Imagem %s removida com sucesso." % image_name,
+                                msg_type="success"))
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

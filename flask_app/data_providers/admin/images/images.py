@@ -29,11 +29,14 @@ class ImagesDataProvider:
         total_n_pages = int(math.ceil(float(len(all_images_name))/app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]))
         total_n_pages = max(1, total_n_pages)
 
+        page = min(total_n_pages, page)
+
         first = (page-1)*app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]
         last_plus_one = first+app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]
 
         data = {
             "empty": empty,
+            "page": page,
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),
             "paginator_data": paginator_data_provider.get_data(
                 current_page=page,

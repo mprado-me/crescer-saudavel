@@ -31,7 +31,7 @@
             <td>{{image_name}}</td>
             <td>
               <!-- TODO: Protect this and other posts against CSRF attacks -->
-              <form action="{{url_for('admin_remove_image', image_name=image_name)}}" method=post enctype=multipart/form-data>
+              <form action="{{url_for('admin_remove_image', image_name=image_name, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
                 <input type=submit value=Remover>
               </form>
             </td>
