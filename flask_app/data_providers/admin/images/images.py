@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+
 from flask_app import app
 
 from flask_app.data_providers.admin.shared.navbar import navbar_data_provider
@@ -19,6 +21,9 @@ class ImagesDataProvider:
     def get_data(self, page):
         return self.sample_data_0(page=page)
 
+    def get_images_name(self, page):
+        return os.listdir(app.config["UPLOAD_FOLDER"])
+
     def sample_data_0(self, page):
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),
@@ -30,6 +35,7 @@ class ImagesDataProvider:
                 other_url_params={
                 }
             ),
+            "images-name": self.get_images_name(page=page)
         }
         return data
 

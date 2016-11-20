@@ -15,47 +15,49 @@
     {% include "shared/paginator.html" %}
   {% endwith %}
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="img-table-first-col"></th>
-        <th>Nome</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>
-        <td>Doe</td>
-        <td>
-          <!-- TODO: Protect this and other posts against CSRF attacks -->
-          <form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>
-            <input type=submit value=Remover>
-          </form>
-        </td>
-      </tr>
-      <tr>
-        <td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>
-        <td>Moe</td>
-        <td>
-          <!-- TODO: Protect this and other posts against CSRF attacks -->
-          <form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>
-            <input type=submit value=Remover>
-          </form>
-        </td>
-      </tr>
-      <tr>
-        <td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>
-        <td>Dooley</td>
-        <td>
-          <!-- TODO: Protect this and other posts against CSRF attacks -->
-          <form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>
-            <input type=submit value=Remover>
-          </form>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!--<table class="table">-->
+    <!--<thead>-->
+      <!--<tr>-->
+        <!--<th class="img-table-first-col"></th>-->
+        <!--<th>Nome</th>-->
+        <!--<th></th>-->
+      <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+      <!--<tr>-->
+        <!--<td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>-->
+        <!--<td>Doe</td>-->
+        <!--<td>-->
+          <!--&lt;!&ndash; TODO: Protect this and other posts against CSRF attacks &ndash;&gt;-->
+          <!--<form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>-->
+            <!--<input type=submit value=Remover>-->
+          <!--</form>-->
+        <!--</td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>-->
+        <!--<td>Moe</td>-->
+        <!--<td>-->
+          <!--&lt;!&ndash; TODO: Protect this and other posts against CSRF attacks &ndash;&gt;-->
+          <!--<form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>-->
+            <!--<input type=submit value=Remover>-->
+          <!--</form>-->
+        <!--</td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td><img class="img-in-table" src="{{url_for('static', filename='uploads/Screenshot_2016-05-11-14-31-37.png')}}"></td>-->
+        <!--<td>Dooley</td>-->
+        <!--<td>-->
+          <!--&lt;!&ndash; TODO: Protect this and other posts against CSRF attacks &ndash;&gt;-->
+          <!--<form action="{{url_for('admin_remove_image', image_name='Screenshot_2016-05-11-14-31-37.png')}}" method=post enctype=multipart/form-data>-->
+            <!--<input type=submit value=Remover>-->
+          <!--</form>-->
+        <!--</td>-->
+      <!--</tr>-->
+    <!--</tbody>-->
+  <!--</table>-->
+
+  <p>{{data["images-name"]}}</p>
 
   {% with data=data["paginator_data"] %}
     {% include "shared/paginator.html" %}
