@@ -19,7 +19,7 @@ class ImagesDataProvider:
 
     @append_request_msg
     def get_data(self, page):
-        all_images_name = self.get_images_name(page=page)
+        all_images_name = self.get_images_name()
         all_images_name.sort()
 
         empty = False
@@ -52,7 +52,7 @@ class ImagesDataProvider:
         }
         return data
 
-    def get_images_name(self, page):
+    def get_images_name(self):
         return os.listdir(app.config["UPLOADED_IMAGES_FOLDER"])
 
 
