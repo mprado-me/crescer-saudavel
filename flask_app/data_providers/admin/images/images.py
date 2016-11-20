@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, math
 
 from flask_app import app
 
@@ -19,24 +19,31 @@ class ImagesDataProvider:
 
     @append_request_msg
     def get_data(self, page):
-        return self.sample_data_0(page=page)
+        all_images_name = self.get_images_name(page=page)
+        all_images_name.sort()
 
-    def get_images_name(self, page):
-        return os.listdir(app.config["UPLOADED_IMAGES_FOLDER"])
+        total_n_pages = int(math.ceil(float(len(all_images_name))/app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]))
+        total_n_pages = max(1, total_n_pages)
 
-    def sample_data_0(self, page):
+        first = (page-1)*app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]
+        last_plus_one = first+app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]
+
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),
             "paginator_data": paginator_data_provider.get_data(
                 current_page=page,
                 n_pages=app.config["N_PAGES_IN_ADMIN_IMAGES"],
-                total_n_pages=10,
+                total_n_pages=total_n_pages,
                 url_endpoint="admin_images",
                 other_url_params={
                 }
             ),
-            "images-name": self.get_images_name(page=page)
+            "images_name": all_images_name[first:last_plus_one],
         }
         return data
+
+    def get_images_name(self, page):
+        return os.listdir(app.config["UPLOADED_IMAGES_FOLDER"])
+
 
 images_data_provider = ImagesDataProvider()
