@@ -14,7 +14,7 @@ from flask_app.models.category import Category
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
-from flask_app.utils.exceptions import DatabaseAccessError, log_unrecognized_exception
+from flask_app.utils.exceptions import DatabaseAccessError, InvalidUrlParamError, log_unrecognized_exception
 
 
 @app.route('/painel-administrativo/adicionar-produto', methods=['GET', 'POST'])
@@ -124,7 +124,7 @@ def admin_add_product_category():
     if request.method == "GET":
         try:
             data = categories_data_provider.get_add_data(form=form)
-            return render_template("admin/products/add_edit_category.html", data=data)
+            return render_template("admin/products/add_category.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -134,7 +134,7 @@ def admin_add_product_category():
         try:
             if not form.validate_on_submit():
                 data = categories_data_provider.get_add_data(form=form)
-                return render_template("admin/products/add_edit_category.html", data=data)
+                return render_template("admin/products/add_category.html", data=data)
 
             category = Category(
                 name=form.category.data
@@ -160,11 +160,18 @@ def admin_add_product_category():
 def admin_edit_product_category(category_id):
     form = EditCategoryForm()
 
+    # Getting optional parameters
+    page_to_return = request.args.get('page_to_return')
+
+    # Setting default value to optional parameters
+    if not page_to_return:
+        page_to_return = 1
+
     # GET
     if request.method == "GET":
         try:
-            data = categories_data_provider.get_edit_data(form=form, category_id=category_id)
-            return render_template("admin/products/add_edit_category.html", data=data)
+            data = categories_data_provider.get_edit_data(form=form, category_id=category_id, page_to_return=page_to_return)
+            return render_template("admin/products/edit_category.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -172,7 +179,26 @@ def admin_edit_product_category(category_id):
     # POST
     else:
         try:
-            raise NotImplementedError()
+            if not form.validate_on_submit():
+                data = categories_data_provider.get_edit_data(form=form, category_id=category_id, page_to_return=page_to_return)
+                return render_template("admin/products/edit_category.html", data=data)
+
+            category = db_manager.get_category(category_id=category_id)
+
+            if not category:
+                raise InvalidUrlParamError("Category not found")
+
+            category.name = form.category.data
+            db_manager.add_category(category)
+            db_manager.commit()
+
+            return redirect(url_for("admin_product_categories",
+                                    page=page_to_return,
+                                    msg_content="Categoria #%s editada com sucesso." % category.id,
+                                    msg_type="success"))
+        except DatabaseAccessError:
+            db_manager.rollback()
+            abort(500)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)

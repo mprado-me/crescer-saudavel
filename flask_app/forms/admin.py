@@ -15,9 +15,7 @@ from wtforms.validators import DataRequired
 
 class CategoryForm(FlaskForm):
     category = StringField(label="Nome da categoria", validators=[
-        DataRequired(message=error_msg_provider.data_required()),
-        Unique(model=Category, field=Category.name, message=error_msg_provider.category_already_registered())
-    ])
+        DataRequired(message=error_msg_provider.data_required())])
 
 
 class AddCategoryForm(CategoryForm):

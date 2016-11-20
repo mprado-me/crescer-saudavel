@@ -8,9 +8,6 @@ class ErrorMsgProvider:
     def __init__(self):
         pass
 
-    def category_already_registered(self):
-        return "Categoria já registrada"
-
     def data_required(self):
         return "Campo obrigatório"
 

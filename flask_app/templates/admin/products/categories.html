@@ -19,18 +19,20 @@
       <tbody>
         {% for category in data["categories"] %}
           <tr>
-            <td>{{category.id}}</td>
+            <td>#{{category.id}}</td>
             <td>{{category.name}}</td>
             <td>
               <ul class="table-action-ul">
                 <li>
-                  <form action="{{url_for('admin_edit_product_category', category_id=category.id, page_to_return=data['page'])}}" method=get enctype=multipart/form-data>
+                  <form action="{{url_for('admin_edit_product_category', category_id=category.id)}}" method=get enctype=multipart/form-data>
+                    <input type="text" name="page_to_return" value="{{data['page']}}" hidden>
                     <input type=submit value=Editar>
                   </form>
                 </li>
                 <li>
                   <!-- TODO: Protect this and other posts against CSRF attacks -->
-                  <form action="{{url_for('admin_remove_product_category', category_id=category.id, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
+                  <form action="{{url_for('admin_remove_product_category', category_id=category.id)}}" method=post enctype=multipart/form-data>
+                    <input type="text" name="page_to_return" value="{{data['page']}}" hidden>
                     <input type=submit value=Remover>
                   </form>
                 </li>

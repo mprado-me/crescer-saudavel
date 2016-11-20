@@ -26,11 +26,10 @@ class CategoriesDataProvider():
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "form": form,
-            "title": "Adicionar nova categoria de produto"
         }
         return data
 
-    def get_edit_data(self, form, category_id):
+    def get_edit_data(self, form, category_id, page_to_return):
         category = db_manager.get_category(category_id=category_id)
 
         if not category:
@@ -41,10 +40,12 @@ class CategoriesDataProvider():
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "form": form,
-            "title": "Editar categoria de produto"
+            "category_id": category_id,
+            "page_to_return": page_to_return,
         }
         return data
 
+    @append_request_msg
     def get_data(self, page):
         all_categories = self.get_categories_sorted()
 
