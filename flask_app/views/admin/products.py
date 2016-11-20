@@ -190,6 +190,7 @@ def admin_edit_product_category(category_id):
 
             category.name = form.category.data
             db_manager.add_category(category)
+            db_manager.commit()
 
             return redirect(url_for("admin_product_categories",
                                     page=page_to_return,
