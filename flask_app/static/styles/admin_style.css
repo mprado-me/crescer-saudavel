@@ -40,3 +40,13 @@
     max-width: 100px;
     max-height: 100px;
 }
+
+.table-action-ul {
+    list-style-type:none;
+    padding-left: 0px;
+    margin-bottom: 0px;
+}
+
+.table-action-ul > li:not(:last-child) {
+    margin-bottom: 8px;
+}

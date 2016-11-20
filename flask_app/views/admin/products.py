@@ -124,7 +124,7 @@ def admin_add_product_category():
     if request.method == "GET":
         try:
             data = categories_data_provider.get_add_data(form=form)
-            return render_template("admin/products/add_edit_product_category.html", data=data)
+            return render_template("admin/products/add_edit_category.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -134,7 +134,7 @@ def admin_add_product_category():
         try:
             if not form.validate_on_submit():
                 data = categories_data_provider.get_add_data(form=form)
-                return render_template("admin/products/add_edit_product_category.html", data=data)
+                return render_template("admin/products/add_edit_category.html", data=data)
 
             category = Category(
                 name=form.category.data
@@ -164,7 +164,7 @@ def admin_edit_product_category(category_id):
     if request.method == "GET":
         try:
             data = categories_data_provider.get_edit_data(form=form, category_id=category_id)
-            return render_template("admin/products/add_edit_product_category.html", data=data)
+            return render_template("admin/products/add_edit_category.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -178,13 +178,26 @@ def admin_edit_product_category(category_id):
             abort(500)
 
 
+@app.route('/painel-administrativo/remover-categoria-de-produto/<int:category_id>', methods=['POST'])
+@login_required
+@admin
+@log_route
+def admin_remove_product_category(category_id):
+    try:
+        raise NotImplementedError()
+    except Exception as e:
+        log_unrecognized_exception(e)
+        abort(500)
+
+
 @app.route('/painel-administrativo/categorias-de-produto/pagina/<int:page>')
 @login_required
 @admin
 @log_route
 def admin_product_categories(page):
     try:
-        raise NotImplementedError()
+        data = categories_data_provider.get_data(page=page)
+        return render_template("admin/products/categories.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

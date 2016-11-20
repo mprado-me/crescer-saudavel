@@ -3,14 +3,6 @@
 {% block title %}Imagens{% endblock %}
 
 {% block content %}
-  {% if data["msgs"] %}
-    {% for msg in data["msgs"] %}
-      {% with data=msg %}
-        {% include "shared/alert-msg.html" %}
-      {% endwith %}
-    {% endfor %}
-  {% endif %}
-
   {% with data=data["paginator_data"] %}
     {% include "shared/paginator.html" %}
   {% endwith %}

@@ -1,0 +1,50 @@
+{% extends "admin/shared/base.html" %}
+
+{% block title %}Categorias de produto{% endblock %}
+
+{% block content %}
+  {% with data=data["paginator_data"] %}
+    {% include "shared/paginator.html" %}
+  {% endwith %}
+
+  {% if not data["empty"] %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nome</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for category in data["categories"] %}
+          <tr>
+            <td>{{category.id}}</td>
+            <td>{{category.name}}</td>
+            <td>
+              <ul class="table-action-ul">
+                <li>
+                  <form action="{{url_for('admin_edit_product_category', category_id=category.id, page_to_return=data['page'])}}" method=get enctype=multipart/form-data>
+                    <input type=submit value=Editar>
+                  </form>
+                </li>
+                <li>
+                  <!-- TODO: Protect this and other posts against CSRF attacks -->
+                  <form action="{{url_for('admin_remove_product_category', category_id=category.id, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
+                    <input type=submit value=Remover>
+                  </form>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Nenhuma imagem encontrada.</p>
+  {% endif %}
+
+  {% with data=data["paginator_data"] %}
+    {% include "shared/paginator.html" %}
+  {% endwith %}
+{% endblock %}
