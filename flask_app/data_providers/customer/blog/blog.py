@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_app import app
+from flask import url_for
 
+from flask_app import app
 from flask_app.data_providers.customer.shared.footer import footer_data_provider
 from flask_app.data_providers.customer.shared.header import header_data_provider
-from flask_app.data_providers.customer.shared.paginator import paginator_data_provider
-
-from flask import url_for
+from flask_app.data_providers.shared.paginator import paginator_data_provider
 
 
 class BlogDataProvider:

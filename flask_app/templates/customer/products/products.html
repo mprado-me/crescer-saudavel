@@ -27,7 +27,7 @@
                   </div>
                 {% endif %}
                 {% with data=data["paginator_data"] %}
-                  {% include "customer/shared/paginator.html" %}
+                  {% include "shared/paginator.html" %}
                 {% endwith %}
               </div>
             </div>
@@ -68,7 +68,7 @@
             <div class="toolbar">
               <div class="pager">
                 {% with data=data["paginator_data"] %}
-                {% include "customer/shared/paginator.html" %}
+                {% include "shared/paginator.html" %}
                 {% endwith %}
               </div>
             </div>

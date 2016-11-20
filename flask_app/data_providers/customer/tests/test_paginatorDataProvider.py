@@ -3,7 +3,7 @@
 
 from unittest import TestCase
 
-from flask_app.data_providers.customer.shared.paginator import paginator_data_provider
+from flask_app.data_providers.shared.paginator import paginator_data_provider
 
 
 class TestPaginatorDataProvider(TestCase):

@@ -11,6 +11,7 @@ MAIL_USE_TLS = False
 MAIL_USE_SSL = True
 N_PAGES_IN_PRODUCTS_PAGINATOR = 4
 N_PAGES_IN_BLOG_PAGINATOR = 3
+N_PAGES_IN_ADMIN_IMAGES = 5
 
 LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 LOGGING_FILENAME = 'logs/log'
