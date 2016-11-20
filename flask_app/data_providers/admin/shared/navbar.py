@@ -39,6 +39,22 @@ class NavbarDataProvider:
                             "name": "Visualizar/Editar/Remover produtos",
                             "href": url_for("admin_products", page=1),
                         },
+                        {
+                            "name": "Adicionar categoria",
+                            "href": "#",
+                        },
+                        {
+                            "name": "Editar/Remover categorias",
+                            "href": "#",
+                        },
+                        {
+                            "name": "Adicionar subcategoria",
+                            "href": "#",
+                        },
+                        {
+                            "name": "Editar/Remover subcategorias",
+                            "href": "#",
+                        },
                     ],
                 },
                 {
