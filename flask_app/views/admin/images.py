@@ -10,7 +10,6 @@ from werkzeug.utils import secure_filename
 from flask_app import app
 
 from flask_app.data_providers.admin.images.images import images_data_provider
-from flask_app.data_providers.admin.images.add_image import add_image_data_provider
 
 from flask_app.forms.admin import UploadImageForm
 
@@ -28,7 +27,7 @@ def admin_add_image():
     # GET
     if request.method == "GET":
         try:
-            data = add_image_data_provider.get_data(form=form)
+            data = images_data_provider.get_add_data(form=form)
             return render_template("admin/images/add-image.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -38,7 +37,7 @@ def admin_add_image():
     else:
         try:
             if not form.validate_on_submit():
-                data = add_image_data_provider.get_data(form=form)
+                data = images_data_provider.get_add_data(form=form)
                 return render_template("admin/images/add-image.html", data=data)
 
             file_ = request.files['file']
@@ -84,7 +83,7 @@ def admin_remove_image(image_name):
             os.remove(path_to_file)
         return redirect(url_for("admin_images",
                                 page=page_to_return,
-                                msg_content="Imagem %s removida com sucesso." % image_name,
+                                msg_content="Imagem %s foi removida com sucesso." % image_name,
                                 msg_type="success"))
     except Exception as e:
         log_unrecognized_exception(e)

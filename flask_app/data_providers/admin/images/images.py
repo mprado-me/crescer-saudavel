@@ -18,6 +18,14 @@ class ImagesDataProvider:
         pass
 
     @append_request_msg
+    def get_add_data(self, form):
+        data = {
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),
+            "form": form,
+        }
+        return data
+
+    @append_request_msg
     def get_data(self, page):
         all_images_name = self.get_images_name()
         all_images_name.sort()
