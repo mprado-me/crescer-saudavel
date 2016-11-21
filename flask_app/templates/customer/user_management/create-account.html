@@ -14,11 +14,8 @@
       <form action="{{url_for('create_account')}}" method="post">
         {{ data["form"].csrf_token }}
         <div class="registered-users">
-          {% if data["msg"] %}
-          {% with data=data["msg"] %}
-          {% include "shared/alert-msg.html" %}
-          {% endwith %}
-          {% endif %}
+          {% include "shared/flash_messages.html" %}
+
           <strong>Novo cliente</strong>
           <div class="content">
             <ul class="form-list">

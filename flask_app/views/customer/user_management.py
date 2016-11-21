@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import abort, redirect, render_template, request, url_for
+from flask import abort, flash, redirect, render_template, request, url_for
 from flask_app.data_providers.customer.user_management.create_account import create_account_data_provider
 from flask_app.data_providers.customer.user_management.login import login_data_provider
 from flask_app.data_providers.customer.user_management.recover_password import recover_password_data_provider
@@ -63,10 +63,12 @@ def create_account():
             return redirect(url_for("sent_confirmation_email", email=request.form["email"]))
         except DatabaseAccessError:
             db_manager.rollback()
-            data = create_account_data_provider.get_data_when_database_access_error(form=form)
+            flash(DatabaseAccessError.msg, "danger")
+            data = create_account_data_provider.get_data(form=form)
             return render_template('customer/user_management/create-account.html', data=data)
         except EmailSendingError:
-            data = create_account_data_provider.get_data_when_email_sending_error(form=form)
+            flash(EmailSendingError.msg, "danger")
+            data = create_account_data_provider.get_data(form=form)
             return render_template('customer/user_management/create-account.html', data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -84,14 +86,16 @@ def email_confirmed(token):
         user.email_confirmed = True
         db_manager.add_user(user)
         db_manager.commit()
-        return redirect(url_for('login', msg_content="Email confirmado com sucesso.", msg_type="success"))
+        flash("Email confirmado com sucesso.", "success")
+        return redirect(url_for('login'))
     except BadSignature:
         log_exception(name="BadSignature")
         abort(404)
     except DatabaseAccessError:
         db_manager.rollback()
-        href = url_for('email_confirmed', token=token)
-        data = failed_to_get_data_provider.get_data_when_database_access_error(href=href)
+        current_url = url_for('email_confirmed', token=token)
+        flash(DatabaseAccessError.msg, "danger")
+        data = failed_to_get_data_provider.get_data(current_url=current_url)
         return render_template('customer/shared/failed-to-get.html', data=data)
     except Exception as e:
             log_unrecognized_exception(e)
@@ -122,10 +126,12 @@ def recover_password():
             email_manager.send_redefine_password_email(form.email.data)
             return redirect(url_for("sent_recover_password_email", email=form.email.data))
         except DatabaseAccessError:
-            data = recover_password_data_provider.get_data_when_database_access_error(form=form)
+            flash(DatabaseAccessError.msg, "danger")
+            data = recover_password_data_provider.get_data(form=form)
             return render_template('customer/user_management/recover-password.html', data=data)
         except EmailSendingError:
-            data = recover_password_data_provider.get_data_when_email_sending_error(form=form)
+            flash(EmailSendingError.msg, "danger")
+            data = recover_password_data_provider.get_data(form=form)
             return render_template('customer/user_management/recover-password.html', data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -172,13 +178,15 @@ def login():
             return redirect(url_for('my_account'))
         except DatabaseAccessError:
             db_manager.rollback()
-            data = login_data_provider.get_data_when_database_access_error(form=form)
+            flash(DatabaseAccessError.msg, "danger")
+            data = login_data_provider.get_data(form=form)
             return render_template('customer/user_management/login.html', data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
 
 
+# TODO: Add a time constraint to the token
 @app.route('/redefinir-senha/<token>', methods=["GET", "POST"])
 @log_route
 def redefine_password(token):
@@ -212,13 +220,15 @@ def redefine_password(token):
             db_manager.add_user(user)
             db_manager.commit()
 
-            return redirect(url_for('login', msg_type="success", msg_content="Senha redefinida com sucesso."))
+            flash("Senha redefinida com sucesso.", "success")
+            return redirect(url_for('login'))
         except BadSignature:
             log_exception(name="BadSignature")
             abort(404)
         except DatabaseAccessError:
             db_manager.rollback()
-            data = redefine_password_data_provider.get_data_when_database_access_error(form=form, email=email, token=token)
+            flash(DatabaseAccessError.msg, "danger")
+            data = redefine_password_data_provider.get_data(form=form, email=email, token=token)
             return render_template('customer/user_management/redefine-password.html', data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -250,10 +260,12 @@ def resend_confirmation_email():
             email_manager.send_create_account_confirmation_email(form.email.data)
             return redirect(url_for("sent_confirmation_email", email=form.email.data))
         except DatabaseAccessError:
-            data = resend_confirmation_email_data_provider.get_data_when_database_access_error(form=form)
+            flash(DatabaseAccessError.msg, "danger")
+            data = resend_confirmation_email_data_provider.get_data(form=form)
             return render_template('customer/user_management/resend-confirmation-email.html', data=data)
         except EmailSendingError:
-            data = resend_confirmation_email_data_provider.get_data_when_email_sending_error(form=form)
+            flash(EmailSendingError.msg, "danger")
+            data = resend_confirmation_email_data_provider.get_data(form=form)
             return render_template('customer/user_management/resend-confirmation-email.html', data=data)
         except Exception as e:
             log_unrecognized_exception(e)

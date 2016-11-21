@@ -13,7 +13,6 @@ from flask_app.data_providers.shared.paginator import paginator_data_provider
 from flask_app.models.category import Category
 
 from flask_app.utils.db_manager import db_manager
-from flask_app.utils.decorators import append_request_msg
 from flask_app.utils.exceptions import InvalidParamError
 
 
@@ -21,7 +20,6 @@ class CategoriesDataProvider():
     def __init__(self):
         pass
 
-    @append_request_msg
     def get_add_data(self, form):
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
@@ -45,7 +43,6 @@ class CategoriesDataProvider():
         }
         return data
 
-    @append_request_msg
     def get_data(self, page, remove_form):
         all_categories = self.get_categories_sorted()
 

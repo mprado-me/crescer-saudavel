@@ -17,16 +17,6 @@ class CreateAccountDataProvider:
     def get_data(self, form):
         return self.sample_data_0(form)
 
-    def get_data_when_database_access_error(self, form):
-        data = self.get_data(form=form)
-        data["msg"] = DatabaseAccessError.msg
-        return data
-
-    def get_data_when_email_sending_error(self, form):
-        data = self.get_data(form=form)
-        data["msg"] = EmailSendingError.msg
-        return data
-
     def get_page_heading_data(self):
         return {
             "path": [

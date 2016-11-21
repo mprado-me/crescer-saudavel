@@ -16,12 +16,6 @@ class RedefinePasswordDataProvider:
     def get_data(self, form, email, token):
         return self.sample_data_0(form=form, email=email, token=token)
 
-    def get_data_when_database_access_error(self, form, email, token):
-        data = self.get_data(form=form, email=email, token=token)
-        msgs = [DatabaseAccessError.msg]
-        data["msgs"] = msgs
-        return data
-
     def get_page_heading_data(self):
         return {
             "path": [

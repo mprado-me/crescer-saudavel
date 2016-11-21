@@ -10,14 +10,11 @@ from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabName
 
 from flask_app.data_providers.shared.paginator import paginator_data_provider
 
-from flask_app.utils.decorators import append_request_msg
-
 
 class ImagesDataProvider:
     def __init__(self):
         pass
 
-    @append_request_msg
     def get_add_data(self, form):
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),
@@ -25,7 +22,6 @@ class ImagesDataProvider:
         }
         return data
 
-    @append_request_msg
     def get_data(self, page, remove_form):
         all_images_name = self.get_images_name()
         all_images_name.sort()

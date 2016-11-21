@@ -17,16 +17,6 @@ class RecoverPasswordDataProvider:
     def get_data(self, form):
         return self.sample_data_0(form=form)
 
-    def get_data_when_database_access_error(self, form):
-        data = self.get_data(form=form)
-        data["msgs"] = [DatabaseAccessError.msg]
-        return data
-
-    def get_data_when_email_sending_error(self, form):
-        data = self.get_data(form=form)
-        data["msgs"] = [EmailSendingError.msg]
-        return data
-
     def get_page_heading_data(self):
         return {
             "path": [

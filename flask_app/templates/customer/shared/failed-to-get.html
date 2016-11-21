@@ -7,9 +7,8 @@
 {% endwith %}
 <div class="main-container">
   <div class="main container fail-container">
-    {% with data=data["msg"] %}
-    {% include "shared/alert-msg.html" %}
-    {% endwith %}
+    {% include "shared/flash_messages.html" %}
+    
     {% if data["button"] %}
     <a href="{{data['button']['href']}}">
       <button type="button" title="{{data['button']['title']}}" class="button"><span>{{data['button']['title']}}</span>

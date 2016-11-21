@@ -5,10 +5,7 @@ from .. import app
 
 
 class DatabaseAccessError(Exception):
-    msg = {
-        "type": "danger",
-        "content": "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente.",
-    }
+    msg = "Falha! Ocorreu um erro ao acessar o banco de dados. Tente novamente."
 
     def __init__(self, message="", exception=None):
         super(DatabaseAccessError, self).__init__(message)
@@ -16,10 +13,7 @@ class DatabaseAccessError(Exception):
 
 
 class EmailSendingError(Exception):
-    msg = {
-        "type": "danger",
-        "content": "Falha! Ocorreu um erro ao enviar o email. Tente novamente.",
-    }
+    msg = "Falha! Ocorreu um erro ao enviar o email. Tente novamente."
 
     def __init__(self, message="", exception=None):
         super(EmailSendingError, self).__init__(message)

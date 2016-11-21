@@ -9,33 +9,20 @@ class FailedToGetDataProvider:
     def __init__(self):
         pass
 
-    def get_data(self, msg, button):
-        return self.sample_data_0(msg=msg, button=button)
-
-    def get_data_when_database_access_error(self, href):
-        msg = {
-            "type": "danger",
-            "content": "Falha! Ocorreu um erro ao acessar o banco de dados.",
+    def get_data(self, current_url):
+        return {
+            "header_data": header_data_provider.get_data(),
+            "page_heading_data": self.get_page_heading_data(),
+            "button": {
+                "title": "Tentar novamente",
+                "href": current_url,
+            },
+            "footer_data": footer_data_provider.get_data(),
         }
-        button = {
-            "title": "Tentar novamente",
-            "href": href,
-        }
-        return self.get_data(msg=msg, button=button)
 
     def get_page_heading_data(self):
         return {
             "title": "Falha",
         }
-
-    def sample_data_0(self, msg, button):
-        data = {
-            "header_data": header_data_provider.get_data(),
-            "page_heading_data": self.get_page_heading_data(),
-            "msg": msg,
-            "button": button,
-            "footer_data": footer_data_provider.get_data(),
-        }
-        return data
 
 failed_to_get_data_provider = FailedToGetDataProvider()
