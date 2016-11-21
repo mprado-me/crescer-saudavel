@@ -3,6 +3,9 @@
 {% block title %}Adicionar nova categoria de produto{% endblock %}
 
 {% block content %}
+  <a href="{{url_for('admin_product_categories', page=1)}}">Ver categorias</a>
+  <div class="br-8px"></div>
+
   <form class="form" action="{{url_for('admin_add_product_category')}}" method=post enctype=multipart/form-data>
     {{ data["form"].csrf_token }}
     {% with form = data["form"] %}

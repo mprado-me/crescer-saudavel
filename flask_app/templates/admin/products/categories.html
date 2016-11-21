@@ -3,6 +3,9 @@
 {% block title %}Categorias de produto{% endblock %}
 
 {% block content %}
+  <a href="{{url_for('admin_add_product_category')}}">Adicionar nova categoria</a>
+  <div class="br-8px"></div>
+
   {% with data=data["paginator_data"] %}
     {% include "shared/paginator.html" %}
   {% endwith %}

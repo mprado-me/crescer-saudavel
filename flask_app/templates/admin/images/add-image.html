@@ -1,8 +1,11 @@
 {% extends "admin/shared/base.html" %}
 
-{% block title %}Adicionar imagem{% endblock %}
+{% block title %}Adicionar nova imagem{% endblock %}
 
 {% block content %}
+  <a href="{{url_for('admin_images', page=1)}}">Ver imagens</a>
+  <div class="br-8px"></div>
+
   <form class="form" action="" method=post enctype=multipart/form-data>
     {{ data["form"].csrf_token }}
     {% with form = data["form"] %}

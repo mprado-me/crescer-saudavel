@@ -32,7 +32,7 @@ class NavbarDataProvider:
                     "name": NavbarTabNamesProvider.products,
                     "submenu_items": [
                         {
-                            "name": "Adicionar produto",
+                            "name": "Adicionar novo produto",
                             "href": url_for("admin_add_product"),
                         },
                         {
@@ -40,7 +40,7 @@ class NavbarDataProvider:
                             "href": url_for("admin_products", page=1),
                         },
                         {
-                            "name": "Adicionar categoria",
+                            "name": "Adicionar nova categoria",
                             "href": url_for("admin_add_product_category"),
                         },
                         {
@@ -48,7 +48,7 @@ class NavbarDataProvider:
                             "href": url_for("admin_product_categories", page=1),
                         },
                         {
-                            "name": "Adicionar subcategoria",
+                            "name": "Adicionar nova subcategoria",
                             "href": url_for("admin_add_product_subcategory")
                         },
                         {
@@ -78,7 +78,7 @@ class NavbarDataProvider:
                     "name": NavbarTabNamesProvider.blog,
                     "submenu_items": [
                         {
-                            "name": "Adicionar post",
+                            "name": "Adicionar novo post",
                             "href": url_for("admin_add_blog_post"),
                         },
                         {
@@ -104,7 +104,7 @@ class NavbarDataProvider:
                     "name": NavbarTabNamesProvider.images,
                     "submenu_items": [
                         {
-                            "name": "Adicionar imagem",
+                            "name": "Adicionar nova imagem",
                             "href": url_for("admin_add_image"),
                         },
                         {
@@ -138,7 +138,7 @@ class NavbarDataProvider:
                     "name": NavbarTabNamesProvider.attended_cities,
                     "submenu_items": [
                         {
-                            "name": "Adicionar cidade",
+                            "name": "Adicionar nova cidade",
                             "href": url_for("admin_add_attended_city"),
                         },
                         {
