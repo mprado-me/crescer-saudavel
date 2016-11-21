@@ -3,9 +3,7 @@
 
 from flask_app.forms.error_msg_provider import error_msg_provider
 
-from flask_app.models.category import Category
-
-from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Unique
+from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Length
 
 from flask_wtf import FlaskForm
 
@@ -15,7 +13,8 @@ from wtforms.validators import DataRequired
 
 class CategoryForm(FlaskForm):
     category = StringField(label="Nome da categoria", validators=[
-        DataRequired(message=error_msg_provider.data_required())])
+        DataRequired(message=error_msg_provider.data_required()),
+        Length(max_length=64, message=error_msg_provider.category_too_long())])
 
 
 class AddCategoryForm(CategoryForm):
