@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import abort, redirect, render_template, request, url_for
+from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import login_required
 
 from flask_app import app
@@ -142,9 +142,8 @@ def admin_add_product_category():
             db_manager.add_category(category)
             db_manager.commit()
 
-            return redirect(url_for("admin_add_product_category",
-                                    msg_content="Categoria %s foi adicionada com sucesso." % form.category.data,
-                                    msg_type="success"))
+            flash("Categoria %s foi adicionada com sucesso." % form.category.data, "success")
+            return redirect(url_for("admin_add_product_category"))
         except DatabaseAccessError:
             db_manager.rollback()
             abort(500)
@@ -192,10 +191,8 @@ def admin_edit_product_category(category_id):
             db_manager.add_category(category)
             db_manager.commit()
 
-            return redirect(url_for("admin_product_categories",
-                                    page=page_to_return,
-                                    msg_content="Categoria #%s foi editada com sucesso." % category.id,
-                                    msg_type="success"))
+            flash("Categoria #%s foi editada com sucesso." % category.id, "success")
+            return redirect(url_for("admin_product_categories", page=page_to_return))
         except DatabaseAccessError:
             db_manager.rollback()
             abort(500)
@@ -219,10 +216,8 @@ def admin_remove_product_category(category_id):
         page_to_return = 1
 
     if not remove_form.validate_on_submit():
-        return redirect(url_for("admin_product_categories",
-                                page=page_to_return,
-                                msg_content="Não foi possível remover a categoria #%s. Tente novamente." % category_id,
-                                msg_type="warning"))
+        flash("Não foi possível remover a categoria #%s. Tente novamente." % category_id, "warning")
+        return redirect(url_for("admin_product_categories", page=page_to_return))
 
     try:
         category = db_manager.get_category(category_id=category_id)
@@ -233,10 +228,8 @@ def admin_remove_product_category(category_id):
         db_manager.delete_category(category)
         db_manager.commit()
 
-        return redirect(url_for("admin_product_categories",
-                                page=page_to_return,
-                                msg_content="Categoria #%s (%s) foi removida com sucesso." % (category.id, category.name),
-                                msg_type="success"))
+        flash("Categoria #%s (%s) foi removida com sucesso." % (category.id, category.name), "success")
+        return redirect(url_for("admin_product_categories", page=page_to_return))
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

@@ -3,7 +3,7 @@
 
 import os
 
-from flask import abort, redirect, render_template, request, url_for
+from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 
@@ -44,9 +44,8 @@ def admin_add_image():
             filename = secure_filename(file_.filename)
             file_.save(os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], filename))
 
-            return redirect(url_for("admin_add_image",
-                                    msg_content="Imagem %s foi adicionada com sucesso." % filename,
-                                    msg_type="success"))
+            flash("Imagem %s foi adicionada com sucesso." % filename, "success")
+            return redirect(url_for("admin_add_image"))
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -82,19 +81,16 @@ def admin_remove_image(image_name):
         page_to_return = 1
 
     if not remove_form.validate_on_submit():
-        return redirect(url_for("admin_images",
-                                page=page_to_return,
-                                msg_content="Não foi possível remover a imagem %s. Tente novamente." % image_name,
-                                msg_type="warning"))
+        flash("Não foi possível remover a imagem %s. Tente novamente." % image_name, "warning")
+        return redirect(url_for("admin_images", page=page_to_return))
 
     try:
         path_to_file = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], image_name)
         if os.path.exists(path_to_file):
             os.remove(path_to_file)
-        return redirect(url_for("admin_images",
-                                page=page_to_return,
-                                msg_content="Imagem %s foi removida com sucesso." % image_name,
-                                msg_type="success"))
+
+        flash("Imagem %s foi removida com sucesso." % image_name, "success")
+        return redirect(url_for("admin_images", page=page_to_return))
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
