@@ -21,15 +21,7 @@
       <h3>{{self.title()}}</h3>
     </div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          {% with category=category, message=message %}
-            {% include "shared/alert-msg.html" %}
-          {% endwith %}
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
+    {% include "shared/flash_messages.html" %}
 
     {% block content %}
     {% endblock %}
