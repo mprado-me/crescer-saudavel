@@ -31,11 +31,12 @@ class SimpleSubmitForm(FlaskForm):
 
 class UploadImageForm(FlaskForm):
     allowed_extensions = ["png", "jpg", "jpeg"]
-    image = FileField('Image', validators=[
-        HasFilePart(input_file_name="file", message=error_msg_provider.none_file_selected_msg(), stop=True),
+    image = FileField(label='Imagem', validators=[
+        HasFilePart(input_file_name="image", message=error_msg_provider.none_file_selected_msg(), stop=True),
         AllowedFileFormat(
-            input_file_name="file",
+            input_file_name="image",
             allowed_extensions=allowed_extensions,
             message=error_msg_provider.invalid_file_format_msg(allowed_extensions=allowed_extensions)
         )]
     )
+    upload = SubmitField(label="Upload")

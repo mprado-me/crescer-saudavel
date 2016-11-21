@@ -3,6 +3,8 @@
         { field }} {{ field.label }}<br>
     {% elif field.type == "StringField" %}
         {{ field.label }}:  {{ field }}<br>
+    {% elif field.type == "FileField" %}
+        {{ field }}
     {% elif field.type == "SubmitField" %}
         {{ field }}
     {% endif %}

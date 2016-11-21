@@ -40,9 +40,9 @@ def admin_add_image():
                 data = images_data_provider.get_add_data(form=form)
                 return render_template("admin/images/add-image.html", data=data)
 
-            file_ = request.files['file']
-            filename = secure_filename(file_.filename)
-            file_.save(os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], filename))
+            image = request.files[form.image.name]
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], filename))
 
             flash("Imagem %s foi adicionada com sucesso." % filename, "success")
             return redirect(url_for("admin_add_image"))
