@@ -26,7 +26,7 @@ class ImagesDataProvider:
         return data
 
     @append_request_msg
-    def get_data(self, page):
+    def get_data(self, page, remove_form):
         all_images_name = self.get_images_name()
         all_images_name.sort()
 
@@ -45,6 +45,7 @@ class ImagesDataProvider:
         last_plus_one = first+app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]
 
         data = {
+            "remove_form": remove_form,
             "empty": empty,
             "page": page,
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),

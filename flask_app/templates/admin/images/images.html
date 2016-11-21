@@ -22,8 +22,8 @@
             <td><img class="img-in-table" src="{{url_for('static', filename='uploads/images/'+image_name)}}"></td>
             <td>{{image_name}}</td>
             <td>
-              <!-- TODO: Protect this and other posts against CSRF attacks -->
               <form class="remove-form" action="{{url_for('admin_remove_image', image_name=image_name, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
+                {{ data["remove_form"].csrf_token }}
                 <input type=submit value=Remover>
               </form>
             </td>
@@ -32,7 +32,7 @@
       </tbody>
     </table>
   {% else %}
-    <p>Nenhuma imagem encontrada.</p>
+    <p>Nenhuma imagem foi encontrada.</p>
   {% endif %}
 
   {% with data=data["paginator_data"] %}

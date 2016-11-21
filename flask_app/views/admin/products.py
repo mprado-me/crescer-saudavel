@@ -8,7 +8,7 @@ from flask_app import app
 
 from flask_app.data_providers.admin.products.categories import categories_data_provider
 
-from flask_app.forms.admin import AddCategoryForm, EditCategoryForm
+from flask_app.forms.admin import AddCategoryForm, EditCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
 
@@ -209,12 +209,20 @@ def admin_edit_product_category(category_id):
 @admin
 @log_route
 def admin_remove_product_category(category_id):
+    remove_form = SimpleSubmitForm()
+
     # Getting optional parameters
     page_to_return = request.args.get('page_to_return')
 
     # Setting default value to optional parameters
     if not page_to_return:
         page_to_return = 1
+
+    if not remove_form.validate_on_submit():
+        return redirect(url_for("admin_product_categories",
+                                page=page_to_return,
+                                msg_content="Não foi possível remover a categoria #%s. Tente novamente." % category_id,
+                                msg_type="warning"))
 
     try:
         category = db_manager.get_category(category_id=category_id)
@@ -239,8 +247,10 @@ def admin_remove_product_category(category_id):
 @admin
 @log_route
 def admin_product_categories(page):
+    remove_form = SimpleSubmitForm()
+
     try:
-        data = categories_data_provider.get_data(page=page)
+        data = categories_data_provider.get_data(page=page, remove_form=remove_form)
         return render_template("admin/products/categories.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)

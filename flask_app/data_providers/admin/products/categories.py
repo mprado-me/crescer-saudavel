@@ -46,7 +46,7 @@ class CategoriesDataProvider():
         return data
 
     @append_request_msg
-    def get_data(self, page):
+    def get_data(self, page, remove_form):
         all_categories = self.get_categories_sorted()
 
         empty = False
@@ -64,6 +64,7 @@ class CategoriesDataProvider():
         last_plus_one = first + app.config["DEFAULT_N_ITEMS_BY_PAGE"]
 
         data = {
+            "remove_form": remove_form,
             "empty": empty,
             "page": page,
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),

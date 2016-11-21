@@ -26,6 +26,10 @@ class EditCategoryForm(CategoryForm):
     edit = SubmitField(label="Editar")
 
 
+class SimpleSubmitForm(FlaskForm):
+    submit = SubmitField()
+
+
 class UploadImageForm(FlaskForm):
     allowed_extensions = ["png", "jpg", "jpeg"]
     image = FileField('Image', validators=[
