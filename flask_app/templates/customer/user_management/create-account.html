@@ -14,7 +14,7 @@
       <form action="{{url_for('create_account')}}" method="post">
         {{ data["form"].csrf_token }}
         <div class="registered-users">
-          {% include "shared/flash_messages.html" %}
+          {% include "shared/flash-messages.html" %}
 
           <strong>Novo cliente</strong>
           <div class="content">

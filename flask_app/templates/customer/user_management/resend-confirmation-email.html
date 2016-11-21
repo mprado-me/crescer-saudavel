@@ -14,9 +14,7 @@
       <form action="{{url_for('resend_confirmation_email')}}" method="post">
         {{ data["form"].csrf_token }}
         <div class="registered-users">
-          <div class="login-alerts-container">
-            {% include "shared/flash_messages.html" %}
-          </div>
+          {% include "shared/flash-messages.html" %}
           <strong>Reenviar email de confirmação</strong>
           <div class="content">
             <ul class="form-list">
