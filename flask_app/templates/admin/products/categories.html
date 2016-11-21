@@ -31,7 +31,7 @@
                 </li>
                 <li>
                   <!-- TODO: Protect this and other posts against CSRF attacks -->
-                  <form action="{{url_for('admin_remove_product_category', category_id=category.id, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
+                  <form class="remove-form" action="{{url_for('admin_remove_product_category', category_id=category.id, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
                     <input type=submit value=Remover>
                   </form>
                 </li>
@@ -48,4 +48,13 @@
   {% with data=data["paginator_data"] %}
     {% include "shared/paginator.html" %}
   {% endwith %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(".remove-form").submit(function() {
+      var c = confirm("Tem certeza que deseja remover a categoria? Ficará difícil para o usuário encontrar os produtos que pertencem a esta categoria.");
+      return c;
+  });
+</script>
 {% endblock %}
