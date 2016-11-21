@@ -24,10 +24,7 @@
             <td>
               <ul class="table-action-ul">
                 <li>
-                  <form action="{{url_for('admin_edit_product_category', category_id=category.id)}}" method=get enctype=multipart/form-data>
-                    <input type="text" name="page_to_return" value="{{data['page']}}" hidden>
-                    <input type=submit value=Editar>
-                  </form>
+                  <a href="{{url_for('admin_edit_product_category', category_id=category.id, page_to_return=data['page'])}}">Editar</a>
                 </li>
                 <li>
                   <!-- TODO: Protect this and other posts against CSRF attacks -->
