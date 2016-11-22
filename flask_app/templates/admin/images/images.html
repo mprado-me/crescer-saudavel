@@ -6,11 +6,11 @@
   <a href="{{url_for('admin_add_image')}}">Adicionar nova imagem</a>
   <div class="br-8px"></div>
 
-  {% with data=data["paginator_data"] %}
-    {% include "shared/paginator.html" %}
-  {% endwith %}
-
   {% if not data["empty"] %}
+    {% with data=data["paginator_data"] %}
+      {% include "shared/paginator.html" %}
+    {% endwith %}
+
     <table class="table">
       <thead>
         <tr>
@@ -34,13 +34,14 @@
         {% endfor %}
       </tbody>
     </table>
+
+    {% with data=data["paginator_data"] %}
+      {% include "shared/paginator.html" %}
+    {% endwith %}
   {% else %}
     <p>Nenhuma imagem foi encontrada.</p>
   {% endif %}
 
-  {% with data=data["paginator_data"] %}
-    {% include "shared/paginator.html" %}
-  {% endwith %}
 {% endblock %}
 
 {% block scripts %}
