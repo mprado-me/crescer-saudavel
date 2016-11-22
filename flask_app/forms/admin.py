@@ -3,6 +3,8 @@
 
 from flask_app.forms.error_msg_provider import error_msg_provider
 
+from flask_app.models.category import Category
+
 from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Length
 
 from flask_wtf import FlaskForm
@@ -33,8 +35,8 @@ class SubcategoryForm(FlaskForm):
         Length(max_length=64, message=error_msg_provider.subcategory_too_long())])
 
     def add_category_choices(self):
-        # TODO: Get categories from db
-        self.category.choices = [(1, "Categoria 1"), (2, "Categoria 2"), (3, "Categoria 3")]
+        categories = Category.query.order_by(Category.name).all()
+        self.category.choices = [(category.id, category.name) for category in categories]
 
 
 class AddSubcategoryForm(SubcategoryForm):
