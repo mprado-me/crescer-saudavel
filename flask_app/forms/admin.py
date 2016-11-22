@@ -5,7 +5,7 @@ from flask_app.forms.error_msg_provider import error_msg_provider
 
 from flask_app.models.category import Category
 
-from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Length
+from flask_app.utils.form_field_validators import AllowedFileFormat, Contains, HasFilePart, Length
 
 from flask_wtf import FlaskForm
 
@@ -16,7 +16,8 @@ from wtforms.validators import DataRequired
 class CategoryForm(FlaskForm):
     category = StringField(label="Nome da categoria", validators=[
         DataRequired(message=error_msg_provider.data_required()),
-        Length(max_length=64, message=error_msg_provider.category_too_long())])
+        Length(max_length=64, message=error_msg_provider.category_too_long())
+    ])
 
 
 class AddCategoryForm(CategoryForm):
@@ -32,7 +33,8 @@ class SubcategoryForm(FlaskForm):
     category = SelectField(label="Categoria", coerce=int)
     subcategory = StringField(label="Nome da subcategoria", validators=[
         DataRequired(message=error_msg_provider.data_required()),
-        Length(max_length=64, message=error_msg_provider.subcategory_too_long())])
+        Length(max_length=64, message=error_msg_provider.subcategory_too_long())
+    ])
 
     def add_category_choices(self):
         categories = Category.query.order_by(Category.name).all()
@@ -59,6 +61,6 @@ class UploadImageForm(FlaskForm):
             input_file_name="image",
             allowed_extensions=allowed_extensions,
             message=error_msg_provider.invalid_file_format_msg(allowed_extensions=allowed_extensions)
-        )]
-    )
+        )
+    ])
     upload = SubmitField(label="Upload")

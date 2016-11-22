@@ -34,6 +34,28 @@ class AllowedFileFormat(object):
                 raise ValidationError(self.message)
 
 
+class Contains(object):
+    def __init__(self, model, field, message=u'Elemento não encontrado', stop=False):
+        self.model = model
+        self.field = field
+        self.message = message
+        self.stop = stop
+
+    def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
+        try:
+            check = self.model.query.filter(self.field == field.data).first()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+        if not check:
+            if self.stop:
+                raise StopValidation(self.message)
+            else:
+                raise ValidationError(self.message)
+
+
 class CorrectPassword(object):
     def __init__(self, message=u'Senha incorreta', stop=False):
         self.message = message
@@ -136,28 +158,6 @@ class Length(object):
                 raise StopValidation(message % dict(min=self.min, max=self.max, length=l))
             else:
                 raise ValidationError(message % dict(min=self.min, max=self.max, length=l))
-
-
-class NotUnique(object):
-    def __init__(self, model, field, message=u'Elemento é único', stop=False):
-        self.model = model
-        self.field = field
-        self.message = message
-        self.stop = stop
-
-    def __call__(self, form, field):
-        if callable(self.message):
-            self.message = self.message()
-
-        try:
-            check = self.model.query.filter(self.field == field.data).first()
-        except Exception as e:
-            raise DatabaseAccessError(exception=e)
-        if not check:
-            if self.stop:
-                raise StopValidation(self.message)
-            else:
-                raise ValidationError(self.message)
 
 
 class Unique(object):

@@ -12,6 +12,7 @@ from flask_app.data_providers.admin.products.subcategories import subcategories_
 from flask_app.forms.admin import AddCategoryForm, AddSubcategoryForm, EditCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
+from flask_app.models.subcategory import Subcategory
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
@@ -231,6 +232,9 @@ def admin_remove_product_category(category_id):
 
         flash("Categoria #%s (%s) foi removida com sucesso." % (category.id, category.name), "success")
         return redirect(url_for("admin_product_categories", page=page_to_return))
+    except DatabaseAccessError:
+        db_manager.rollback()
+        abort(500)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
@@ -262,6 +266,7 @@ def admin_add_product_subcategory():
     if request.method == "GET":
         try:
             form.add_category_choices()
+
             data = subcategories_data_provider.get_add_data(form)
             return render_template("admin/products/add_subcategory.html", data=data)
         except Exception as e:
@@ -271,7 +276,24 @@ def admin_add_product_subcategory():
     # POST
     else:
         try:
-            raise NotImplementedError()
+            form.add_category_choices()
+
+            if not form.validate_on_submit():
+                data = subcategories_data_provider.get_add_data(form)
+                return render_template("admin/products/add_subcategory.html", data=data)
+
+            subcategory = Subcategory(
+                category_id=form.category.data,
+                name=form.subcategory.data
+            )
+            db_manager.add_subcategory(subcategory)
+            db_manager.commit()
+
+            flash("Subcategoria %s foi adicionada com sucesso." % form.subcategory.data, "success")
+            return redirect(url_for("admin_add_product_subcategory"))
+        except DatabaseAccessError:
+            db_manager.rollback()
+            abort(500)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)

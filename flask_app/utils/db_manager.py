@@ -6,6 +6,7 @@ from .. import db
 from ..utils.exceptions import DatabaseAccessError
 
 from ..models.category import Category
+from ..models.subcategory import Subcategory
 from ..models.user import User
 
 class DbManager:
@@ -39,6 +40,24 @@ class DbManager:
     def delete_category(self, category):
         try:
             db.session.delete(category)
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
+    def add_subcategory(self, subcategory):
+        try:
+            db.session.add(subcategory)
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
+    def get_subcategory(self, subcategory_id):
+        try:
+            return Subcategory.query.filter_by(id=subcategory_id).first()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
+    def delete_subcategory(self, subcategory):
+        try:
+            db.session.delete(subcategory)
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 
