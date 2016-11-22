@@ -356,9 +356,28 @@ def admin_edit_product_subcategory(subcategory_id):
 @admin
 @log_route
 def admin_remove_product_subcategory(subcategory_id):
+    remove_form = SimpleSubmitForm()
+
+    if not remove_form.validate_on_submit():
+        flash("Não foi possível remover a categoria #%s. Tente novamente." % subcategory_id, "warning")
+        return redirect(url_for("admin_product_subcategories", page=1))
+
     try:
-        raise NotImplementedError()
+        subcategory = db_manager.get_subcategory(subcategory_id=subcategory_id)
+
+        if not subcategory:
+            raise InvalidUrlParamError("Subcategory not found")
+
+        db_manager.delete_subcategory(subcategory)
+        db_manager.commit()
+
+        flash("Subcategoria #%s (%s) foi removida com sucesso." % (subcategory.id, subcategory.name), "success")
+        return redirect(url_for("admin_product_subcategories", page=1))
+    except DatabaseAccessError:
+        db_manager.rollback()
+        abort(500)
     except Exception as e:
+        db_manager.rollback()
         log_unrecognized_exception(e)
         abort(500)
 

@@ -11,4 +11,4 @@ from sqlalchemy.orm import relationship
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64))
-    subcategories = relationship("Subcategory", order_by=Subcategory.name, back_populates="category")
+    subcategories = relationship("Subcategory", order_by=Subcategory.name, back_populates="category", cascade="delete")
