@@ -45,8 +45,8 @@ class SubcategoriesDataProvider():
         }
         return data
 
-    def get_data(self, page, remove_form):
-        subcategories = self.get_subcategories()
+    def get_data(self, page, remove_form, filter_category_form, category_id):
+        subcategories = self.get_subcategories(category_id)
 
         empty = False
         if len(subcategories) == 0:
@@ -64,6 +64,7 @@ class SubcategoriesDataProvider():
 
         data = {
             "remove_form": remove_form,
+            "filter_category_form": filter_category_form,
             "empty": empty,
             "page": page,
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
@@ -79,8 +80,11 @@ class SubcategoriesDataProvider():
         }
         return data
 
-    def get_subcategories(self):
-        return Subcategory.query.order_by(Subcategory.name).all()
+    def get_subcategories(self, category_id):
+        if category_id:
+            return Subcategory.query.filter(Subcategory.category_id==category_id).order_by(Subcategory.name).all()
+        else:
+            return Subcategory.query.order_by(Subcategory.name).all()
 
 
 subcategories_data_provider = SubcategoriesDataProvider()

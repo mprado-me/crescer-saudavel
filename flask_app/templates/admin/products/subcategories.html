@@ -6,6 +6,14 @@
   <a href="{{url_for('admin_add_product_subcategory')}}">Adicionar nova subcategoria</a>
   <div class="br-8px"></div>
 
+  <div class="jumbotron filter">
+    <form action="" method=get enctype=multipart/form-data>
+      {% with form = data["filter_category_form"] %}
+        {% include "admin/shared/form-fields.html" %}
+      {% endwith %}
+    </form>
+  </div>
+
   {% with data=data["paginator_data"] %}
     {% include "shared/paginator.html" %}
   {% endwith %}

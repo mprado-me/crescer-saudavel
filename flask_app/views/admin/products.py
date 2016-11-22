@@ -9,14 +9,14 @@ from flask_app import app
 from flask_app.data_providers.admin.products.categories import categories_data_provider
 from flask_app.data_providers.admin.products.subcategories import subcategories_data_provider
 
-from flask_app.forms.admin import AddCategoryForm, AddSubcategoryForm, EditCategoryForm, SimpleSubmitForm
+from flask_app.forms.admin import AddCategoryForm, AddSubcategoryForm, EditCategoryForm, FilterCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
 from flask_app.models.subcategory import Subcategory
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
-from flask_app.utils.exceptions import DatabaseAccessError, InvalidUrlParamError, log_unrecognized_exception
+from flask_app.utils.exceptions import DatabaseAccessError, InvalidQueryParamError, InvalidUrlParamError, log_unrecognized_exception
 
 
 @app.route('/painel-administrativo/adicionar-produto', methods=['GET', 'POST'])
@@ -341,10 +341,28 @@ def admin_remove_product_subcategory(subcategory_id):
 @admin
 @log_route
 def admin_product_subcategories(page):
+    filter_category_form = FilterCategoryForm()
     remove_form = SimpleSubmitForm()
 
+    # Getting optional parameters
+    category_id = request.args.get('category_id')
+
+    # Setting default value to optional parameters
     try:
-        data = subcategories_data_provider.get_data(page=page, remove_form=remove_form)
+        category_id_as_int = int(category_id)
+        if category_id_as_int <= 0:
+            raise InvalidQueryParamError()
+    except:
+        category_id = None
+
+    try:
+        filter_category_form.add_category_choices(category_id=category_id)
+
+        data = subcategories_data_provider.get_data(
+            page=page,
+            remove_form=remove_form,
+            filter_category_form=filter_category_form,
+            category_id=category_id)
         return render_template("admin/products/subcategories.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)

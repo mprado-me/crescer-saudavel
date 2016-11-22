@@ -49,6 +49,23 @@ class EditSubcategoryForm(SubcategoryForm):
     edit = SubmitField(label="Editar")
 
 
+class FilterCategoryForm(FlaskForm):
+    category_id = SelectField(label="Categoria", coerce=int)
+    filter = SubmitField(label="Filtrar")
+
+    def add_category_choices(self, category_id):
+        categories = Category.query.order_by(Category.name).all()
+        self.category_id.choices = [(0, "Todas")] + [(category.id, category.name) for category in categories]
+
+        if category_id:
+            first_idx = None
+            for idx, category_option in enumerate(self.category_id.choices):
+                if str(category_option[0]) == str(category_id):
+                    first_idx = idx
+            if first_idx:
+                self.category_id.choices.insert(0, self.category_id.choices.pop(first_idx))
+
+
 class SimpleSubmitForm(FlaskForm):
     submit = SubmitField()
 
