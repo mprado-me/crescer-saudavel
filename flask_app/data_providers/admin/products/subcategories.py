@@ -29,18 +29,19 @@ class SubcategoriesDataProvider():
         }
         return data
 
-    def get_edit_data(self, form, category_id, page_to_return):
-        category = db_manager.get_category(category_id=category_id)
+    def get_edit_data(self, form, subcategory_id, page_to_return):
+        subcategory = Subcategory.query.filter(Subcategory.id == subcategory_id).one_or_none()
 
-        if not category:
-            raise InvalidParamError(message="Category not found")
+        if not subcategory:
+            raise InvalidParamError(message="Subcategory not found")
 
-        form.category.data = category.name
+        form.subcategory.data = subcategory.name
+        form.category_id.data = subcategory.category_id
 
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "form": form,
-            "category_id": category_id,
+            "subcategory_id": subcategory_id,
             "page_to_return": page_to_return,
         }
         return data

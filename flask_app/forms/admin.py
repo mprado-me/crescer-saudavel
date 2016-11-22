@@ -30,15 +30,14 @@ class EditCategoryForm(CategoryForm):
 
 # Subcategory
 class SubcategoryForm(FlaskForm):
-    category = SelectField(label="Categoria", coerce=int)
+    category_id = SelectField(label="Categoria", coerce=int)
     subcategory = StringField(label="Nome da subcategoria", validators=[
         DataRequired(message=error_msg_provider.data_required()),
         Length(max_length=64, message=error_msg_provider.subcategory_too_long())
     ])
 
-    def add_category_choices(self):
-        categories = Category.query.order_by(Category.name).all()
-        self.category.choices = [(category.id, category.name) for category in categories]
+    def add_category_choices(self, first_category_id=None):
+        add_category_choices(self, first_category_id=first_category_id, include_all_category=False)
 
 
 class AddSubcategoryForm(SubcategoryForm):
@@ -53,17 +52,8 @@ class FilterCategoryForm(FlaskForm):
     category_id = SelectField(label="Categoria", coerce=int)
     filter = SubmitField(label="Filtrar")
 
-    def add_category_choices(self, category_id):
-        categories = Category.query.order_by(Category.name).all()
-        self.category_id.choices = [(0, "Todas")] + [(category.id, category.name) for category in categories]
-
-        if category_id:
-            first_idx = None
-            for idx, category_option in enumerate(self.category_id.choices):
-                if str(category_option[0]) == str(category_id):
-                    first_idx = idx
-            if first_idx:
-                self.category_id.choices.insert(0, self.category_id.choices.pop(first_idx))
+    def add_category_choices(self, first_category_id):
+        add_category_choices(self, first_category_id=first_category_id, include_all_category=True)
 
 
 class SimpleSubmitForm(FlaskForm):
@@ -81,3 +71,18 @@ class UploadImageForm(FlaskForm):
         )
     ])
     upload = SubmitField(label="Upload")
+
+
+def add_category_choices(form, first_category_id=None, include_all_category=False):
+    categories = Category.query.order_by(Category.name).all()
+    form.category_id.choices = [(category.id, category.name) for category in categories]
+    if include_all_category:
+        form.category_id.choices.insert(0, (0, "Todas"))
+
+    if first_category_id:
+        first_idx = None
+        for idx, category_option in enumerate(form.category_id.choices):
+            if str(category_option[0]) == str(first_category_id):
+                first_idx = idx
+        if first_idx:
+            form.category_id.choices.insert(0, form.category_id.choices.pop(first_idx))

@@ -9,7 +9,7 @@ from flask_app import app
 from flask_app.data_providers.admin.products.categories import categories_data_provider
 from flask_app.data_providers.admin.products.subcategories import subcategories_data_provider
 
-from flask_app.forms.admin import AddCategoryForm, AddSubcategoryForm, EditCategoryForm, FilterCategoryForm, SimpleSubmitForm
+from flask_app.forms.admin import AddSubcategoryForm, AddCategoryForm, EditSubcategoryForm, EditCategoryForm, FilterCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
 from flask_app.models.subcategory import Subcategory
@@ -283,7 +283,7 @@ def admin_add_product_subcategory():
                 return render_template("admin/products/add_subcategory.html", data=data)
 
             subcategory = Subcategory(
-                category_id=form.category.data,
+                category_id=form.category_id.data,
                 name=form.subcategory.data
             )
             db_manager.add_subcategory(subcategory)
@@ -304,12 +304,26 @@ def admin_add_product_subcategory():
 @admin
 @log_route
 def admin_edit_product_subcategory(subcategory_id):
-    form = None
+    form = EditSubcategoryForm()
+
+    # Getting optional parameters
+    page_to_return = request.args.get('page_to_return')
+
+    # Setting default value to optional parameters
+    if not page_to_return:
+        page_to_return = 1
 
     # GET
     if request.method == "GET":
         try:
-            raise NotImplementedError()
+            subcategory = Subcategory.query.filter(Subcategory.id == subcategory_id).one_or_none()
+            if not subcategory:
+                raise InvalidUrlParamError()
+
+            form.add_category_choices()
+
+            data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id, page_to_return=page_to_return)
+            return render_template("admin/products/edit_subcategory.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -317,7 +331,24 @@ def admin_edit_product_subcategory(subcategory_id):
     # POST
     else:
         try:
-            raise NotImplementedError()
+            form.add_category_choices()
+
+            if not form.validate_on_submit():
+                data = subcategories_data_provider.get_add_data(form)
+                return render_template("admin/products/add_subcategory.html", data=data)
+
+            subcategory = Subcategory(
+                category_id=form.category_id.data,
+                name=form.subcategory.data
+            )
+            db_manager.add_subcategory(subcategory)
+            db_manager.commit()
+
+            flash("Subcategoria %s foi adicionada com sucesso." % form.subcategory.data, "success")
+            return redirect(url_for("admin_add_product_subcategory"))
+        except DatabaseAccessError:
+            db_manager.rollback()
+            abort(500)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -356,7 +387,7 @@ def admin_product_subcategories(page):
         category_id = None
 
     try:
-        filter_category_form.add_category_choices(category_id=category_id)
+        filter_category_form.add_category_choices(first_category_id=category_id)
 
         data = subcategories_data_provider.get_data(
             page=page,
