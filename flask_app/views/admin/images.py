@@ -14,7 +14,7 @@ from flask_app.data_providers.admin.images.images import images_data_provider
 from flask_app.forms.admin import SimpleSubmitForm, UploadImageForm
 
 from flask_app.utils.decorators import admin, log_route
-from flask_app.utils.exceptions import log_unrecognized_exception
+from flask_app.utils.exceptions import InsecurePostException, log_unrecognized_exception
 
 
 @app.route('/painel-administrativo/adicionar-imagem', methods=['GET', 'POST'])
@@ -80,11 +80,10 @@ def admin_remove_image(image_name):
     if not page_to_return:
         page_to_return = 1
 
-    if not remove_form.validate_on_submit():
-        flash("Não foi possível remover a imagem \"%s\". Tente novamente." % image_name, "warning")
-        return redirect(url_for("admin_images", page=page_to_return))
-
     try:
+        if not remove_form.validate_on_submit():
+            raise InsecurePostException()
+
         path_to_file = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], image_name)
         if os.path.exists(path_to_file):
             os.remove(path_to_file)
