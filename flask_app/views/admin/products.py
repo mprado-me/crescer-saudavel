@@ -16,7 +16,7 @@ from flask_app.models.subcategory import Subcategory
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
-from flask_app.utils.exceptions import DatabaseAccessError, InvalidQueryParamError, InvalidUrlParamError, log_unrecognized_exception
+from flask_app.utils.exceptions import DatabaseAccessError, InsecurePostException, InvalidQueryParamError, InvalidUrlParamError, log_unrecognized_exception
 
 
 @app.route('/painel-administrativo/adicionar-produto', methods=['GET', 'POST'])
@@ -219,11 +219,10 @@ def admin_remove_product_category(category_id):
     if not page_to_return:
         page_to_return = 1
 
-    if not remove_form.validate_on_submit():
-        flash("Não foi possível remover a categoria #%s. Tente novamente." % category_id, "warning")
-        return redirect(url_for("admin_product_categories", page=page_to_return))
-
     try:
+        if not remove_form.validate_on_submit():
+            raise InsecurePostException()
+
         category = db_manager.get_category(category_id=category_id)
 
         if not category:
@@ -358,11 +357,10 @@ def admin_edit_product_subcategory(subcategory_id):
 def admin_remove_product_subcategory(subcategory_id):
     remove_form = SimpleSubmitForm()
 
-    if not remove_form.validate_on_submit():
-        flash("Não foi possível remover a categoria #%s. Tente novamente." % subcategory_id, "warning")
-        return redirect(url_for("admin_product_subcategories", page=1))
-
     try:
+        if not remove_form.validate_on_submit():
+            raise InsecurePostException()
+
         subcategory = db_manager.get_subcategory(subcategory_id=subcategory_id)
 
         if not subcategory:

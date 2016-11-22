@@ -20,6 +20,12 @@ class EmailSendingError(Exception):
         log_exception(name="EmailSendingError", message=message, exception=exception)
 
 
+class InsecurePostException(Exception):
+    def __init__(self, message=""):
+        super(InsecurePostException, self).__init__(message)
+        log_exception(name="InsecurePostException", message=message)
+
+
 class InvalidQueryParamError(Exception):
     def __init__(self, message=""):
         super(InvalidQueryParamError, self).__init__(message)
