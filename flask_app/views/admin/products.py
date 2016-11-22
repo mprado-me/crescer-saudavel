@@ -310,13 +310,6 @@ def admin_add_product_subcategory():
 def admin_edit_product_subcategory(subcategory_id):
     form = EditSubcategoryForm()
 
-    # Getting optional parameters
-    page_to_return = request.args.get('page_to_return')
-
-    # Setting default value to optional parameters
-    if not page_to_return:
-        page_to_return = 1
-
     # GET
     if request.method == "GET":
         try:
@@ -326,7 +319,7 @@ def admin_edit_product_subcategory(subcategory_id):
 
             form.add_category_choices()
 
-            data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id, page_to_return=page_to_return)
+            data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id)
             return render_template("admin/products/edit_subcategory.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -338,7 +331,7 @@ def admin_edit_product_subcategory(subcategory_id):
             form.add_category_choices()
 
             if not form.validate_on_submit():
-                data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id, page_to_return=page_to_return)
+                data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id)
                 return render_template("admin/products/edit_subcategory.html", data=data)
 
             subcategory = db_manager.get_subcategory(subcategory_id)
@@ -348,8 +341,7 @@ def admin_edit_product_subcategory(subcategory_id):
             db_manager.commit()
 
             flash("Subcategoria %s foi editada com sucesso." % form.subcategory.data, "success")
-            # TODO: Add category_id_to_return
-            return redirect(url_for("admin_product_subcategories", page=page_to_return))
+            return redirect(url_for("admin_product_subcategories", page=1))
         except DatabaseAccessError:
             db_manager.rollback()
             abort(500)

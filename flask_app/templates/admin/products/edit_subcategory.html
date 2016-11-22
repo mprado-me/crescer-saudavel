@@ -6,7 +6,7 @@
   <a href="{{url_for('admin_product_subcategories', page=1)}}">Ver subcategorias</a>
   <div class="br-8px"></div>
 
-  <form class="form" action="{{url_for('admin_edit_product_subcategory', subcategory_id=data.subcategory_id, page_to_return=data.page_to_return)}}" method=post enctype=multipart/form-data>
+  <form class="form" action="{{url_for('admin_edit_product_subcategory', subcategory_id=data.subcategory_id)}}" method=post enctype=multipart/form-data>
     {{ data["form"].csrf_token }}
     {% with form = data["form"] %}
       {% include "admin/shared/form-fields.html" %}
