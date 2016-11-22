@@ -67,10 +67,12 @@ def create_account():
             data = create_account_data_provider.get_data(form=form)
             return render_template('customer/user_management/create-account.html', data=data)
         except EmailSendingError:
+            db_manager.rollback()
             flash(EmailSendingError.msg, "danger")
             data = create_account_data_provider.get_data(form=form)
             return render_template('customer/user_management/create-account.html', data=data)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
@@ -89,6 +91,7 @@ def email_confirmed(token):
         flash("Email confirmado com sucesso.", "success")
         return redirect(url_for('login'))
     except BadSignature:
+        db_manager.rollback()
         log_exception(name="BadSignature")
         abort(404)
     except DatabaseAccessError:
@@ -98,8 +101,9 @@ def email_confirmed(token):
         data = failed_to_get_data_provider.get_data(current_url=current_url)
         return render_template('customer/shared/failed-to-get.html', data=data)
     except Exception as e:
-            log_unrecognized_exception(e)
-            abort(500)
+        db_manager.rollback()
+        log_unrecognized_exception(e)
+        abort(500)
 
 
 @app.route('/recuperar-senha', methods=["GET", "POST"])
@@ -126,14 +130,17 @@ def recover_password():
             email_manager.send_redefine_password_email(form.email.data)
             return redirect(url_for("sent_recover_password_email", email=form.email.data))
         except DatabaseAccessError:
+            db_manager.rollback()
             flash(DatabaseAccessError.msg, "danger")
             data = recover_password_data_provider.get_data(form=form)
             return render_template('customer/user_management/recover-password.html', data=data)
         except EmailSendingError:
+            db_manager.rollback()
             flash(EmailSendingError.msg, "danger")
             data = recover_password_data_provider.get_data(form=form)
             return render_template('customer/user_management/recover-password.html', data=data)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
@@ -182,6 +189,7 @@ def login():
             data = login_data_provider.get_data(form=form)
             return render_template('customer/user_management/login.html', data=data)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
@@ -223,6 +231,7 @@ def redefine_password(token):
             flash("Senha redefinida com sucesso.", "success")
             return redirect(url_for('login'))
         except BadSignature:
+            db_manager.rollback()
             log_exception(name="BadSignature")
             abort(404)
         except DatabaseAccessError:
@@ -231,6 +240,7 @@ def redefine_password(token):
             data = redefine_password_data_provider.get_data(form=form, email=email, token=token)
             return render_template('customer/user_management/redefine-password.html', data=data)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
@@ -260,14 +270,17 @@ def resend_confirmation_email():
             email_manager.send_create_account_confirmation_email(form.email.data)
             return redirect(url_for("sent_confirmation_email", email=form.email.data))
         except DatabaseAccessError:
+            db_manager.rollback()
             flash(DatabaseAccessError.msg, "danger")
             data = resend_confirmation_email_data_provider.get_data(form=form)
             return render_template('customer/user_management/resend-confirmation-email.html', data=data)
         except EmailSendingError:
+            db_manager.rollback()
             flash(EmailSendingError.msg, "danger")
             data = resend_confirmation_email_data_provider.get_data(form=form)
             return render_template('customer/user_management/resend-confirmation-email.html', data=data)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
