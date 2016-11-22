@@ -12,7 +12,7 @@ from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 
-# Category
+# Category -- begin
 class CategoryForm(FlaskForm):
     category = StringField(label="Nome da categoria", validators=[
         DataRequired(message=error_msg_provider.data_required()),
@@ -26,9 +26,9 @@ class AddCategoryForm(CategoryForm):
 
 class EditCategoryForm(CategoryForm):
     edit = SubmitField(label="Editar")
+# Category -- end --
 
-
-# Subcategory
+# Subcategory -- begin --
 class SubcategoryForm(FlaskForm):
     category_id = SelectField(label="Categoria", coerce=int)
     subcategory = StringField(label="Nome da subcategoria", validators=[
@@ -54,7 +54,18 @@ class FilterCategoryForm(FlaskForm):
 
     def add_category_choices(self):
         add_category_choices(self, include_all_category=True)
+# Subcategory -- end --
 
+# Product -- begin --
+class ProductForm(FlaskForm):
+    pass
+
+class AddProductForm(ProductForm):
+    pass
+
+class EditProductForm(ProductForm):
+    pass
+# Product -- end --
 
 class SimpleSubmitForm(FlaskForm):
     submit = SubmitField()

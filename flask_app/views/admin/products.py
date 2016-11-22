@@ -7,9 +7,10 @@ from flask_login import login_required
 from flask_app import app
 
 from flask_app.data_providers.admin.products.categories import categories_data_provider
+from flask_app.data_providers.admin.products.products import products_data_provider
 from flask_app.data_providers.admin.products.subcategories import subcategories_data_provider
 
-from flask_app.forms.admin import AddSubcategoryForm, AddCategoryForm, EditSubcategoryForm, EditCategoryForm, FilterCategoryForm, SimpleSubmitForm
+from flask_app.forms.admin import AddSubcategoryForm, AddCategoryForm, AddProductForm, EditSubcategoryForm, EditCategoryForm, FilterCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
 from flask_app.models.subcategory import Subcategory
@@ -24,12 +25,13 @@ from flask_app.utils.exceptions import DatabaseAccessError, InsecurePostExceptio
 @admin
 @log_route
 def admin_add_product():
-    form = None
+    form = AddProductForm()
 
     # GET
     if request.method == "GET":
         try:
-            raise NotImplementedError()
+            data = products_data_provider.get_add_data(form = form)
+            return render_template("admin/products/add_product.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -380,7 +382,6 @@ def admin_remove_product_subcategory(subcategory_id):
         abort(500)
 
 
-
 @app.route('/painel-administrativo/subcategorias-de-produto/pagina/<int:page>')
 @login_required
 @admin
@@ -397,7 +398,7 @@ def admin_product_subcategories(page):
         category_id_as_int = int(category_id)
         if category_id_as_int <= 0:
             raise InvalidQueryParamError()
-    except:
+    except Exception:
         category_id = None
 
     try:

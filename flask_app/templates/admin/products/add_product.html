@@ -1,0 +1,15 @@
+{% extends "admin/shared/base.html" %}
+
+{% block title %}Adicionar novo produto{% endblock %}
+
+{% block content %}
+  <a href="{{url_for('admin_products', page=1)}}">Ver produtos</a>
+  <div class="br-8px"></div>
+
+  <form class="form" action="{{url_for('admin_add_product')}}" method=post enctype=multipart/form-data>
+    {{ data["form"].csrf_token }}
+    {% with form = data["form"] %}
+      {% include "admin/shared/form-fields.html" %}
+    {% endwith %}
+  </form>
+{% endblock %}
