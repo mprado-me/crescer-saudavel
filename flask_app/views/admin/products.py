@@ -150,6 +150,7 @@ def admin_add_product_category():
             db_manager.rollback()
             abort(500)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
@@ -199,6 +200,7 @@ def admin_edit_product_category(category_id):
             db_manager.rollback()
             abort(500)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
@@ -236,6 +238,7 @@ def admin_remove_product_category(category_id):
         db_manager.rollback()
         abort(500)
     except Exception as e:
+        db_manager.rollback()
         log_unrecognized_exception(e)
         abort(500)
 
@@ -295,6 +298,7 @@ def admin_add_product_subcategory():
             db_manager.rollback()
             abort(500)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
@@ -334,22 +338,23 @@ def admin_edit_product_subcategory(subcategory_id):
             form.add_category_choices()
 
             if not form.validate_on_submit():
-                data = subcategories_data_provider.get_add_data(form)
-                return render_template("admin/products/add_subcategory.html", data=data)
+                data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id, page_to_return=page_to_return)
+                return render_template("admin/products/edit_subcategory.html", data=data)
 
-            subcategory = Subcategory(
-                category_id=form.category_id.data,
-                name=form.subcategory.data
-            )
+            subcategory = db_manager.get_subcategory(subcategory_id)
+            subcategory.name = form.subcategory.data
+            subcategory.category_id = form.category_id.data
             db_manager.add_subcategory(subcategory)
             db_manager.commit()
 
-            flash("Subcategoria %s foi adicionada com sucesso." % form.subcategory.data, "success")
-            return redirect(url_for("admin_add_product_subcategory"))
+            flash("Subcategoria %s foi editada com sucesso." % form.subcategory.data, "success")
+            # TODO: Add category_id_to_return
+            return redirect(url_for("admin_product_subcategories", page=page_to_return))
         except DatabaseAccessError:
             db_manager.rollback()
             abort(500)
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
