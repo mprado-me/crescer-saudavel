@@ -13,51 +13,33 @@ class DbManager:
     def __init__(self):
         pass
 
-    def add_user(self, user):
+    def add(self, element):
         try:
-            db.session.add(user)
+            db.session.add(element)
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
+    def delete(self, element):
+        try:
+            db.session.delete(element)
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 
     def get_user(self, email):
         try:
-            return User.query.filter_by(email=email).first()
-        except Exception as e:
-            raise DatabaseAccessError(exception=e)
-
-    def add_category(self, category):
-        try:
-            db.session.add(category)
+            return User.query.filter_by(email=email).one_or_none()
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 
     def get_category(self, category_id):
         try:
-            return Category.query.filter_by(id=category_id).first()
-        except Exception as e:
-            raise DatabaseAccessError(exception=e)
-
-    def delete_category(self, category):
-        try:
-            db.session.delete(category)
-        except Exception as e:
-            raise DatabaseAccessError(exception=e)
-
-    def add_subcategory(self, subcategory):
-        try:
-            db.session.add(subcategory)
+            return Category.query.filter_by(id=category_id).one_or_none()
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 
     def get_subcategory(self, subcategory_id):
         try:
-            return Subcategory.query.filter_by(id=subcategory_id).first()
-        except Exception as e:
-            raise DatabaseAccessError(exception=e)
-
-    def delete_subcategory(self, subcategory):
-        try:
-            db.session.delete(subcategory)
+            return Subcategory.query.filter_by(id=subcategory_id).one_or_none()
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 

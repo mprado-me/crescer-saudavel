@@ -141,7 +141,7 @@ def admin_add_product_category():
             category = Category(
                 name=form.category.data
             )
-            db_manager.add_category(category)
+            db_manager.add(category)
             db_manager.commit()
 
             flash("Categoria %s foi adicionada com sucesso." % form.category.data, "success")
@@ -191,7 +191,7 @@ def admin_edit_product_category(category_id):
                 raise InvalidUrlParamError("Category not found")
 
             category.name = form.category.data
-            db_manager.add_category(category)
+            db_manager.add(category)
             db_manager.commit()
 
             flash("Categoria #%s foi editada com sucesso." % category.id, "success")
@@ -229,7 +229,7 @@ def admin_remove_product_category(category_id):
         if not category:
             raise InvalidUrlParamError("Category not found")
 
-        db_manager.delete_category(category)
+        db_manager.delete(category)
         db_manager.commit()
 
         flash("Categoria #%s (%s) foi removida com sucesso." % (category.id, category.name), "success")
@@ -289,7 +289,7 @@ def admin_add_product_subcategory():
                 category_id=form.category_id.data,
                 name=form.subcategory.data
             )
-            db_manager.add_subcategory(subcategory)
+            db_manager.add(subcategory)
             db_manager.commit()
 
             flash("Subcategoria %s foi adicionada com sucesso." % form.subcategory.data, "success")
@@ -337,7 +337,7 @@ def admin_edit_product_subcategory(subcategory_id):
             subcategory = db_manager.get_subcategory(subcategory_id)
             subcategory.name = form.subcategory.data
             subcategory.category_id = form.category_id.data
-            db_manager.add_subcategory(subcategory)
+            db_manager.add(subcategory)
             db_manager.commit()
 
             flash("Subcategoria %s foi editada com sucesso." % form.subcategory.data, "success")
@@ -368,7 +368,7 @@ def admin_remove_product_subcategory(subcategory_id):
         if not subcategory:
             raise InvalidUrlParamError("Subcategory not found")
 
-        db_manager.delete_subcategory(subcategory)
+        db_manager.delete(subcategory)
         db_manager.commit()
 
         flash("Subcategoria #%s (%s) foi removida com sucesso." % (subcategory.id, subcategory.name), "success")

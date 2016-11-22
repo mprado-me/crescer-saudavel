@@ -55,7 +55,7 @@ def create_account():
                 email=form.email.data,
                 password=form.password.data
             )
-            db_manager.add_user(user)
+            db_manager.add(user)
 
             email_manager.send_create_account_confirmation_email(form.email.data)
 
@@ -84,7 +84,7 @@ def email_confirmed(token):
         if not user:
             abort(404)
         user.email_confirmed = True
-        db_manager.add_user(user)
+        db_manager.add(user)
         db_manager.commit()
         flash("Email confirmado com sucesso.", "success")
         return redirect(url_for('login'))
@@ -172,7 +172,7 @@ def login():
 
             user = db_manager.get_user(form.email.data)
             user.authenticated = True
-            db_manager.add_user(user)
+            db_manager.add(user)
             db_manager.commit()
             login_user(user)
             return redirect(url_for('my_account'))
@@ -217,7 +217,7 @@ def redefine_password(token):
 
             user = db_manager.get_user(email)
             user.password = form.password.data
-            db_manager.add_user(user)
+            db_manager.add(user)
             db_manager.commit()
 
             flash("Senha redefinida com sucesso.", "success")
