@@ -44,7 +44,7 @@ def admin_add_image():
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], filename))
 
-            flash("Imagem %s foi adicionada com sucesso." % filename, "success")
+            flash("Imagem \"%s\" foi adicionada com sucesso." % filename, "success")
             return redirect(url_for("admin_add_image"))
         except Exception as e:
             log_unrecognized_exception(e)
@@ -81,7 +81,7 @@ def admin_remove_image(image_name):
         page_to_return = 1
 
     if not remove_form.validate_on_submit():
-        flash("Não foi possível remover a imagem %s. Tente novamente." % image_name, "warning")
+        flash("Não foi possível remover a imagem \"%s\". Tente novamente." % image_name, "warning")
         return redirect(url_for("admin_images", page=page_to_return))
 
     try:
@@ -89,7 +89,7 @@ def admin_remove_image(image_name):
         if os.path.exists(path_to_file):
             os.remove(path_to_file)
 
-        flash("Imagem %s foi removida com sucesso." % image_name, "success")
+        flash("Imagem \"%s\" foi removida com sucesso." % image_name, "success")
         return redirect(url_for("admin_images", page=page_to_return))
     except Exception as e:
         log_unrecognized_exception(e)

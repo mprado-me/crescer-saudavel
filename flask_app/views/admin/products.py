@@ -144,7 +144,7 @@ def admin_add_product_category():
             db_manager.add(category)
             db_manager.commit()
 
-            flash("Categoria %s foi adicionada com sucesso." % form.category.data, "success")
+            flash("Categoria \"%s\" foi adicionada com sucesso." % form.category.data, "success")
             return redirect(url_for("admin_add_product_category"))
         except DatabaseAccessError:
             db_manager.rollback()
@@ -232,7 +232,7 @@ def admin_remove_product_category(category_id):
         db_manager.delete(category)
         db_manager.commit()
 
-        flash("Categoria #%s (%s) foi removida com sucesso." % (category.id, category.name), "success")
+        flash("Categoria #%s \"%s\" foi removida com sucesso." % (category.id, category.name), "success")
         return redirect(url_for("admin_product_categories", page=page_to_return))
     except DatabaseAccessError:
         db_manager.rollback()
@@ -292,7 +292,7 @@ def admin_add_product_subcategory():
             db_manager.add(subcategory)
             db_manager.commit()
 
-            flash("Subcategoria %s foi adicionada com sucesso." % form.subcategory.data, "success")
+            flash("Subcategoria \"%s\" foi adicionada com sucesso." % form.subcategory.data, "success")
             return redirect(url_for("admin_add_product_subcategory"))
         except DatabaseAccessError:
             db_manager.rollback()
@@ -340,7 +340,7 @@ def admin_edit_product_subcategory(subcategory_id):
             db_manager.add(subcategory)
             db_manager.commit()
 
-            flash("Subcategoria %s foi editada com sucesso." % form.subcategory.data, "success")
+            flash("Subcategoria #%s foi editada com sucesso." % subcategory_id, "success")
             return redirect(url_for("admin_product_subcategories", page=1))
         except DatabaseAccessError:
             db_manager.rollback()
@@ -371,7 +371,7 @@ def admin_remove_product_subcategory(subcategory_id):
         db_manager.delete(subcategory)
         db_manager.commit()
 
-        flash("Subcategoria #%s (%s) foi removida com sucesso." % (subcategory.id, subcategory.name), "success")
+        flash("Subcategoria #%s \"%s\" foi removida com sucesso." % (subcategory.id, subcategory.name), "success")
         return redirect(url_for("admin_product_subcategories", page=1))
     except DatabaseAccessError:
         db_manager.rollback()
