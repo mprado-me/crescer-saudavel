@@ -1,0 +1,64 @@
+{% extends "admin/shared/base.html" %}
+
+{% block title %}Subcategorias de produto{% endblock %}
+
+{% block content %}
+  <a href="{{url_for('admin_add_product_subcategory')}}">Adicionar nova subcategoria</a>
+  <div class="br-8px"></div>
+
+  {% with data=data["paginator_data"] %}
+    {% include "shared/paginator.html" %}
+  {% endwith %}
+
+  {% if not data["empty"] %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id (Categoria)</th>
+          <th>Nome (Categoria)</th>
+          <th>Id (Subcategoria)</th>
+          <th>Nome (Subcategoria)</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for subcategory in data["subcategories"] %}
+          <tr>
+            <td>#{{subcategory.category.id}}</td>
+            <td>{{subcategory.category.name}}</td>
+            <td>#{{subcategory.id}}</td>
+            <td>{{subcategory.name}}</td>
+            <td>
+              <ul class="table-action-ul">
+                <li>
+                  <a href="{{url_for('admin_edit_product_subcategory', subcategory_id=subcategory.id, page_to_return=data['page'])}}">Editar</a>
+                </li>
+                <li>
+                  <form class="remove-form" action="{{url_for('admin_remove_product_subcategory', subcategory_id=subcategory.id, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
+                    {{ data["remove_form"].csrf_token }}
+                    <input type=submit value=Remover>
+                  </form>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Nenhuma subcategoria foi encontrada.</p>
+  {% endif %}
+
+  {% with data=data["paginator_data"] %}
+    {% include "shared/paginator.html" %}
+  {% endwith %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(".remove-form").submit(function() {
+      var c = confirm("Tem certeza que deseja remover a categoria? Ficará difícil para o usuário encontrar os produtos que pertencem a esta categoria.");
+      return c;
+  });
+</script>
+{% endblock %}

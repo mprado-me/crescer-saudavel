@@ -323,13 +323,29 @@ def admin_edit_product_subcategory(subcategory_id):
             abort(500)
 
 
+@app.route('/painel-administrativo/remover-subcategoria-de-produto/<int:subcategory_id>', methods=['POST'])
+@login_required
+@admin
+@log_route
+def admin_remove_product_subcategory(subcategory_id):
+    try:
+        raise NotImplementedError()
+    except Exception as e:
+        log_unrecognized_exception(e)
+        abort(500)
+
+
+
 @app.route('/painel-administrativo/subcategorias-de-produto/pagina/<int:page>')
 @login_required
 @admin
 @log_route
 def admin_product_subcategories(page):
+    remove_form = SimpleSubmitForm()
+
     try:
-        raise NotImplementedError()
+        data = subcategories_data_provider.get_data(page=page, remove_form=remove_form)
+        return render_template("admin/products/subcategories.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

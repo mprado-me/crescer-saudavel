@@ -11,10 +11,12 @@ from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabName
 from flask_app.data_providers.shared.paginator import paginator_data_provider
 
 from flask_app.models.category import Category
+from flask_app.models.subcategory import Subcategory
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.exceptions import InvalidParamError
 
+from flask import session
 
 class SubcategoriesDataProvider():
     def __init__(self):
@@ -44,13 +46,13 @@ class SubcategoriesDataProvider():
         return data
 
     def get_data(self, page, remove_form):
-        all_categories = self.get_categories_sorted()
+        subcategories = self.get_subcategories()
 
         empty = False
-        if len(all_categories) == 0:
+        if len(subcategories) == 0:
             empty = True
 
-        total_n_pages = int(math.ceil(float(len(all_categories)) / app.config["DEFAULT_N_ITEMS_BY_PAGE"]))
+        total_n_pages = int(math.ceil(float(len(subcategories)) / app.config["DEFAULT_N_ITEMS_BY_PAGE"]))
         total_n_pages = max(1, total_n_pages)
 
         # page between 1 and total_n_pages
@@ -73,12 +75,12 @@ class SubcategoriesDataProvider():
                 other_url_params={
                 }
             ),
-            "categories": all_categories[first:last_plus_one],
+            "subcategories": subcategories[first:last_plus_one],
         }
         return data
 
-    def get_categories_sorted(self):
-        return Category.query.order_by(Category.name).all()
+    def get_subcategories(self):
+        return Subcategory.query.order_by(Subcategory.name).all()
 
 
 subcategories_data_provider = SubcategoriesDataProvider()
