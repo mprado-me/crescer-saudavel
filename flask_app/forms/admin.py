@@ -36,8 +36,8 @@ class SubcategoryForm(FlaskForm):
         Length(max_length=64, message=error_msg_provider.subcategory_too_long())
     ])
 
-    def add_category_choices(self, first_category_id=None):
-        add_category_choices(self, first_category_id=first_category_id, include_all_category=False)
+    def add_category_choices(self):
+        add_category_choices(self, include_all_category=False)
 
 
 class AddSubcategoryForm(SubcategoryForm):
@@ -52,8 +52,8 @@ class FilterCategoryForm(FlaskForm):
     category_id = SelectField(label="Categoria", coerce=int)
     filter = SubmitField(label="Filtrar")
 
-    def add_category_choices(self, first_category_id):
-        add_category_choices(self, first_category_id=first_category_id, include_all_category=True)
+    def add_category_choices(self):
+        add_category_choices(self, include_all_category=True)
 
 
 class SimpleSubmitForm(FlaskForm):
@@ -73,16 +73,8 @@ class UploadImageForm(FlaskForm):
     upload = SubmitField(label="Upload")
 
 
-def add_category_choices(form, first_category_id=None, include_all_category=False):
+def add_category_choices(form, include_all_category=False):
     categories = Category.query.order_by(Category.name).all()
     form.category_id.choices = [(category.id, category.name) for category in categories]
     if include_all_category:
         form.category_id.choices.insert(0, (0, "Todas"))
-
-    if first_category_id:
-        first_idx = None
-        for idx, category_option in enumerate(form.category_id.choices):
-            if str(category_option[0]) == str(first_category_id):
-                first_idx = idx
-        if first_idx:
-            form.category_id.choices.insert(0, form.category_id.choices.pop(first_idx))

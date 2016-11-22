@@ -387,7 +387,7 @@ def admin_product_subcategories(page):
         category_id = None
 
     try:
-        filter_category_form.add_category_choices(first_category_id=category_id)
+        filter_category_form.add_category_choices()
 
         data = subcategories_data_provider.get_data(
             page=page,

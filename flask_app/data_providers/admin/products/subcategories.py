@@ -63,6 +63,9 @@ class SubcategoriesDataProvider():
         first = (page - 1) * app.config["DEFAULT_N_ITEMS_BY_PAGE"]
         last_plus_one = first + app.config["DEFAULT_N_ITEMS_BY_PAGE"]
 
+        if category_id:
+            filter_category_form.category_id.data = int(category_id)
+
         data = {
             "remove_form": remove_form,
             "filter_category_form": filter_category_form,
