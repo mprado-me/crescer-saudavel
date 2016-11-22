@@ -1,0 +1,15 @@
+{% extends "admin/shared/base.html" %}
+
+{% block title %}Adicionar nova subcategoria de produto{% endblock %}
+
+{% block content %}
+  <a href="{{url_for('admin_product_subcategories', page=1)}}">Ver subcategorias</a>
+  <div class="br-8px"></div>
+
+  <form class="form" action="{{url_for('admin_add_product_subcategory')}}" method=post enctype=multipart/form-data>
+    {{ data["form"].csrf_token }}
+    {% with form = data["form"] %}
+      {% include "admin/shared/form-fields.html" %}
+    {% endwith %}
+  </form>
+{% endblock %}

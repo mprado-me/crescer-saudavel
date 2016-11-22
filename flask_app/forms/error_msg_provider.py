@@ -11,6 +11,9 @@ class ErrorMsgProvider:
     def category_too_long(self):
         return "O nome de uma categoria deve ter no máximo 64 caracteres"
 
+    def subcategory_too_long(self):
+        return "O nome de uma subcategoria deve ter no máximo 64 caracteres"
+
     def data_required(self):
         return "Campo obrigatório"
 

@@ -1,7 +1,7 @@
 {% for field in form %}
     {% if field.type == "BooleanField" %}
         { field }} {{ field.label }}<br>
-    {% elif field.type == "StringField" %}
+    {% elif field.type in ["StringField", "SelectField"]  %}
         {{ field.label }}:  {{ field }}<br>
     {% elif field.type == "FileField" %}
         {{ field }}

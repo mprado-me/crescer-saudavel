@@ -7,10 +7,10 @@ from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart
 
 from flask_wtf import FlaskForm
 
-from wtforms import FileField, StringField, SubmitField
+from wtforms import FileField, StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 
-
+# Category
 class CategoryForm(FlaskForm):
     category = StringField(label="Nome da categoria", validators=[
         DataRequired(message=error_msg_provider.data_required()),
@@ -22,6 +22,26 @@ class AddCategoryForm(CategoryForm):
 
 
 class EditCategoryForm(CategoryForm):
+    edit = SubmitField(label="Editar")
+
+
+# Subcategory
+class SubcategoryForm(FlaskForm):
+    category = SelectField(label="Categoria", coerce=int)
+    subcategory = StringField(label="Nome da subcategoria", validators=[
+        DataRequired(message=error_msg_provider.data_required()),
+        Length(max_length=64, message=error_msg_provider.subcategory_too_long())])
+
+    def add_category_choices(self):
+        # TODO: Get categories from db
+        self.category.choices = [(1, "Categoria 1"), (2, "Categoria 2"), (3, "Categoria 3")]
+
+
+class AddSubcategoryForm(SubcategoryForm):
+    add = SubmitField(label="Adicionar")
+
+
+class EditSubcategoryForm(SubcategoryForm):
     edit = SubmitField(label="Editar")
 
 

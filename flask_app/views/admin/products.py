@@ -7,8 +7,9 @@ from flask_login import login_required
 from flask_app import app
 
 from flask_app.data_providers.admin.products.categories import categories_data_provider
+from flask_app.data_providers.admin.products.subcategories import subcategories_data_provider
 
-from flask_app.forms.admin import AddCategoryForm, EditCategoryForm, SimpleSubmitForm
+from flask_app.forms.admin import AddCategoryForm, AddSubcategoryForm, EditCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
 
@@ -255,12 +256,14 @@ def admin_product_categories(page):
 @admin
 @log_route
 def admin_add_product_subcategory():
-    form = None
+    form = AddSubcategoryForm()
 
     # GET
     if request.method == "GET":
         try:
-            raise NotImplementedError()
+            form.add_category_choices()
+            data = subcategories_data_provider.get_add_data(form)
+            return render_template("admin/products/add_subcategory.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
