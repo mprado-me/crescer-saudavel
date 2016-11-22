@@ -76,8 +76,9 @@ class SubcategoriesDataProvider():
                 current_page=page,
                 n_pages=app.config["DEFAULT_N_PAGES_IN_PAGINATOR"],
                 total_n_pages=total_n_pages,
-                url_endpoint="admin_product_categories",
+                url_endpoint="admin_product_subcategories",
                 other_url_params={
+                    "category_id": category_id,
                 }
             ),
             "subcategories": subcategories[first:last_plus_one],
