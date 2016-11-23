@@ -30,6 +30,8 @@ def admin_add_product():
     # GET
     if request.method == "GET":
         try:
+            form.add_choices()
+
             data = products_data_provider.get_add_data(form = form)
             return render_template("admin/products/add_product.html", data=data)
         except Exception as e:

@@ -23,8 +23,7 @@ class ImagesDataProvider:
         return data
 
     def get_data(self, page, remove_form):
-        all_images_name = self.get_images_name()
-        all_images_name.sort()
+        all_images_name = self.get_images_name_sorted()
 
         empty = False
         if len(all_images_name) == 0:
@@ -57,8 +56,10 @@ class ImagesDataProvider:
         }
         return data
 
-    def get_images_name(self):
-        return os.listdir(app.config["UPLOADED_IMAGES_FOLDER"])
+    def get_images_name_sorted(self):
+        all_images_name = os.listdir(app.config["UPLOADED_IMAGES_FOLDER"])
+        all_images_name.sort()
+        return all_images_name
 
 
 images_data_provider = ImagesDataProvider()

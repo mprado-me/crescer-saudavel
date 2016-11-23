@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from flask_app.data_providers.admin.images.images import images_data_provider
+
 from flask_app.forms.error_msg_provider import error_msg_provider
 from flask_app.forms.widgets import personalized_textarea
 
@@ -324,6 +326,36 @@ class ProductForm(FlaskForm):
         validators=[
             Markdown(message=error_msg_provider.markdown_format()),
         ])
+
+    def add_choices(self):
+        categories = Category.query.order_by(Category.name).all()
+
+        choices = [("0/0", "Nenhuma")]
+        for category in categories:
+            choices.append((str(category.id)+"/0", category.name))
+            for subcategory in category.subcategories:
+                choices.append((str(category.id) + "/" + str(subcategory.id), category.name + "/" + subcategory.name))
+        self.category_subcategory.choices = choices
+
+        choices = []
+        all_images_name = images_data_provider.get_images_name_sorted()
+        for image_name in all_images_name:
+            choices.append((image_name, image_name))
+
+        self.image_1.choices = choices[:]
+
+        choices.insert(0, ("", "Nenhuma"))
+
+        self.image_2.choices = choices
+        self.image_3.choices = choices
+        self.image_4.choices = choices
+        self.image_5.choices = choices
+        self.image_6.choices = choices
+        self.image_7.choices = choices
+        self.image_8.choices = choices
+        self.image_9.choices = choices
+        self.image_10.choices = choices
+
 
 class AddProductForm(ProductForm):
     add = SubmitField(label="Adicionar")
