@@ -99,6 +99,10 @@ textarea {
     padding: 4px 6px;
 }
 
+.input-error {
+    padding: 4px 6px !important;
+}
+
 @media screen and (max-width: 768px) {
     textarea {
         width: 30em;

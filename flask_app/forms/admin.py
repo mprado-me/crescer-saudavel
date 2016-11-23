@@ -8,7 +8,7 @@ from flask_app.forms.widgets import personalized_textarea
 
 from flask_app.models.category import Category
 
-from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Length, Integer, Float, Price, Markdown
+from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Length, NotNegativeIntegerString, FloatString, Price, Markdown
 
 from flask_wtf import FlaskForm
 
@@ -86,7 +86,7 @@ class ProductForm(FlaskForm):
         },
         validators=[
             DataRequired(message=error_msg_provider.data_required()),
-            Float(message=error_msg_provider.price_format()),
+            FloatString(message=error_msg_provider.price_format()),
             Price(message=error_msg_provider.price_format()),
         ])
     stock_quantity = StringField(
@@ -96,8 +96,7 @@ class ProductForm(FlaskForm):
             "size": "12"},
         validators=[
             DataRequired(message=error_msg_provider.data_required()),
-            Integer(message=error_msg_provider.stock_quantity()),
-            NumberRange(min=0, message=error_msg_provider.stock_quantity())
+            NotNegativeIntegerString(message=error_msg_provider.stock_quantity()),
         ])
     summary = TextAreaField(
         label="Resumo",
@@ -124,55 +123,46 @@ class ProductForm(FlaskForm):
         label="2º Imagem",
         choices=[("0", "0")],
         validators = [
-            DataRequired(message=error_msg_provider.data_required())
         ])
     image_3 = SelectField(
         label="3º Imagem",
         choices=[("0", "0")],
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
         ])
     image_4 = SelectField(
         label="4º Imagem",
         choices=[("0", "0")],
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
         ])
     image_5 = SelectField(
         label="5º Imagem",
         choices=[("0", "0")],
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
         ])
     image_6 = SelectField(
         label="6º Imagem",
         choices=[("0", "0")],
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
         ])
     image_7 = SelectField(
         label="7º Imagem",
         choices=[("0", "0")],
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
         ])
     image_8 = SelectField(
         label="8º Imagem",
         choices=[("0", "0")],
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
         ])
     image_9 = SelectField(
         label="9º Imagem",
         choices=[("0", "0")],
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
         ])
     image_10 = SelectField(
         label="10º Imagem",
         choices=[("0", "0")],
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
         ])
 
 
@@ -182,7 +172,7 @@ class ProductForm(FlaskForm):
             "placeholder": "Ex.: Detalhes"
         },
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_1_content = TextAreaField(
         label="Conteúdo da 1º aba",
@@ -203,7 +193,7 @@ class ProductForm(FlaskForm):
     tab_2_title = StringField(
         label="Título da 2º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_2_content = TextAreaField(
         label="Conteúdo da 2º aba",
@@ -217,7 +207,7 @@ class ProductForm(FlaskForm):
     tab_3_title = StringField(
         label="Título da 3º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_3_content = TextAreaField(
         label="Conteúdo da 3º aba",
@@ -231,7 +221,7 @@ class ProductForm(FlaskForm):
     tab_4_title = StringField(
         label="Título da 4º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_4_content = TextAreaField(
         label="Conteúdo da 4º aba",
@@ -245,7 +235,7 @@ class ProductForm(FlaskForm):
     tab_5_title = StringField(
         label="Título da 5º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_5_content = TextAreaField(
         label="Conteúdo da 5º aba",
@@ -259,7 +249,7 @@ class ProductForm(FlaskForm):
     tab_6_title = StringField(
         label="Título da 6º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_6_content = TextAreaField(
         label="Conteúdo da 6º aba",
@@ -273,7 +263,7 @@ class ProductForm(FlaskForm):
     tab_7_title = StringField(
         label="Título da 7º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_7_content = TextAreaField(
         label="Conteúdo da 7º aba",
@@ -287,7 +277,7 @@ class ProductForm(FlaskForm):
     tab_8_title = StringField(
         label="Título da 8º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_8_content = TextAreaField(
         label="Conteúdo da 8º aba",
@@ -301,7 +291,7 @@ class ProductForm(FlaskForm):
     tab_9_title = StringField(
         label="Título da 9º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_9_content = TextAreaField(
         label="Conteúdo da 9º aba",
@@ -315,7 +305,7 @@ class ProductForm(FlaskForm):
     tab_10_title = StringField(
         label="Título da 10º aba",
         validators=[
-            Length(min_length=1, max_length=32, message=error_msg_provider.tab_title_length())
+            Length(min_length=0, max_length=32, message=error_msg_provider.tab_title_length())
         ])
     tab_10_content = TextAreaField(
         label="Conteúdo da 10º aba",

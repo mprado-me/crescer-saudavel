@@ -12,13 +12,13 @@ class ErrorMsgProvider:
         return "Formato Markdown inválido"
 
     def stock_quantity(self):
-        return "A quantidade deste item no estoque deve ser um número inteiro maior ou igual a zero"
+        return "A quantidade do item no estoque deve ser um número inteiro maior ou igual a zero"
 
     def price_format(self):
-        return "Formato de preço inválido. Exemplos de formatos aceitos: 0,80 | 13,20 | 8.50 | 0.76 | 123.60"
+        return "Formato de preço inválido. Exemplos de formatos aceitos: 8.50 | 0.76 | 123.60"
 
     def tab_title_length(self):
-        return "O título de uma aba de produto deve ter entre 1 e 32 caracteres"
+        return "O título de uma aba de produto deve possuir no máximo 32 caracteres"
 
     def category_too_long(self):
         return "O nome de uma categoria deve ter no máximo 64 caracteres"

@@ -41,7 +41,13 @@ def admin_add_product():
     # POST
     else:
         try:
-            raise NotImplementedError()
+            form.add_choices()
+
+            if not form.validate_on_submit():
+                data = products_data_provider.get_add_data(form=form)
+                return render_template("admin/products/add_product.html", data=data)
+
+            return "Produto adicionado com sucesso"
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)

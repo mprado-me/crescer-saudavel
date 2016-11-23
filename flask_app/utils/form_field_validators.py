@@ -240,14 +240,14 @@ class Markdown(object):
 
         try:
             Markup(markdown.markdown(field.data))
-        except:
+        except Exception:
             if self.stop:
                 raise StopValidation(self.message)
             else:
                 raise ValidationError(self.message)
 
 
-class Integer(object):
+class NotNegativeIntegerString(object):
     def __init__(self, message=u'Valor fornecido deve ser inteiro', stop=True):
         self.message = message
         self.stop = stop
@@ -257,15 +257,17 @@ class Integer(object):
             self.message = self.message()
 
         try:
-            int(field.data)
-        except:
+            data_as_int = int(field.data)
+            if data_as_int < 0:
+                raise Exception()
+        except Exception:
             if self.stop:
                 raise StopValidation(self.message)
             else:
                 raise ValidationError(self.message)
 
 
-class Float(object):
+class FloatString(object):
     def __init__(self, message=u'Valor fornecido deve ser um número real', stop=True):
         self.message = message
         self.stop = stop
@@ -276,7 +278,7 @@ class Float(object):
 
         try:
             float(field.data)
-        except:
+        except Exception:
             if self.stop:
                 raise StopValidation(self.message)
             else:
@@ -287,9 +289,6 @@ class Price(Regexp):
     def __init__(self, message=u"Formato de preço inválido", stop=False):
         self.message = message
         self.stop = stop
-        self.validate_hostname = HostnameValidation(
-            require_tld=True,
-        )
         super(Price, self).__init__(r'^\d+[,.]\d\d$', re.IGNORECASE, message)
 
     def __call__(self, form, field):
@@ -299,12 +298,6 @@ class Price(Regexp):
         try:
             match = super(Price, self).__call__(form, field, self.message)
         except ValidationError:
-            if self.stop:
-                raise StopValidation(self.message)
-            else:
-                raise ValidationError(self.message)
-
-        if not self.validate_hostname(match.group(1)):
             if self.stop:
                 raise StopValidation(self.message)
             else:
