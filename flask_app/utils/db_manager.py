@@ -43,6 +43,12 @@ class DbManager:
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 
+    def refresh(self, element):
+        try:
+            db.session.refresh(element)
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
     def commit(self):
         try:
             db.session.commit()

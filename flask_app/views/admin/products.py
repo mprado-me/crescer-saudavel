@@ -101,9 +101,11 @@ def admin_add_product():
             db_manager.add(product)
             db_manager.commit()
 
-            flash("Produto \"%s\" foi adicionado com sucesso." % form.title.data, "success")
+            db_manager.refresh(product)
+            flash("Produto \"%s\" foi adicionado com sucesso. Clique <a target='_blank' href=%s>aqui</a> para ver o produto." % (form.title.data, url_for("product", product_id=product.id)), "success")
             return redirect(url_for("admin_add_product"))
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
