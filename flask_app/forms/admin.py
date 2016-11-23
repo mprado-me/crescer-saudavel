@@ -8,7 +8,7 @@ from flask_app.forms.widgets import personalized_textarea
 
 from flask_app.models.category import Category
 
-from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Length, NotNegativeIntegerString, FloatString, Price, Markdown
+from flask_app.utils.form_field_validators import AllowedFileFormat, HasFilePart, Length, NotNegativeIntegerString, Price, Markdown
 
 from flask_wtf import FlaskForm
 
@@ -70,7 +70,8 @@ class ProductForm(FlaskForm):
             "size": "25"
         },
         validators=[
-            DataRequired(message=error_msg_provider.data_required())
+            DataRequired(message=error_msg_provider.data_required()),
+            Length(max_length=128, message=error_msg_provider.product_title_length())
         ])
     category_subcategory = SelectField(
         label="Categoria/Subcategoria",
@@ -86,8 +87,7 @@ class ProductForm(FlaskForm):
         },
         validators=[
             DataRequired(message=error_msg_provider.data_required()),
-            FloatString(message=error_msg_provider.price_format()),
-            Price(message=error_msg_provider.price_format()),
+            Price(message=error_msg_provider.price()),
         ])
     stock_quantity = StringField(
         label="Quantidade no estoque",

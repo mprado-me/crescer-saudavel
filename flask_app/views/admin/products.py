@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from decimal import Decimal
+
 from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import login_required
 
@@ -13,6 +15,7 @@ from flask_app.data_providers.admin.products.subcategories import subcategories_
 from flask_app.forms.admin import AddSubcategoryForm, AddCategoryForm, AddProductForm, EditSubcategoryForm, EditCategoryForm, FilterCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
+from flask_app.models.product import Product
 from flask_app.models.subcategory import Subcategory
 
 from flask_app.utils.db_manager import db_manager
@@ -47,7 +50,59 @@ def admin_add_product():
                 data = products_data_provider.get_add_data(form=form)
                 return render_template("admin/products/add_product.html", data=data)
 
-            return "Produto adicionado com sucesso"
+            category_id = int(form.category_subcategory.data.split('/')[0])
+            if category_id == 0:
+                category_id = None
+            subcategory_id = int(form.category_subcategory.data.split('/')[1])
+            if subcategory_id == 0:
+                subcategory_id = None
+
+            product = Product(
+                title=form.title.data,
+                category_id=category_id,
+                subcategory_id=subcategory_id,
+                price=Decimal(form.price.data.replace(',', '.')),
+                stock_quantity=int(form.stock_quantity.data),
+                summary=form.summary.data,
+
+                image_1=form.image_1.data,
+                image_2=form.image_2.data,
+                image_3=form.image_3.data,
+                image_4=form.image_4.data,
+                image_5=form.image_5.data,
+                image_6=form.image_6.data,
+                image_7=form.image_7.data,
+                image_8=form.image_8.data,
+                image_9=form.image_9.data,
+                image_10=form.image_10.data,
+
+                tab_1_title=form.tab_1_title.data,
+                tab_1_content=form.tab_1_content.data,
+                tab_2_title=form.tab_2_title.data,
+                tab_2_content=form.tab_2_content.data,
+                tab_3_title=form.tab_3_title.data,
+                tab_3_content=form.tab_3_content.data,
+                tab_4_title=form.tab_4_title.data,
+                tab_4_content=form.tab_4_content.data,
+                tab_5_title=form.tab_5_title.data,
+                tab_5_content=form.tab_5_content.data,
+                tab_6_title=form.tab_6_title.data,
+                tab_6_content=form.tab_6_content.data,
+                tab_7_title=form.tab_7_title.data,
+                tab_7_content=form.tab_7_content.data,
+                tab_8_title=form.tab_8_title.data,
+                tab_8_content=form.tab_8_content.data,
+                tab_9_title=form.tab_9_title.data,
+                tab_9_content=form.tab_9_content.data,
+                tab_10_title=form.tab_10_title.data,
+                tab_10_content=form.tab_10_content.data,
+            )
+
+            db_manager.add(product)
+            db_manager.commit()
+
+            flash("Produto \"%s\" foi adicionado com sucesso." % form.title.data, "success")
+            return redirect(url_for("admin_add_product"))
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)

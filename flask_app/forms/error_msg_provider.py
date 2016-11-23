@@ -8,14 +8,17 @@ class ErrorMsgProvider:
     def __init__(self):
         pass
 
+    def product_title_length(self):
+        return "O título de um produto deve possuir no máximo 128 caracteres"
+
     def markdown_format(self):
         return "Formato Markdown inválido"
 
     def stock_quantity(self):
         return "A quantidade do item no estoque deve ser um número inteiro maior ou igual a zero"
 
-    def price_format(self):
-        return "Formato de preço inválido. Exemplos de formatos aceitos: 8.50 | 0.76 | 123.60"
+    def price(self):
+        return "Formato de preço inválido ou preço excessivamente alto (maior ou igual a 10 bilhões). Exemplos de formatos aceitos: 12,80 | 0,90 | 8.50 | 0.76 | 123.60"
 
     def tab_title_length(self):
         return "O título de uma aba de produto deve possuir no máximo 32 caracteres"

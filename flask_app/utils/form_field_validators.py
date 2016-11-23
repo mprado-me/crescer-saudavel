@@ -267,29 +267,11 @@ class NotNegativeIntegerString(object):
                 raise ValidationError(self.message)
 
 
-class FloatString(object):
-    def __init__(self, message=u'Valor fornecido deve ser um número real', stop=True):
-        self.message = message
-        self.stop = stop
-
-    def __call__(self, form, field):
-        if callable(self.message):
-            self.message = self.message()
-
-        try:
-            float(field.data)
-        except Exception:
-            if self.stop:
-                raise StopValidation(self.message)
-            else:
-                raise ValidationError(self.message)
-
-
 class Price(Regexp):
     def __init__(self, message=u"Formato de preço inválido", stop=False):
         self.message = message
         self.stop = stop
-        super(Price, self).__init__(r'^\d+[,.]\d\d$', re.IGNORECASE, message)
+        super(Price, self).__init__(r'^\d{1,10}[,.]\d\d$', re.IGNORECASE, message)
 
     def __call__(self, form, field):
         if callable(self.message):

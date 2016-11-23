@@ -7,8 +7,10 @@ def personalized_textarea(field, **kwargs):
     example = kwargs.pop('example', "")
     markdown = kwargs.pop('markdown', False)
     options = dict(kwargs, name=field.name, id=field.name)
+    if not field.data:
+        field.data = ""
     html = []
-    html.append(u'<textarea %s></textarea>' % html_params(**options))
+    html.append(u'<textarea %s>%s</textarea>' % (html_params(**options), field.data))
     html.append(u'<br>')
     if markdown:
         html.append(u"""<div class="markdown-container"><span class="label label-default markdown">Formato Markdown</span>""")
