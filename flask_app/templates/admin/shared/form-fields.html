@@ -1,12 +1,31 @@
 {% for field in form %}
     {% if field.type == "BooleanField" %}
         { field }} {{ field.label }}<br>
-    {% elif field.type in ["StringField", "SelectField"]  %}
-        {{ field.label }}:  {{ field }}<br>
+    {% elif field.type in ["StringField", "SelectField", "IntegerField"]  %}
+        {{ field.label }}
+        {% if field.flags.required and field.type != "SelectField" %}
+            <span class="required-optional">(Obrigatório)</span>
+        {% elif field.type != "SelectField" %}
+            <span class="required-optional">(Opcional)</span>
+        {% endif %}
+        :
+        {{ field }}<br>
+    {% elif field.type == "TextAreaField" %}
+        {{ field.label }}
+        {% if field.flags.required %}
+            <span class="required-optional">(Obrigatório)</span>
+        {% else %}
+            <span class="required-optional">(Opcional)</span>
+        {% endif %}
+        :<br>
+        {{ field }}<br>
     {% elif field.type == "FileField" %}
         {{ field }}
     {% elif field.type == "SubmitField" %}
         {{ field }}
+        <br>
+        <br>
+        <br>
     {% endif %}
     {% if field.errors and field.errors|length > 0 %}
         <div class="input-errors-container">

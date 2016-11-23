@@ -226,3 +226,67 @@ class VariableTrue(object):
                 raise StopValidation(self.message)
             else:
                 raise ValidationError(self.message)
+
+
+class Markdown(object):
+    def __init__(self, message=u'Formatação Markdown inválida', stop=True):
+        self.message = message
+        self.stop = stop
+
+    def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
+        if False:
+            if self.stop:
+                raise StopValidation(self.message)
+            else:
+                raise ValidationError(self.message)
+
+
+class Integer(object):
+    def __init__(self, message=u'Formatação Markdown inválida', stop=True):
+        self.message = message
+        self.stop = stop
+
+    def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
+        if False:
+            if self.stop:
+                raise StopValidation(self.message)
+            else:
+                raise ValidationError(self.message)
+
+
+class Float(object):
+    def __init__(self, message=u'Formatação Markdown inválida', stop=True):
+        self.message = message
+        self.stop = stop
+
+    def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
+        if False:
+            if self.stop:
+                raise StopValidation(self.message)
+            else:
+                raise ValidationError(self.message)
+
+
+class Price(object):
+    def __init__(self, message=u'Formatação Markdown inválida', stop=True):
+        self.message = message
+        self.stop = stop
+
+    def __call__(self, form, field):
+        if callable(self.message):
+            self.message = self.message()
+
+        if False:
+            if self.stop:
+                raise StopValidation(self.message)
+            else:
+                raise ValidationError(self.message)

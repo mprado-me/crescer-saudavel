@@ -6,6 +6,22 @@
     margin-bottom: 8px;
 }
 
+.form button{
+    margin-bottom: 8px;
+}
+
+.form select{
+    margin-bottom: 8px;
+}
+
+.form textarea{
+    margin-bottom: 8px;
+}
+
+.form .markdown-container{
+    margin-bottom: 0px;
+}
+
 .no-points {
     list-style-type:none;
     padding-left: 0px;
@@ -58,4 +74,41 @@
 .jumbotron.filter {
     padding: 16px;
     margin-bottom: 0px;
+}
+
+textarea {
+    width: 40em;
+    height: 6em;
+}
+
+.popover{
+    max-width: 70%;
+}
+
+.example-jumbotron {
+    padding: 12px 20px !important;
+    margin-bottom: 0px;
+}
+
+.required-optional {
+    font-size: 12px;
+}
+
+.label.markdown {
+    margin-right: 6px;
+    padding: 4px 6px;
+}
+
+@media screen and (max-width: 768px) {
+    textarea {
+        width: 30em;
+        height: 6em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    textarea {
+        width: 20em;
+        height: 6em;
+    }
 }
