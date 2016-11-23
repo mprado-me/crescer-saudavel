@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import markdown
 import re
 
 from ..models.user import User
 
 from exceptions import DatabaseAccessError
 
-from flask import request
+from flask import request, Markup
 
 from wtforms.validators import HostnameValidation, ValidationError, Regexp, StopValidation
 
@@ -237,7 +238,9 @@ class Markdown(object):
         if callable(self.message):
             self.message = self.message()
 
-        if False:
+        try:
+            Markup(markdown.markdown(field.data))
+        except:
             if self.stop:
                 raise StopValidation(self.message)
             else:
@@ -245,7 +248,7 @@ class Markdown(object):
 
 
 class Integer(object):
-    def __init__(self, message=u'Formatação Markdown inválida', stop=True):
+    def __init__(self, message=u'Valor fornecido deve ser inteiro', stop=True):
         self.message = message
         self.stop = stop
 
@@ -253,7 +256,9 @@ class Integer(object):
         if callable(self.message):
             self.message = self.message()
 
-        if False:
+        try:
+            int(field.data)
+        except:
             if self.stop:
                 raise StopValidation(self.message)
             else:
@@ -261,7 +266,7 @@ class Integer(object):
 
 
 class Float(object):
-    def __init__(self, message=u'Formatação Markdown inválida', stop=True):
+    def __init__(self, message=u'Valor fornecido deve ser um número real', stop=True):
         self.message = message
         self.stop = stop
 
@@ -269,23 +274,37 @@ class Float(object):
         if callable(self.message):
             self.message = self.message()
 
-        if False:
+        try:
+            float(field.data)
+        except:
             if self.stop:
                 raise StopValidation(self.message)
             else:
                 raise ValidationError(self.message)
 
 
-class Price(object):
-    def __init__(self, message=u'Formatação Markdown inválida', stop=True):
+class Price(Regexp):
+    def __init__(self, message=u"Formato de preço inválido", stop=False):
         self.message = message
         self.stop = stop
+        self.validate_hostname = HostnameValidation(
+            require_tld=True,
+        )
+        super(Price, self).__init__(r'^\d+[,.]\d\d$', re.IGNORECASE, message)
 
     def __call__(self, form, field):
         if callable(self.message):
             self.message = self.message()
 
-        if False:
+        try:
+            match = super(Price, self).__call__(form, field, self.message)
+        except ValidationError:
+            if self.stop:
+                raise StopValidation(self.message)
+            else:
+                raise ValidationError(self.message)
+
+        if not self.validate_hostname(match.group(1)):
             if self.stop:
                 raise StopValidation(self.message)
             else:

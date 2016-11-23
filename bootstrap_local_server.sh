@@ -19,6 +19,7 @@ pip install psycopg2;
 pip install Flask-Mail;
 pip install Flask-Login;
 pip install enum34;
+pip install markdown;
 
 cd /vagrant;
 mkdir logs;
