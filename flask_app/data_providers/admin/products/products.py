@@ -33,8 +33,15 @@ class ProductsDataProvider():
         if not product:
             raise InvalidParamError()
 
+        category_id = product.category_id
+        if not category_id:
+            category_id = 0
+        subcategory_id = product.subcategory_id
+        if not subcategory_id:
+            subcategory_id = 0
+
         form.title.data = product.title
-        form.category_subcategory.data = str(product.category_id) + "/" + str(product.subcategory_id)
+        form.category_subcategory.data = str(category_id) + "/" + str(subcategory_id)
         form.price.data = str(product.price)
         form.stock_quantity.data = str(product.stock_quantity)
         form.stop_sell_stock_quantity.data = str(product.stop_sell_stock_quantity)
