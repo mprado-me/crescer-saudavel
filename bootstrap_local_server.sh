@@ -23,6 +23,7 @@ pip install markdown;
 
 cd /vagrant;
 mkdir logs;
+mkdir flask_app/static/uploads;
 mkdir flask_app/static/uploads/images;
 
 # To create database user and the database for the user:
