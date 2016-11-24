@@ -182,7 +182,11 @@ def login():
             db_manager.add(user)
             db_manager.commit()
             login_user(user)
-            return redirect(url_for('my_account'))
+
+            if user.email == app.config["ADMIN_MAIL"]:
+                return redirect(url_for('admin_dashboard'))
+            else:
+                return redirect(url_for('my_account'))
         except DatabaseAccessError:
             db_manager.rollback()
             flash(DatabaseAccessError.msg, "danger")
