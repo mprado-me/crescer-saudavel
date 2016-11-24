@@ -43,7 +43,7 @@
             <td>{{product.stock_quantity}}</td>
             <td>{{product.stop_sell_stock_quantity}}</td>
             <td>
-                  <a href="{{url_for('product', product_id=product.id)}}">Ver produto</a>
+                  <a target="_blank" href="{{url_for('product', product_id=product.id)}}">Ver produto</a>
                   <div class="br-8px"></div>
                   <a href="{{url_for('admin_edit_product', product_id=product.id)}}">Editar</a>
                   <div class="br-8px"></div>

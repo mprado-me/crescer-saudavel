@@ -22,7 +22,7 @@ from flask_app.models.subcategory import Subcategory
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
-from flask_app.utils.exceptions import DatabaseAccessError, InsecurePostException, InvalidQueryParamError, InvalidUrlParamError, log_unrecognized_exception
+from flask_app.utils.exceptions import InsecurePostException, InvalidQueryParamError, InvalidUrlParamError, log_unrecognized_exception
 
 
 @app.route('/painel-administrativo/adicionar-produto', methods=['GET', 'POST'])
@@ -260,9 +260,25 @@ def admin_products(page):
 @admin
 @log_route
 def admin_remove_product(product_id):
+    remove_form = SimpleSubmitForm()
+
     try:
-        raise NotImplementedError()
+        if not remove_form.validate_on_submit():
+            raise InsecurePostException()
+
+        product = db_manager.get_product(product_id=product_id)
+
+        if not product:
+            raise InvalidUrlParamError("Product not found")
+
+        product.active = False
+        db_manager.add(product)
+        db_manager.commit()
+
+        flash("Produto #%s \"%s\" foi removido com sucesso." % (product.id, product.title), "success")
+        return redirect(url_for("admin_products", page=1))
     except Exception as e:
+        db_manager.rollback()
         log_unrecognized_exception(e)
         abort(500)
 
@@ -272,9 +288,25 @@ def admin_remove_product(product_id):
 @admin
 @log_route
 def admin_reactivate_product(product_id):
+    reactivate_form = SimpleSubmitForm()
+
     try:
-        raise NotImplementedError()
+        if not reactivate_form.validate_on_submit():
+            raise InsecurePostException()
+
+        product = db_manager.get_product(product_id=product_id)
+
+        if not product:
+            raise InvalidUrlParamError("Product not found")
+
+        product.active = True
+        db_manager.add(product)
+        db_manager.commit()
+
+        flash("Produto #%s \"%s\" foi reativado com sucesso." % (product.id, product.title), "success")
+        return redirect(url_for("admin_products", page=1))
     except Exception as e:
+        db_manager.rollback()
         log_unrecognized_exception(e)
         abort(500)
 
@@ -284,9 +316,26 @@ def admin_reactivate_product(product_id):
 @admin
 @log_route
 def admin_add_to_stock(product_id):
+    add_to_stock_form = StockOperationForm()
+
     try:
-        raise NotImplementedError()
+        product = db_manager.get_product(product_id=product_id)
+
+        if not product:
+            raise InvalidUrlParamError("Product not found")
+
+        if not add_to_stock_form.validate_on_submit():
+            flash("Ocorreu uma falha ao aumentar o estoque do produto #%s \"%s\" pois o valor fornecido é inválido." % (product.id, product.title), "danger")
+            return redirect(url_for("admin_products", page=1))
+
+        product.stock_quantity = product.stock_quantity + int(add_to_stock_form.quantity.data)
+        db_manager.add(product)
+        db_manager.commit()
+
+        flash("O estoque do produto #%s \"%s\" foi acrescido pelo valor fornecido com sucesso." % (product.id, product.title), "success")
+        return redirect(url_for("admin_products", page=1))
     except Exception as e:
+        db_manager.rollback()
         log_unrecognized_exception(e)
         abort(500)
 
@@ -296,11 +345,37 @@ def admin_add_to_stock(product_id):
 @admin
 @log_route
 def admin_remove_from_stock(product_id):
+    remove_from_stock_form = StockOperationForm()
+
     try:
-        raise NotImplementedError()
+        product = db_manager.get_product(product_id=product_id)
+
+        if not product:
+            raise InvalidUrlParamError("Product not found")
+
+        if not remove_from_stock_form.validate_on_submit():
+            return remove_from_stock_fail(product=product)
+
+        product.stock_quantity = product.stock_quantity - int(remove_from_stock_form.quantity.data)
+        if product.stock_quantity < 0:
+            return remove_from_stock_fail(product=product)
+
+        db_manager.add(product)
+        db_manager.commit()
+
+        flash("O estoque do produto #%s \"%s\" foi diminuido pelo valor fornecido com sucesso." % (product.id, product.title),
+              "success")
+        return redirect(url_for("admin_products", page=1))
     except Exception as e:
+        db_manager.rollback()
         log_unrecognized_exception(e)
         abort(500)
+
+
+def remove_from_stock_fail(product):
+    flash("Ocorreu uma falha ao diminuir o estoque do produto #%s \"%s\" pois o valor fornecido é inválido." % (
+        product.id, product.title), "danger")
+    return redirect(url_for("admin_products", page=1))
 
 
 @app.route('/painel-administrativo/atualizar-estoque/<int:product_id>', methods=["POST"])
@@ -308,9 +383,29 @@ def admin_remove_from_stock(product_id):
 @admin
 @log_route
 def admin_update_stock(product_id):
+    update_stock_form = StockOperationForm()
+
     try:
-        raise NotImplementedError()
+        product = db_manager.get_product(product_id=product_id)
+
+        if not product:
+            raise InvalidUrlParamError("Product not found")
+
+        if not update_stock_form.validate_on_submit():
+            flash("Ocorreu uma falha ao atualizar o estoque do produto #%s \"%s\" pois o valor fornecido é inválido." % (
+            product.id, product.title), "danger")
+            return redirect(url_for("admin_products", page=1))
+
+        product.stock_quantity = int(update_stock_form.quantity.data)
+
+        db_manager.add(product)
+        db_manager.commit()
+
+        flash("O estoque do produto #%s \"%s\" foi atualizado com sucesso." % (product.id, product.title),
+              "success")
+        return redirect(url_for("admin_products", page=1))
     except Exception as e:
+        db_manager.rollback()
         log_unrecognized_exception(e)
         abort(500)
 
@@ -346,9 +441,6 @@ def admin_add_product_category():
 
             flash("Categoria \"%s\" foi adicionada com sucesso." % form.category.data, "success")
             return redirect(url_for("admin_add_product_category"))
-        except DatabaseAccessError:
-            db_manager.rollback()
-            abort(500)
         except Exception as e:
             db_manager.rollback()
             log_unrecognized_exception(e)
@@ -396,9 +488,6 @@ def admin_edit_product_category(category_id):
 
             flash("Categoria #%s foi editada com sucesso." % category.id, "success")
             return redirect(url_for("admin_product_categories", page=page_to_return))
-        except DatabaseAccessError:
-            db_manager.rollback()
-            abort(500)
         except Exception as e:
             db_manager.rollback()
             log_unrecognized_exception(e)
@@ -433,9 +522,6 @@ def admin_remove_product_category(category_id):
 
         flash("Categoria #%s \"%s\" foi removida com sucesso." % (category.id, category.name), "success")
         return redirect(url_for("admin_product_categories", page=page_to_return))
-    except DatabaseAccessError:
-        db_manager.rollback()
-        abort(500)
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -493,9 +579,6 @@ def admin_add_product_subcategory():
 
             flash("Subcategoria \"%s\" foi adicionada com sucesso." % form.subcategory.data, "success")
             return redirect(url_for("admin_add_product_subcategory"))
-        except DatabaseAccessError:
-            db_manager.rollback()
-            abort(500)
         except Exception as e:
             db_manager.rollback()
             log_unrecognized_exception(e)
@@ -544,9 +627,6 @@ def admin_edit_product_subcategory(subcategory_id):
 
             flash("Subcategoria #%s foi editada com sucesso." % subcategory_id, "success")
             return redirect(url_for("admin_product_subcategories", page=1))
-        except DatabaseAccessError:
-            db_manager.rollback()
-            abort(500)
         except Exception as e:
             db_manager.rollback()
             log_unrecognized_exception(e)
@@ -574,9 +654,6 @@ def admin_remove_product_subcategory(subcategory_id):
 
         flash("Subcategoria #%s \"%s\" foi removida com sucesso." % (subcategory.id, subcategory.name), "success")
         return redirect(url_for("admin_product_subcategories", page=1))
-    except DatabaseAccessError:
-        db_manager.rollback()
-        abort(500)
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
