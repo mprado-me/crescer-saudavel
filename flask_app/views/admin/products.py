@@ -12,7 +12,7 @@ from flask_app.data_providers.admin.products.categories import categories_data_p
 from flask_app.data_providers.admin.products.products import products_data_provider
 from flask_app.data_providers.admin.products.subcategories import subcategories_data_provider
 
-from flask_app.forms.admin import AddSubcategoryForm, AddCategoryForm, AddProductForm, EditSubcategoryForm, EditCategoryForm, FilterCategoryForm, SimpleSubmitForm
+from flask_app.forms.admin import AddSubcategoryForm, AddCategoryForm, AddProductForm, EditSubcategoryForm, EditCategoryForm, EditProductForm, FilterCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
 from flask_app.models.product import Product
@@ -115,12 +115,19 @@ def admin_add_product():
 @admin
 @log_route
 def admin_edit_product(product_id):
-    form = None
+    form = EditProductForm()
 
     # GET
     if request.method == "GET":
         try:
-            raise NotImplementedError()
+            product = db_manager.get_product(product_id)
+            if not product:
+                raise InvalidUrlParamError()
+
+            form.add_choices()
+
+            data = products_data_provider.get_edit_data(form=form, product_id=product_id)
+            return render_template("admin/products/edit_product.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
             abort(500)
@@ -128,8 +135,71 @@ def admin_edit_product(product_id):
     # POST
     else:
         try:
-            raise NotImplementedError()
+            product = db_manager.get_product(product_id)
+            if not product:
+                raise InvalidUrlParamError()
+
+            form.add_choices()
+
+            if not form.validate_on_submit():
+                data = products_data_provider.get_edit_data(form=form, product_id=product_id)
+                return render_template("admin/products/edit_product.html", data=data)
+
+            category_id = int(form.category_subcategory.data.split('/')[0])
+            if category_id == 0:
+                category_id = None
+            subcategory_id = int(form.category_subcategory.data.split('/')[1])
+            if subcategory_id == 0:
+                subcategory_id = None
+
+            product.title=form.title.data,
+            product.category_id=category_id,
+            product.subcategory_id=subcategory_id,
+            product.price=Decimal(form.price.data.replace(',', '.')),
+            product.stock_quantity=int(form.stock_quantity.data),
+            product.summary=form.summary.data,
+
+            product.image_1=form.image_1.data,
+            product.image_2=form.image_2.data,
+            product.image_3=form.image_3.data,
+            product.image_4=form.image_4.data,
+            product.image_5=form.image_5.data,
+            product.image_6=form.image_6.data,
+            product.image_7=form.image_7.data,
+            product.image_8=form.image_8.data,
+            product.image_9=form.image_9.data,
+            product.image_10=form.image_10.data,
+
+            product.tab_1_title=form.tab_1_title.data,
+            product.tab_1_content=form.tab_1_content.data,
+            product.tab_2_title=form.tab_2_title.data,
+            product.tab_2_content=form.tab_2_content.data,
+            product.tab_3_title=form.tab_3_title.data,
+            product.tab_3_content=form.tab_3_content.data,
+            product.tab_4_title=form.tab_4_title.data,
+            product.tab_4_content=form.tab_4_content.data,
+            product.tab_5_title=form.tab_5_title.data,
+            product.tab_5_content=form.tab_5_content.data,
+            product.tab_6_title=form.tab_6_title.data,
+            product.tab_6_content=form.tab_6_content.data,
+            product.tab_7_title=form.tab_7_title.data,
+            product.tab_7_content=form.tab_7_content.data,
+            product.tab_8_title=form.tab_8_title.data,
+            product.tab_8_content=form.tab_8_content.data,
+            product.tab_9_title=form.tab_9_title.data,
+            product.tab_9_content=form.tab_9_content.data,
+            product.tab_10_title=form.tab_10_title.data,
+            product.tab_10_content=form.tab_10_content.data,
+
+            db_manager.add(product)
+            db_manager.commit()
+
+            flash(
+                "Produto #%s \"%s\" foi editado com sucesso. Clique <a target='_blank' href=%s>aqui</a> para ver o produto." %
+                (product.id, product.title, url_for("product", product_id=product.id)), "success")
+            return redirect(url_for("admin_products", page=1))
         except Exception as e:
+            db_manager.rollback()
             log_unrecognized_exception(e)
             abort(500)
 
@@ -379,7 +449,7 @@ def admin_edit_product_subcategory(subcategory_id):
     # GET
     if request.method == "GET":
         try:
-            subcategory = Subcategory.query.filter(Subcategory.id == subcategory_id).one_or_none()
+            subcategory = db_manager.get_subcategory(subcategory_id)
             if not subcategory:
                 raise InvalidUrlParamError()
 
@@ -394,13 +464,16 @@ def admin_edit_product_subcategory(subcategory_id):
     # POST
     else:
         try:
+            subcategory = db_manager.get_subcategory(subcategory_id)
+            if not subcategory:
+                raise InvalidUrlParamError()
+
             form.add_category_choices()
 
             if not form.validate_on_submit():
                 data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id)
                 return render_template("admin/products/edit_subcategory.html", data=data)
 
-            subcategory = db_manager.get_subcategory(subcategory_id)
             subcategory.name = form.subcategory.data
             subcategory.category_id = form.category_id.data
             db_manager.add(subcategory)

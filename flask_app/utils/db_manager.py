@@ -6,6 +6,7 @@ from .. import db
 from ..utils.exceptions import DatabaseAccessError
 
 from ..models.category import Category
+from ..models.product import Product
 from ..models.subcategory import Subcategory
 from ..models.user import User
 
@@ -40,6 +41,12 @@ class DbManager:
     def get_subcategory(self, subcategory_id):
         try:
             return Subcategory.query.filter_by(id=subcategory_id).one_or_none()
+        except Exception as e:
+            raise DatabaseAccessError(exception=e)
+
+    def get_product(self, product_id):
+        try:
+            return Product.query.filter_by(id=product_id).one_or_none()
         except Exception as e:
             raise DatabaseAccessError(exception=e)
 
