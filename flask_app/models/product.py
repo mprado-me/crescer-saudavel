@@ -13,6 +13,7 @@ class Product(db.Model):
     subcategory_id = db.Column(db.Integer, ForeignKey("subcategory.id"))
     price = db.Column(db.Numeric(precision=12, scale=2), nullable=False)
     stock_quantity = db.Column(db.Integer, nullable=False)
+    stop_sell_stock_quantity = db.Column(db.Integer, nullable=False)
     summary = db.Column(db.UnicodeText, nullable=False)
 
     image_1 = db.Column(db.Text, nullable=False)

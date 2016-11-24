@@ -37,6 +37,7 @@ class ProductsDataProvider():
         form.category_subcategory.data = str(product.category_id) + "/" + str(product.subcategory_id)
         form.price.data = str(product.price)
         form.stock_quantity.data = str(product.stock_quantity)
+        form.stop_sell_stock_quantity.data = str(product.stop_sell_stock_quantity)
         form.summary.data = product.summary
 
         form.image_1.data = product.image_1

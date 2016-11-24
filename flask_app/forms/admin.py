@@ -98,6 +98,15 @@ class ProductForm(FlaskForm):
             DataRequired(message=error_msg_provider.data_required()),
             NotNegativeIntegerString(message=error_msg_provider.stock_quantity()),
         ])
+    stop_sell_stock_quantity = StringField(
+        label="Parar de vender quando o estoque estiver abaixo de",
+        render_kw={
+            "placeholder": "Ex.: 5",
+            "size": "12"},
+        validators=[
+            DataRequired(message=error_msg_provider.data_required()),
+            NotNegativeIntegerString(message=error_msg_provider.stock_quantity()),
+        ])
     summary = TextAreaField(
         label="Resumo",
         widget=personalized_textarea,

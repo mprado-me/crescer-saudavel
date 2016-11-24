@@ -63,6 +63,7 @@ def admin_add_product():
                 subcategory_id=subcategory_id,
                 price=Decimal(form.price.data.replace(',', '.')),
                 stock_quantity=int(form.stock_quantity.data),
+                stop_sell_stock_quantity=int(form.stop_sell_stock_quantity.data),
                 summary=form.summary.data,
 
                 image_1=form.image_1.data,
@@ -157,6 +158,7 @@ def admin_edit_product(product_id):
             product.subcategory_id=subcategory_id,
             product.price=Decimal(form.price.data.replace(',', '.')),
             product.stock_quantity=int(form.stock_quantity.data),
+            product.stop_sell_stock_quantity=int(form.stop_sell_stock_quantity.data)
             product.summary=form.summary.data,
 
             product.image_1=form.image_1.data,
