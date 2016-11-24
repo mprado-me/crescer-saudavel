@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import ast
+
 from decimal import Decimal
 
 from flask import abort, flash, redirect, render_template, request, url_for
@@ -12,7 +14,7 @@ from flask_app.data_providers.admin.products.categories import categories_data_p
 from flask_app.data_providers.admin.products.products import products_data_provider
 from flask_app.data_providers.admin.products.subcategories import subcategories_data_provider
 
-from flask_app.forms.admin import AddSubcategoryForm, AddCategoryForm, AddProductForm, EditSubcategoryForm, EditCategoryForm, EditProductForm, FilterCategoryForm, SimpleSubmitForm
+from flask_app.forms.admin import StockOperationForm, AddSubcategoryForm, AddCategoryForm, AddProductForm, EditSubcategoryForm, EditCategoryForm, EditProductForm, FilterProductForm, FilterCategoryForm, SimpleSubmitForm
 
 from flask_app.models.category import Category
 from flask_app.models.product import Product
@@ -211,6 +213,65 @@ def admin_edit_product(product_id):
 @admin
 @log_route
 def admin_products(page):
+    filter_product_form = FilterProductForm()
+    action_form = SimpleSubmitForm()
+    stock_operation_form = StockOperationForm()
+
+    # Getting optional parameters
+    category_subcategory = request.args.get('category_subcategory')
+    active = request.args.get('active')
+
+    # Setting default value to optional parameters
+    if not category_subcategory:
+        category_subcategory = "0/0"
+    if not active:
+        active = "True"
+
+    try:
+        # Converting query parameters from string type to his respective python type
+        category_id = int(category_subcategory.split('/')[0])
+        if category_id == 0:
+            category_id = None
+        subcategory_id = int(category_subcategory.split('/')[1])
+        if subcategory_id == 0:
+            subcategory_id = None
+        active = ast.literal_eval(active)
+
+        filter_product_form.add_category_subcategory_choices()
+
+        data = products_data_provider.get_data(
+            page=page,
+            action_form=action_form,
+            stock_operation_form=stock_operation_form,
+            filter_product_form=filter_product_form,
+            category_id=category_id,
+            subcategory_id=subcategory_id,
+            active = active,
+            category_subcategory=category_subcategory
+        )
+        return render_template("admin/products/products.html", data=data)
+    except Exception as e:
+        log_unrecognized_exception(e)
+        abort(500)
+
+
+@app.route('/painel-administrativo/remover-produto/<int:product_id>', methods=['POST'])
+@login_required
+@admin
+@log_route
+def admin_remove_product(product_id):
+    try:
+        raise NotImplementedError()
+    except Exception as e:
+        log_unrecognized_exception(e)
+        abort(500)
+
+
+@app.route('/painel-administrativo/reativar-produto/<int:product_id>', methods=['POST'])
+@login_required
+@admin
+@log_route
+def admin_reactivate_product(product_id):
     try:
         raise NotImplementedError()
     except Exception as e:

@@ -10,7 +10,7 @@ from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabName
 
 from flask_app.data_providers.shared.paginator import paginator_data_provider
 
-from flask_app.models.category import Category
+from flask_app.models.product import Product
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.exceptions import InvalidParamError
@@ -78,5 +78,56 @@ class ProductsDataProvider():
             "product_id": product_id,
         }
         return data
+
+    def get_data(self, page, action_form, stock_operation_form, filter_product_form, category_id, subcategory_id, active, category_subcategory):
+        products = self.get_products(category_id=category_id, subcategory_id=subcategory_id, active=active)
+
+        empty = False
+        if len(products) == 0:
+            empty = True
+
+        total_n_pages = int(math.ceil(float(len(products)) / app.config["ADMIN_N_PRODUCTS_BY_PAGE"]))
+        total_n_pages = max(1, total_n_pages)
+
+        # page between 1 and total_n_pages
+        page = max(1, page)
+        page = min(total_n_pages, page)
+
+        first = (page - 1) * app.config["ADMIN_N_PRODUCTS_BY_PAGE"]
+        last_plus_one = first + app.config["ADMIN_N_PRODUCTS_BY_PAGE"]
+
+        filter_product_form.category_subcategory.data = category_subcategory
+        filter_product_form.active.data = str(active)
+
+        data = {
+            "action_form": action_form,
+            "stock_operation_form": stock_operation_form,
+            "filter_product_form": filter_product_form,
+            "empty": empty,
+            "page": page,
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
+            "paginator_data": paginator_data_provider.get_data(
+                current_page=page,
+                n_pages=app.config["ADMIN_N_PAGES_IN_PRODUCTS_PAGINATOR"],
+                total_n_pages=total_n_pages,
+                url_endpoint="admin_products",
+                other_url_params={
+                    "category_subcategory": category_subcategory,
+                    "active": active,
+                }
+            ),
+            "products": products[first:last_plus_one],
+        }
+        return data
+
+    def get_products(self, category_id, subcategory_id, active):
+        q = Product.query
+        if category_id:
+            q = q.filter(Product.category_id == category_id)
+        if category_id and subcategory_id:
+            q = q.filter(Product.subcategory_id == subcategory_id)
+        q = q.filter(Product.active == active)
+        return q.order_by(Product.title).all()
+
 
 products_data_provider = ProductsDataProvider()

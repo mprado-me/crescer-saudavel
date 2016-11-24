@@ -54,6 +54,8 @@ def load_user(user_id):
 
 import models.user
 
+import flask_app.views.debug
+
 import flask_app.views.admin.blog
 import flask_app.views.admin.cities
 import flask_app.views.admin.customers

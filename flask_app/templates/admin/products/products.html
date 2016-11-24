@@ -1,0 +1,118 @@
+{% extends "admin/shared/base.html" %}
+
+{% block title %}Produtos{% endblock %}
+
+{% block content %}
+  <a href="{{url_for('admin_add_product')}}">Adicionar novo produto</a>
+  <div class="br-8px"></div>
+
+  <div class="jumbotron filter">
+    <form action="" method=get enctype=multipart/form-data>
+      {% with form = data["filter_product_form"] %}
+        {% include "admin/shared/form-fields.html" %}
+      {% endwith %}
+    </form>
+  </div>
+
+  {% if not data["empty"] %}
+    {% with data=data["paginator_data"] %}
+      {% include "shared/paginator.html" %}
+    {% endwith %}
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Categoria</th>
+          <th>Subcategoria</th>
+          <th>Título</th>
+          <th>Preço (R$)</th>
+          <th>Em estoque</th>
+          <th style="width: 120px;">Parar de vender quando o estoque estiver abaixo de</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in data["products"] %}
+          <tr>
+            <td>#{{product.id}}</td>
+            <td>{{product.category.name}}</td>
+            <td>{{product.subcategory.name}}</td>
+            <td>{{product.title}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.stock_quantity}}</td>
+            <td>{{product.stop_sell_stock_quantity}}</td>
+            <td>
+                  <a href="{{url_for('product', product_id=product.id)}}">Ver produto</a>
+                  <div class="br-8px"></div>
+                  <a href="{{url_for('admin_edit_product', product_id=product.id)}}">Editar</a>
+                  <div class="br-8px"></div>
+                  <form class="add-to-stock-form" action="{{url_for('admin_add_to_stock', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                    {{ data["stock_operation_form"].csrf_token }}
+                    {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
+                    <input class="action-row" type=submit value="Adicionar ao estoque">
+                  </form>
+                  <form class="remove-from-stock-form" action="{{url_for('admin_remove_from_stock', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                    {{ data["stock_operation_form"].csrf_token }}
+                    {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
+                    <input class="action-row" type=submit value="Remover do estoque">
+                  </form>
+                  <form class="update-stock-form" action="{{url_for('admin_update_stock', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                    {{ data["stock_operation_form"].csrf_token }}
+                    {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
+                    <input class="action-row" type=submit value="Atualizar estoque">
+                  </form>
+                {% if product.active %}
+                    <form class="remove-form" action="{{url_for('admin_remove_product', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                      {{ data["action_form"].csrf_token }}
+                      <input type=submit value="Remover produto" >
+                    </form>
+                {% else %}
+                    <form class="reactivate-form" action="{{url_for('admin_reactivate_product', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                      {{ data["action_form"].csrf_token }}
+                      <input type=submit value="Reativar produto">
+                    </form>
+                {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% with data=data["paginator_data"] %}
+      {% include "shared/paginator.html" %}
+    {% endwith %}
+  {% else %}
+    <p>Nenhuma subcategoria foi encontrada.</p>
+  {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(".remove-form").submit(function() {
+      var c = confirm("Tem certeza que deseja remover o produto em questão?");
+      return c;
+  });
+
+  $(".reactivate-form").submit(function() {
+      var c = confirm("Tem certeza que deseja reativar o produto em questão?");
+      return c;
+  });
+
+  $(".add-to-stock-form").submit(function() {
+      var c = confirm("Tem certeza que deseja adicionar essa quantidade de items ao estoque?");
+      return c;
+  });
+
+  $(".remove-from-stock-form").submit(function() {
+      var c = confirm("Tem certeza que deseja remover do estoque essa quantidade de items?");
+      return c;
+  });
+
+  $(".update-stock-form").submit(function() {
+      var c = confirm("Tem certeza que deseja atualizar a quantidade de items no estoque?");
+      return c;
+  });
+</script>
+{% endblock %}

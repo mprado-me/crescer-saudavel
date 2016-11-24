@@ -1,6 +1,6 @@
 {% for field in form %}
     {% if field.type == "BooleanField" %}
-        { field }} {{ field.label }}<br>
+        {{ field }} {{ field.label }}<br>
     {% elif field.type in ["StringField", "SelectField", "IntegerField"]  %}
         {{ field.label }}
         {% if field.flags.required and field.type != "SelectField" %}
@@ -23,8 +23,6 @@
         {{ field }}
     {% elif field.type == "SubmitField" %}
         {{ field }}
-        <br>
-        <br>
         <br>
     {% endif %}
     {% if field.errors and field.errors|length > 0 %}

@@ -73,7 +73,7 @@
 
 .jumbotron.filter {
     padding: 16px;
-    margin-bottom: 0px;
+    margin-bottom: 8px;
 }
 
 textarea {
@@ -101,6 +101,14 @@ textarea {
 
 .input-error {
     padding: 4px 6px !important;
+}
+
+.quantity.action-row {
+    margin-right: 8px;
+}
+
+.action-row {
+    margin-bottom: 8px;
 }
 
 @media screen and (max-width: 768px) {

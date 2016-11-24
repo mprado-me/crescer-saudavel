@@ -327,20 +327,14 @@ class ProductForm(FlaskForm):
         ])
 
     def add_choices(self):
-        categories = Category.query.order_by(Category.name).all()
-
         choices = [("0/0", "Nenhuma")]
-        for category in categories:
-            choices.append((str(category.id)+"/0", category.name))
-            for subcategory in category.subcategories:
-                choices.append((str(category.id) + "/" + str(subcategory.id), category.name + "/" + subcategory.name))
-        self.category_subcategory.choices = choices
+        choices = choices + get_registered_category_subcategory_choices(self)
+        self.category_subcategory.choices = choices[:]
 
         choices = []
         all_images_name = images_data_provider.get_images_name_sorted()
         for image_name in all_images_name:
             choices.append((image_name, image_name))
-
         self.image_1.choices = choices[:]
 
         choices.insert(0, ("", "Nenhuma"))
@@ -361,6 +355,36 @@ class AddProductForm(ProductForm):
 
 class EditProductForm(ProductForm):
     edit = SubmitField(label="Editar")
+
+class FilterProductForm(FlaskForm):
+    category_subcategory = SelectField(
+        label="Categoria/Subcategoria",
+        choices=[("0", "0")],
+        validators=[
+            DataRequired(message=error_msg_provider.data_required())
+        ])
+    active = SelectField(
+        label="Status do produto",
+        choices=[("True", "Ativo"), ("False", "Removido")],
+        validators=[
+            DataRequired(message=error_msg_provider.data_required())
+        ])
+    filter = SubmitField(label="Filtrar")
+
+    def add_category_subcategory_choices(self):
+        choices = [("0/0", "Todas")]
+        choices = choices + get_registered_category_subcategory_choices(self)
+        self.category_subcategory.choices = choices[:]
+
+class StockOperationForm(FlaskForm):
+    quantity = StringField(
+        render_kw={
+            "placeholder": "Ex.: 3",
+            "size": "4"},
+        validators=[
+            DataRequired(message=error_msg_provider.data_required()),
+            NotNegativeIntegerString(message=error_msg_provider.stock_quantity()),
+        ])
 # Product -- end --
 
 class SimpleSubmitForm(FlaskForm):
@@ -385,3 +409,14 @@ def add_category_choices(form, include_all_category=False):
     form.category_id.choices = [(category.id, category.name) for category in categories]
     if include_all_category:
         form.category_id.choices.insert(0, (0, "Todas"))
+
+def get_registered_category_subcategory_choices(form):
+    choices = []
+    categories = Category.query.order_by(Category.name).all()
+
+    for category in categories:
+        choices.append((str(category.id) + "/0", category.name))
+        for subcategory in category.subcategories:
+            choices.append((str(category.id) + "/" + str(subcategory.id), category.name + "/" + subcategory.name))
+
+    return choices

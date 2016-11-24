@@ -4,13 +4,17 @@
 from flask_app import db
 
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    active = db.Column(db.Boolean, default=True, nullable=False)
     title = db.Column(db.String(128), nullable=False)
     category_id = db.Column(db.Integer, ForeignKey("category.id"))
+    category = relationship("Category", back_populates="products")
     subcategory_id = db.Column(db.Integer, ForeignKey("subcategory.id"))
+    subcategory = relationship("Subcategory", back_populates="products")
     price = db.Column(db.Numeric(precision=12, scale=2), nullable=False)
     stock_quantity = db.Column(db.Integer, nullable=False)
     stop_sell_stock_quantity = db.Column(db.Integer, nullable=False)
