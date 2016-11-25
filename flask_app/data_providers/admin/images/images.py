@@ -22,7 +22,7 @@ class ImagesDataProvider:
         }
         return data
 
-    def get_data(self, page, remove_form):
+    def get_data(self, page, remove_form, url_args):
         all_images_name = self.get_images_name_sorted()
 
         empty = False
@@ -40,6 +40,7 @@ class ImagesDataProvider:
         last_plus_one = first+app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]
 
         data = {
+            "url_args": url_args,
             "remove_form": remove_form,
             "empty": empty,
             "page": page,

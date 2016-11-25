@@ -25,7 +25,7 @@
             <td><img class="img-in-table" src="{{url_for('static', filename='uploads/images/'+image_name)}}"></td>
             <td>{{image_name}}</td>
             <td>
-              <form class="remove-form" action="{{url_for('admin_remove_image', image_name=image_name, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
+              <form class="remove-form" action="{{url_for('admin_remove_image', image_name=image_name, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                 {{ data["remove_form"].csrf_token }}
                 <input type=submit value=Remover>
               </form>

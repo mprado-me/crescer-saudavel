@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import ast
 import os
 
 from flask import abort, flash, redirect, render_template, request, url_for
@@ -57,9 +58,12 @@ def admin_add_image():
 @log_route
 def admin_images(page):
     remove_form = SimpleSubmitForm()
+    url_args = {
+        "page": page
+    }
 
     try:
-        data = images_data_provider.get_data(page=page, remove_form=remove_form)
+        data = images_data_provider.get_data(page=page, remove_form=remove_form, url_args=url_args)
         return render_template("admin/images/images.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)
@@ -73,14 +77,17 @@ def admin_images(page):
 def admin_remove_image(image_name):
     remove_form = SimpleSubmitForm()
 
-    # Getting optional parameters
-    page_to_return = request.args.get('page_to_return')
-
-    # Setting default value to optional parameters
-    if not page_to_return:
-        page_to_return = 1
-
     try:
+        # Getting optional parameters
+        url_args = request.args.get('url_args')
+
+        # Setting default value to optional parameters
+        # Converting optional parameters from string type to its corresponded python type
+        if not url_args:
+            url_args = {}
+        else:
+            url_args = ast.literal_eval(url_args)
+
         if not remove_form.validate_on_submit():
             raise InsecurePostException()
 
@@ -89,7 +96,7 @@ def admin_remove_image(image_name):
             os.remove(path_to_file)
 
         flash("Imagem \"%s\" foi removida com sucesso." % image_name, "success")
-        return redirect(url_for("admin_images", page=page_to_return))
+        return redirect(url_for("admin_images", **url_args))
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)
