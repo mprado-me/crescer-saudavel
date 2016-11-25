@@ -16,7 +16,7 @@
               <div class="box-account">
                 <div class="page-title">
                   <h2>Minhas informações</h2>
-                  <form action="{{url_for('my_account')}}" method="post">
+                  <form method="post">
                     <div class="group-select">
                       {% with data=data["user_info_data"] %}
                       {% include "customer/shared/user-info.html" %}

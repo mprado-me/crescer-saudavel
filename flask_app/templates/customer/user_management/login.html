@@ -11,7 +11,7 @@
 <div class="main-container wow bounceInUp animated animated" style="visibility: visible;">
   <div class="main">
     <div class="account-login container">
-      <form action="{{url_for('login')}}" method="post">
+      <form method="post">
         {{ data["form"].csrf_token }}
         <div class="registered-users">
           {% include "shared/flash-messages.html" %}

@@ -25,7 +25,7 @@
             {% else %}
             <div id="checkout-step-billing" class="step a-item" style="display:none;">
               {% endif %}
-              <form id="co-billing-form" action="{{url_for('checkout', step=1)}}" method="post">
+              <form id="co-billing-form" method="post">
                 <fieldset class="group-select">
                   <ul class="">
                     <li id="billing-new-address-form">
