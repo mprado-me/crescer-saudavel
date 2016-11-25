@@ -126,28 +126,152 @@ if app.config["DEBUG"]:
             ))
 
             db.session.add(Subcategory(
-                name="a1",
+                name="a01",
                 category_id=1,
             ))
             db.session.add(Subcategory(
-                name="a2",
+                name="a02",
                 category_id=1,
             ))
             db.session.add(Subcategory(
-                name="a3",
+                name="a03",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a04",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a05",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a06",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a07",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a08",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a09",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a10",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a11",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a12",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a13",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a14",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a15",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a16",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a17",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a18",
+                category_id=1,
+            ))
+            db.session.add(Subcategory(
+                name="a19",
                 category_id=1,
             ))
 
             db.session.add(Subcategory(
-                name="b1",
+                name="b01",
                 category_id=2,
             ))
             db.session.add(Subcategory(
-                name="b2",
+                name="b02",
                 category_id=2,
             ))
             db.session.add(Subcategory(
-                name="b3",
+                name="b03",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b04",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b05",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b06",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b07",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b08",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b09",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b10",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b11",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b12",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b13",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b14",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b15",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b16",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b17",
+                category_id=2,
+            ))
+            db.session.add(Subcategory(
+                name="b18",
                 category_id=2,
             ))
 
@@ -160,184 +284,258 @@ if app.config["DEBUG"]:
                 category_id=3,
             ))
 
+            db.session.add(Subcategory(
+                name="d1",
+                category_id=4,
+            ))
+            db.session.add(Subcategory(
+                name="d2",
+                category_id=4,
+            ))
+            db.session.add(Subcategory(
+                name="d3",
+                category_id=4,
+            ))
+
+            db.session.add(Subcategory(
+                name="e1",
+                category_id=5,
+            ))
+            db.session.add(Subcategory(
+                name="e2",
+                category_id=5,
+            ))
+            db.session.add(Subcategory(
+                name="e3",
+                category_id=5,
+            ))
+
+            db.session.add(Subcategory(
+                name="f1",
+                category_id=6,
+            ))
+            db.session.add(Subcategory(
+                name="f2",
+                category_id=6,
+            ))
+            db.session.add(Subcategory(
+                name="f3",
+                category_id=6,
+            ))
+            db.session.add(Subcategory(
+                name="f4",
+                category_id=6,
+            ))
+            db.session.add(Subcategory(
+                name="f5",
+                category_id=6,
+            ))
+
+            db.session.add(Subcategory(
+                name="g1",
+                category_id=7,
+            ))
+            db.session.add(Subcategory(
+                name="g2",
+                category_id=7,
+            ))
+
+            db.session.add(Subcategory(
+                name="h1",
+                category_id=8,
+            ))
+            db.session.add(Subcategory(
+                name="h2",
+                category_id=8,
+            ))
+            db.session.add(Subcategory(
+                name="h3",
+                category_id=8,
+            ))
+
+            db.session.add(Subcategory(
+                name="i1",
+                category_id=9,
+            ))
+
             db.session.add(Product(
                 active=True,
-                title ="Produto 01",
+                title ="P01",
                 category_id = 1,
                 subcategory_id = 1,
                 price = Decimal("3.20"),
                 stock_quantity = 26,
                 stop_sell_stock_quantity = 3,
-                summary = "Resumo do Produto 1",
+                summary = "Resumo do P01",
 
                 image_1 = "1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 02",
+                title="P02",
                 category_id=1,
                 subcategory_id=1,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 2",
+                summary="Resumo do P02",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 03",
+                title="P03",
                 category_id=2,
                 subcategory_id=4,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 3",
+                summary="Resumo do P03",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 04",
+                title="P04",
                 category_id=2,
                 subcategory_id=5,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 4",
+                summary="Resumo do P04",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 05",
+                title="P05",
                 category_id=2,
                 subcategory_id=5,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 5",
+                summary="Resumo do P05",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=False,
-                title="Produto 06",
+                title="P06",
                 category_id=2,
                 subcategory_id=5,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 6",
+                summary="Resumo do P06",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=False,
-                title="Produto 07",
+                title="P07",
                 category_id=2,
                 subcategory_id=5,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 7",
+                summary="Resumo do P07",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 08",
+                title="P08",
                 category_id=2,
                 subcategory_id=None,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 8",
+                summary="Resumo do P08",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 09",
+                title="P09",
                 category_id=2,
                 subcategory_id=None,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 9",
+                summary="Resumo do P09",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 10",
+                title="P10",
                 category_id=3,
                 subcategory_id=None,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 10",
+                summary="Resumo do P10",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 11",
+                title="P11",
                 category_id=None,
                 subcategory_id=None,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 11",
+                summary="Resumo do P11",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 12",
+                title="P12",
                 category_id=None,
                 subcategory_id=None,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 12",
+                summary="Resumo do P12",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 13",
+                title="P13",
                 category_id=None,
                 subcategory_id=None,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 13",
+                summary="Resumo do P13",
 
                 image_1="1.jpg",
                 image_2="2.jpg",
             ))
             db.session.add(Product(
                 active=True,
-                title="Produto 14",
+                title="P14",
                 category_id=None,
                 subcategory_id=None,
                 price=Decimal("3.20"),
                 stock_quantity=26,
                 stop_sell_stock_quantity=3,
-                summary="Resumo do Produto 14",
+                summary="Resumo do P14",
 
                 image_1="1.jpg",
                 image_2="2.jpg",

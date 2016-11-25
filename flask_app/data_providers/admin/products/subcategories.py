@@ -29,7 +29,7 @@ class SubcategoriesDataProvider():
         }
         return data
 
-    def get_edit_data(self, form, subcategory_id):
+    def get_edit_data(self, form, subcategory_id, url_args):
         subcategory = Subcategory.query.filter(Subcategory.id == subcategory_id).one_or_none()
 
         if not subcategory:
@@ -39,13 +39,14 @@ class SubcategoriesDataProvider():
         form.category_id.data = subcategory.category_id
 
         data = {
+            "url_args": url_args,
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "form": form,
             "subcategory_id": subcategory_id,
         }
         return data
 
-    def get_data(self, page, remove_form, filter_category_form, category_id):
+    def get_data(self, page, remove_form, filter_category_form, category_id, url_args):
         subcategories = self.get_subcategories(category_id)
 
         empty = False
@@ -66,6 +67,7 @@ class SubcategoriesDataProvider():
             filter_category_form.category_id.data = int(category_id)
 
         data = {
+            "url_args": url_args,
             "remove_form": remove_form,
             "filter_category_form": filter_category_form,
             "empty": empty,

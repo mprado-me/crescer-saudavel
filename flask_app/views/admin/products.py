@@ -601,6 +601,16 @@ def admin_add_product_subcategory():
 def admin_edit_product_subcategory(subcategory_id):
     form = EditSubcategoryForm()
 
+    # Getting optional parameters
+    url_args = request.args.get('url_args')
+
+    # Setting default value to optional parameters
+    # Converting optional parameters from string type to its corresponded python type
+    if not url_args:
+        url_args = {}
+    else:
+        url_args = ast.literal_eval(url_args)
+
     # GET
     if request.method == "GET":
         try:
@@ -610,7 +620,7 @@ def admin_edit_product_subcategory(subcategory_id):
 
             form.add_category_choices()
 
-            data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id)
+            data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id, url_args=url_args)
             return render_template("admin/products/edit_subcategory.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -626,7 +636,7 @@ def admin_edit_product_subcategory(subcategory_id):
             form.add_category_choices()
 
             if not form.validate_on_submit():
-                data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id)
+                data = subcategories_data_provider.get_edit_data(form, subcategory_id=subcategory_id, url_args=url_args)
                 return render_template("admin/products/edit_subcategory.html", data=data)
 
             subcategory.name = form.subcategory.data
@@ -635,7 +645,7 @@ def admin_edit_product_subcategory(subcategory_id):
             db_manager.commit()
 
             flash("Subcategoria #%s foi editada com sucesso." % subcategory_id, "success")
-            return redirect(url_for("admin_product_subcategories", page=1))
+            return redirect(url_for("admin_product_subcategories", **url_args))
         except Exception as e:
             db_manager.rollback()
             log_unrecognized_exception(e)
@@ -650,6 +660,16 @@ def admin_remove_product_subcategory(subcategory_id):
     remove_form = SimpleSubmitForm()
 
     try:
+        # Getting optional parameters
+        url_args = request.args.get('url_args')
+
+        # Setting default value to optional parameters
+        # Converting optional parameters from string type to its corresponded python type
+        if not url_args:
+            url_args = {}
+        else:
+            url_args = ast.literal_eval(url_args)
+
         if not remove_form.validate_on_submit():
             raise InsecurePostException()
 
@@ -662,7 +682,7 @@ def admin_remove_product_subcategory(subcategory_id):
         db_manager.commit()
 
         flash("Subcategoria #%s \"%s\" foi removida com sucesso." % (subcategory.id, subcategory.name), "success")
-        return redirect(url_for("admin_product_subcategories", page=1))
+        return redirect(url_for("admin_product_subcategories", **url_args))
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -677,25 +697,31 @@ def admin_product_subcategories(page):
     filter_category_form = FilterCategoryForm()
     remove_form = SimpleSubmitForm()
 
-    # Getting optional parameters
-    category_id = request.args.get('category_id')
-
-    # Setting default value to optional parameters
     try:
-        category_id_as_int = int(category_id)
-        if category_id_as_int <= 0:
-            raise InvalidQueryParamError()
-    except Exception:
-        category_id = None
+        # Getting optional parameters
+        category_id = request.args.get('category_id')
 
-    try:
+        # Setting default value to optional parameters
+        try:
+            category_id_as_int = int(category_id)
+            if category_id_as_int <= 0:
+                raise InvalidQueryParamError()
+        except Exception:
+            category_id = None
+
+        url_args = {
+            "page": page,
+            "category_id": category_id
+        }
+
         filter_category_form.add_category_choices()
 
         data = subcategories_data_provider.get_data(
             page=page,
             remove_form=remove_form,
             filter_category_form=filter_category_form,
-            category_id=category_id)
+            category_id=category_id,
+            url_args=url_args)
         return render_template("admin/products/subcategories.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)

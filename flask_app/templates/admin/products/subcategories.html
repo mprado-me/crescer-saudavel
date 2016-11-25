@@ -7,7 +7,7 @@
   <div class="br-8px"></div>
 
   <div class="jumbotron filter">
-    <form action="" method=get enctype=multipart/form-data>
+    <form action="{{url_for('admin_product_subcategories', page=1)}}" method=get enctype=multipart/form-data>
       {% with form = data["filter_category_form"] %}
         {% include "admin/shared/form-fields.html" %}
       {% endwith %}
@@ -39,10 +39,10 @@
             <td>
               <ul class="table-action-ul">
                 <li>
-                  <a href="{{url_for('admin_edit_product_subcategory', subcategory_id=subcategory.id)}}">Editar</a>
+                  <a href="{{url_for('admin_edit_product_subcategory', subcategory_id=subcategory.id, url_args=data.url_args)}}">Editar</a>
                 </li>
                 <li>
-                  <form class="remove-form" action="{{url_for('admin_remove_product_subcategory', subcategory_id=subcategory.id)}}" method=post enctype=multipart/form-data>
+                  <form class="remove-form" action="{{url_for('admin_remove_product_subcategory', subcategory_id=subcategory.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                     {{ data["remove_form"].csrf_token }}
                     <input type=submit value=Remover>
                   </form>
