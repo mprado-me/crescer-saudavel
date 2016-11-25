@@ -27,10 +27,10 @@
             <td>
               <ul class="table-action-ul">
                 <li>
-                  <a href="{{url_for('admin_edit_product_category', category_id=category.id, page_to_return=data['page'])}}">Editar</a>
+                  <a href="{{url_for('admin_edit_product_category', category_id=category.id, url_args=data.url_args)}}">Editar</a>
                 </li>
                 <li>
-                  <form class="remove-form" action="{{url_for('admin_remove_product_category', category_id=category.id, page_to_return=data['page'])}}" method=post enctype=multipart/form-data>
+                  <form class="remove-form" action="{{url_for('admin_remove_product_category', category_id=category.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                     {{ data["remove_form"].csrf_token }}
                     <input type=submit value=Remover>
                   </form>

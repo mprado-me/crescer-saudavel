@@ -73,6 +73,57 @@ if app.config["DEBUG"]:
             db.session.add(Category(
                 name="C",
             ))
+            db.session.add(Category(
+                name="D",
+            ))
+            db.session.add(Category(
+                name="E",
+            ))
+            db.session.add(Category(
+                name="F",
+            ))
+            db.session.add(Category(
+                name="G",
+            ))
+            db.session.add(Category(
+                name="H",
+            ))
+            db.session.add(Category(
+                name="I",
+            ))
+            db.session.add(Category(
+                name="J",
+            ))
+            db.session.add(Category(
+                name="K",
+            ))
+            db.session.add(Category(
+                name="L",
+            ))
+            db.session.add(Category(
+                name="M",
+            ))
+            db.session.add(Category(
+                name="N",
+            ))
+            db.session.add(Category(
+                name="O",
+            ))
+            db.session.add(Category(
+                name="P",
+            ))
+            db.session.add(Category(
+                name="Q",
+            ))
+            db.session.add(Category(
+                name="R",
+            ))
+            db.session.add(Category(
+                name="S",
+            ))
+            db.session.add(Category(
+                name="T",
+            ))
 
             db.session.add(Subcategory(
                 name="a1",

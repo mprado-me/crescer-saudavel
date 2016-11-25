@@ -455,16 +455,19 @@ def admin_edit_product_category(category_id):
     form = EditCategoryForm()
 
     # Getting optional parameters
-    page_to_return = request.args.get('page_to_return')
+    url_args = request.args.get('url_args')
 
     # Setting default value to optional parameters
-    if not page_to_return:
-        page_to_return = 1
+    # Converting optional parameters from string type to its corresponded python type
+    if not url_args:
+        url_args = {}
+    else:
+        url_args = ast.literal_eval(url_args)
 
     # GET
     if request.method == "GET":
         try:
-            data = categories_data_provider.get_edit_data(form=form, category_id=category_id, page_to_return=page_to_return)
+            data = categories_data_provider.get_edit_data(form=form, category_id=category_id, url_args=url_args)
             return render_template("admin/products/edit_category.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -474,7 +477,7 @@ def admin_edit_product_category(category_id):
     else:
         try:
             if not form.validate_on_submit():
-                data = categories_data_provider.get_edit_data(form=form, category_id=category_id, page_to_return=page_to_return)
+                data = categories_data_provider.get_edit_data(form=form, category_id=category_id, url_args=url_args)
                 return render_template("admin/products/edit_category.html", data=data)
 
             category = db_manager.get_category(category_id=category_id)
@@ -487,7 +490,7 @@ def admin_edit_product_category(category_id):
             db_manager.commit()
 
             flash("Categoria #%s foi editada com sucesso." % category.id, "success")
-            return redirect(url_for("admin_product_categories", page=page_to_return))
+            return redirect(url_for("admin_product_categories", **url_args))
         except Exception as e:
             db_manager.rollback()
             log_unrecognized_exception(e)
@@ -501,14 +504,17 @@ def admin_edit_product_category(category_id):
 def admin_remove_product_category(category_id):
     remove_form = SimpleSubmitForm()
 
-    # Getting optional parameters
-    page_to_return = request.args.get('page_to_return')
-
-    # Setting default value to optional parameters
-    if not page_to_return:
-        page_to_return = 1
-
     try:
+        # Getting optional parameters
+        url_args = request.args.get('url_args')
+
+        # Setting default value to optional parameters
+        # Converting optional parameters from string type to its corresponded python type
+        if not url_args:
+            url_args = {}
+        else:
+            url_args = ast.literal_eval(url_args)
+
         if not remove_form.validate_on_submit():
             raise InsecurePostException()
 
@@ -521,7 +527,7 @@ def admin_remove_product_category(category_id):
         db_manager.commit()
 
         flash("Categoria #%s \"%s\" foi removida com sucesso." % (category.id, category.name), "success")
-        return redirect(url_for("admin_product_categories", page=page_to_return))
+        return redirect(url_for("admin_product_categories", **url_args))
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -534,9 +540,12 @@ def admin_remove_product_category(category_id):
 @log_route
 def admin_product_categories(page):
     remove_form = SimpleSubmitForm()
+    url_args = {
+        "page": page
+    }
 
     try:
-        data = categories_data_provider.get_data(page=page, remove_form=remove_form)
+        data = categories_data_provider.get_data(page=page, remove_form=remove_form, url_args=url_args)
         return render_template("admin/products/categories.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)

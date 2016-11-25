@@ -27,7 +27,7 @@ class CategoriesDataProvider():
         }
         return data
 
-    def get_edit_data(self, form, category_id, page_to_return):
+    def get_edit_data(self, form, category_id, url_args):
         category = db_manager.get_category(category_id=category_id)
 
         if not category:
@@ -39,11 +39,11 @@ class CategoriesDataProvider():
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "form": form,
             "category_id": category_id,
-            "page_to_return": page_to_return,
+            "url_args": url_args,
         }
         return data
 
-    def get_data(self, page, remove_form):
+    def get_data(self, page, remove_form, url_args):
         all_categories = self.get_categories_sorted()
 
         empty = False
@@ -61,6 +61,7 @@ class CategoriesDataProvider():
         last_plus_one = first + app.config["DEFAULT_N_ITEMS_BY_PAGE"]
 
         data = {
+            "url_args": url_args,
             "remove_form": remove_form,
             "empty": empty,
             "page": page,
