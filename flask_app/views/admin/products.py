@@ -120,6 +120,16 @@ def admin_add_product():
 def admin_edit_product(product_id):
     form = EditProductForm()
 
+    # Getting optional parameters
+    url_args = request.args.get('url_args')
+
+    # Setting default value to optional parameters
+    # Converting optional parameters from string type to its corresponded python type
+    if not url_args:
+        url_args = {}
+    else:
+        url_args = ast.literal_eval(url_args)
+
     # GET
     if request.method == "GET":
         try:
@@ -129,7 +139,7 @@ def admin_edit_product(product_id):
 
             form.add_choices()
 
-            data = products_data_provider.get_edit_data(form=form, product_id=product_id)
+            data = products_data_provider.get_edit_data(form=form, product_id=product_id, url_args=url_args)
             return render_template("admin/products/edit_product.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -145,7 +155,7 @@ def admin_edit_product(product_id):
             form.add_choices()
 
             if not form.validate_on_submit():
-                data = products_data_provider.get_edit_data(form=form, product_id=product_id)
+                data = products_data_provider.get_edit_data(form=form, product_id=product_id, url_args=url_args)
                 return render_template("admin/products/edit_product.html", data=data)
 
             category_id = int(form.category_subcategory.data.split('/')[0])
@@ -201,7 +211,7 @@ def admin_edit_product(product_id):
             flash(
                 "Produto #%s \"%s\" foi editado com sucesso. Clique <a target='_blank' href=%s>aqui</a> para ver o produto." %
                 (product.id, product.title, url_for("product", product_id=product.id)), "success")
-            return redirect(url_for("admin_products", page=1))
+            return redirect(url_for("admin_products", **url_args))
         except Exception as e:
             db_manager.rollback()
             log_unrecognized_exception(e)
@@ -217,17 +227,23 @@ def admin_products(page):
     action_form = SimpleSubmitForm()
     stock_operation_form = StockOperationForm()
 
-    # Getting optional parameters
-    category_subcategory = request.args.get('category_subcategory')
-    active = request.args.get('active')
-
-    # Setting default value to optional parameters
-    if not category_subcategory:
-        category_subcategory = "0/0"
-    if not active:
-        active = "True"
-
     try:
+        # Getting optional parameters
+        category_subcategory = request.args.get('category_subcategory')
+        active = request.args.get('active')
+
+        # Setting default value to optional parameters
+        if not category_subcategory:
+            category_subcategory = "0/0"
+        if not active:
+            active = "True"
+
+        url_args = {
+            "category_subcategory": category_subcategory,
+            "active": active,
+            "page": page
+        }
+
         # Converting query parameters from string type to his respective python type
         category_id = int(category_subcategory.split('/')[0])
         if category_id == 0:
@@ -246,8 +262,9 @@ def admin_products(page):
             filter_product_form=filter_product_form,
             category_id=category_id,
             subcategory_id=subcategory_id,
-            active = active,
-            category_subcategory=category_subcategory
+            active=active,
+            category_subcategory=category_subcategory,
+            url_args=url_args
         )
         return render_template("admin/products/products.html", data=data)
     except Exception as e:
@@ -263,6 +280,16 @@ def admin_remove_product(product_id):
     remove_form = SimpleSubmitForm()
 
     try:
+        # Getting optional parameters
+        url_args = request.args.get('url_args')
+
+        # Setting default value to optional parameters
+        # Converting optional parameters from string type to its corresponded python type
+        if not url_args:
+            url_args = {}
+        else:
+            url_args = ast.literal_eval(url_args)
+
         if not remove_form.validate_on_submit():
             raise InsecurePostException()
 
@@ -275,8 +302,8 @@ def admin_remove_product(product_id):
         db_manager.add(product)
         db_manager.commit()
 
-        flash("Produto #%s \"%s\" foi removido com sucesso." % (product.id, product.title), "success")
-        return redirect(url_for("admin_products", page=1))
+        flash("Produto #%s \"%s\" foi removido." % (product.id, product.title), "success")
+        return redirect(url_for("admin_products", **url_args))
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -291,6 +318,16 @@ def admin_reactivate_product(product_id):
     reactivate_form = SimpleSubmitForm()
 
     try:
+        # Getting optional parameters
+        url_args = request.args.get('url_args')
+
+        # Setting default value to optional parameters
+        # Converting optional parameters from string type to its corresponded python type
+        if not url_args:
+            url_args = {}
+        else:
+            url_args = ast.literal_eval(url_args)
+
         if not reactivate_form.validate_on_submit():
             raise InsecurePostException()
 
@@ -303,8 +340,8 @@ def admin_reactivate_product(product_id):
         db_manager.add(product)
         db_manager.commit()
 
-        flash("Produto #%s \"%s\" foi reativado com sucesso." % (product.id, product.title), "success")
-        return redirect(url_for("admin_products", page=1))
+        flash("Produto #%s \"%s\" foi reativado." % (product.id, product.title), "success")
+        return redirect(url_for("admin_products", **url_args))
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -319,6 +356,16 @@ def admin_add_to_stock(product_id):
     add_to_stock_form = StockOperationForm()
 
     try:
+        # Getting optional parameters
+        url_args = request.args.get('url_args')
+
+        # Setting default value to optional parameters
+        # Converting optional parameters from string type to its corresponded python type
+        if not url_args:
+            url_args = {}
+        else:
+            url_args = ast.literal_eval(url_args)
+
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
@@ -326,14 +373,14 @@ def admin_add_to_stock(product_id):
 
         if not add_to_stock_form.validate_on_submit():
             flash("Ocorreu uma falha ao aumentar o estoque do produto #%s \"%s\" pois o valor fornecido é inválido." % (product.id, product.title), "danger")
-            return redirect(url_for("admin_products", page=1))
+            return redirect(url_for("admin_products", **url_args))
 
         product.stock_quantity = product.stock_quantity + int(add_to_stock_form.quantity.data)
         db_manager.add(product)
         db_manager.commit()
 
-        flash("O estoque do produto #%s \"%s\" foi acrescido pelo valor fornecido com sucesso." % (product.id, product.title), "success")
-        return redirect(url_for("admin_products", page=1))
+        flash("O estoque do produto #%s \"%s\" foi acrescido pelo valor fornecido." % (product.id, product.title), "success")
+        return redirect(url_for("admin_products", **url_args))
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -348,34 +395,44 @@ def admin_remove_from_stock(product_id):
     remove_from_stock_form = StockOperationForm()
 
     try:
+        # Getting optional parameters
+        url_args = request.args.get('url_args')
+
+        # Setting default value to optional parameters
+        # Converting optional parameters from string type to its corresponded python type
+        if not url_args:
+            url_args = {}
+        else:
+            url_args = ast.literal_eval(url_args)
+
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
             raise InvalidUrlParamError("Product not found")
 
         if not remove_from_stock_form.validate_on_submit():
-            return remove_from_stock_fail(product=product)
+            return remove_from_stock_fail(product=product, url_args=url_args)
 
         product.stock_quantity = product.stock_quantity - int(remove_from_stock_form.quantity.data)
         if product.stock_quantity < 0:
-            return remove_from_stock_fail(product=product)
+            return remove_from_stock_fail(product=product, url_args=url_args)
 
         db_manager.add(product)
         db_manager.commit()
 
-        flash("O estoque do produto #%s \"%s\" foi diminuido pelo valor fornecido com sucesso." % (product.id, product.title),
+        flash("O estoque do produto #%s \"%s\" foi diminuido pelo valor fornecido." % (product.id, product.title),
               "success")
-        return redirect(url_for("admin_products", page=1))
+        return redirect(url_for("admin_products", **url_args))
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
         abort(500)
 
 
-def remove_from_stock_fail(product):
+def remove_from_stock_fail(product, url_args):
     flash("Ocorreu uma falha ao diminuir o estoque do produto #%s \"%s\" pois o valor fornecido é inválido." % (
         product.id, product.title), "danger")
-    return redirect(url_for("admin_products", page=1))
+    return redirect(url_for("admin_products", **url_args))
 
 
 @app.route('/painel-administrativo/atualizar-estoque/<int:product_id>', methods=["POST"])
@@ -386,6 +443,16 @@ def admin_update_stock(product_id):
     update_stock_form = StockOperationForm()
 
     try:
+        # Getting optional parameters
+        url_args = request.args.get('url_args')
+
+        # Setting default value to optional parameters
+        # Converting optional parameters from string type to its corresponded python type
+        if not url_args:
+            url_args = {}
+        else:
+            url_args = ast.literal_eval(url_args)
+
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
@@ -394,16 +461,16 @@ def admin_update_stock(product_id):
         if not update_stock_form.validate_on_submit():
             flash("Ocorreu uma falha ao atualizar o estoque do produto #%s \"%s\" pois o valor fornecido é inválido." % (
             product.id, product.title), "danger")
-            return redirect(url_for("admin_products", page=1))
+            return redirect(url_for("admin_products", **url_args))
 
         product.stock_quantity = int(update_stock_form.quantity.data)
 
         db_manager.add(product)
         db_manager.commit()
 
-        flash("O estoque do produto #%s \"%s\" foi atualizado com sucesso." % (product.id, product.title),
+        flash("O estoque do produto #%s \"%s\" foi atualizado." % (product.id, product.title),
               "success")
-        return redirect(url_for("admin_products", page=1))
+        return redirect(url_for("admin_products", **url_args))
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)

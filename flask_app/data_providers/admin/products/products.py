@@ -27,7 +27,7 @@ class ProductsDataProvider():
         }
         return data
 
-    def get_edit_data(self, form, product_id):
+    def get_edit_data(self, form, product_id, url_args):
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
@@ -80,13 +80,14 @@ class ProductsDataProvider():
         form.tab_10_content.data = product.tab_10_content
 
         data = {
+            "url_args": url_args,
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "form": form,
             "product_id": product_id,
         }
         return data
 
-    def get_data(self, page, action_form, stock_operation_form, filter_product_form, category_id, subcategory_id, active, category_subcategory):
+    def get_data(self, page, action_form, stock_operation_form, filter_product_form, category_id, subcategory_id, active, category_subcategory, url_args):
         products = self.get_products(category_id=category_id, subcategory_id=subcategory_id, active=active)
 
         empty = False
@@ -107,6 +108,7 @@ class ProductsDataProvider():
         filter_product_form.active.data = str(active)
 
         data = {
+            "url_args":url_args,
             "action_form": action_form,
             "stock_operation_form": stock_operation_form,
             "filter_product_form": filter_product_form,

@@ -7,7 +7,7 @@
   <div class="br-8px"></div>
 
   <div class="jumbotron filter">
-    <form action="" method=get enctype=multipart/form-data>
+    <form action="{{url_for('admin_products', page=1)}}" method=get enctype=multipart/form-data>
       {% with form = data["filter_product_form"] %}
         {% include "admin/shared/form-fields.html" %}
       {% endwith %}
@@ -45,30 +45,30 @@
             <td>
                   <a target="_blank" href="{{url_for('product', product_id=product.id)}}">Ver produto</a>
                   <div class="br-8px"></div>
-                  <a href="{{url_for('admin_edit_product', product_id=product.id)}}">Editar</a>
+                  <a href="{{url_for('admin_edit_product', product_id=product.id, url_args=data.url_args)}}">Editar</a>
                   <div class="br-8px"></div>
-                  <form class="add-to-stock-form" action="{{url_for('admin_add_to_stock', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                  <form class="add-to-stock-form" action="{{url_for('admin_add_to_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                     {{ data["stock_operation_form"].csrf_token }}
                     {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
                     <input class="action-row" type=submit value="Adicionar ao estoque">
                   </form>
-                  <form class="remove-from-stock-form" action="{{url_for('admin_remove_from_stock', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                  <form class="remove-from-stock-form" action="{{url_for('admin_remove_from_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                     {{ data["stock_operation_form"].csrf_token }}
                     {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
                     <input class="action-row" type=submit value="Remover do estoque">
                   </form>
-                  <form class="update-stock-form" action="{{url_for('admin_update_stock', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                  <form class="update-stock-form" action="{{url_for('admin_update_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                     {{ data["stock_operation_form"].csrf_token }}
                     {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
                     <input class="action-row" type=submit value="Atualizar estoque">
                   </form>
                 {% if product.active %}
-                    <form class="remove-form" action="{{url_for('admin_remove_product', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                    <form class="remove-form" action="{{url_for('admin_remove_product', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                       {{ data["action_form"].csrf_token }}
                       <input type=submit value="Remover produto" >
                     </form>
                 {% else %}
-                    <form class="reactivate-form" action="{{url_for('admin_reactivate_product', product_id=product.id)}}" method=post enctype=multipart/form-data>
+                    <form class="reactivate-form" action="{{url_for('admin_reactivate_product', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                       {{ data["action_form"].csrf_token }}
                       <input type=submit value="Reativar produto">
                     </form>
