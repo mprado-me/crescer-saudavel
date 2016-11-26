@@ -140,3 +140,7 @@ tr.removed > td > img {
 tr.removed > td > p {
     color: #777;
 }
+
+.glyphicon-info-sign {
+    margin-left:4px;
+}

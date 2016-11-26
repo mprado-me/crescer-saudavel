@@ -1,3 +1,5 @@
+{% import "shared/macros.html" as macros %}
+
 {% extends "admin/shared/base.html" %}
 
 {% block title %}Produtos{% endblock %}
@@ -28,7 +30,7 @@
           <th>Título</th>
           <th>Preço (R$)</th>
           <th>Em estoque</th>
-          <th style="width: 120px;">Parar de vender quando o estoque estiver abaixo de</th>
+          <th>Mín. estoque{{macros.info_tooltip_min_stock()}}</th>
           <th></th>
         </tr>
       </thead>
@@ -90,6 +92,10 @@
 
 {% block scripts %}
 <script>
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+  });
+
   $(".remove-form").submit(function() {
       var c = confirm("Tem certeza que deseja remover o produto em questão?");
       return c;

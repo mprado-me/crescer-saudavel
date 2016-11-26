@@ -47,3 +47,11 @@
   {% endif %}
     </li>
 {%- endmacro %}
+
+{% macro info_tooltip(text, data_html="false") -%}
+  <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{{text}}" data-html="{{data_html}}"></span>
+{%- endmacro %}
+
+{% macro info_tooltip_min_stock() -%}
+  {{info_tooltip("Parar de vender o produto quando o estoque atingir valor mínimo estabelecido.")}}
+{%- endmacro %}
