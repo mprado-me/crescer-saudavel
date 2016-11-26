@@ -26,9 +26,10 @@
               <td><img class="img-in-table" src="{{url_for('static', filename='uploads/images/'+image_name)}}"></td>
               <td><p>{{image_name}}</p></td>
               <td class="action">
-                <div>
-                  <button type="button" class="btn btn-default remove-btn" url="{{url_for('admin_remove_image', image_name=image_name)}}" image_name="{{image_name}}">Remover</button>
-                </div>
+                <form class="ajax remove" action="{{url_for('admin_remove_image', image_name=image_name)}}" method="post" image_name="{{image_name}}">
+                  {{data["remove_form"].csrf_token}}
+                  <input type="submit" class="btn btn-default" value="Remover">
+                </form>
               </td>
             </tr>
           {% endfor %}
@@ -47,66 +48,71 @@
 
 {% block scripts %}
 <script>
-  /*
-  $(".remove-form").submit(function() {
-      var c = confirm("Tem certeza que deseja remover a imagem? Se algum produto utilizar está imagem, a apresentação de tal produto será prejudicada.");
-      return c;
-  });
-  */
+  $("form").filter(".ajax").filter(".remove").each(function(){
+    var form = $(this)
+    var submitInput = form.children().filter("input:submit");
+    setAjaxFormHandlers({
+      form: form,
+      minResponseTime: 500,
+      confirmMessage: "Tem certeza que deseja remover a imagem? Se algum produto utilizar está imagem, a apresentação de tal produto será prejudicada.",
+      submit: function(){
+        submitInput.prop("disabled", true)
+        submitInput.attr("value", "Removendo...")
+      },
+      success: function(){
+        submitInput.attr("value", "Imagem removida");
+        form.closest("tr").addClass("removed");
+      },
+      error: function(){
+        submitInput.prop("disabled", false)
+        submitInput.attr("value", "Remover");
 
-  $(".remove-btn").each(function(){
-    var btn = $(this)
-    btn.click(function(){
-      var btn = $(this)
-      btn.prop("disabled", true)
-      btn.addClass("disabled")
-      btn.html("Removendo...")
-      var date = new Date()
-      var clickTime = date.getTime()
-      var minLoadingTime = 650
-      console.log("button {0} click".f(btn.attr("image_name")))
-      $.ajax({
-        url: btn.attr("url"),
-        type: 'POST',
-        async: true,
-        success: function(data){
-          console.log("button {0} return post with success".f(btn.attr("image_name")))
-          var date = new Date()
-          var postReturnTime = date.getTime()
-          var delay = minLoadingTime-(postReturnTime-clickTime)
-          console.log("delay to update UI: {0}".f(delay))
-          setTimeout(function(){
-            console.log("updating image {0} UI after successful remove".f(btn.attr("image_name")))
-            btn.html("Imagem removida")
-            var tr = btn.closest("tr")
-            tr.addClass("removed")
-            tr.children().each(function(){
-              $(this).children().each(function(){
-                if($(this).is("p")){
-                  $(this).addClass("text-muted")
-                }
-              })
-            })
-          }, delay)
-        },
-        error: function(xhr, status, error){
-          console.log("button {0} return post with error".f(btn.attr("image_name")))
-          var date = new Date()
-          var postReturnTime = date.getTime()
-          var delay = minLoadingTime-(postReturnTime-clickTime)
-          console.log("delay to update UI: {0}".f(delay))
-          setTimeout(function(){
-            console.log("updating image {0} UI after unsuccessful remove".f(btn.attr("image_name")))
-            btn.prop("disabled", false)
-            btn.removeClass("disabled")
-            btn.html("Remover")
-            toastr.options.closeButton = true
-            toastr.options.timeOut = 10000
-            toastr.error('Ocorreu uma falha ao remover a imagem "{0}". Tente novamente.'.f(btn.attr("image_name")))
-          }, delay)
-        }
-      })
+        toastr.options.closeButton = true;
+        toastr.options.timeOut = 10000;
+        toastr.error('Ocorreu uma falha ao remover a imagem "{0}". Tente novamente.'.f(form.attr("image_name")));
+      },
     })
   })
+
+  function setAjaxFormHandlers(data){
+    var form = data.form;
+    var minResponseTime = data.minResponseTime;
+    var confirmMessage = data.confirmMessage;
+    var submit = data.submit;
+    var success = data.success;
+    var error = data.error;
+
+    form.submit(function(event){
+      if(confirmMessage){
+        var c = confirm(confirmMessage);
+        if(!c){
+          return false;
+        }
+      }
+      if(!minResponseTime){
+        minResponseTime = 0;
+      }
+      submit()
+      form.clickTime = (new Date()).getTime();
+      $.ajax({
+        url: form.attr("action"),
+        type: form.attr("method"),
+        data: form.serialize(),
+        async: true,
+        success: function(){
+          var postReturnTime = (new Date()).getTime();
+          var delay = minResponseTime-(postReturnTime-form.clickTime);
+          setTimeout(success, delay)
+        },
+        error: function(){
+          var postReturnTime = (new Date()).getTime();
+          var delay = minResponseTime-(postReturnTime-form.clickTime);
+          setTimeout(error, delay)
+        }
+      })
+      event.preventDefault()
+      return true;
+    })
+  }
 </script>
 {% endblock %}

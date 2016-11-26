@@ -136,3 +136,7 @@ tr.removed > td > img {
 .table-responsive {
     border: 1px solid #ddd;
 }
+
+tr.removed > td > p {
+    color: #777;
+}
