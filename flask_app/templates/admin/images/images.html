@@ -11,29 +11,30 @@
       {% include "shared/paginator.html" %}
     {% endwith %}
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="img-table-first-col"></th>
-          <th>Nome</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for image_name in data["images_name"] %}
+    <div class="table-responsive">
+      <table class="table table-condensed table-hover">
+        <thead>
           <tr>
-            <td><img class="img-in-table" src="{{url_for('static', filename='uploads/images/'+image_name)}}"></td>
-            <td>{{image_name}}</td>
-            <td>
-              <form class="remove-form" action="{{url_for('admin_remove_image', image_name=image_name, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
-                {{ data["remove_form"].csrf_token }}
-                <input type=submit value=Remover>
-              </form>
-            </td>
+            <th class="img-table-first-col"></th>
+            <th>Nome</th>
+            <th class="images-table-action-col"></th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for image_name in data["images_name"] %}
+            <tr>
+              <td><img class="img-in-table" src="{{url_for('static', filename='uploads/images/'+image_name)}}"></td>
+              <td><p>{{image_name}}</p></td>
+              <td class="action">
+                <div>
+                  <button type="button" class="btn btn-default remove-btn" url="{{url_for('admin_remove_image', image_name=image_name)}}" image_name="{{image_name}}">Remover</button>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
     {% with data=data["paginator_data"] %}
       {% include "shared/paginator.html" %}
@@ -46,9 +47,66 @@
 
 {% block scripts %}
 <script>
+  /*
   $(".remove-form").submit(function() {
       var c = confirm("Tem certeza que deseja remover a imagem? Se algum produto utilizar está imagem, a apresentação de tal produto será prejudicada.");
       return c;
   });
+  */
+
+  $(".remove-btn").each(function(){
+    var btn = $(this)
+    btn.click(function(){
+      var btn = $(this)
+      btn.prop("disabled", true)
+      btn.addClass("disabled")
+      btn.html("Removendo...")
+      var date = new Date()
+      var clickTime = date.getTime()
+      var minLoadingTime = 650
+      console.log("button {0} click".f(btn.attr("image_name")))
+      $.ajax({
+        url: btn.attr("url"),
+        type: 'POST',
+        async: true,
+        success: function(data){
+          console.log("button {0} return post with success".f(btn.attr("image_name")))
+          var date = new Date()
+          var postReturnTime = date.getTime()
+          var delay = minLoadingTime-(postReturnTime-clickTime)
+          console.log("delay to update UI: {0}".f(delay))
+          setTimeout(function(){
+            console.log("updating image {0} UI after successful remove".f(btn.attr("image_name")))
+            btn.html("Imagem removida")
+            var tr = btn.closest("tr")
+            tr.addClass("removed")
+            tr.children().each(function(){
+              $(this).children().each(function(){
+                if($(this).is("p")){
+                  $(this).addClass("text-muted")
+                }
+              })
+            })
+          }, delay)
+        },
+        error: function(xhr, status, error){
+          console.log("button {0} return post with error".f(btn.attr("image_name")))
+          var date = new Date()
+          var postReturnTime = date.getTime()
+          var delay = minLoadingTime-(postReturnTime-clickTime)
+          console.log("delay to update UI: {0}".f(delay))
+          setTimeout(function(){
+            console.log("updating image {0} UI after unsuccessful remove".f(btn.attr("image_name")))
+            btn.prop("disabled", false)
+            btn.removeClass("disabled")
+            btn.html("Remover")
+            toastr.options.closeButton = true
+            toastr.options.timeOut = 10000
+            toastr.error('Ocorreu uma falha ao remover a imagem "{0}". Tente novamente.'.f(btn.attr("image_name")))
+          }, delay)
+        }
+      })
+    })
+  })
 </script>
 {% endblock %}

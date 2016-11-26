@@ -3,6 +3,8 @@
 
 import ast
 import os
+import time
+import random
 
 from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import login_required
@@ -75,7 +77,10 @@ def admin_images(page):
 @admin
 @log_route
 def admin_remove_image(image_name):
-    remove_form = SimpleSubmitForm()
+    # remove_form = SimpleSubmitForm()
+
+    if random.uniform(0,1) < 0.5:
+        abort(500)
 
     try:
         # Getting optional parameters
@@ -88,15 +93,16 @@ def admin_remove_image(image_name):
         else:
             url_args = ast.literal_eval(url_args)
 
-        if not remove_form.validate_on_submit():
-            raise InsecurePostException()
+        # if not remove_form.validate_on_submit():
+        #     raise InsecurePostException()
 
         path_to_file = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], image_name)
         if os.path.exists(path_to_file):
             os.remove(path_to_file)
 
         flash("Imagem \"%s\" foi removida com sucesso." % image_name, "success")
-        return redirect(url_for("admin_images", **url_args))
+        return ('', 204)
+        # return redirect(url_for("admin_images", **url_args))
     except Exception as e:
         log_unrecognized_exception(e)
         abort(500)

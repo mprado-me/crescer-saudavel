@@ -124,3 +124,15 @@ textarea {
         height: 6em;
     }
 }
+
+td.action {
+    text-align: right;
+}
+
+tr.removed > td > img {
+    filter: grayscale(100%);
+}
+
+.table-responsive {
+    border: 1px solid #ddd;
+}

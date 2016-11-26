@@ -1,0 +1,15 @@
+<script>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% with category=category, message=message %}
+                {% if category == "success" %}
+                    toastr.success("{{message}}")
+                {% elif category == "error" or category == "danger" %}
+                    toastr.error(""{{message}}"")
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</script>
