@@ -130,30 +130,5 @@
       actionButton.html("Ocultar ações <span class='glyphicon glyphicon-menu-up'></span>")
     });
   });
-
-  $(".remove-form").submit(function() {
-      var c = confirm("Tem certeza que deseja remover o produto em questão?");
-      return c;
-  });
-
-  $(".reactivate-form").submit(function() {
-      var c = confirm("Tem certeza que deseja reativar o produto em questão?");
-      return c;
-  });
-
-  $(".add-to-stock-form").submit(function() {
-      var c = confirm("Tem certeza que deseja adicionar essa quantidade de items ao estoque?");
-      return c;
-  });
-
-  $(".remove-from-stock-form").submit(function() {
-      var c = confirm("Tem certeza que deseja remover do estoque essa quantidade de items?");
-      return c;
-  });
-
-  $(".update-stock-form").submit(function() {
-      var c = confirm("Tem certeza que deseja atualizar a quantidade de items no estoque?");
-      return c;
-  });
 </script>
 {% endblock %}
