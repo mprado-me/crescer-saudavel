@@ -38,10 +38,13 @@ function setAjaxFormHandlers(data){
               var delay = minResponseTime-(postReturnTime-form.clickTime);
               setTimeout(success, delay);
             },
-            error: function(){
+            error: function(jqXHR, textStatus, errorThrown){
               var postReturnTime = (new Date()).getTime();
               var delay = minResponseTime-(postReturnTime-form.clickTime);
-              setTimeout(error, delay);
+              console.log(delay)
+              setTimeout(function() {
+                error(jqXHR.status);
+              }, delay);
             }
         })
         event.preventDefault();

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import ast
+import random
 
 from decimal import Decimal
 
@@ -291,7 +292,7 @@ def admin_remove_product(product_id):
             url_args = ast.literal_eval(url_args)
 
         if not remove_form.validate_on_submit():
-            raise InsecurePostException()
+            return "", 422
 
         product = db_manager.get_product(product_id=product_id)
 
@@ -372,8 +373,7 @@ def admin_add_to_stock(product_id):
             raise InvalidUrlParamError("Product not found")
 
         if not add_to_stock_form.validate_on_submit():
-            flash("Ocorreu uma falha ao aumentar o estoque do produto #%s \"%s\" pois o valor fornecido é inválido." % (product.id, product.title), "danger")
-            return redirect(url_for("admin_products", **url_args))
+            return "", 422
 
         product.stock_quantity = product.stock_quantity + int(add_to_stock_form.quantity.data)
         db_manager.add(product)
@@ -411,7 +411,7 @@ def admin_remove_from_stock(product_id):
             raise InvalidUrlParamError("Product not found")
 
         if not remove_from_stock_form.validate_on_submit():
-            return remove_from_stock_fail(product=product, url_args=url_args)
+            return "", 422
 
         product.stock_quantity = product.stock_quantity - int(remove_from_stock_form.quantity.data)
         if product.stock_quantity < 0:
@@ -459,9 +459,7 @@ def admin_update_stock(product_id):
             raise InvalidUrlParamError("Product not found")
 
         if not update_stock_form.validate_on_submit():
-            flash("Ocorreu uma falha ao atualizar o estoque do produto #%s \"%s\" pois o valor fornecido é inválido." % (
-            product.id, product.title), "danger")
-            return redirect(url_for("admin_products", **url_args))
+            return "", 422
 
         product.stock_quantity = int(update_stock_form.quantity.data)
 

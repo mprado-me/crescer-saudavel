@@ -107,7 +107,7 @@ textarea {
     margin-right: 8px;
 }
 
-.action-row {
+.action-row:not(:last-child) {
     margin-bottom: 8px;
 }
 
@@ -171,4 +171,8 @@ input.stock.quantity {
 
 .action-row > .input-group > span.input-group-btn > input {
     width: 100%;
+}
+
+table .btn.action {
+    width: 130px;
 }

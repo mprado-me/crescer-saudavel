@@ -44,6 +44,12 @@ class InvalidUrlParamError(Exception):
         log_exception(name="InvalidUrlParamError", message=message)
 
 
+class InvalidFormError(Exception):
+    def __init__(self, message=""):
+        super(InvalidFormError, self).__init__(message)
+        log_exception(name="InvalidFormError", message=message)
+
+
 def log_exception(name, message="", exception=None):
     app.logger.error("-*-*-")
     if message != "":
