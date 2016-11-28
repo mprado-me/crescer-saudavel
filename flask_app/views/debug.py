@@ -846,13 +846,39 @@ if app.config["DEBUG"]:
         # GET
         if request.method == "GET":
             return render_template_string("""
-                <p>q = %s</p>
-                <form action="" method=post>
-                    <input type=submit value="POST">
-                <form>
-            """ % (q))
+                <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                    <title>{% block title %}{% endblock %}</title>
+                    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
+                    <link rel="icon" href="#" type="image/x-icon">
+                    <link rel="shortcut icon" href="#" type="image/x-icon">
+
+                    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width">
+
+                    <style>
+                        #example{
+                            margin-right: -20px;
+                            margin-top: 20px;
+                        }
+
+                        .align-right {
+                            text-align: right;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="align-right">
+                        <a data-placement="bottom" id="example" tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" data-content="And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
+                    </div>
+
+                    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+                    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js' )}}"></script>
+                    <script>
+                        $('#example').popover()
+                    </script>
+                </body>
+            """)
         # POST
         else:
-            return render_template_string("""
-                <p>q = %s</p>
-            """ % (q))
+            return None

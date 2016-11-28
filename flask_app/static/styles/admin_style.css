@@ -144,3 +144,31 @@ tr.removed > td > p {
 .glyphicon-info-sign {
     margin-left:4px;
 }
+
+.collapsible-row > td {
+    border-top: none !important;
+}
+
+.panel.actions {
+    float: right;
+}
+
+input.stock.quantity {
+    width: 70px;
+}
+
+.btn.action-row{
+    width: 100%;
+}
+
+.action-row > .input-group {
+    width: 100%;
+}
+
+.action-row > .input-group > span.input-group-btn {
+    width: 100%;
+}
+
+.action-row > .input-group > span.input-group-btn > input {
+    width: 100%;
+}

@@ -45,36 +45,60 @@
             <td>{{product.stock_quantity}}</td>
             <td>{{product.stop_sell_stock_quantity}}</td>
             <td>
-                  <a target="_blank" href="{{url_for('product', product_id=product.id)}}">Ver produto</a>
-                  <div class="br-8px"></div>
-                  <a href="{{url_for('admin_edit_product', product_id=product.id, url_args=data.url_args)}}">Editar</a>
-                  <div class="br-8px"></div>
-                  <form class="add-to-stock-form" action="{{url_for('admin_add_to_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
+              <button id="action-btn-{{product.id}}" class="btn btn-default action" type="button" data-toggle="collapse" data-target="#collapsible-row-{{product.id}}" aria-expanded="false" aria-controls="collapsible-row-{{product.id}}">
+                Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
+              </button>
+            </td>
+          </tr>
+          <tr class="collapse collapsible-row" id="collapsible-row-{{product.id}}" action-btn-id="action-btn-{{product.id}}">
+            <td colspan="8">
+              <div class="panel panel-default actions">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Ações</h3>
+                </div>
+                <div class="panel-body">
+                  <a class="btn btn-default action-row" target="_blank" href="{{url_for('product', product_id=product.id)}}">Ver produto</a><br>
+                  <a class="btn btn-default action-row" href="{{url_for('admin_edit_product', product_id=product.id, url_args=data.url_args)}}">Editar</a>
+                  <form class="add-to-stock-form action-row" action="{{url_for('admin_add_to_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                     {{ data["stock_operation_form"].csrf_token }}
-                    {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
-                    <input class="action-row" type=submit value="Adicionar ao estoque">
+                    <div class="input-group">
+                      <input name="{{data['stock_operation_form'].quantity.name}}" size="5" type="number" class="form-control stock quantity" placeholder="Ex.: 3">
+                      <span class="input-group-btn">
+                        <input name="{{data['stock_operation_form'].submit.name}}" class="btn btn-default" type="submit" value="Adicionar ao estoque">
+                      </span>
+                    </div>
                   </form>
-                  <form class="remove-from-stock-form" action="{{url_for('admin_remove_from_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
+                  <form class="remove-from-stock-form action-row" action="{{url_for('admin_remove_from_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                     {{ data["stock_operation_form"].csrf_token }}
-                    {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
-                    <input class="action-row" type=submit value="Remover do estoque">
+                    <div class="input-group">
+                      <input name="{{data['stock_operation_form'].quantity.name}}" type="number" class="form-control stock quantity" placeholder="Ex.: 3">
+                      <span class="input-group-btn">
+                        <input name="{{data['stock_operation_form'].submit.name}}" class="btn btn-default" type="submit" value="Remover do estoque">
+                      </span>
+                    </div>
                   </form>
-                  <form class="update-stock-form" action="{{url_for('admin_update_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
+                  <form class="update-stock-form action-row" action="{{url_for('admin_update_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                     {{ data["stock_operation_form"].csrf_token }}
-                    {{ data["stock_operation_form"].quantity(class="quantity action-row") }}
-                    <input class="action-row" type=submit value="Atualizar estoque">
+                    <div class="input-group">
+                      <input name="{{data['stock_operation_form'].quantity.name}}" type="number" class="form-control stock quantity" placeholder="Ex.: 3">
+                      <span class="input-group-btn">
+                        <input name="{{data['stock_operation_form'].submit.name}}" class="btn btn-default" type="submit" value="Atualizar estoque">
+                      </span>
+                    </div>
                   </form>
-                {% if product.active %}
-                    <form class="remove-form" action="{{url_for('admin_remove_product', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
+                  {% if product.active %}
+                    <form class="remove-form action-row" action="{{url_for('admin_remove_product', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                       {{ data["action_form"].csrf_token }}
-                      <input type=submit value="Remover produto" >
+                      <input class="btn btn-default action-row" type=submit value="Remover produto" >
                     </form>
-                {% else %}
-                    <form class="reactivate-form" action="{{url_for('admin_reactivate_product', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
+                  {% else %}
+                    <form class="reactivate-form action-row" action="{{url_for('admin_reactivate_product', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
                       {{ data["action_form"].csrf_token }}
-                      <input type=submit value="Reativar produto">
+                      <input class="btn btn-default action-row" type=submit value="Reativar produto">
                     </form>
-                {% endif %}
+                  {% endif %}
+                </div>
+              </div>       
             </td>
           </tr>
         {% endfor %}
@@ -94,6 +118,17 @@
 <script>
   $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
+  });
+
+  $(".collapsible-row").each(function(){
+    var collapsibleRow = $(this);
+    var actionButton = $("#{0}".f(collapsibleRow.attr("action-btn-id")));
+    collapsibleRow.on('hide.bs.collapse', function () {
+      actionButton.html("Exibir ações <span class='glyphicon glyphicon-menu-down'></span>")
+    });
+    collapsibleRow.on('show.bs.collapse', function () {
+      actionButton.html("Ocultar ações <span class='glyphicon glyphicon-menu-up'></span>")
+    });
   });
 
   $(".remove-form").submit(function() {

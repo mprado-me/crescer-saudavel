@@ -15,6 +15,11 @@ from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange
 
+
+class SimpleSubmitForm(FlaskForm):
+    submit = SubmitField()
+
+
 # Category -- begin
 class CategoryForm(FlaskForm):
     category = StringField(label="Nome da categoria", validators=[
@@ -376,7 +381,7 @@ class FilterProductForm(FlaskForm):
         choices = choices + get_registered_category_subcategory_choices(self)
         self.category_subcategory.choices = choices[:]
 
-class StockOperationForm(FlaskForm):
+class StockOperationForm(SimpleSubmitForm):
     quantity = StringField(
         render_kw={
             "placeholder": "Ex.: 3",
@@ -386,9 +391,6 @@ class StockOperationForm(FlaskForm):
             NotNegativeIntegerString(message=error_msg_provider.stock_quantity()),
         ])
 # Product -- end --
-
-class SimpleSubmitForm(FlaskForm):
-    submit = SubmitField()
 
 
 class UploadImageForm(FlaskForm):
