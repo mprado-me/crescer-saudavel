@@ -12,6 +12,7 @@ function setAjaxFormHandlers(data){
     var form = data.form;
     var minResponseTime = data.minResponseTime;
     var confirmMessage = data.confirmMessage;
+    var dataType = data.dataType;
     var submit = data.submit;
     var success = data.success;
     var error = data.error;
@@ -32,11 +33,14 @@ function setAjaxFormHandlers(data){
             url: form.attr("action"),
             type: form.attr("method"),
             data: form.serialize(),
+            dataType: dataType,
             async: true,
-            success: function(){
+            success: function(data){
               var postReturnTime = (new Date()).getTime();
               var delay = minResponseTime-(postReturnTime-form.clickTime);
-              setTimeout(success, delay);
+              setTimeout(function(){
+                success(data)
+              }, delay);
             },
             error: function(jqXHR, textStatus, errorThrown){
               var postReturnTime = (new Date()).getTime();

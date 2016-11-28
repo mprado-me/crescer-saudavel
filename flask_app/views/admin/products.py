@@ -3,6 +3,7 @@
 
 import ast
 import random
+import json
 
 from decimal import Decimal
 
@@ -357,20 +358,10 @@ def admin_add_to_stock(product_id):
     add_to_stock_form = StockOperationForm()
 
     try:
-        # Getting optional parameters
-        url_args = request.args.get('url_args')
-
-        # Setting default value to optional parameters
-        # Converting optional parameters from string type to its corresponded python type
-        if not url_args:
-            url_args = {}
-        else:
-            url_args = ast.literal_eval(url_args)
-
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
-            raise InvalidUrlParamError("Product not found")
+            return "", 404
 
         if not add_to_stock_form.validate_on_submit():
             return "", 422
@@ -379,12 +370,14 @@ def admin_add_to_stock(product_id):
         db_manager.add(product)
         db_manager.commit()
 
-        flash("O estoque do produto #%s \"%s\" foi acrescido pelo valor fornecido." % (product.id, product.title), "success")
-        return redirect(url_for("admin_products", **url_args))
+        response = {
+            "new_stock_quantity": product.stock_quantity,
+        }
+        return json.dumps(response), 200
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
-        abort(500)
+        return "", 500
 
 
 @app.route('/painel-administrativo/remover-do-estoque/<int:product_id>', methods=["POST"])
@@ -395,38 +388,29 @@ def admin_remove_from_stock(product_id):
     remove_from_stock_form = StockOperationForm()
 
     try:
-        # Getting optional parameters
-        url_args = request.args.get('url_args')
-
-        # Setting default value to optional parameters
-        # Converting optional parameters from string type to its corresponded python type
-        if not url_args:
-            url_args = {}
-        else:
-            url_args = ast.literal_eval(url_args)
-
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
-            raise InvalidUrlParamError("Product not found")
+            return "", 404
 
         if not remove_from_stock_form.validate_on_submit():
             return "", 422
 
         product.stock_quantity = product.stock_quantity - int(remove_from_stock_form.quantity.data)
         if product.stock_quantity < 0:
-            return remove_from_stock_fail(product=product, url_args=url_args)
+            return "", 422
 
         db_manager.add(product)
         db_manager.commit()
 
-        flash("O estoque do produto #%s \"%s\" foi diminuido pelo valor fornecido." % (product.id, product.title),
-              "success")
-        return redirect(url_for("admin_products", **url_args))
+        response = {
+            "new_stock_quantity": product.stock_quantity,
+        }
+        return json.dumps(response), 200
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
-        abort(500)
+        return "", 500
 
 
 def remove_from_stock_fail(product, url_args):
@@ -443,20 +427,10 @@ def admin_update_stock(product_id):
     update_stock_form = StockOperationForm()
 
     try:
-        # Getting optional parameters
-        url_args = request.args.get('url_args')
-
-        # Setting default value to optional parameters
-        # Converting optional parameters from string type to its corresponded python type
-        if not url_args:
-            url_args = {}
-        else:
-            url_args = ast.literal_eval(url_args)
-
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
-            raise InvalidUrlParamError("Product not found")
+            return "", 404
 
         if not update_stock_form.validate_on_submit():
             return "", 422
@@ -466,13 +440,14 @@ def admin_update_stock(product_id):
         db_manager.add(product)
         db_manager.commit()
 
-        flash("O estoque do produto #%s \"%s\" foi atualizado." % (product.id, product.title),
-              "success")
-        return redirect(url_for("admin_products", **url_args))
+        response = {
+            "new_stock_quantity": product.stock_quantity,
+        }
+        return json.dumps(response), 200
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
-        abort(500)
+        return "", 500
 
 
 @app.route('/painel-administrativo/adicionar-categoria-de-produto', methods=['GET', 'POST'])

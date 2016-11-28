@@ -147,16 +147,15 @@
     setAjaxFormHandlers({
       form: form,
       minResponseTime: 500,
+      dataType: "json",
       submit: function(){
         disableInputGroup(form.parent(), "change-stock-group")
         submitInput.attr("value", "Adicionando...")
       },
-      success: function(){
+      success: function(data){
         colId = "in-stock"
         row = 0
-        newValue = parseInt(getTableData(colId, row)) + parseInt(stockQuantityInput.val());
-
-        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(newValue);
+        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);
 
         toastr.options.closeButton = false;
         toastr.options.timeOut = 3500;
@@ -192,17 +191,15 @@
     setAjaxFormHandlers({
       form: form,
       minResponseTime: 500,
+      dataType: "json",
       submit: function(){
         disableInputGroup(form.parent(), "change-stock-group")
         submitInput.attr("value", "Removendo...")
       },
-      success: function(){
+      success: function(data){
         colId = "in-stock"
         row = 0
-        newValue = parseInt(getTableData(colId, row)) - parseInt(stockQuantityInput.val());
-        newValue = Math.max(0, newValue)
-
-        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(newValue);
+        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);
 
         toastr.options.closeButton = true;
         toastr.options.timeOut = 3500;
@@ -238,16 +235,15 @@
     setAjaxFormHandlers({
       form: form,
       minResponseTime: 500,
+      dataType: "json",
       submit: function(){
         disableInputGroup(form.parent(), "change-stock-group")
         submitInput.attr("value", "Atualizando...")
       },
-      success: function(){
+      success: function(data){
         colId = "in-stock"
         row = 0
-        newValue = parseInt(stockQuantityInput.val());
-
-        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(newValue);
+        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);
 
         toastr.options.closeButton = true;
         toastr.options.timeOut = 3500;
