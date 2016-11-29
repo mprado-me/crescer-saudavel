@@ -9,6 +9,7 @@ sudo apt-get install -y python-dev;
 
 pip install --upgrade pip;
 pip install Flask;
+sudo pip install flask-bcrypt;
 pip install Flask-WTF;
 pip install Flask-SQLAlchemy;
 pip install flask-bcrypt;
