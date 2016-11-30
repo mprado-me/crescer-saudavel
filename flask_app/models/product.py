@@ -16,9 +16,10 @@ class Product(db.Model):
     subcategory_id = db.Column(db.Integer, ForeignKey("subcategory.id"))
     subcategory = relationship("Subcategory", back_populates="products")
     price = db.Column(db.Numeric(precision=12, scale=2), nullable=False)
-    stock_quantity = db.Column(db.Integer, nullable=False)
-    stop_sell_stock_quantity = db.Column(db.Integer, nullable=False)
+    in_stock = db.Column(db.Integer, nullable=False)
+    min_stock = db.Column(db.Integer, nullable=False)
     summary = db.Column(db.UnicodeText, nullable=False)
+    sales_number = db.Column(db.Integer, default=0)
 
     image_1 = db.Column(db.Text, nullable=False)
     image_2 = db.Column(db.Text)

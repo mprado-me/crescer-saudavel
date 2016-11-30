@@ -1,57 +1,60 @@
 {% macro mandatory_mark(show_mark=False) -%}
-{% if show_mark %}
-<span class="required">*</span>
-{% endif %}
+    {% if show_mark %}
+        <span class="required">*</span>
+    {% endif %}
 {%- endmacro %}
 
 {%- macro input(name, id="", class="", type="text", pattern=".*", title="", value="", maxlength=256, editable=False, errors=None) -%}
-{% if not editable %}
-<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}"
-       value="{{ value if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}" readonly>
-{% else %}
-<input type="{{ type }}" pattern="{{pattern}}" id="{{ id }}" name="{{ name }}" title="{{ title }}"
-       value="{{ value if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}">
-{% if errors and errors|length > 0 %}
-<div class="input-errors-container">
-  <ul>
-    {% for error in errors %}
-    <li>
-      <div class="alert alert-danger input-error" role="alert">{{error|safe}}</div>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-{% endif %}
+    {% if not editable %}
+        <input type="{{ type }}" pattern="{{ pattern }}" id="{{ id }}" name="{{ name }}" title="{{ title }}"
+               value="{{ value if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}" readonly>
+    {% else %}
+        <input type="{{ type }}" pattern="{{ pattern }}" id="{{ id }}" name="{{ name }}" title="{{ title }}"
+               value="{{ value if value != None else '' }}" maxlength="{{ maxlength }}" class="{{ class }}">
+        {% if errors and errors|length > 0 %}
+            <div class="input-errors-container">
+                <ul>
+                    {% for error in errors %}
+                        <li>
+                            <div class="alert alert-danger input-error" role="alert">{{ error|safe }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endif %}
 {%- endmacro %}
 
 {%- macro social_network(title, class, href) -%}
-<li class="pull-left {{ class }}"><a target="_blank" rel="nofollow" href="{{ href }}" title="{{ title }}"></a></li>
+    <li class="pull-left {{ class }}"><a target="_blank" rel="nofollow" href="{{ href }}" title="{{ title }}"></a></li>
 {%- endmacro %}
 
 {%- macro product(title, href, class="") -%}
-<li class="{{ class }}"><a href="{{ href }}" title="{{ title }}">{{ title }}</a></li>
+    <li class="{{ class }}"><a href="{{ href }}" title="{{ title }}">{{ title }}</a></li>
 {%- endmacro %}
 
 {%- macro blog_post_link(title, href, class="") -%}
-<li class="{{ class }}"><a href="{{ href }}" title="{{ title }}">{{ title }}</a></li>
+    <li class="{{ class }}"><a href="{{ href }}" title="{{ title }}">{{ title }}</a></li>
 {%- endmacro %}
 
 {%- macro sort_method_li(name, active, href) -%}
-  {% if active %}
-    <li class="active">
-      <a>{{name}}</a>
-  {% else %}
-    <li>
-      <a href="{{href}}">{{name}}</a>
-  {% endif %}
-    </li>
+    {% if active %}
+        <li class="active">
+            <a>{{ name }}</a>
+            {% else %}
+        <li>
+        <a href="{{ href }}">{{ name }}</a>
+    {% endif %}
+</li>
 {%- endmacro %}
 
 {% macro info_tooltip(text, data_html="false") -%}
-  <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{{text}}" data-html="{{data_html}}"></span>
+    {% if text %}
+        <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{{ text }}"
+              data-html="{{ data_html }}"></span>
+    {% endif %}
 {%- endmacro %}
 
 {% macro info_tooltip_min_stock() -%}
-  {{info_tooltip("Parar de vender o produto quando o estoque atingir valor mínimo estabelecido.")}}
+    {{ info_tooltip("Parar de vender o produto quando o estoque atingir valor mínimo estabelecido.") }}
 {%- endmacro %}

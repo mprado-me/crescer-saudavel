@@ -1,0 +1,63 @@
+{% import "shared/macros.html" as macros %}
+
+{#<div class="jumbotron filter">#}
+{#    <form action="{{ url_for('admin_products', page=1) }}" method=get enctype=multipart/form-data>#}
+{#        {% with form = data["filter_product_form"] %}#}
+{#            {% include "admin/shared/form-fields.html" %}#}
+{#        {% endwith %}#}
+{#    </form>#}
+{#</div>#}
+
+{% if data.table_data.rows|length > 0 %}
+    {% with data=data.paginator_data %}
+        {% include "shared/paginator.html" %}
+    {% endwith %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            {% for col in data.table_data.cols %}
+                <th id="{{ col.id }}">
+                    {% if col.title %}
+                        {{ col.title }}{{ macros.info_tooltip(col.tooltip) }}
+                    {% endif %}
+                </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in data.table_data.rows %}
+            {% set row_idx = loop.index0 %}
+            <tr>
+                {% for td in row %}
+                    <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}">
+                        {% if data.table_data.cols[loop.index0].id == "actions" %}
+                            <button class="btn btn-default action" type="button" id="action-btn-{{ row_idx }}"
+                                    data-toggle="collapse" data-target="#collapsible-row-{{ row_idx }}"
+                                    aria-expanded="false"
+                                    aria-controls="collapsible-row-{{ row_idx }}">
+                                Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
+                            </button>
+                        {% else %}
+                            {{ td }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr class="collapse collapsible-row" id="collapsible-row-{{ row_idx }}" action-btn-id="action-btn-{{ row_idx }}">
+                <td colspan="8">
+                    {% with data=td %}
+                        {% include "admin/products/actions.html" %}
+                    {% endwith %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% with data=data.paginator_data %}
+        {% include "shared/paginator.html" %}
+    {% endwith %}
+{% else %}
+    <p>{{ data.empty_msg }}</p>
+{% endif %}

@@ -17,29 +17,6 @@ from flask_app.utils.decorators import log_route
 from flask import flash, redirect, url_for, render_template_string, request
 
 if app.config["DEBUG"]:
-    @app.route('/debug/db', methods=["GET"])
-    @log_route
-    def debug():
-        return render_template_string("""
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <p>{{message}}</p>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <form action="{{url_for('clear_db')}}" method=post enctype=multipart/form-data>
-                <input type=submit value="Limpar Db">
-            </form>
-            <form action="{{url_for('create_db')}}" method=post enctype=multipart/form-data>
-                <input type=submit value="Criar Db">
-            </form>
-            <form action="{{url_for('fill_db')}}" method=post enctype=multipart/form-data>
-                <input type=submit value="Preencher Db">
-            </form>
-        """)
-
-
     @app.route('/debug/db/restart', methods=["GET"])
     @log_route
     def restart_db():
@@ -49,20 +26,9 @@ if app.config["DEBUG"]:
             fill_db_implementation()
             flash("Db foi reiniciado com sucesso", "success")
             return redirect(url_for("admin_dashboard"))
-        except:
-            flash("Falha ao reiniciar o db")
-            return redirect(url_for('debug'))
-
-    @app.route('/debug/db/clear', methods=["POST"])
-    @log_route
-    def clear_db():
-        try:
-            clear_db_implementation()
-            flash("Db foi limpo com sucesso")
-            return redirect(url_for('debug'))
         except Exception as e:
             log_unrecognized_exception(e)
-            flash("Falha ao limpar o db")
+            flash("Falha ao reiniciar o db")
             return redirect(url_for('debug'))
 
 
@@ -70,35 +36,8 @@ if app.config["DEBUG"]:
         db.drop_all()
 
 
-    @app.route('/debug/db/create', methods=["POST"])
-    @log_route
-    def create_db():
-        try:
-            create_db_implementation()
-            flash("Db foi criado com sucesso")
-            return redirect(url_for('debug'))
-        except Exception as e:
-            log_unrecognized_exception(e)
-            flash("Falha ao criar o db")
-            return redirect(url_for('debug'))
-
-
     def create_db_implementation():
         db.create_all()
-
-
-    @app.route('/debug/db/fill', methods=["POST"])
-    @log_route
-    def fill_db():
-        try:
-            fill_db_implementation()
-            flash("Db preenchido com sucesso")
-            return redirect(url_for('debug'))
-        except Exception as e:
-            db.session.rollback()
-            log_unrecognized_exception(e)
-            flash("Falha ao preencher o db")
-            return redirect(url_for('debug'))
 
 
     def fill_db_implementation():
@@ -411,8 +350,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P01",
 
             image_1="1.jpg",
@@ -424,8 +363,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P02",
 
             image_1="1.jpg",
@@ -437,8 +376,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P03",
 
             image_1="1.jpg",
@@ -450,8 +389,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P04",
 
             image_1="1.jpg",
@@ -463,8 +402,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P05",
 
             image_1="1.jpg",
@@ -476,8 +415,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P06",
 
             image_1="1.jpg",
@@ -489,8 +428,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P07",
 
             image_1="1.jpg",
@@ -502,8 +441,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P08",
 
             image_1="1.jpg",
@@ -515,8 +454,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P09",
 
             image_1="1.jpg",
@@ -528,8 +467,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P10",
 
             image_1="1.jpg",
@@ -541,8 +480,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P11",
 
             image_1="1.jpg",
@@ -554,8 +493,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P12",
 
             image_1="1.jpg",
@@ -567,8 +506,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P13",
 
             image_1="1.jpg",
@@ -580,8 +519,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P14",
 
             image_1="1.jpg",
@@ -593,8 +532,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P15",
 
             image_1="1.jpg",
@@ -606,8 +545,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P17",
 
             image_1="1.jpg",
@@ -619,8 +558,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P17",
 
             image_1="1.jpg",
@@ -632,8 +571,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P18",
 
             image_1="1.jpg",
@@ -645,8 +584,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P19",
 
             image_1="1.jpg",
@@ -658,8 +597,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P20",
 
             image_1="1.jpg",
@@ -671,8 +610,8 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P21",
 
             image_1="1.jpg",
@@ -684,8 +623,8 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=4,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P22",
 
             image_1="1.jpg",
@@ -697,8 +636,8 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=5,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P23",
 
             image_1="1.jpg",
@@ -710,8 +649,8 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=5,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P24",
 
             image_1="1.jpg",
@@ -723,8 +662,8 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=5,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P25",
 
             image_1="1.jpg",
@@ -736,8 +675,8 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=5,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P26",
 
             image_1="1.jpg",
@@ -749,8 +688,8 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=None,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P27",
 
             image_1="1.jpg",
@@ -762,8 +701,8 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=None,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P28",
 
             image_1="1.jpg",
@@ -775,8 +714,8 @@ if app.config["DEBUG"]:
             category_id=3,
             subcategory_id=None,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P29",
 
             image_1="1.jpg",
@@ -788,8 +727,8 @@ if app.config["DEBUG"]:
             category_id=None,
             subcategory_id=None,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P30",
 
             image_1="1.jpg",
@@ -801,8 +740,8 @@ if app.config["DEBUG"]:
             category_id=None,
             subcategory_id=None,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P31",
 
             image_1="1.jpg",
@@ -814,8 +753,8 @@ if app.config["DEBUG"]:
             category_id=None,
             subcategory_id=None,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P32",
 
             image_1="1.jpg",
@@ -827,8 +766,8 @@ if app.config["DEBUG"]:
             category_id=None,
             subcategory_id=None,
             price=Decimal("3.20"),
-            stock_quantity=26,
-            stop_sell_stock_quantity=3,
+            in_stock=26,
+            min_stock=3,
             summary="Resumo do P33",
 
             image_1="1.jpg",

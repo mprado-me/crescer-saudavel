@@ -226,7 +226,7 @@ def admin_edit_product(product_id):
 @log_route
 def admin_products(page):
     filter_product_form = FilterProductForm()
-    action_form = SimpleSubmitForm()
+    simple_submit_form = SimpleSubmitForm()
     stock_operation_form = StockOperationForm()
 
     try:
@@ -259,7 +259,7 @@ def admin_products(page):
 
         data = products_data_provider.get_data(
             page=page,
-            action_form=action_form,
+            simple_submit_form=simple_submit_form,
             stock_operation_form=stock_operation_form,
             filter_product_form=filter_product_form,
             category_id=category_id,

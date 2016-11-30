@@ -1,359 +1,246 @@
 {% extends "admin/shared/base.html" %}
 
-{% import "shared/macros.html" as macros %}
-
 {% block title %}Produtos{% endblock %}
 
 {% block content %}
-  <a href="{{url_for('admin_add_product')}}">Adicionar novo produto</a>
-  <div class="br-8px"></div>
+    <a href="{{ url_for('admin_add_product') }}">Adicionar novo produto</a>
+    <div class="br-8px"></div>
 
-  <div class="jumbotron filter">
-    <form action="{{url_for('admin_products', page=1)}}" method=get enctype=multipart/form-data>
-      {% with form = data["filter_product_form"] %}
-        {% include "admin/shared/form-fields.html" %}
-      {% endwith %}
-    </form>
-  </div>
-
-  {% if not data["empty"] %}
-    {% with data=data["paginator_data"] %}
-      {% include "shared/paginator.html" %}
+    {% with data=data.super_table_data %}
+        {% include "admin/shared/super_table.html" %}
     {% endwith %}
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th id="id">Id</th>
-          <th id="category">Categoria</th>
-          <th id="subcategory">Subcategoria</th>
-          <th id="title">Título</th>
-          <th id="price">Preço (R$)</th>
-          <th id="in-stock">Em estoque</th>
-          <th id="min-stock">Mín. estoque{{macros.info_tooltip_min_stock()}}</th>
-          <th id="actions"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in data["products"] %}
-          <tr>
-            <td id="col-id-row-{{loop.index0}}">#{{product.id}}</td>
-            <td id="col-category-row-{{loop.index0}}">{{product.category.name}}</td>
-            <td id="col-subcategory-row-{{loop.index0}}">{{product.subcategory.name}}</td>
-            <td id="col-title-row-{{loop.index0}}">{{product.title}}</td>
-            <td id="col-price-row-{{loop.index0}}">{{product.price}}</td>
-            <td id="col-in-stock-row-{{loop.index0}}">{{product.stock_quantity}}</td>
-            <td id="col-min-stock-row-{{loop.index0}}">{{product.stop_sell_stock_quantity}}</td>
-            <td id="col-actions-row-{{loop.index0}}">
-              <button id="action-btn-{{product.id}}" class="btn btn-default action" type="button" data-toggle="collapse" data-target="#collapsible-row-{{product.id}}" aria-expanded="false" aria-controls="collapsible-row-{{product.id}}">
-                Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
-              </button>
-            </td>
-          </tr>
-          <tr class="collapse collapsible-row" id="collapsible-row-{{product.id}}" action-btn-id="action-btn-{{product.id}}">
-            <td colspan="8">
-              <div class="panel panel-default actions">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Ações</h3>
-                </div>
-                <div class="panel-body">
-                  <a class="btn btn-default action-row" target="_blank" href="{{url_for('product', product_id=product.id)}}">Ver produto</a><br>
-                  <a class="btn btn-default action-row" href="{{url_for('admin_edit_product', product_id=product.id, url_args=data.url_args)}}">Editar</a>
-                  <form row="{{loop.index0}}" product_id="{{product.id}}" class="add-to-stock-form action-row" action="{{url_for('admin_add_to_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
-                    {{ data["stock_operation_form"].csrf_token }}
-                    <div class="input-group">
-                      <input name="{{data['stock_operation_form'].quantity.name}}" size="5" type="number" class="form-control stock quantity" placeholder="Ex.: 3">
-                      <span class="input-group-btn">
-                        <input name="{{data['stock_operation_form'].submit.name}}" class="btn btn-default change-stock-group" type="submit" value="Adicionar ao estoque">
-                      </span>
-                    </div>
-                  </form>
-                  <form row="{{loop.index0}}" product_id="{{product.id}}" class="remove-from-stock-form action-row" action="{{url_for('admin_remove_from_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
-                    {{ data["stock_operation_form"].csrf_token }}
-                    <div class="input-group">
-                      <input name="{{data['stock_operation_form'].quantity.name}}" type="number" class="form-control stock quantity" placeholder="Ex.: 3">
-                      <span class="input-group-btn">
-                        <input name="{{data['stock_operation_form'].submit.name}}" class="btn btn-default change-stock-group" type="submit" value="Remover do estoque">
-                      </span>
-                    </div>
-                  </form>
-                  <form row="{{loop.index0}}" product_id="{{product.id}}" class="update-stock-form action-row" action="{{url_for('admin_update_stock', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
-                    {{ data["stock_operation_form"].csrf_token }}
-                    <div class="input-group">
-                      <input name="{{data['stock_operation_form'].quantity.name}}" type="number" class="form-control stock quantity" placeholder="Ex.: 3">
-                      <span class="input-group-btn">
-                        <input name="{{data['stock_operation_form'].submit.name}}" class="btn btn-default change-stock-group" type="submit" value="Atualizar estoque">
-                      </span>
-                    </div>
-                  </form>
-                  <form product_id="{{product.id}}" class="remove-product action-row" action="{{url_for('admin_remove_product', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
-                    {{ data["action_form"].csrf_token }}
-                    <input class="btn btn-default action-row" type=submit value="Remover produto" >
-                  </form>
-                  <form product_id="{{product.id}}" class="reactivate-product action-row" action="{{url_for('admin_reactivate_product', product_id=product.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
-                    {{ data["action_form"].csrf_token }}
-                    <input class="btn btn-default action-row" type=submit value="Reativar produto">
-                  </form>
-                </div>
-              </div>       
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    {% with data=data["paginator_data"] %}
-      {% include "shared/paginator.html" %}
-    {% endwith %}
-  {% else %}
-    <p>Nenhum produto foi encontrado.</p>
-  {% endif %}
-
 {% endblock %}
 
 {% block scripts %}
-<script>
-  $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-  });
-
-  $(".collapsible-row").each(function(){
-    var collapsibleRow = $(this);
-    var actionButton = $("#{0}".f(collapsibleRow.attr("action-btn-id")));
-    collapsibleRow.on('hide.bs.collapse', function () {
-      actionButton.html("Exibir ações <span class='glyphicon glyphicon-menu-down'></span>")
-    });
-    collapsibleRow.on('show.bs.collapse', function () {
-      actionButton.html("Ocultar ações <span class='glyphicon glyphicon-menu-up'></span>")
-    });
-  });
-
-  disableInputGroup = function(root, groupClass){
-    root.find("input.{0}".f(groupClass)).each(function(){
-      $(this).prop("disabled", true);
-    })
-  }
-
-  enableInputGroup = function(root, groupClass){
-    root.find("input.{0}".f(groupClass)).each(function(){
-      $(this).prop("disabled", false);
-    })
-  }
-
-  $(".add-to-stock-form").each(function(){
-    var form = $(this)
-    var stockQuantityInput = form.find("input[type='number']");
-    var submitInput = form.find("input:submit");
-    setAjaxFormHandlers({
-      form: form,
-      minResponseTime: 500,
-      dataType: "json",
-      submit: function(){
-        disableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Adicionando...")
-      },
-      success: function(data){
-        colId = "in-stock"
-        row = 0
-        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);
-
-        toastr.options.closeButton = false;
-        toastr.options.timeOut = 3500;
-        toastr.success("O estoque do produto #{0} foi aumentado em {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));
-
-        stockQuantityInput.val('')
-
-        enableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Adicionar ao estoque");
-      },
-      error: function(status){
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 10000;
-
-        if(status == "422"){
-          stockQuantityInput.val('')
-          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));
-        }
-        else {
-          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));
-        }
-
-        enableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Adicionar ao estoque");
-      },
-    })
-  })
-
-  $(".remove-from-stock-form").each(function(){
-    var form = $(this)
-    var stockQuantityInput = form.find("input[type='number']");
-    var submitInput = form.find("input:submit");
-    setAjaxFormHandlers({
-      form: form,
-      minResponseTime: 500,
-      dataType: "json",
-      submit: function(){
-        disableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Removendo...")
-      },
-      success: function(data){
-        colId = "in-stock"
-        row = 0
-        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);
-
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 3500;
-        toastr.success("O estoque do produto #{0} foi diminuído em {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));
-
-        stockQuantityInput.val('')
-
-        enableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Remover do estoque");
-      },
-      error: function(status){
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 10000;
-
-        if(status == "422"){
-          stockQuantityInput.val('')
-          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));
-        }
-        else {
-          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));
-        }
-
-        enableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Remover do estoque");
-      },
-    })
-  })
-
-  $(".update-stock-form").each(function(){
-    var form = $(this)
-    var stockQuantityInput = form.find("input[type='number']");
-    var submitInput = form.find("input:submit");
-    setAjaxFormHandlers({
-      form: form,
-      minResponseTime: 500,
-      dataType: "json",
-      submit: function(){
-        disableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Atualizando...")
-      },
-      success: function(data){
-        colId = "in-stock"
-        row = 0
-        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);
-
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 3500;
-        toastr.success("O estoque do produto #{0} foi atualizado para {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));
-
-        stockQuantityInput.val('')
-
-        enableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Atualizar estoque");
-      },
-      error: function(status){
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 10000;
-
-        if(status == "422"){
-          stockQuantityInput.val('')
-          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));
-        }
-        else {
-          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));
-        }
-
-        enableInputGroup(form.parent(), "change-stock-group")
-        submitInput.attr("value", "Atualizar estoque");
-      },
-    })
-  })
-
-  {% for product in data.products %}
-    {% if product.active %}
-      $("form.reactivate-product").each(function(){
-        $(this).hide()
-      })
-    {% else %}
-      $("form.remove-product").each(function(){
-        $(this).hide()
-      })
-    {% endif %}
-  {% endfor %}
-
-  $("form.remove-product").each(function(){
-    var form = $(this)
-    var submitInput = form.children().filter("input:submit");
-    setAjaxFormHandlers({
-      form: form,
-      minResponseTime: 500,
-      submit: function(){
-        submitInput.prop("disabled", true)
-        submitInput.attr("value", "Removendo...")
-      },
-      success: function(){
-        submitInput.prop("disabled", false)
-        submitInput.attr("value", "Remover produto");
-
-        form.hide()
-        form.siblings().show()
-
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 3500;
-        toastr.success('O produto #{0} foi removido com sucesso.'.f(form.attr("product_id")));
-      },
-      error: function(status){
-        submitInput.prop("disabled", false)
-        submitInput.attr("value", "Remover produto");
-
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 10000;
-        toastr.error('Ocorreu uma falha ao remover o produto #{0}. Tente novamente.'.f(form.attr("product_id")));
-      },
-    })
-  })
-
-  $("form.reactivate-product").each(function(){
-    var form = $(this)
-    var submitInput = form.children().filter("input:submit");
-    setAjaxFormHandlers({
-      form: form,
-      minResponseTime: 500,
-      submit: function(){
-        submitInput.prop("disabled", true)
-        submitInput.attr("value", "Reativando...")
-      },
-      success: function(){
-        submitInput.prop("disabled", false)
-        submitInput.attr("value", "Reativar produto");
-
-        form.hide()
-        form.siblings().show()
-
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 3500;
-        toastr.success('O produto #{0} foi reativado com sucesso.'.f(form.attr("product_id")));
-      },
-      error: function(status){
-        submitInput.prop("disabled", false)
-        submitInput.attr("value", "Remover produto");
-
-        toastr.options.closeButton = true;
-        toastr.options.timeOut = 10000;
-        toastr.error('Ocorreu uma falha ao reativar o produto #{0}. Tente novamente.'.f(form.attr("product_id")));
-      },
-    })
-  })
-
-  updateTableData = function(colId, row, value){
-    $("#col-{0}-row-{1}".f(colId, row)).html(value);
-  }
-
-  getTableData = function(colId, row, value){
-    return $("#col-{0}-row-{1}".f(colId, row)).html();
-  }
-</script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/super_table.js' )}}"></script>
+    <script>
+        {##}
+        {#  disableInputGroup = function(root, groupClass){#}
+        {#    root.find("input.{0}".f(groupClass)).each(function(){#}
+        {#      $(this).prop("disabled", true);#}
+        {#    })#}
+        {#  }#}
+        {##}
+        {#  enableInputGroup = function(root, groupClass){#}
+        {#    root.find("input.{0}".f(groupClass)).each(function(){#}
+        {#      $(this).prop("disabled", false);#}
+        {#    })#}
+        {#  }#}
+        {##}
+        {#  $(".add-to-stock-form").each(function(){#}
+        {#    var form = $(this)#}
+        {#    var stockQuantityInput = form.find("input[type='number']");#}
+        {#    var submitInput = form.find("input:submit");#}
+        {#    setAjaxFormHandlers({#}
+        {#      form: form,#}
+        {#      minResponseTime: 500,#}
+        {#      dataType: "json",#}
+        {#      submit: function(){#}
+        {#        disableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Adicionando...")#}
+        {#      },#}
+        {#      success: function(data){#}
+        {#        colId = "in-stock"#}
+        {#        row = 0#}
+        {#        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);#}
+        {##}
+        {#        toastr.options.closeButton = false;#}
+        {#        toastr.options.timeOut = 3500;#}
+        {#        toastr.success("O estoque do produto #{0} foi aumentado em {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));#}
+        {##}
+        {#        stockQuantityInput.val('')#}
+        {##}
+        {#        enableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Adicionar ao estoque");#}
+        {#      },#}
+        {#      error: function(status){#}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 10000;#}
+        {##}
+        {#        if(status == "422"){#}
+        {#          stockQuantityInput.val('')#}
+        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));#}
+        {#        }#}
+        {#        else {#}
+        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
+        {#        }#}
+        {##}
+        {#        enableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Adicionar ao estoque");#}
+        {#      },#}
+        {#    })#}
+        {#  })#}
+        {##}
+        {#  $(".remove-from-stock-form").each(function(){#}
+        {#    var form = $(this)#}
+        {#    var stockQuantityInput = form.find("input[type='number']");#}
+        {#    var submitInput = form.find("input:submit");#}
+        {#    setAjaxFormHandlers({#}
+        {#      form: form,#}
+        {#      minResponseTime: 500,#}
+        {#      dataType: "json",#}
+        {#      submit: function(){#}
+        {#        disableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Removendo...")#}
+        {#      },#}
+        {#      success: function(data){#}
+        {#        colId = "in-stock"#}
+        {#        row = 0#}
+        {#        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);#}
+        {##}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 3500;#}
+        {#        toastr.success("O estoque do produto #{0} foi diminuído em {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));#}
+        {##}
+        {#        stockQuantityInput.val('')#}
+        {##}
+        {#        enableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Remover do estoque");#}
+        {#      },#}
+        {#      error: function(status){#}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 10000;#}
+        {##}
+        {#        if(status == "422"){#}
+        {#          stockQuantityInput.val('')#}
+        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));#}
+        {#        }#}
+        {#        else {#}
+        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
+        {#        }#}
+        {##}
+        {#        enableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Remover do estoque");#}
+        {#      },#}
+        {#    })#}
+        {#  })#}
+        {##}
+        {#  $(".update-stock-form").each(function(){#}
+        {#    var form = $(this)#}
+        {#    var stockQuantityInput = form.find("input[type='number']");#}
+        {#    var submitInput = form.find("input:submit");#}
+        {#    setAjaxFormHandlers({#}
+        {#      form: form,#}
+        {#      minResponseTime: 500,#}
+        {#      dataType: "json",#}
+        {#      submit: function(){#}
+        {#        disableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Atualizando...")#}
+        {#      },#}
+        {#      success: function(data){#}
+        {#        colId = "in-stock"#}
+        {#        row = 0#}
+        {#        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);#}
+        {##}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 3500;#}
+        {#        toastr.success("O estoque do produto #{0} foi atualizado para {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));#}
+        {##}
+        {#        stockQuantityInput.val('')#}
+        {##}
+        {#        enableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Atualizar estoque");#}
+        {#      },#}
+        {#      error: function(status){#}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 10000;#}
+        {##}
+        {#        if(status == "422"){#}
+        {#          stockQuantityInput.val('')#}
+        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));#}
+        {#        }#}
+        {#        else {#}
+        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
+        {#        }#}
+        {##}
+        {#        enableInputGroup(form.parent(), "change-stock-group")#}
+        {#        submitInput.attr("value", "Atualizar estoque");#}
+        {#      },#}
+        {#    })#}
+        {#  })#}
+        {##}
+        {#  {% for product in data.products %}#}
+        {#    {% if product.active %}#}
+        {#      $("form.reactivate-product").each(function(){#}
+        {#        $(this).hide()#}
+        {#      })#}
+        {#    {% else %}#}
+        {#      $("form.remove-product").each(function(){#}
+        {#        $(this).hide()#}
+        {#      })#}
+        {#    {% endif %}#}
+        {#  {% endfor %}#}
+        {##}
+        {#  $("form.remove-product").each(function(){#}
+        {#    var form = $(this)#}
+        {#    var submitInput = form.children().filter("input:submit");#}
+        {#    setAjaxFormHandlers({#}
+        {#      form: form,#}
+        {#      minResponseTime: 500,#}
+        {#      submit: function(){#}
+        {#        submitInput.prop("disabled", true)#}
+        {#        submitInput.attr("value", "Removendo...")#}
+        {#      },#}
+        {#      success: function(){#}
+        {#        submitInput.prop("disabled", false)#}
+        {#        submitInput.attr("value", "Remover produto");#}
+        {##}
+        {#        form.hide()#}
+        {#        form.siblings().show()#}
+        {##}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 3500;#}
+        {#        toastr.success('O produto #{0} foi removido com sucesso.'.f(form.attr("product_id")));#}
+        {#      },#}
+        {#      error: function(status){#}
+        {#        submitInput.prop("disabled", false)#}
+        {#        submitInput.attr("value", "Remover produto");#}
+        {##}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 10000;#}
+        {#        toastr.error('Ocorreu uma falha ao remover o produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
+        {#      },#}
+        {#    })#}
+        {#  })#}
+        {##}
+        {#  $("form.reactivate-product").each(function(){#}
+        {#    var form = $(this)#}
+        {#    var submitInput = form.children().filter("input:submit");#}
+        {#    setAjaxFormHandlers({#}
+        {#      form: form,#}
+        {#      minResponseTime: 500,#}
+        {#      submit: function(){#}
+        {#        submitInput.prop("disabled", true)#}
+        {#        submitInput.attr("value", "Reativando...")#}
+        {#      },#}
+        {#      success: function(){#}
+        {#        submitInput.prop("disabled", false)#}
+        {#        submitInput.attr("value", "Reativar produto");#}
+        {##}
+        {#        form.hide()#}
+        {#        form.siblings().show()#}
+        {##}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 3500;#}
+        {#        toastr.success('O produto #{0} foi reativado com sucesso.'.f(form.attr("product_id")));#}
+        {#      },#}
+        {#      error: function(status){#}
+        {#        submitInput.prop("disabled", false)#}
+        {#        submitInput.attr("value", "Remover produto");#}
+        {##}
+        {#        toastr.options.closeButton = true;#}
+        {#        toastr.options.timeOut = 10000;#}
+        {#        toastr.error('Ocorreu uma falha ao reativar o produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
+        {#      },#}
+        {#    })#}
+        {#  })#}
+        {##}
+        {#  updateTableData = function(colId, row, value){#}
+        {#    $("#col-{0}-row-{1}".f(colId, row)).html(value);#}
+        {#  }#}
+        {##}
+        {#  getTableData = function(colId, row, value){#}
+        {#    return $("#col-{0}-row-{1}".f(colId, row)).html();#}
+        {#  }#}
+    </script>
 {% endblock %}

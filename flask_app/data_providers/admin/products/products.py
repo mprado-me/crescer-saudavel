@@ -16,6 +16,8 @@ from flask_app.utils.db_manager import db_manager
 from flask_app.utils.exceptions import InvalidParamError
 
 
+from flask import url_for
+
 class ProductsDataProvider():
     def __init__(self):
         pass
@@ -87,12 +89,8 @@ class ProductsDataProvider():
         }
         return data
 
-    def get_data(self, page, action_form, stock_operation_form, filter_product_form, category_id, subcategory_id, active, category_subcategory, url_args):
+    def get_data(self, page, simple_submit_form, stock_operation_form, filter_product_form, category_id, subcategory_id, active, category_subcategory, url_args):
         products = self.get_products(category_id=category_id, subcategory_id=subcategory_id, active=active)
-
-        empty = False
-        if len(products) == 0:
-            empty = True
 
         total_n_pages = int(math.ceil(float(len(products)) / app.config["ADMIN_N_PRODUCTS_BY_PAGE"]))
         total_n_pages = max(1, total_n_pages)
@@ -104,30 +102,30 @@ class ProductsDataProvider():
         first = (page - 1) * app.config["ADMIN_N_PRODUCTS_BY_PAGE"]
         last_plus_one = first + app.config["ADMIN_N_PRODUCTS_BY_PAGE"]
 
-        filter_product_form.category_subcategory.data = category_subcategory
-        filter_product_form.active.data = str(active)
-
-        data = {
-            "url_args":url_args,
-            "action_form": action_form,
-            "stock_operation_form": stock_operation_form,
-            "filter_product_form": filter_product_form,
-            "empty": empty,
-            "page": page,
+        return {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
-            "paginator_data": paginator_data_provider.get_data(
-                current_page=page,
-                n_pages=app.config["ADMIN_N_PAGES_IN_PRODUCTS_PAGINATOR"],
-                total_n_pages=total_n_pages,
-                url_endpoint="admin_products",
-                other_url_params={
-                    "category_subcategory": category_subcategory,
-                    "active": active,
-                }
-            ),
-            "products": products[first:last_plus_one],
+            "super_table_data": {
+                "filter_data": self.get_filter_data(
+                    form=filter_product_form,
+                    category_subcategory=category_subcategory,
+                    active=active),
+                "paginator_data": paginator_data_provider.get_data(
+                    current_page=page,
+                    n_pages=app.config["ADMIN_N_PAGES_IN_PRODUCTS_PAGINATOR"],
+                    total_n_pages=total_n_pages,
+                    url_endpoint="admin_products",
+                    other_url_params={
+                        "category_subcategory": category_subcategory,
+                        "active": active,
+                    }),
+                "table_data": self.get_table_data(
+                    products=products[first:last_plus_one],
+                    url_args=url_args,
+                    simple_submit_form=simple_submit_form,
+                    stock_operation_form=stock_operation_form),
+                "empty_msg": "Nenhum produto foi encontrado.",
+            }
         }
-        return data
 
     def get_products(self, category_id, subcategory_id, active):
         q = Product.query
@@ -137,6 +135,75 @@ class ProductsDataProvider():
             q = q.filter(Product.subcategory_id == subcategory_id)
         q = q.filter(Product.active == active)
         return q.order_by(Product.title).all()
+
+    def get_table_data(self, products, url_args, simple_submit_form, stock_operation_form):
+        rows = []
+        for idx, product in enumerate(products):
+            rows.append([
+                "#"+str(product.id),
+                product.category.name,
+                product.subcategory.name,
+                product.title,
+                product.price,
+                product.in_stock,
+                product.min_stock,
+                product.sales_number,
+                {
+                    "product_id": product.id,
+                    "row": idx,
+                    "file": url_for("static", filename="templates/admin/actions.html"),
+                    "url_args": url_args,
+                    "simple_submit_form": simple_submit_form,
+                    "stock_operation_form": stock_operation_form,
+                }
+            ])
+
+        return {
+            "cols": [
+                {
+                    "id": "id",
+                    "title": "Id",
+                },
+                {
+                    "id": "category",
+                    "title": "Categoria",
+                },
+                {
+                    "id": "subcategory",
+                    "title": "Subcategoria",
+                },
+                {
+                    "id": "title",
+                    "title": "Título",
+                },
+                {
+                    "id": "price",
+                    "title": "Preço",
+                },
+                {
+                    "id": "in_stock",
+                    "title": "Em estoque",
+                },
+                {
+                    "id": "min_stock",
+                    "title": "Mín. estoque",
+                    "tooltip": "Quando o estoque do produto for menor ou igual ao valor estabelecido, o produto não será mais disponibilizado para venda no site."
+                },
+                {
+                    "id": "sales_number",
+                    "title": "Vendas",
+                    "tooltip": "Total de vendas do produto pelo site."
+                },
+                {
+                    "id": "actions",
+                },
+            ],
+            "rows": rows,
+        }
+
+    def get_filter_data(self, form, category_subcategory, active):
+        form.category_subcategory.data = category_subcategory
+        form.active.data = str(active)
 
 
 products_data_provider = ProductsDataProvider()

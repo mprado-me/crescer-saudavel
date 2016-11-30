@@ -26,3 +26,5 @@ LOGGING_FILENAME = 'logs/log'
 LOGGING_LEVEL = logging.DEBUG
 
 UPLOADED_IMAGES_FOLDER = '/vagrant/flask_app/static/uploads/images'
+
+SQLALCHEMY_TRACK_MODIFICATIONS = False
