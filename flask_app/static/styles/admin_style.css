@@ -176,3 +176,23 @@ input.stock.quantity {
 table .btn.action {
     width: 130px;
 }
+
+.actions-container > a {
+    width: 100%;
+}
+
+.actions-container > form > input, .input-group {
+    width: 100%;
+}
+
+.actions-container > form > .input-group > .input-group-btn {
+    width: 100%;
+}
+
+.actions-container > form > .input-group > .input-group-btn > input {
+    width: 100%;
+}
+
+.actions-container > a,form:not(:last-child) {
+    margin-bottom: 8px;
+}

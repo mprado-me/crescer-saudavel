@@ -1,63 +1,59 @@
-<p>Oi!</p>
-{#<div class="panel panel-default actions">#}
-{#    <div class="panel-heading">#}
-{#        <h3 class="panel-title">Ações</h3>#}
-{#    </div>#}
-{#    <div class="panel-body">#}
-{#        <a class="btn btn-default action-row" target="_blank" href="{{ url_for('product', product_id=product.id) }}">Ver#}
-{#            produto</a><br>#}
-{#        <a class="btn btn-default action-row"#}
-{#           href="{{ url_for('admin_edit_product', product_id=product.id, url_args=data.url_args) }}">Editar</a>#}
-{#        <form row="{{ loop.index0 }}" product_id="{{ product.id }}" class="add-to-stock-form action-row"#}
-{#              action="{{ url_for('admin_add_to_stock', product_id=product.id, url_args=data.url_args) }}" method=post#}
-{#              enctype=multipart/form-data>#}
-{#            {{ data["stock_operation_form"].csrf_token }}#}
-{#            <div class="input-group">#}
-{#                <input name="{{ data['stock_operation_form'].quantity.name }}" size="5" type="number"#}
-{#                       class="form-control stock quantity" placeholder="Ex.: 3">#}
-{#                <span class="input-group-btn">#}
-{#                        <input name="{{ data['stock_operation_form'].submit.name }}"#}
-{#                               class="btn btn-default change-stock-group" type="submit" value="Adicionar ao estoque">#}
-{#                      </span>#}
-{#            </div>#}
-{#        </form>#}
-{#        <form row="{{ loop.index0 }}" product_id="{{ product.id }}" class="remove-from-stock-form action-row"#}
-{#              action="{{ url_for('admin_remove_from_stock', product_id=product.id, url_args=data.url_args) }}"#}
-{#              method=post enctype=multipart/form-data>#}
-{#            {{ data["stock_operation_form"].csrf_token }}#}
-{#            <div class="input-group">#}
-{#                <input name="{{ data['stock_operation_form'].quantity.name }}" type="number"#}
-{#                       class="form-control stock quantity" placeholder="Ex.: 3">#}
-{#                <span class="input-group-btn">#}
-{#                        <input name="{{ data['stock_operation_form'].submit.name }}"#}
-{#                               class="btn btn-default change-stock-group" type="submit" value="Remover do estoque">#}
-{#                      </span>#}
-{#            </div>#}
-{#        </form>#}
-{#        <form row="{{ loop.index0 }}" product_id="{{ product.id }}" class="update-stock-form action-row"#}
-{#              action="{{ url_for('admin_update_stock', product_id=product.id, url_args=data.url_args) }}" method=post#}
-{#              enctype=multipart/form-data>#}
-{#            {{ data["stock_operation_form"].csrf_token }}#}
-{#            <div class="input-group">#}
-{#                <input name="{{ data['stock_operation_form'].quantity.name }}" type="number"#}
-{#                       class="form-control stock quantity" placeholder="Ex.: 3">#}
-{#                <span class="input-group-btn">#}
-{#                        <input name="{{ data['stock_operation_form'].submit.name }}"#}
-{#                               class="btn btn-default change-stock-group" type="submit" value="Atualizar estoque">#}
-{#                      </span>#}
-{#            </div>#}
-{#        </form>#}
-{#        <form product_id="{{ product.id }}" class="remove-product action-row"#}
-{#              action="{{ url_for('admin_remove_product', product_id=product.id, url_args=data.url_args) }}" method=post#}
-{#              enctype=multipart/form-data>#}
-{#            {{ data["action_form"].csrf_token }}#}
-{#            <input class="btn btn-default action-row" type=submit value="Remover produto">#}
-{#        </form>#}
-{#        <form product_id="{{ product.id }}" class="reactivate-product action-row"#}
-{#              action="{{ url_for('admin_reactivate_product', product_id=product.id, url_args=data.url_args) }}"#}
-{#              method=post enctype=multipart/form-data>#}
-{#            {{ data["action_form"].csrf_token }}#}
-{#            <input class="btn btn-default action-row" type=submit value="Reativar produto">#}
-{#        </form>#}
-{#    </div>#}
-{#</div>#}
+{% extends "admin/shared/actions_base.html" %}
+
+{% block actions %}
+    <a class="btn btn-default" target="_blank" href="{{ url_for('product', product_id=data.product_id) }}">Ver
+        produto</a><br>
+    <a class="btn btn-default"
+       href="{{ url_for('admin_edit_product', product_id=data.product_id, url_args=data.url_args) }}">Editar</a>
+    <form row="{{ loop.index0 }}" product_id="{{ data.product_id }}" class="add-to-stock-form"
+          action="{{ url_for('admin_add_to_stock', product_id=data.product_id, url_args=data.url_args) }}" method=post
+          enctype=multipart/form-data>
+        {{ data["stock_operation_form"].csrf_token }}
+        <div class="input-group">
+            <input name="{{ data['stock_operation_form'].quantity.name }}" size="5" type="number"
+                   class="form-control stock quantity" placeholder="Ex.: 3">
+            <span class="input-group-btn">
+                        <input name="{{ data['stock_operation_form'].submit.name }}"
+                               class="btn btn-default change-stock-group" type="submit" value="Adicionar ao estoque">
+                      </span>
+        </div>
+    </form>
+    <form row="{{ loop.index0 }}" product_id="{{ data.product_id }}" class="remove-from-stock-form"
+          action="{{ url_for('admin_remove_from_stock', product_id=data.product_id, url_args=data.url_args) }}"
+          method=post enctype=multipart/form-data>
+        {{ data["stock_operation_form"].csrf_token }}
+        <div class="input-group">
+            <input name="{{ data['stock_operation_form'].quantity.name }}" type="number"
+                   class="form-control stock quantity" placeholder="Ex.: 3">
+            <span class="input-group-btn">
+                        <input name="{{ data['stock_operation_form'].submit.name }}"
+                               class="btn btn-default change-stock-group" type="submit" value="Remover do estoque">
+                      </span>
+        </div>
+    </form>
+    <form row="{{ loop.index0 }}" product_id="{{ data.product_id }}" class="update-stock-form"
+          action="{{ url_for('admin_update_stock', product_id=data.product_id, url_args=data.url_args) }}" method=post
+          enctype=multipart/form-data>
+        {{ data["stock_operation_form"].csrf_token }}
+        <div class="input-group">
+            <input name="{{ data['stock_operation_form'].quantity.name }}" type="number"
+                   class="form-control stock quantity" placeholder="Ex.: 3">
+            <span class="input-group-btn">
+                        <input name="{{ data['stock_operation_form'].submit.name }}"
+                               class="btn btn-default change-stock-group" type="submit" value="Atualizar estoque">
+                      </span>
+        </div>
+    </form>
+    <form product_id="{{ data.product_id }}" class="remove-product"
+          action="{{ url_for('admin_remove_product', product_id=data.product_id, url_args=data.url_args) }}" method=post
+          enctype=multipart/form-data>
+        {{ data["simple_submit_form"].csrf_token }}
+        <input class="btn btn-default" type=submit value="Remover produto">
+    </form>
+    <form product_id="{{ data.product_id }}" class="reactivate-product"
+          action="{{ url_for('admin_reactivate_product', product_id=data.product_id, url_args=data.url_args) }}"
+          method=post enctype=multipart/form-data>
+        {{ data["simple_submit_form"].csrf_token }}
+        <input class="btn btn-default" type=submit value="Reativar produto">
+    </form>
+{% endblock %}

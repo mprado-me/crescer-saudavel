@@ -32,6 +32,7 @@
                 {% for td in row %}
                     <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}">
                         {% if data.table_data.cols[loop.index0].id == "actions" %}
+                            {% set actions_data = td %}
                             <button class="btn btn-default action" type="button" id="action-btn-{{ row_idx }}"
                                     data-toggle="collapse" data-target="#collapsible-row-{{ row_idx }}"
                                     aria-expanded="false"
@@ -44,13 +45,18 @@
                     </td>
                 {% endfor %}
             </tr>
-            <tr class="collapse collapsible-row" id="collapsible-row-{{ row_idx }}" action-btn-id="action-btn-{{ row_idx }}">
-                <td colspan="8">
-                    {% with data=td %}
-                        {% include "admin/products/actions.html" %}
-                    {% endwith %}
-                </td>
-            </tr>
+            {% for td in row %}
+                {% if data.table_data.cols[loop.index0].id == "actions" %}
+                    <tr class="collapse collapsible-row" id="collapsible-row-{{ row_idx }}"
+                        action-btn-id="action-btn-{{ row_idx }}">
+                        <td colspan="{{ data.table_data.cols|length }}">
+                            {% with data=td %}
+                                {% include "admin/products/actions.html" %}
+                            {% endwith %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         {% endfor %}
         </tbody>
     </table>
