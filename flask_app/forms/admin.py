@@ -382,7 +382,7 @@ class FilterProductForm(FlaskForm):
         self.category_subcategory.choices = choices[:]
 
 class StockOperationForm(SimpleSubmitForm):
-    quantity = StringField(
+    amount = StringField(
         render_kw={
             "placeholder": "Ex.: 3",
             "size": "4"},

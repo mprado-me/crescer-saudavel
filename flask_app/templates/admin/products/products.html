@@ -12,235 +12,172 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="{{ url_for('static', filename='js/super_table.js' )}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/super_table.js' ) }}"></script>
     <script>
-        {##}
-        {#  disableInputGroup = function(root, groupClass){#}
-        {#    root.find("input.{0}".f(groupClass)).each(function(){#}
-        {#      $(this).prop("disabled", true);#}
-        {#    })#}
-        {#  }#}
-        {##}
-        {#  enableInputGroup = function(root, groupClass){#}
-        {#    root.find("input.{0}".f(groupClass)).each(function(){#}
-        {#      $(this).prop("disabled", false);#}
-        {#    })#}
-        {#  }#}
-        {##}
-        {#  $(".add-to-stock-form").each(function(){#}
-        {#    var form = $(this)#}
-        {#    var stockQuantityInput = form.find("input[type='number']");#}
-        {#    var submitInput = form.find("input:submit");#}
-        {#    setAjaxFormHandlers({#}
-        {#      form: form,#}
-        {#      minResponseTime: 500,#}
-        {#      dataType: "json",#}
-        {#      submit: function(){#}
-        {#        disableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Adicionando...")#}
-        {#      },#}
-        {#      success: function(data){#}
-        {#        colId = "in-stock"#}
-        {#        row = 0#}
-        {#        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);#}
-        {##}
-        {#        toastr.options.closeButton = false;#}
-        {#        toastr.options.timeOut = 3500;#}
-        {#        toastr.success("O estoque do produto #{0} foi aumentado em {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));#}
-        {##}
-        {#        stockQuantityInput.val('')#}
-        {##}
-        {#        enableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Adicionar ao estoque");#}
-        {#      },#}
-        {#      error: function(status){#}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 10000;#}
-        {##}
-        {#        if(status == "422"){#}
-        {#          stockQuantityInput.val('')#}
-        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));#}
-        {#        }#}
-        {#        else {#}
-        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
-        {#        }#}
-        {##}
-        {#        enableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Adicionar ao estoque");#}
-        {#      },#}
-        {#    })#}
-        {#  })#}
-        {##}
-        {#  $(".remove-from-stock-form").each(function(){#}
-        {#    var form = $(this)#}
-        {#    var stockQuantityInput = form.find("input[type='number']");#}
-        {#    var submitInput = form.find("input:submit");#}
-        {#    setAjaxFormHandlers({#}
-        {#      form: form,#}
-        {#      minResponseTime: 500,#}
-        {#      dataType: "json",#}
-        {#      submit: function(){#}
-        {#        disableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Removendo...")#}
-        {#      },#}
-        {#      success: function(data){#}
-        {#        colId = "in-stock"#}
-        {#        row = 0#}
-        {#        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);#}
-        {##}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 3500;#}
-        {#        toastr.success("O estoque do produto #{0} foi diminuído em {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));#}
-        {##}
-        {#        stockQuantityInput.val('')#}
-        {##}
-        {#        enableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Remover do estoque");#}
-        {#      },#}
-        {#      error: function(status){#}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 10000;#}
-        {##}
-        {#        if(status == "422"){#}
-        {#          stockQuantityInput.val('')#}
-        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));#}
-        {#        }#}
-        {#        else {#}
-        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
-        {#        }#}
-        {##}
-        {#        enableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Remover do estoque");#}
-        {#      },#}
-        {#    })#}
-        {#  })#}
-        {##}
-        {#  $(".update-stock-form").each(function(){#}
-        {#    var form = $(this)#}
-        {#    var stockQuantityInput = form.find("input[type='number']");#}
-        {#    var submitInput = form.find("input:submit");#}
-        {#    setAjaxFormHandlers({#}
-        {#      form: form,#}
-        {#      minResponseTime: 500,#}
-        {#      dataType: "json",#}
-        {#      submit: function(){#}
-        {#        disableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Atualizando...")#}
-        {#      },#}
-        {#      success: function(data){#}
-        {#        colId = "in-stock"#}
-        {#        row = 0#}
-        {#        $("#col-{0}-row-{1}".f("in-stock", form.attr("row"))).html(data.new_stock_quantity);#}
-        {##}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 3500;#}
-        {#        toastr.success("O estoque do produto #{0} foi atualizado para {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));#}
-        {##}
-        {#        stockQuantityInput.val('')#}
-        {##}
-        {#        enableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Atualizar estoque");#}
-        {#      },#}
-        {#      error: function(status){#}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 10000;#}
-        {##}
-        {#        if(status == "422"){#}
-        {#          stockQuantityInput.val('')#}
-        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));#}
-        {#        }#}
-        {#        else {#}
-        {#          toastr.error('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
-        {#        }#}
-        {##}
-        {#        enableInputGroup(form.parent(), "change-stock-group")#}
-        {#        submitInput.attr("value", "Atualizar estoque");#}
-        {#      },#}
-        {#    })#}
-        {#  })#}
-        {##}
-        {#  {% for product in data.products %}#}
-        {#    {% if product.active %}#}
-        {#      $("form.reactivate-product").each(function(){#}
-        {#        $(this).hide()#}
-        {#      })#}
-        {#    {% else %}#}
-        {#      $("form.remove-product").each(function(){#}
-        {#        $(this).hide()#}
-        {#      })#}
-        {#    {% endif %}#}
-        {#  {% endfor %}#}
-        {##}
-        {#  $("form.remove-product").each(function(){#}
-        {#    var form = $(this)#}
-        {#    var submitInput = form.children().filter("input:submit");#}
-        {#    setAjaxFormHandlers({#}
-        {#      form: form,#}
-        {#      minResponseTime: 500,#}
-        {#      submit: function(){#}
-        {#        submitInput.prop("disabled", true)#}
-        {#        submitInput.attr("value", "Removendo...")#}
-        {#      },#}
-        {#      success: function(){#}
-        {#        submitInput.prop("disabled", false)#}
-        {#        submitInput.attr("value", "Remover produto");#}
-        {##}
-        {#        form.hide()#}
-        {#        form.siblings().show()#}
-        {##}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 3500;#}
-        {#        toastr.success('O produto #{0} foi removido com sucesso.'.f(form.attr("product_id")));#}
-        {#      },#}
-        {#      error: function(status){#}
-        {#        submitInput.prop("disabled", false)#}
-        {#        submitInput.attr("value", "Remover produto");#}
-        {##}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 10000;#}
-        {#        toastr.error('Ocorreu uma falha ao remover o produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
-        {#      },#}
-        {#    })#}
-        {#  })#}
-        {##}
-        {#  $("form.reactivate-product").each(function(){#}
-        {#    var form = $(this)#}
-        {#    var submitInput = form.children().filter("input:submit");#}
-        {#    setAjaxFormHandlers({#}
-        {#      form: form,#}
-        {#      minResponseTime: 500,#}
-        {#      submit: function(){#}
-        {#        submitInput.prop("disabled", true)#}
-        {#        submitInput.attr("value", "Reativando...")#}
-        {#      },#}
-        {#      success: function(){#}
-        {#        submitInput.prop("disabled", false)#}
-        {#        submitInput.attr("value", "Reativar produto");#}
-        {##}
-        {#        form.hide()#}
-        {#        form.siblings().show()#}
-        {##}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 3500;#}
-        {#        toastr.success('O produto #{0} foi reativado com sucesso.'.f(form.attr("product_id")));#}
-        {#      },#}
-        {#      error: function(status){#}
-        {#        submitInput.prop("disabled", false)#}
-        {#        submitInput.attr("value", "Remover produto");#}
-        {##}
-        {#        toastr.options.closeButton = true;#}
-        {#        toastr.options.timeOut = 10000;#}
-        {#        toastr.error('Ocorreu uma falha ao reativar o produto #{0}. Tente novamente.'.f(form.attr("product_id")));#}
-        {#      },#}
-        {#    })#}
-        {#  })#}
-        {##}
-        {#  updateTableData = function(colId, row, value){#}
-        {#    $("#col-{0}-row-{1}".f(colId, row)).html(value);#}
-        {#  }#}
-        {##}
-        {#  getTableData = function(colId, row, value){#}
-        {#    return $("#col-{0}-row-{1}".f(colId, row)).html();#}
-        {#  }#}
+        $("form.add-to-stock").each(function () {
+            var form = $(this);
+            var stockQuantityInput = form.find("input[type='number']");
+            var submitInput = form.find("input[type='submit']");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                dataType: "json",
+                submit: function () {
+                    disableInputGroup(form.parent(), "change-stock-group");
+                    submitInput.attr("value", "Adicionando...")
+                },
+                success: function (data) {
+                    updateTableData("stock", form.attr("row_idx"), data["new_stock"]);
+                    throwSuccessOpToast("O estoque do produto #{0} foi aumentado em {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));
+                    stockQuantityInput.val('');
+                },
+                error: function (status) {
+                    if (status == "422") {
+                        stockQuantityInput.val('');
+                        throwErrorOpToast('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));
+                    }
+                    else {
+                        throwErrorOpToast('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));
+                    }
+                },
+                complete: function () {
+                    enableInputGroup(form.parent(), "change-stock-group");
+                    submitInput.attr("value", "Adicionar ao estoque");
+                }
+            })
+        });
+
+        $("form.remove-from-stock").each(function () {
+            var form = $(this);
+            var stockQuantityInput = form.find("input[type='number']");
+            var submitInput = form.find("input[type='submit']");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                dataType: "json",
+                submit: function () {
+                    disableInputGroup(form.parent(), "change-stock-group");
+                    submitInput.attr("value", "Removendo...")
+                },
+                success: function (data) {
+                    updateTableData("stock", form.attr("row_idx"), data["new_stock"]);
+                    throwSuccessOpToast("O estoque do produto #{0} foi diminuído em {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));
+                    stockQuantityInput.val('');
+                },
+                error: function (status) {
+                    if (status == "422") {
+                        stockQuantityInput.val('');
+                        throwErrorOpToast('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));
+                    }
+                    else {
+                        throwErrorOpToast('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));
+                    }
+                },
+                complete: function () {
+                    enableInputGroup(form.parent(), "change-stock-group");
+                    submitInput.attr("value", "Remover do estoque");
+                }
+            })
+        });
+
+        $("form.update-stock").each(function () {
+            var form = $(this);
+            var stockQuantityInput = form.find("input[type='number']");
+            var submitInput = form.find("input[type='submit']");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                dataType: "json",
+                submit: function () {
+                    disableInputGroup(form.parent(), "change-stock-group");
+                    submitInput.attr("value", "Atualizando...")
+                },
+                success: function (data) {
+                    updateTableData("stock", form.attr("row_idx"), data["new_stock"]);
+                    throwSuccessOpToast("O estoque do produto #{0} foi atualizado para {1} unidade(s).".f(form.attr("product_id"), stockQuantityInput.val()));
+                    stockQuantityInput.val('');
+                },
+                error: function (status) {
+                    if (status == "422") {
+                        stockQuantityInput.val('');
+                        throwErrorOpToast('Ocorreu uma falha ao alterar o estoque do produto #{0}. O valor fornecido é inválido.'.f(form.attr("product_id")));
+                    }
+                    else {
+                        throwErrorOpToast('Ocorreu uma falha ao alterar o estoque do produto #{0}. Tente novamente.'.f(form.attr("product_id")));
+                    }
+                },
+                complete: function () {
+                    enableInputGroup(form.parent(), "change-stock-group");
+                    submitInput.attr("value", "Atualizar estoque");
+                }
+            })
+        });
+
+        {% for col in data.super_table_data.table_data.cols %}
+            {% if col.id == "actions" %}
+                {% set actions_idx = loop.index0 %}
+                {% for row in data.super_table_data.table_data.rows %}
+                    {% set actions_data = row[actions_idx] %}
+                    {% if actions_data.product_active %}
+                        $("#reactivate-product-{0}".f({{ actions_data.product_id }})).hide();
+                    {% else %}
+                        $("#remove-product-{0}".f({{ actions_data.product_id }})).hide();
+                        $("#row-{0}".f({{ loop.index0 }})).addClass("removed");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        $("form.remove-product").each(function () {
+            var form = $(this);
+            var submitInput = form.find("input[type='submit']");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                submit: function () {
+                    submitInput.prop("disabled", true);
+                    submitInput.attr("value", "Removendo...");
+                },
+                success: function () {
+                    $("#row-{0}".f(form.attr("row_idx"))).addClass("removed");
+                    form.hide();
+                    $("#reactivate-product-{0}".f(form.attr("product_id"))).show();
+                    throwSuccessOpToast('O produto #{0} foi removido com sucesso.'.f(form.attr("product_id")));
+                },
+                error: function () {
+                    throwErrorOpToast('Ocorreu uma falha ao remover o produto #{0}. Tente novamente.'.f(form.attr("product_id")));
+                },
+                complete: function () {
+                    submitInput.prop("disabled", false);
+                    submitInput.attr("value", "Remover produto");
+                }
+            })
+        });
+
+        $("form.reactivate-product").each(function () {
+            var form = $(this);
+            var submitInput = form.find("input[type='submit']");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                submit: function () {
+                    submitInput.prop("disabled", true);
+                    submitInput.attr("value", "Reativando...");
+                },
+                success: function () {
+                    $("#row-{0}".f(form.attr("row_idx"))).removeClass("removed");
+                    form.hide();
+                    $("#remove-product-{0}".f(form.attr("product_id"))).show();
+                    throwSuccessOpToast('O produto #{0} foi reativado com sucesso.'.f(form.attr("product_id")));
+                },
+                error: function () {
+                    throwErrorOpToast('Ocorreu uma falha ao reativar o produto #{0}. Tente novamente.'.f(form.attr("product_id")));
+                },
+                complete: function () {
+                    submitInput.prop("disabled", false);
+                    submitInput.attr("value", "Reativar produto");
+                }
+            })
+        })
     </script>
 {% endblock %}

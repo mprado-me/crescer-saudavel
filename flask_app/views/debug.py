@@ -350,7 +350,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P01",
 
@@ -363,7 +363,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P02",
 
@@ -376,7 +376,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P03",
 
@@ -389,7 +389,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P04",
 
@@ -402,7 +402,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P05",
 
@@ -415,7 +415,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P06",
 
@@ -428,7 +428,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P07",
 
@@ -441,7 +441,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P08",
 
@@ -454,7 +454,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P09",
 
@@ -467,7 +467,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P10",
 
@@ -480,7 +480,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P11",
 
@@ -493,7 +493,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P12",
 
@@ -506,7 +506,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P13",
 
@@ -519,7 +519,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P14",
 
@@ -532,7 +532,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P15",
 
@@ -545,7 +545,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P17",
 
@@ -558,7 +558,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P17",
 
@@ -571,7 +571,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P18",
 
@@ -584,7 +584,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P19",
 
@@ -597,7 +597,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P20",
 
@@ -610,7 +610,7 @@ if app.config["DEBUG"]:
             category_id=1,
             subcategory_id=1,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P21",
 
@@ -623,7 +623,7 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=4,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P22",
 
@@ -636,7 +636,7 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=5,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P23",
 
@@ -649,7 +649,7 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=5,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P24",
 
@@ -662,7 +662,7 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=5,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P25",
 
@@ -675,7 +675,7 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=5,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P26",
 
@@ -688,7 +688,7 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=None,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P27",
 
@@ -701,7 +701,7 @@ if app.config["DEBUG"]:
             category_id=2,
             subcategory_id=None,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P28",
 
@@ -714,7 +714,7 @@ if app.config["DEBUG"]:
             category_id=3,
             subcategory_id=None,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P29",
 
@@ -727,7 +727,7 @@ if app.config["DEBUG"]:
             category_id=None,
             subcategory_id=None,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P30",
 
@@ -740,7 +740,7 @@ if app.config["DEBUG"]:
             category_id=None,
             subcategory_id=None,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P31",
 
@@ -753,7 +753,7 @@ if app.config["DEBUG"]:
             category_id=None,
             subcategory_id=None,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P32",
 
@@ -766,7 +766,7 @@ if app.config["DEBUG"]:
             category_id=None,
             subcategory_id=None,
             price=Decimal("3.20"),
-            in_stock=26,
+            stock=26,
             min_stock=3,
             summary="Resumo do P33",
 

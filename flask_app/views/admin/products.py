@@ -366,12 +366,12 @@ def admin_add_to_stock(product_id):
         if not add_to_stock_form.validate_on_submit():
             return "", 422
 
-        product.stock_quantity = product.stock_quantity + int(add_to_stock_form.quantity.data)
+        product.stock = product.stock + int(add_to_stock_form.amount.data)
         db_manager.add(product)
         db_manager.commit()
 
         response = {
-            "new_stock_quantity": product.stock_quantity,
+            "new_stock": product.stock,
         }
         return json.dumps(response), 200
     except Exception as e:
@@ -396,15 +396,15 @@ def admin_remove_from_stock(product_id):
         if not remove_from_stock_form.validate_on_submit():
             return "", 422
 
-        product.stock_quantity = product.stock_quantity - int(remove_from_stock_form.quantity.data)
-        if product.stock_quantity < 0:
+        product.stock = product.stock - int(remove_from_stock_form.amount.data)
+        if product.stock < 0:
             return "", 422
 
         db_manager.add(product)
         db_manager.commit()
 
         response = {
-            "new_stock_quantity": product.stock_quantity,
+            "new_stock": product.stock,
         }
         return json.dumps(response), 200
     except Exception as e:
@@ -435,13 +435,13 @@ def admin_update_stock(product_id):
         if not update_stock_form.validate_on_submit():
             return "", 422
 
-        product.stock_quantity = int(update_stock_form.quantity.data)
+        product.stock = int(update_stock_form.amount.data)
 
         db_manager.add(product)
         db_manager.commit()
 
         response = {
-            "new_stock_quantity": product.stock_quantity,
+            "new_stock": product.stock,
         }
         return json.dumps(response), 200
     except Exception as e:

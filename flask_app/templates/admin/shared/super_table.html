@@ -28,7 +28,7 @@
         <tbody>
         {% for row in data.table_data.rows %}
             {% set row_idx = loop.index0 %}
-            <tr>
+            <tr id="row-{{ row_idx }}">
                 {% for td in row %}
                     <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}">
                         {% if data.table_data.cols[loop.index0].id == "actions" %}
@@ -49,7 +49,7 @@
                 {% if data.table_data.cols[loop.index0].id == "actions" %}
                     <tr class="collapse collapsible-row" id="collapsible-row-{{ row_idx }}"
                         action-btn-id="action-btn-{{ row_idx }}">
-                        <td colspan="{{ data.table_data.cols|length }}">
+                        <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}" colspan="{{ data.table_data.cols|length }}">
                             {% with data=td %}
                                 {% include "admin/products/actions.html" %}
                             {% endwith %}

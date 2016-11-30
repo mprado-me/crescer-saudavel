@@ -141,15 +141,16 @@ class ProductsDataProvider():
         for idx, product in enumerate(products):
             rows.append([
                 "#"+str(product.id),
-                product.category.name,
-                product.subcategory.name,
+                product.category.name if product.category else "-",
+                product.subcategory.name if product.subcategory else "-",
                 product.title,
                 product.price,
-                product.in_stock,
+                product.stock,
                 product.min_stock,
                 product.sales_number,
                 {
                     "product_id": product.id,
+                    "product_active": product.active,
                     "row": idx,
                     "file": url_for("static", filename="templates/admin/actions.html"),
                     "url_args": url_args,
@@ -181,7 +182,7 @@ class ProductsDataProvider():
                     "title": "Preço",
                 },
                 {
-                    "id": "in_stock",
+                    "id": "stock",
                     "title": "Em estoque",
                 },
                 {

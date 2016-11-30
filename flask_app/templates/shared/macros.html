@@ -58,3 +58,9 @@
 {% macro info_tooltip_min_stock() -%}
     {{ info_tooltip("Parar de vender o produto quando o estoque atingir valor mínimo estabelecido.") }}
 {%- endmacro %}
+
+{% macro append_class_if(class, condition) -%}
+    {% if condition %}
+        {{ class }}
+    {% endif %}
+{%- endmacro %}

@@ -137,7 +137,7 @@ tr.removed > td > img {
     border: 1px solid #ddd;
 }
 
-tr.removed > td > p {
+tr.removed td {
     color: #777;
 }
 
@@ -153,8 +153,8 @@ tr.removed > td > p {
     float: right;
 }
 
-input.stock.quantity {
-    width: 70px;
+input.stock-amount {
+    width: 85px !important;
 }
 
 .btn.action-row{
@@ -195,4 +195,12 @@ table .btn.action {
 
 .actions-container > a,form:not(:last-child) {
     margin-bottom: 8px;
+}
+
+.actions-container > a.last,form.last {
+    margin-bottom: 0;
+}
+
+.hidden {
+    display: none;
 }
