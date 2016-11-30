@@ -13,53 +13,56 @@
         {% include "shared/paginator.html" %}
     {% endwith %}
 
-    <table class="table">
-        <thead>
-        <tr>
-            {% for col in data.table_data.cols %}
-                <th id="{{ col.id }}">
-                    {% if col.title %}
-                        {{ col.title }}{{ macros.info_tooltip(col.tooltip) }}
-                    {% endif %}
-                </th>
-            {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for row in data.table_data.rows %}
-            {% set row_idx = loop.index0 %}
-            <tr id="row-{{ row_idx }}">
-                {% for td in row %}
-                    <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}">
-                        {% if data.table_data.cols[loop.index0].id == "actions" %}
-                            {% set actions_data = td %}
-                            <button class="btn btn-default action" type="button" id="action-btn-{{ row_idx }}"
-                                    data-toggle="collapse" data-target="#collapsible-row-{{ row_idx }}"
-                                    aria-expanded="false"
-                                    aria-controls="collapsible-row-{{ row_idx }}">
-                                Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
-                            </button>
-                        {% else %}
-                            {{ td }}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                {% for col in data.table_data.cols %}
+                    <th id="{{ col.id }}">
+                        {% if col.title %}
+                            {{ col.title }}{{ macros.info_tooltip(col.tooltip) }}
                         {% endif %}
-                    </td>
+                    </th>
                 {% endfor %}
             </tr>
-            {% for td in row %}
-                {% if data.table_data.cols[loop.index0].id == "actions" %}
-                    <tr class="collapse collapsible-row" id="collapsible-row-{{ row_idx }}"
-                        action-btn-id="action-btn-{{ row_idx }}">
-                        <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}" colspan="{{ data.table_data.cols|length }}">
-                            {% with data=td %}
-                                {% include "admin/products/actions.html" %}
-                            {% endwith %}
+            </thead>
+            <tbody>
+            {% for row in data.table_data.rows %}
+                {% set row_idx = loop.index0 %}
+                <tr id="row-{{ row_idx }}">
+                    {% for td in row %}
+                        <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}">
+                            {% if data.table_data.cols[loop.index0].id == "actions" %}
+                                {% set actions_data = td %}
+                                <button class="btn btn-default action" type="button" id="action-btn-{{ row_idx }}"
+                                        data-toggle="collapse" data-target="#collapsible-row-{{ row_idx }}"
+                                        aria-expanded="false"
+                                        aria-controls="collapsible-row-{{ row_idx }}">
+                                    Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
+                                </button>
+                            {% else %}
+                                {{ td }}
+                            {% endif %}
                         </td>
-                    </tr>
-                {% endif %}
+                    {% endfor %}
+                </tr>
+                {% for td in row %}
+                    {% if data.table_data.cols[loop.index0].id == "actions" %}
+                        <tr class="collapse collapsible-row" id="collapsible-row-{{ row_idx }}"
+                            action-btn-id="action-btn-{{ row_idx }}">
+                            <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}"
+                                colspan="{{ data.table_data.cols|length }}">
+                                {% with data=td %}
+                                    {% include "admin/products/actions.html" %}
+                                {% endwith %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 
     {% with data=data.paginator_data %}
         {% include "shared/paginator.html" %}

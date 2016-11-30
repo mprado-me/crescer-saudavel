@@ -204,3 +204,19 @@ table .btn.action {
 .hidden {
     display: none;
 }
+
+.table {
+    margin-bottom: 0;
+}
+
+.panel.actions{
+    margin-bottom: 8px;
+}
+
+.table-responsive {
+    border-radius: 5px;
+}
+
+td {
+    vertical-align: middle !important;
+}
