@@ -102,13 +102,13 @@ class ProductsDataProvider():
         first = (page - 1) * app.config["ADMIN_N_PRODUCTS_BY_PAGE"]
         last_plus_one = first + app.config["ADMIN_N_PRODUCTS_BY_PAGE"]
 
+        filter_product_form.category_subcategory.data = category_subcategory
+        filter_product_form.active.data = str(active)
+
         return {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "super_table_data": {
-                "filter_data": self.get_filter_data(
-                    form=filter_product_form,
-                    category_subcategory=category_subcategory,
-                    active=active),
+                "filter_form": filter_product_form,
                 "paginator_data": paginator_data_provider.get_data(
                     current_page=page,
                     n_pages=app.config["ADMIN_N_PAGES_IN_PRODUCTS_PAGINATOR"],
@@ -201,10 +201,6 @@ class ProductsDataProvider():
             ],
             "rows": rows,
         }
-
-    def get_filter_data(self, form, category_subcategory, active):
-        form.category_subcategory.data = category_subcategory
-        form.active.data = str(active)
 
 
 products_data_provider = ProductsDataProvider()

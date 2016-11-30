@@ -1,12 +1,12 @@
 {% import "shared/macros.html" as macros %}
 
-{#<div class="jumbotron filter">#}
-{#    <form action="{{ url_for('admin_products', page=1) }}" method=get enctype=multipart/form-data>#}
-{#        {% with form = data["filter_product_form"] %}#}
-{#            {% include "admin/shared/form-fields.html" %}#}
-{#        {% endwith %}#}
-{#    </form>#}
-{#</div>#}
+{% if data.filter_form %}
+    <div class="jumbotron filter-container">
+        {% with form=data.filter_form %}
+            {% include "admin/shared/filter_form.html" %}
+        {% endwith %}
+    </div>
+{% endif %}
 
 {% if data.table_data.rows|length > 0 %}
     {% with data=data.paginator_data %}
@@ -18,7 +18,7 @@
             <thead>
             <tr>
                 {% for col in data.table_data.cols %}
-                    <th id="{{ col.id }}">
+                    <th id="{{ col.id }}" class="{{ macros.append_class_if('min-width', col.id=='actions') }}">
                         {% if col.title %}
                             {{ col.title }}{{ macros.info_tooltip(col.tooltip) }}
                         {% endif %}
@@ -68,5 +68,5 @@
         {% include "shared/paginator.html" %}
     {% endwith %}
 {% else %}
-    <p>{{ data.empty_msg }}</p>
+    <p class="empty-msg">{{ data.empty_msg }}</p>
 {% endif %}

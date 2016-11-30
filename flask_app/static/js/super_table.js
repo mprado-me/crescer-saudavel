@@ -12,3 +12,9 @@ $(".collapsible-row").each(function () {
         actionButton.html("Ocultar ações <span class='glyphicon glyphicon-menu-up'></span>")
     });
 });
+
+$(".filter-item select").each(function(){
+    selectField = $(this);
+    label = selectField.siblings("label");
+    selectField.css("min-width", "{0}px".f(label.width()+10));
+});

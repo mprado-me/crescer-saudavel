@@ -175,6 +175,7 @@ input.stock-amount {
 
 table .btn.action {
     width: 130px;
+    float: right;
 }
 
 .actions-container > a {
@@ -219,4 +220,60 @@ table .btn.action {
 
 td {
     vertical-align: middle !important;
+}
+
+.jumbotron.filter-container {
+    margin-bottom: 0;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    padding-right: 16px !important;
+    padding-left: 2px !important;
+}
+
+th.min-width {
+    width: 1px;
+}
+
+select.form-control {
+    width: auto;
+    vertical-align: center;
+    max-width: 250px;
+}
+
+.filter-container .form-group {
+    margin-bottom: 0;
+    /*margin-top: 4px;*/
+}
+
+.filter-container select.form-control.category-subcategory {
+    /*min-width: 185px;*/
+}
+
+.filter-container select.form-control.active {
+    /*min-width: 60px;*/
+}
+
+.filter-container .filter-item {
+    margin-left: 10px;
+}
+
+.max-width {
+    width: 100%;
+}
+
+.filter-item label {
+    margin-left: 2px;
+}
+
+form.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filter-item:last-child {
+    align-self: flex-end;
+}
+
+.empty-msg {
+    margin-top: 10px;
 }
