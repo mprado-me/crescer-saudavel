@@ -13,10 +13,13 @@ from flask_app.data_providers.shared.paginator import paginator_data_provider
 from flask_app.models.product import Product
 
 from flask_app.utils.db_manager import db_manager
+from flask_app.utils.enums import AdminProductsTableSortMethod
 from flask_app.utils.exceptions import InvalidParamError
-
+from flask_app.utils.string import String
+from flask_app.utils.utils import Utils
 
 from flask import url_for
+
 
 class ProductsDataProvider():
     def __init__(self):
@@ -89,7 +92,8 @@ class ProductsDataProvider():
         }
         return data
 
-    def get_data(self, page, simple_submit_form, stock_operation_form, filter_product_form, category_id, subcategory_id, active, category_subcategory, url_args):
+    def get_data(self, page, simple_submit_form, stock_operation_form, filter_product_form, category_id, subcategory_id,
+                 active, category_subcategory, url_args, selected_sort_method):
         products = self.get_products(category_id=category_id, subcategory_id=subcategory_id, active=active)
 
         total_n_pages = int(math.ceil(float(len(products)) / app.config["ADMIN_N_PRODUCTS_BY_PAGE"]))
@@ -108,7 +112,10 @@ class ProductsDataProvider():
         return {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "super_table_data": {
-                "filter_form": filter_product_form,
+                "filter_data": {
+                    "form": filter_product_form,
+                    "action": url_for("admin_products", **(Utils.new_dic(url_args, {"page": 1})))
+                },
                 "paginator_data": paginator_data_provider.get_data(
                     current_page=page,
                     n_pages=app.config["ADMIN_N_PAGES_IN_PRODUCTS_PAGINATOR"],
@@ -118,6 +125,16 @@ class ProductsDataProvider():
                         "category_subcategory": category_subcategory,
                         "active": active,
                     }),
+                "sort_method_query_arg_name": String.QueryArgName.SORT_METHOD,
+                "sort_methods": [
+                    self.get_sort_method(selected_sort_method, "Nome", int(AdminProductsTableSortMethod.NAME)),
+                    self.get_sort_method(selected_sort_method, "Menor preço", int(AdminProductsTableSortMethod.LOWEST_PRICE)),
+                    self.get_sort_method(selected_sort_method, "Maior preço", int(AdminProductsTableSortMethod.BIGGEST_PRICE)),
+                    self.get_sort_method(selected_sort_method, "Menor estoque", int(AdminProductsTableSortMethod.LOWEST_STOCK)),
+                    self.get_sort_method(selected_sort_method, "Maior estoque", int(AdminProductsTableSortMethod.HIGHER_STOCK)),
+                    self.get_sort_method(selected_sort_method, "Mais vendido", int(AdminProductsTableSortMethod.BEST_SELLER)),
+                    self.get_sort_method(selected_sort_method, "Menos vendido", int(AdminProductsTableSortMethod.LESS_SOLD)),
+                ],
                 "table_data": self.get_table_data(
                     products=products[first:last_plus_one],
                     url_args=url_args,
@@ -140,7 +157,7 @@ class ProductsDataProvider():
         rows = []
         for idx, product in enumerate(products):
             rows.append([
-                "#"+str(product.id),
+                "#" + str(product.id),
                 product.category.name if product.category else "-",
                 product.subcategory.name if product.subcategory else "-",
                 product.title,
@@ -200,6 +217,13 @@ class ProductsDataProvider():
                 },
             ],
             "rows": rows,
+        }
+
+    def get_sort_method(self, selected_sort_method, name, sort_method):
+        return {
+            "name": name,
+            "value": sort_method,
+            "selected": sort_method == selected_sort_method
         }
 
 

@@ -16,3 +16,14 @@ class ProductSortMethod(IntEnum):
     LOWEST_PRICE = 2
     BIGGEST_PRICE = 3
     BEST_SELLER = 4
+
+
+@unique
+class AdminProductsTableSortMethod(IntEnum):
+    NAME = 1
+    LOWEST_PRICE = 2
+    BIGGEST_PRICE = 3
+    LOWEST_STOCK = 4
+    HIGHER_STOCK = 5
+    BEST_SELLER = 6
+    LESS_SOLD = 7

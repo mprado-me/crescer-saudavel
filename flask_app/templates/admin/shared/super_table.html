@@ -1,8 +1,8 @@
 {% import "shared/macros.html" as macros %}
 
-{% if data.filter_form %}
+{% if data.filter_data %}
     <div class="jumbotron filter-container">
-        {% with form=data.filter_form %}
+        {% with data=data %}
             {% include "admin/shared/filter_form.html" %}
         {% endwith %}
     </div>
@@ -14,16 +14,16 @@
             {% include "shared/paginator.html" %}
         {% endwith %}
 
-        <div class="form-group sort-method-container">
-          <label>Ordenar por:</label>
-          <select class="form-control sort-method">
-            <option>Nome</option>
-            <option>Maior estoque</option>
-            <option>Menor estoque</option>
-            <option>Mais vendido</option>
-            <option>Menos vendido</option>
-          </select>
-        </div>
+        {% if data.sort_methods and data.sort_method_query_arg_name %}
+            <div class="form-group sort-method-container">
+                <label for="select-sort-method">Ordenar por:</label>
+                <select id="select-sort-method" name="{{ data.sort_method_query_arg_name }}" class="form-control sort-method">
+                    {% for sort_method in data.sort_methods %}
+                        <option value="{{ sort_method.value }}" {{ macros.get_if('selected', sort_method.selected) }}>{{ sort_method.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
     </div>
 
 
@@ -32,7 +32,7 @@
             <thead>
             <tr>
                 {% for col in data.table_data.cols %}
-                    <th id="{{ col.id }}" class="{{ macros.append_class_if('min-width', col.id=='actions') }}">
+                    <th id="{{ col.id }}" class="{{ macros.get_if('min-width', col.id=='actions') }}">
                         {% if col.title %}
                             {{ col.title }}{{ macros.info_tooltip(col.tooltip) }}
                         {% endif %}

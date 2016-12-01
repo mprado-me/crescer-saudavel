@@ -24,7 +24,9 @@ from flask_app.models.subcategory import Subcategory
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
+from flask_app.utils.enums import AdminProductsTableSortMethod
 from flask_app.utils.exceptions import InsecurePostException, InvalidQueryParamError, InvalidUrlParamError, log_unrecognized_exception
+from flask_app.utils.string import String
 
 
 @app.route('/painel-administrativo/adicionar-produto', methods=['GET', 'POST'])
@@ -233,27 +235,38 @@ def admin_products(page):
         # Getting optional parameters
         category_subcategory = request.args.get('category_subcategory')
         active = request.args.get('active')
+        sort_method = request.args.get(String.QueryArgName.SORT_METHOD)
 
         # Setting default value to optional parameters
         if not category_subcategory:
             category_subcategory = "0/0"
         if not active:
             active = "True"
+        if not sort_method:
+            sort_method = int(AdminProductsTableSortMethod.NAME)
 
         url_args = {
             "category_subcategory": category_subcategory,
             "active": active,
-            "page": page
+            "page": page,
+            String.QueryArgName.SORT_METHOD: sort_method,
         }
 
         # Converting query parameters from string type to his respective python type
-        category_id = int(category_subcategory.split('/')[0])
-        if category_id == 0:
-            category_id = None
-        subcategory_id = int(category_subcategory.split('/')[1])
-        if subcategory_id == 0:
-            subcategory_id = None
-        active = ast.literal_eval(active)
+        try:
+            category_id = int(category_subcategory.split('/')[0])
+            if category_id == 0:
+                category_id = None
+
+            subcategory_id = int(category_subcategory.split('/')[1])
+            if subcategory_id == 0:
+                subcategory_id = None
+
+            active = ast.literal_eval(active)
+
+            sort_method = int(sort_method)
+        except:
+            abort(422)
 
         filter_product_form.add_category_subcategory_choices()
 
@@ -266,7 +279,8 @@ def admin_products(page):
             subcategory_id=subcategory_id,
             active=active,
             category_subcategory=category_subcategory,
-            url_args=url_args
+            url_args=url_args,
+            selected_sort_method=sort_method,
         )
         return render_template("admin/products/products.html", data=data)
     except Exception as e:

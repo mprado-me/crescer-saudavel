@@ -1,5 +1,6 @@
-<form class="filter-container" method=get>
-    {% for field in form %}
+<form class="filter-container" action="{{ data.filter_data.action }}" method=get>
+    <input class="sort-method" name="{{ data.sort_method_query_arg_name }}" hidden>
+    {% for field in data.filter_data.form %}
         {% if field.type == "SelectField" %}
             <div class="filter-item">
                 <div class="form-group">

@@ -1,5 +1,7 @@
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+    $('form.filter-container input.sort-method').attr("value", $('select.sort-method').val());
+
 });
 
 $(".collapsible-row").each(function () {
@@ -17,4 +19,12 @@ $(".filter-item select").each(function(){
     selectField = $(this);
     label = selectField.siblings("label");
     selectField.css("min-width", "{0}px".f(label.width()+10));
+});
+
+
+$('select.sort-method').on('change', function () {
+    select = $(this);
+    console.log(select.val());
+    $('form.filter-container input.sort-method').attr("value", select.val());
+    $("form.filter-container input[type='submit']").click();
 });
