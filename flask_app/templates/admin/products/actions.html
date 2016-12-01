@@ -6,7 +6,7 @@
     <a class="btn btn-default" target="_blank" href="{{ url_for('product', product_id=data.product_id) }}">Ver
         produto</a><br>
     <a class="btn btn-default"
-       href="{{ url_for('admin_edit_product', product_id=data.product_id, url_args=data.url_args) }}">Editar</a>
+       href="{{ url_for('admin_edit_product', product_id=data.product_id, url_args=data.url_args) }}">Editar produto</a>
     <form row_idx="{{ row_idx }}" product_id="{{ data.product_id }}" class="add-to-stock change-stock-group"
           action="{{ url_for('admin_add_to_stock', product_id=data.product_id, url_args=data.url_args) }}" method=post>
         {{ data["stock_operation_form"].csrf_token }}

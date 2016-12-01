@@ -9,9 +9,23 @@
 {% endif %}
 
 {% if data.table_data.rows|length > 0 %}
-    {% with data=data.paginator_data %}
-        {% include "shared/paginator.html" %}
-    {% endwith %}
+    <div class="paginator-plus-order-row">
+        {% with data=data.paginator_data %}
+            {% include "shared/paginator.html" %}
+        {% endwith %}
+
+        <div class="form-group sort-method-container">
+          <label>Ordenar por:</label>
+          <select class="form-control sort-method">
+            <option>Nome</option>
+            <option>Maior estoque</option>
+            <option>Menor estoque</option>
+            <option>Mais vendido</option>
+            <option>Menos vendido</option>
+          </select>
+        </div>
+    </div>
+
 
     <div class="table-responsive">
         <table class="table">

@@ -142,7 +142,7 @@ tr.removed td {
 }
 
 .glyphicon-info-sign {
-    margin-left:4px;
+    margin-left:0px;
 }
 
 .collapsible-row > td {
@@ -276,4 +276,30 @@ form.filter-container {
 
 .empty-msg {
     margin-top: 10px;
+}
+
+.paginator-plus-order-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.paginator-container {
+}
+
+.sort-method-container {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+select.sort-method {
+    margin-left: 8px;
+}
+
+.paginator-plus-order-row .paginator-container .pagination {
+    margin-top: 20px;
+    margin-bottom: 0;
+    margin-right: 12px;
 }
