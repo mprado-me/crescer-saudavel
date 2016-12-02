@@ -115,7 +115,6 @@ class ProductsDataProvider():
                     page=page,
                     n_items=n_items,
                     per_page=app.config["ADMIN_N_PRODUCTS_PER_PAGE"],
-                    paginator_size=app.config["ADMIN_PRODUCTS_TABLE_PAGINATOR_SIZE"],
                     url_endpoint="admin_products",
                     url_args=url_args),
                 "sort_method_query_arg_name": String.QueryArgName.SORT_METHOD,
