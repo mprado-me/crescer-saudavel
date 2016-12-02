@@ -161,11 +161,11 @@ class ProductsDataProvider:
                 ),
             ],
             "paginator_data": paginator_data_provider.get_data(
-                current_page=page,
-                n_pages=app.config["N_PAGES_IN_PRODUCTS_PAGINATOR"],
+                page=page,
+                n_pages=app.config["USER_PRODUCTS_PAGINATOR_SIZE"],
                 total_n_pages=10,
                 url_endpoint="products",
-                other_url_params={
+                url_args={
                     "sort_method": sort_method,
                 }
             ),

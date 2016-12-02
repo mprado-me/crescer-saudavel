@@ -53,15 +53,15 @@ class SubcategoriesDataProvider():
         if len(subcategories) == 0:
             empty = True
 
-        total_n_pages = int(math.ceil(float(len(subcategories)) / app.config["DEFAULT_N_ITEMS_BY_PAGE"]))
+        total_n_pages = int(math.ceil(float(len(subcategories)) / app.config["DEFAULT_N_ITEMS_PER_PAGE"]))
         total_n_pages = max(1, total_n_pages)
 
         # page between 1 and total_n_pages
         page = max(1, page)
         page = min(total_n_pages, page)
 
-        first = (page - 1) * app.config["DEFAULT_N_ITEMS_BY_PAGE"]
-        last_plus_one = first + app.config["DEFAULT_N_ITEMS_BY_PAGE"]
+        first = (page - 1) * app.config["DEFAULT_N_ITEMS_PER_PAGE"]
+        last_plus_one = first + app.config["DEFAULT_N_ITEMS_PER_PAGE"]
 
         if category_id:
             filter_category_form.category_id.data = int(category_id)
@@ -74,11 +74,11 @@ class SubcategoriesDataProvider():
             "page": page,
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
             "paginator_data": paginator_data_provider.get_data(
-                current_page=page,
-                n_pages=app.config["DEFAULT_N_PAGES_IN_PAGINATOR"],
+                page=page,
+                n_pages=app.config["DEFAULT_PAGINATOR_SIZE"],
                 total_n_pages=total_n_pages,
                 url_endpoint="admin_product_subcategories",
-                other_url_params={
+                url_args={
                     "category_id": category_id,
                 }
             ),

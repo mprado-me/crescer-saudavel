@@ -20,7 +20,7 @@ class ProductSortMethod(IntEnum):
 
 @unique
 class AdminProductsTableSortMethod(IntEnum):
-    NAME = 1
+    TITLE = 1
     LOWEST_PRICE = 2
     BIGGEST_PRICE = 3
     LOWEST_STOCK = 4

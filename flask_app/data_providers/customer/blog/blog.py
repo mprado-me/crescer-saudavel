@@ -36,8 +36,8 @@ class BlogDataProvider:
             "page_heading_data": self.get_page_heading_data(),
             "footer_data": footer_data_provider.get_data(),
             "paginator_data": paginator_data_provider.get_data(
-                current_page=page,
-                n_pages=app.config["N_PAGES_IN_BLOG_PAGINATOR"],
+                page=page,
+                n_pages=app.config["USER_BLOG_PAGINATOR_SIZE"],
                 total_n_pages=7,
                 url_endpoint="blog",
             ),
@@ -83,8 +83,8 @@ class BlogDataProvider:
             "page_heading_data": self.get_page_heading_data(),
             "footer_data": footer_data_provider.get_data(),
             "paginator_data": paginator_data_provider.get_data(
-                current_page=page,
-                n_pages=app.config["N_PAGES_IN_BLOG_PAGINATOR"],
+                page=page,
+                n_pages=app.config["USER_BLOG_PAGINATOR_SIZE"],
                 total_n_pages=7,
                 url_endpoint="blog",
             ),

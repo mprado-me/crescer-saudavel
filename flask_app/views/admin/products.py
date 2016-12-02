@@ -243,7 +243,7 @@ def admin_products(page):
         if not active:
             active = "True"
         if not sort_method:
-            sort_method = int(AdminProductsTableSortMethod.NAME)
+            sort_method = int(AdminProductsTableSortMethod.TITLE)
 
         url_args = {
             "category_subcategory": category_subcategory,
@@ -253,6 +253,8 @@ def admin_products(page):
         }
 
         # Converting query parameters from string type to his respective python type
+        category_id = None
+        subcategory_id = None
         try:
             category_id = int(category_subcategory.split('/')[0])
             if category_id == 0:

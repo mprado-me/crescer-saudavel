@@ -363,7 +363,7 @@ class EditProductForm(ProductForm):
 
 class FilterProductForm(FlaskForm):
     category_subcategory = SelectField(
-        label="Categoria/Subcategoria",
+        label="Categoria / Subcategoria",
         choices=[("0", "0")],
         validators=[
             DataRequired(message=error_msg_provider.data_required())
@@ -377,7 +377,7 @@ class FilterProductForm(FlaskForm):
     filter = SubmitField(label="Filtrar")
 
     def add_category_subcategory_choices(self):
-        choices = [("0/0", "Todas")]
+        choices = [("0 / 0", "Todas")]
         choices = choices + get_registered_category_subcategory_choices(self)
         self.category_subcategory.choices = choices[:]
 
@@ -417,8 +417,8 @@ def get_registered_category_subcategory_choices(form):
     categories = Category.query.order_by(Category.name).all()
 
     for category in categories:
-        choices.append((str(category.id) + "/0", category.name))
+        choices.append((str(category.id) + " / 0", category.name))
         for subcategory in category.subcategories:
-            choices.append((str(category.id) + "/" + str(subcategory.id), category.name + "/" + subcategory.name))
+            choices.append((str(category.id) + " / " + str(subcategory.id), category.name + " / " + subcategory.name))
 
     return choices

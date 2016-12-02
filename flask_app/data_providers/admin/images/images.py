@@ -29,15 +29,15 @@ class ImagesDataProvider:
         if len(all_images_name) == 0:
             empty = True
 
-        total_n_pages = int(math.ceil(float(len(all_images_name))/app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]))
+        total_n_pages = int(math.ceil(float(len(all_images_name))/app.config["ADMIN_N_IMAGES_PER_PAGE"]))
         total_n_pages = max(1, total_n_pages)
 
         # page between 1 and total_n_pages
         page = max(1, page)
         page = min(total_n_pages, page)
 
-        first = (page-1)*app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]
-        last_plus_one = first+app.config["N_ITEMS_BY_PAGE_IN_ADMIN_IMAGES"]
+        first = (page-1)*app.config["ADMIN_N_IMAGES_PER_PAGE"]
+        last_plus_one = first+app.config["ADMIN_N_IMAGES_PER_PAGE"]
 
         data = {
             "url_args": url_args,
@@ -46,11 +46,11 @@ class ImagesDataProvider:
             "page": page,
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),
             "paginator_data": paginator_data_provider.get_data(
-                current_page=page,
-                n_pages=app.config["N_PAGES_IN_ADMIN_IMAGES"],
+                page=page,
+                n_pages=app.config["ADMIN_IMAGES_TABLE_PAGINATOR_SIZE"],
                 total_n_pages=total_n_pages,
                 url_endpoint="admin_images",
-                other_url_params={
+                url_args={
                 }
             ),
             "images_name": all_images_name[first:last_plus_one],
