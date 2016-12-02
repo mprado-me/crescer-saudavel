@@ -16,7 +16,7 @@
 
         {% if data.sort_methods and data.sort_method_query_arg_name %}
             <div class="form-group sort-method-container">
-                <label for="select-sort-method">Ordenar por:</label>
+                <label class="sort-method" for="select-sort-method">Ordenar por:</label>
                 <select id="select-sort-method" name="{{ data.sort_method_query_arg_name }}"
                         class="form-control sort-method">
                     {% for sort_method in data.sort_methods %}

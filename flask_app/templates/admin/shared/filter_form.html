@@ -10,9 +10,9 @@
             </div>
         {% elif field.type == "SubmitField" %}
             <div class="filter-item">
-                <br>
                 {{ field(class_="btn btn-default") }}
             </div>
         {% endif %}
     {% endfor %}
+    <p class="total-items">{{ data.filter_data.n_items }} items encontrados</p>
 </form>

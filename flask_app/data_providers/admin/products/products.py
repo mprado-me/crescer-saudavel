@@ -109,7 +109,8 @@ class ProductsDataProvider():
             "super_table_data": {
                 "filter_data": {
                     "form": filter_product_form,
-                    "action": url_for("admin_products", **(Utils.new_dic(url_args, {"page": 1})))
+                    "action": url_for("admin_products", **(Utils.new_dic(url_args, {"page": 1}))),
+                    "n_items": n_items
                 },
                 "paginator_data": paginator_data_provider.get_data(
                     page=page,
