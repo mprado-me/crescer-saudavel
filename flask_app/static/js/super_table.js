@@ -4,8 +4,6 @@ var hide_actions = "Ocultar ações <span class='glyphicon glyphicon-menu-up'></
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $('form.filter-container input.sort-method').attr("value", $('select.sort-method').val());
-    $("button.action").html(show_actions);
-    $(".collapsible-row").hide();
 });
 
 $("button.action").on('click', function () {

@@ -314,10 +314,6 @@ select.sort-method {
     background-color: #fff !important;
 }
 
-.add-new-link-container {
-    margin-bottom: 16px;
-}
-
 .filter-container .total-items {
     padding: 0;
     margin-top: 12px;
@@ -330,4 +326,18 @@ select.sort-method {
 .filter-container .filter-item input[type=submit] {
     margin-top: 25px;
     margin-right: 12px;
+}
+
+.without-bottom-paginator {
+    margin-bottom: 32px;
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title-container > a{
+    font-size: 14px;
+    align-self: flex-end;
 }

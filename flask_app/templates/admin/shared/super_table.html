@@ -10,7 +10,7 @@
 
 {% if data.table_data.rows|length > 0 %}
     <div class="paginator-plus-order-row">
-        {% with data=data.paginator_data %}
+        {% with data=data.paginator_data, top=True %}
             {% include "shared/paginator.html" %}
         {% endwith %}
 
@@ -28,7 +28,7 @@
     </div>
 
 
-    <div class="table-responsive">
+    <div class="table-responsive {{ macros.get_if('without-bottom-paginator', data.paginator_data.pages|length <= 1) }}">
         <table class="table table-hover">
             <thead>
             <tr>
@@ -64,7 +64,7 @@
                 {% for td in row %}
                     {% if data.table_data.cols[loop.index0].id == "actions" %}
                         <tr class="collapsible-row not-hover" id="collapsible-row-{{ row_idx }}"
-                            action-btn-id="action-btn-{{ row_idx }}">
+                            action-btn-id="action-btn-{{ row_idx }}" style="display: none;">
                             <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}"
                                 colspan="{{ data.table_data.cols|length }}">
                                 {% with data=td %}
@@ -79,7 +79,7 @@
         </table>
     </div>
 
-    {% with data=data.paginator_data %}
+    {% with data=data.paginator_data, bottom=True %}
         {% include "shared/paginator.html" %}
     {% endwith %}
 {% else %}

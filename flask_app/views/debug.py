@@ -40,6 +40,7 @@ if app.config["DEBUG"]:
         db.create_all()
 
     def fill_db_implementation():
+        # Creating admin user
         email = app.config["ADMIN_MAIL"]
         admin_user = User(
             email=email,
@@ -51,16 +52,37 @@ if app.config["DEBUG"]:
         db.session.add(admin_user)
         db.session.commit()
 
+        # Creating default categories
         for i in range(0, 10):
             db.session.add(get_random_category())
             db.session.commit()
 
+        # Creating default subcategories
         for i in range(0, 50):
             db.session.add(get_random_subcategory())
             db.session.commit()
 
+        # Creating default products
         for i in range(50, 500):
             db.session.add(get_random_product())
+            db.session.commit()
+
+        # Creating categories to test paginator
+        create_test_paginator_categories_and_products()
+
+    def create_test_paginator_categories_and_products():
+        per_page = app.config["ADMIN_N_PRODUCTS_PER_PAGE"]
+        for i in range(0, 20):
+            category = get_random_category()
+            category.name = "categoria_%02d_paginas" % (i+1)
+            db.session.add(category)
+            db.session.commit()
+
+            for j in range(0, per_page/2 + i*per_page):
+                product = get_random_product()
+                product.active = True
+                product.category_id = category.id
+                db.session.add(product)
             db.session.commit()
 
     def get_random_category():
