@@ -275,7 +275,7 @@ form.filter-container {
 }
 
 .empty-msg {
-    margin-top: 10px;
+    margin-top: 16px;
 }
 
 .paginator-plus-order-row {
@@ -306,4 +306,8 @@ select.sort-method {
 
 .table-hover>tbody>tr.not-hover:hover {
     background-color: #fff !important;
+}
+
+.add-new-link-container {
+    margin-bottom: 16px;
 }

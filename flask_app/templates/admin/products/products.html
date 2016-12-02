@@ -5,8 +5,9 @@
 {% block title %}Produtos{% endblock %}
 
 {% block content %}
-    <a href="{{ url_for('admin_add_product') }}">Adicionar novo produto</a>
-    <div class="br-8px"></div>
+    <div class="add-new-link-container">
+        <a class="add-new-link" href="{{ url_for('admin_add_product') }}">Adicionar novo produto</a>
+    </div>
 
     {% with data=data.super_table_data %}
         {% include "admin/shared/super_table.html" %}
