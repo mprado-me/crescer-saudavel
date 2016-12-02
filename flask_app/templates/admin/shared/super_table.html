@@ -29,7 +29,7 @@
 
 
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-hover">
             <thead>
             <tr>
                 {% for col in data.table_data.cols %}
@@ -63,7 +63,7 @@
                 </tr>
                 {% for td in row %}
                     {% if data.table_data.cols[loop.index0].id == "actions" %}
-                        <tr class="collapsible-row" id="collapsible-row-{{ row_idx }}"
+                        <tr class="collapsible-row not-hover" id="collapsible-row-{{ row_idx }}"
                             action-btn-id="action-btn-{{ row_idx }}">
                             <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}"
                                 colspan="{{ data.table_data.cols|length }}">

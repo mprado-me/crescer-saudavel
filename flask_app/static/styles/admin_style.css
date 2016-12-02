@@ -303,3 +303,7 @@ select.sort-method {
     margin-bottom: 0;
     margin-right: 12px;
 }
+
+.table-hover>tbody>tr.not-hover:hover {
+    background-color: #fff !important;
+}
