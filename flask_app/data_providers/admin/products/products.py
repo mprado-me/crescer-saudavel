@@ -179,6 +179,7 @@ class ProductsDataProvider():
         for idx, product in enumerate(products):
             rows.append([
                 "#" + str(product.id),
+                product.active,
                 product.category.name if product.category else "-",
                 product.subcategory.name if product.subcategory else "-",
                 product.title,
@@ -202,6 +203,11 @@ class ProductsDataProvider():
                 {
                     "id": "id",
                     "title": "Id",
+                },
+                {
+                    "id": "active",
+                    "title": "Ativo",
+                    "showAsBool": True
                 },
                 {
                     "id": "category",

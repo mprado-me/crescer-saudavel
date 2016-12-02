@@ -1,5 +1,7 @@
 {% extends "admin/shared/base.html" %}
 
+{% import "shared/macros.html" as macros %}
+
 {% block title %}Produtos{% endblock %}
 
 {% block content %}
@@ -141,6 +143,7 @@
                 success: function () {
                     $("#row-{0}".f(form.attr("row_idx"))).addClass("removed");
                     form.hide();
+                    updateTableData("active", form.attr("row_idx"), "{{ macros.get_bool_glyphicons(False) }}");
                     $("#reactivate-product-{0}".f(form.attr("product_id"))).show();
                     throwSuccessOpToast('O produto #{0} foi removido com sucesso.'.f(form.attr("product_id")));
                 },
@@ -167,6 +170,7 @@
                 success: function () {
                     $("#row-{0}".f(form.attr("row_idx"))).removeClass("removed");
                     form.hide();
+                    updateTableData("active", form.attr("row_idx"), "{{ macros.get_bool_glyphicons(True) }}");
                     $("#remove-product-{0}".f(form.attr("product_id"))).show();
                     throwSuccessOpToast('O produto #{0} foi reativado com sucesso.'.f(form.attr("product_id")));
                 },

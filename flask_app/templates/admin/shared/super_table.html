@@ -54,6 +54,8 @@
                                         aria-controls="collapsible-row-{{ row_idx }}">
                                     Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
                                 </button>
+                            {% elif data.table_data.cols[loop.index0].showAsBool %}
+                                {{ macros.get_bool_glyphicons(td) }}
                             {% else %}
                                 {{ td }}
                             {% endif %}

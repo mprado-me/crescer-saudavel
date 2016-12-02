@@ -56,11 +56,15 @@
 {%- endmacro %}
 
 {% macro info_tooltip_min_stock() -%}
-    {{ info_tooltip("Parar de vender o produto quando o estoque atingir valor mínimo estabelecido.") }}
+    {{ info_tooltip("Parar de vender o produto quando o estoque atingir o valor mínimo estabelecido.") }}
 {%- endmacro %}
 
 {% macro get_if(class, condition) -%}
     {% if condition %}
         {{ class }}
     {% endif %}
+{%- endmacro %}
+
+{% macro get_bool_glyphicons(value) -%}
+    {% if value %}<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>{% else %}<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>{% endif %}
 {%- endmacro %}
