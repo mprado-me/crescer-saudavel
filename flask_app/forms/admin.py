@@ -370,7 +370,7 @@ class FilterProductForm(FlaskForm):
         ])
     active = SelectField(
         label="Status do produto",
-        choices=[("True", "Ativo"), ("False", "Removido")],
+        choices=[("True", "Ativo"), ("False", "Inativo")],
         validators=[
             DataRequired(message=error_msg_provider.data_required())
         ])

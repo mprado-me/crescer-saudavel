@@ -124,14 +124,14 @@
                     {% if actions_data.product_active %}
                         $("#reactivate-product-{0}".f({{ actions_data.product_id }})).hide();
                     {% else %}
-                        $("#remove-product-{0}".f({{ actions_data.product_id }})).hide();
-                        $("#row-{0}".f({{ loop.index0 }})).addClass("removed");
+                        $("#desactivate-product-{0}".f({{ actions_data.product_id }})).hide();
+                        $("#row-{0}".f({{ loop.index0 }})).addClass("inactive");
                     {% endif %}
                 {% endfor %}
             {% endif %}
         {% endfor %}
 
-        $("form.remove-product").each(function () {
+        $("form.desactivate-product").each(function () {
             var form = $(this);
             var submitInput = form.find("input[type='submit']");
             setAjaxFormHandlers({
@@ -139,21 +139,21 @@
                 minResponseTime: DEFAULT_RESPONSE_TIME,
                 submit: function () {
                     submitInput.prop("disabled", true);
-                    submitInput.attr("value", "Removendo...");
+                    submitInput.attr("value", "Desativando...");
                 },
                 success: function () {
-                    $("#row-{0}".f(form.attr("row_idx"))).addClass("removed");
+                    $("#row-{0}".f(form.attr("row_idx"))).addClass("inactive");
                     form.hide();
                     updateTableData("active", form.attr("row_idx"), "{{ macros.get_bool_glyphicons(False) }}");
                     $("#reactivate-product-{0}".f(form.attr("product_id"))).show();
-                    throwSuccessOpToast('O produto #{0} foi removido com sucesso.'.f(form.attr("product_id")));
+                    throwSuccessOpToast('O produto #{0} foi desativado com sucesso.'.f(form.attr("product_id")));
                 },
                 error: function () {
-                    throwErrorOpToast('Ocorreu uma falha ao remover o produto #{0}. Tente novamente.'.f(form.attr("product_id")));
+                    throwErrorOpToast('Ocorreu uma falha ao desativar o produto #{0}. Tente novamente.'.f(form.attr("product_id")));
                 },
                 complete: function () {
                     submitInput.prop("disabled", false);
-                    submitInput.attr("value", "Remover produto");
+                    submitInput.attr("value", "Desativar produto");
                 }
             })
         });
@@ -169,10 +169,10 @@
                     submitInput.attr("value", "Reativando...");
                 },
                 success: function () {
-                    $("#row-{0}".f(form.attr("row_idx"))).removeClass("removed");
+                    $("#row-{0}".f(form.attr("row_idx"))).removeClass("inactive");
                     form.hide();
                     updateTableData("active", form.attr("row_idx"), "{{ macros.get_bool_glyphicons(True) }}");
-                    $("#remove-product-{0}".f(form.attr("product_id"))).show();
+                    $("#desactivate-product-{0}".f(form.attr("product_id"))).show();
                     throwSuccessOpToast('O produto #{0} foi reativado com sucesso.'.f(form.attr("product_id")));
                 },
                 error: function () {

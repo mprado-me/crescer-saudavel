@@ -141,6 +141,10 @@ tr.removed td {
     color: #777;
 }
 
+tr.inactive td {
+    color: #777;
+}
+
 .glyphicon-info-sign {
     margin-left:0px;
 }
