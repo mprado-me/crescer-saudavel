@@ -17,7 +17,8 @@
         {% if data.sort_methods and data.sort_method_query_arg_name %}
             <div class="form-group sort-method-container">
                 <label for="select-sort-method">Ordenar por:</label>
-                <select id="select-sort-method" name="{{ data.sort_method_query_arg_name }}" class="form-control sort-method">
+                <select id="select-sort-method" name="{{ data.sort_method_query_arg_name }}"
+                        class="form-control sort-method">
                     {% for sort_method in data.sort_methods %}
                         <option value="{{ sort_method.value }}" {{ macros.get_if('selected', sort_method.selected) }}>{{ sort_method.name }}</option>
                     {% endfor %}
@@ -49,9 +50,7 @@
                             {% if data.table_data.cols[loop.index0].id == "actions" %}
                                 {% set actions_data = td %}
                                 <button class="btn btn-default action" type="button" id="action-btn-{{ row_idx }}"
-                                        data-toggle="collapse" data-target="#collapsible-row-{{ row_idx }}"
-                                        aria-expanded="false"
-                                        aria-controls="collapsible-row-{{ row_idx }}">
+                                        target_id="collapsible-row-{{ row_idx }}">
                                     Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
                                 </button>
                             {% elif data.table_data.cols[loop.index0].showAsBool %}
@@ -64,7 +63,7 @@
                 </tr>
                 {% for td in row %}
                     {% if data.table_data.cols[loop.index0].id == "actions" %}
-                        <tr class="collapse collapsible-row" id="collapsible-row-{{ row_idx }}"
+                        <tr class="collapsible-row" id="collapsible-row-{{ row_idx }}"
                             action-btn-id="action-btn-{{ row_idx }}">
                             <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}"
                                 colspan="{{ data.table_data.cols|length }}">
