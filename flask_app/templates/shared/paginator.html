@@ -1,27 +1,29 @@
-<div class="pages paginator-container">
-    <ol class="pagination">
-        {% if data["previous_href"] %}
-            <li><a class="button" href="{{ data['previous_href'] }}" title="Páginas anteriores"> « </a></li>
-        {% endif %}
-        {% for page in data["pages"] %}
-            {% if page["active"] %}
-                <li class="active"><a class="button" href="{{ page['href'] }}">{{ page['text'] }}</a></li>
-            {% else %}
-                <li>
-                    {% if page["href"] %}
-                        <a class="button" href="{{ page['href']|default('#') }}">
-                            {{ page['text'] }}
-                        </a>
-                    {% else %}
-                        <span class="button">
+{% if data.pages|length > 1 %}
+    <div class="pages paginator-container">
+        <ol class="pagination">
+            {% if data["previous_href"] %}
+                <li><a class="button" href="{{ data['previous_href'] }}" title="Páginas anteriores"> « </a></li>
+            {% endif %}
+            {% for page in data["pages"] %}
+                {% if page["active"] %}
+                    <li class="active"><a class="button" href="{{ page['href'] }}">{{ page['text'] }}</a></li>
+                {% else %}
+                    <li>
+                        {% if page["href"] %}
+                            <a class="button" href="{{ page['href']|default('#') }}">
+                                {{ page['text'] }}
+                            </a>
+                        {% else %}
+                            <span class="button">
                             {{ page['text'] }}
                         </span>
-                    {% endif %}
-                </li>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if data["next_href"] %}
+                <li><a class="button" href="{{ data['next_href'] }}" title="Próximas páginas"> » </a></li>
             {% endif %}
-        {% endfor %}
-        {% if data["next_href"] %}
-            <li><a class="button" href="{{ data['next_href'] }}" title="Próximas páginas"> » </a></li>
-        {% endif %}
-    </ol>
-</div>
+        </ol>
+    </div>
+{% endif %}

@@ -297,6 +297,7 @@ form.filter-container {
     display: flex;
     margin-top: 20px;
     margin-bottom: 0;
+    margin-left: auto;
 }
 
 select.sort-method {
