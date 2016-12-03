@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-class NavbarTabNamesProvider():
+class NavbarTabNames():
     def __init__(self):
         pass
 

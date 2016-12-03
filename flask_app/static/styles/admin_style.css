@@ -222,10 +222,6 @@ table .btn.action {
     border-radius: 5px;
 }
 
-td {
-    vertical-align: middle !important;
-}
-
 .jumbotron.filter-container {
     margin-bottom: 0;
     padding-top: 12px !important;
@@ -332,12 +328,25 @@ select.sort-method {
     margin-bottom: 32px;
 }
 
-.title-container {
+.title.page-header {
     display: flex;
     justify-content: space-between;
 }
 
-.title-container > a{
+.title.page-header > a{
     font-size: 14px;
     align-self: flex-end;
+}
+
+img.images-table {
+    height:100%;
+    max-height: 130px;
+}
+
+td.vertical-align-middle {
+    vertical-align: middle !important;
+}
+
+#images-table th#image_name {
+    width: 100%;
 }

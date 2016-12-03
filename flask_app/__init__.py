@@ -20,6 +20,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, instance_relative_config=True)
 
+import flask_app.utils.filters
+
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
 

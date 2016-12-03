@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_app.data_providers.admin.shared.navbar import navbar_data_provider
-from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNamesProvider
+from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNames
 
 from flask_app.utils.enums import OrderStatus
 
@@ -18,7 +18,7 @@ class HomeDataProvider:
 
     def sample_data_0(self):
         data = {
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.home),
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.home),
             "n_new_orders": 3,
             "new_orders_href": url_for("admin_orders", order_status=OrderStatus.PAID, page=1),
         }

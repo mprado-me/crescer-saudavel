@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>{% block title %}{% endblock %}</title>
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
-  <link rel="icon" href="#" type="image/x-icon">
-  <link rel="shortcut icon" href="#" type="image/x-icon">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
+    <link rel="icon" href="#" type="image/x-icon">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
 
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/admin_style.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/toastr.min.css') }}">
-  <meta name="viewport" content="initial-scale=1.0, width=device-width">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/admin_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/toastr.min.css') }}">
+    <meta name="viewport" content="initial-scale=1.0, width=device-width">
 </head>
 <body>
-  {% with data=data["navbar_data"] %}
-  {% include "admin/shared/navbar.html" %}
-  {% endwith %}
+{% with data=data["navbar_data"] %}
+    {% include "admin/shared/navbar.html" %}
+{% endwith %}
 
-  <div class="container">
-    <div class="page-header">
-      <h3>{{self.title()}}</h3>
+<div class="container">
+    <div class="page-header title">
+        <h3>{{ self.title() }}</h3>
+        {% block title_right_link %}{% endblock %}
     </div>
 
-    <!--{% include "shared/flash-messages.html" %}-->
+    {#    {% include "shared/flash-messages.html" %}#}
 
     {% block content %}
     {% endblock %}
-  </div>
+</div>
 
-  <script type="text/javascript" src="{{ url_for('static', filename='js/utils.js' )}}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js' )}}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/toastr.min.js' )}}"></script>
-  {% block scripts %}
-  {% endblock %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/utils.js' ) }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js' ) }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/toastr.min.js' ) }}"></script>
+{% block scripts %}
+{% endblock %}
 </body>
 </html>

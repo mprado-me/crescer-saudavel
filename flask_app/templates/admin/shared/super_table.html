@@ -27,9 +27,8 @@
         {% endif %}
     </div>
 
-
     <div class="table-responsive {{ macros.get_if('without-bottom-paginator', data.paginator_data.pages|length <= 1) }}">
-        <table class="table table-hover">
+        <table id="{{ macros.get_if(data.table_data.id, data.table_data.id) }}" class="table table-hover">
             <thead>
             <tr>
                 {% for col in data.table_data.cols %}
@@ -46,15 +45,29 @@
                 {% set row_idx = loop.index0 %}
                 <tr id="row-{{ row_idx }}">
                     {% for td in row %}
-                        <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}">
-                            {% if data.table_data.cols[loop.index0].id == "actions" %}
-                                {% set actions_data = td %}
-                                <button class="btn btn-default action" type="button" id="action-btn-{{ row_idx }}"
-                                        target_id="collapsible-row-{{ row_idx }}">
-                                    Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
-                                </button>
-                            {% elif data.table_data.cols[loop.index0].showAsBool %}
-                                {{ macros.get_bool_glyphicons(td) }}
+                        {% set vertical_align_middle = data.table_data|ignore_undefined("settings.vertical_align_middle") %}
+{#                        {% set vertical_align_middle = data|attr("table_data")|attr("settings")|attr("vertical_align_middle") %}#}
+                        <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}"
+                            class="{{ macros.get_if('vertical-align-middle', vertical_align_middle) }}">
+                            {% set col_type=data.table_data.cols[loop.index0].type %}
+                            {% if col_type == "actions" %}
+                                {% set expandable=data.table_data.cols[loop.index0].expandable %}
+                                {% if expandable %}
+                                    <button class="btn btn-default action" type="button" id="action-btn-{{ row_idx }}"
+                                            target_id="collapsible-row-{{ row_idx }}">
+                                        Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
+                                    </button>
+                                {% else %}
+                                    {% with data=td.data %}
+                                        {% include td.file_path %}
+                                    {% endwith %}
+                                {% endif %}
+                            {% elif col_type == "bool" %}
+                                {{ macros.get_bool_glyphicon(td) }}
+                            {% elif col_type == "image" %}
+                                {% with data=td.data %}
+                                    {% include td.file_path %}
+                                {% endwith %}
                             {% else %}
                                 {{ td }}
                             {% endif %}
@@ -62,13 +75,15 @@
                     {% endfor %}
                 </tr>
                 {% for td in row %}
-                    {% if data.table_data.cols[loop.index0].id == "actions" %}
+                    {% set col_type=data.table_data.cols[loop.index0].type %}
+                    {% set expandable=data.table_data.cols[loop.index0].expandable %}
+                    {% if col_type == "actions" and expandable %}
                         <tr class="collapsible-row not-hover" id="collapsible-row-{{ row_idx }}"
                             action-btn-id="action-btn-{{ row_idx }}" style="display: none;">
                             <td id="col-{{ data.table_data.cols[loop.index0].id }}-row-{{ row_idx }}"
                                 colspan="{{ data.table_data.cols|length }}">
-                                {% with data=td %}
-                                    {% include "admin/products/actions.html" %}
+                                {% with data=td.data %}
+                                    {% include td.file_path %}
                                 {% endwith %}
                             </td>
                         </tr>

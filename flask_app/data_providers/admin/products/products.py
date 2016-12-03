@@ -6,14 +6,14 @@ import math
 from flask_app import app
 
 from flask_app.data_providers.admin.shared.navbar import navbar_data_provider
-from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNamesProvider
+from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNames
 
 from flask_app.data_providers.shared.paginator import paginator_data_provider
 
 from flask_app.models.product import Product
 
 from flask_app.utils.db_manager import db_manager
-from flask_app.utils.enums import AdminProductsTableSortMethod
+from flask_app.utils.enums import AdminProductsSortMethod
 from flask_app.utils.exceptions import InvalidParamError
 from flask_app.utils.string import String
 from flask_app.utils.utils import Utils
@@ -29,7 +29,7 @@ class ProductsDataProvider():
 
     def get_add_data(self, form):
         data = {
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.products),
             "form": form,
         }
         return data
@@ -88,7 +88,7 @@ class ProductsDataProvider():
 
         data = {
             "url_args": url_args,
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.products),
             "form": form,
             "product_id": product_id,
         }
@@ -104,8 +104,10 @@ class ProductsDataProvider():
         filter_product_form.category_subcategory.data = category_subcategory
         filter_product_form.active.data = str(active)
 
+        per_page = app.config["ADMIN_N_PRODUCTS_PER_PAGE"]
+
         return {
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.products),
             "super_table_data": {
                 "filter_data": {
                     "form": filter_product_form,
@@ -115,30 +117,30 @@ class ProductsDataProvider():
                 "paginator_data": paginator_data_provider.get_data(
                     page=page,
                     n_items=n_items,
-                    per_page=app.config["ADMIN_N_PRODUCTS_PER_PAGE"],
+                    per_page=per_page,
                     url_endpoint="admin_products",
                     url_args=url_args),
                 "sort_method_query_arg_name": String.QueryArgName.SORT_METHOD,
                 "sort_methods": [
                     self.get_sort_method(selected_sort_method, "Título",
-                                         int(AdminProductsTableSortMethod.TITLE)),
+                                         int(AdminProductsSortMethod.TITLE)),
                     self.get_sort_method(selected_sort_method, "Menor preço",
-                                         int(AdminProductsTableSortMethod.LOWEST_PRICE)),
+                                         int(AdminProductsSortMethod.LOWEST_PRICE)),
                     self.get_sort_method(selected_sort_method, "Maior preço",
-                                         int(AdminProductsTableSortMethod.BIGGEST_PRICE)),
+                                         int(AdminProductsSortMethod.BIGGEST_PRICE)),
                     self.get_sort_method(selected_sort_method, "Menor estoque",
-                                         int(AdminProductsTableSortMethod.LOWEST_STOCK)),
+                                         int(AdminProductsSortMethod.LOWEST_STOCK)),
                     self.get_sort_method(selected_sort_method, "Maior estoque",
-                                         int(AdminProductsTableSortMethod.HIGHER_STOCK)),
+                                         int(AdminProductsSortMethod.HIGHER_STOCK)),
                     self.get_sort_method(selected_sort_method, "Mais vendido",
-                                         int(AdminProductsTableSortMethod.BEST_SELLER)),
+                                         int(AdminProductsSortMethod.BEST_SELLER)),
                     self.get_sort_method(selected_sort_method, "Menos vendido",
-                                         int(AdminProductsTableSortMethod.LESS_SOLD)),
+                                         int(AdminProductsSortMethod.LESS_SOLD)),
                 ],
                 "table_data": self.get_table_data(
                     products=q.slice(*Utils.get_page_range(page=page,
                                                           n_items=n_items,
-                                                          per_page=app.config["ADMIN_N_PRODUCTS_PER_PAGE"])).all(),
+                                                          per_page=per_page)).all(),
                     url_args=url_args,
                     simple_submit_form=simple_submit_form,
                     stock_operation_form=stock_operation_form),
@@ -159,19 +161,19 @@ class ProductsDataProvider():
         return q
 
     def get_order_by_arg(self, sort_method):
-        if sort_method == int(AdminProductsTableSortMethod.TITLE):
+        if sort_method == int(AdminProductsSortMethod.TITLE):
             return asc(Product.title)
-        elif sort_method == int(AdminProductsTableSortMethod.LOWEST_PRICE):
+        elif sort_method == int(AdminProductsSortMethod.LOWEST_PRICE):
             return asc(Product.price)
-        elif sort_method == int(AdminProductsTableSortMethod.BIGGEST_PRICE):
+        elif sort_method == int(AdminProductsSortMethod.BIGGEST_PRICE):
             return desc(Product.price)
-        elif sort_method == int(AdminProductsTableSortMethod.LOWEST_STOCK):
+        elif sort_method == int(AdminProductsSortMethod.LOWEST_STOCK):
             return asc(Product.stock)
-        elif sort_method == int(AdminProductsTableSortMethod.HIGHER_STOCK):
+        elif sort_method == int(AdminProductsSortMethod.HIGHER_STOCK):
             return desc(Product.stock)
-        elif sort_method == int(AdminProductsTableSortMethod.BEST_SELLER):
+        elif sort_method == int(AdminProductsSortMethod.BEST_SELLER):
             return desc(Product.sales_number)
-        elif sort_method == int(AdminProductsTableSortMethod.LESS_SOLD):
+        elif sort_method == int(AdminProductsSortMethod.LESS_SOLD):
             return asc(Product.sales_number)
 
     def get_table_data(self, products, url_args, simple_submit_form, stock_operation_form):
@@ -191,7 +193,7 @@ class ProductsDataProvider():
                     "product_id": product.id,
                     "product_active": product.active,
                     "row": idx,
-                    "file": url_for("static", filename="templates/admin/actions.html"),
+                    "file_path": "admin/products/actions.html",
                     "url_args": url_args,
                     "simple_submit_form": simple_submit_form,
                     "stock_operation_form": stock_operation_form,
@@ -199,6 +201,10 @@ class ProductsDataProvider():
             ])
 
         return {
+            "id": "products-table",
+            "settings": {
+                "vertical_align_middle": True,
+            },
             "cols": [
                 {
                     "id": "id",
@@ -207,7 +213,7 @@ class ProductsDataProvider():
                 {
                     "id": "active",
                     "title": "Ativo",
-                    "showAsBool": True
+                    "type": "bool"
                 },
                 {
                     "id": "category",
@@ -241,6 +247,8 @@ class ProductsDataProvider():
                 },
                 {
                     "id": "actions",
+                    "type": "actions",
+                    "expandable": True,
                 },
             ],
             "rows": rows,

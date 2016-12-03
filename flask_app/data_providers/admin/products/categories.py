@@ -6,7 +6,7 @@ import math
 from flask_app import app
 
 from flask_app.data_providers.admin.shared.navbar import navbar_data_provider
-from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNamesProvider
+from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNames
 
 from flask_app.data_providers.shared.paginator import paginator_data_provider
 
@@ -22,7 +22,7 @@ class CategoriesDataProvider():
 
     def get_add_data(self, form):
         data = {
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.products),
             "form": form,
         }
         return data
@@ -36,7 +36,7 @@ class CategoriesDataProvider():
         form.category.data = category.name
 
         data = {
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.products),
             "form": form,
             "category_id": category_id,
             "url_args": url_args,
@@ -65,7 +65,7 @@ class CategoriesDataProvider():
             "remove_form": remove_form,
             "empty": empty,
             "page": page,
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.products),
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.products),
             "paginator_data": paginator_data_provider.get_data(
                 page=page,
                 n_pages=app.config["DEFAULT_PAGINATOR_SIZE"],

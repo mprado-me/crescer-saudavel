@@ -3,12 +3,15 @@
 
 import os, math
 
+from flask.ext.app.utils.utils import Utils
 from flask_app import app
 
 from flask_app.data_providers.admin.shared.navbar import navbar_data_provider
-from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNamesProvider
+from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNames
 
 from flask_app.data_providers.shared.paginator import paginator_data_provider
+
+from flask import url_for
 
 
 class ImagesDataProvider:
@@ -17,7 +20,7 @@ class ImagesDataProvider:
 
     def get_add_data(self, form):
         data = {
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.images),
             "form": form,
         }
         return data
@@ -25,35 +28,28 @@ class ImagesDataProvider:
     def get_data(self, page, remove_form, url_args):
         all_images_name = self.get_images_name_sorted()
 
-        empty = False
-        if len(all_images_name) == 0:
-            empty = True
+        n_items = len(all_images_name)
 
-        total_n_pages = int(math.ceil(float(len(all_images_name))/app.config["ADMIN_N_IMAGES_PER_PAGE"]))
-        total_n_pages = max(1, total_n_pages)
+        per_page = app.config["ADMIN_N_IMAGES_PER_PAGE"]
 
-        # page between 1 and total_n_pages
-        page = max(1, page)
-        page = min(total_n_pages, page)
-
-        first = (page-1)*app.config["ADMIN_N_IMAGES_PER_PAGE"]
-        last_plus_one = first+app.config["ADMIN_N_IMAGES_PER_PAGE"]
+        range = Utils.get_page_range(page=page, n_items=n_items, per_page=per_page)
+        sliced_images_name = all_images_name[range[0]:range[1]]
 
         data = {
-            "url_args": url_args,
-            "remove_form": remove_form,
-            "empty": empty,
-            "page": page,
-            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNamesProvider.images),
-            "paginator_data": paginator_data_provider.get_data(
-                page=page,
-                n_pages=app.config["ADMIN_IMAGES_TABLE_PAGINATOR_SIZE"],
-                total_n_pages=total_n_pages,
-                url_endpoint="admin_images",
-                url_args={
-                }
-            ),
-            "images_name": all_images_name[first:last_plus_one],
+            "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.images),
+            "super_table_data": {
+                "paginator_data": paginator_data_provider.get_data(
+                    page=page,
+                    n_items=n_items,
+                    per_page=per_page,
+                    url_endpoint="admin_images",
+                ),
+                "table_data": self.get_table_data(
+                    images_name=sliced_images_name,
+                    remove_form=remove_form,
+                ),
+                "empty_msg": "Nenhuma imagem foi encontrada.",
+            },
         }
         return data
 
@@ -61,6 +57,46 @@ class ImagesDataProvider:
         all_images_name = os.listdir(app.config["UPLOADED_IMAGES_FOLDER"])
         all_images_name.sort()
         return all_images_name
+
+    def get_table_data(self, images_name, remove_form):
+        rows = []
+        for idx, image_name in enumerate(images_name):
+            rows.append([
+                {
+                    "file_path": "admin/images/image.html",
+                    "data": {
+                        "image_name": image_name
+                    }
+                },
+                image_name,
+                {
+                    "file_path": "admin/images/actions.html",
+                    "data": {
+                        "image_name": image_name,
+                        "remove_form": remove_form
+                    }
+                }
+            ])
+
+        return {
+            "id": "images-table",
+            "cols": [
+                {
+                    "id": "image",
+                    "type": "image"
+                },
+                {
+                    "id": "image_name",
+                    "title": "Nome",
+                },
+                {
+                    "id": "actions",
+                    "type": "actions",
+                    "expandable": False,
+                },
+            ],
+            "rows": rows,
+        }
 
 
 images_data_provider = ImagesDataProvider()

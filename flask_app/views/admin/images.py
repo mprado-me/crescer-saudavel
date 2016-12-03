@@ -60,12 +60,17 @@ def admin_add_image():
 @log_route
 def admin_images(page):
     remove_form = SimpleSubmitForm()
+
     url_args = {
         "page": page
     }
 
     try:
-        data = images_data_provider.get_data(page=page, remove_form=remove_form, url_args=url_args)
+        data = images_data_provider.get_data(
+            page=page,
+            remove_form=remove_form,
+            url_args=url_args
+        )
         return render_template("admin/images/images.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)

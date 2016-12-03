@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNamesProvider
+from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNames
 
 from flask_app.utils.enums import OrderStatus
 
@@ -25,11 +25,11 @@ class NavbarDataProvider:
         data = {
             "menu_items": [
                 {
-                    "name": NavbarTabNamesProvider.home,
+                    "name": NavbarTabNames.home,
                     "href": url_for("admin_dashboard")
                 },
                 {
-                    "name": NavbarTabNamesProvider.products,
+                    "name": NavbarTabNames.products,
                     "submenu_items": [
                         {
                             "name": "Adicionar novo produto",
@@ -58,7 +58,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": NavbarTabNamesProvider.orders,
+                    "name": NavbarTabNames.orders,
                     "submenu_items": [
                         {
                             "name": "Pagos",
@@ -75,7 +75,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": NavbarTabNamesProvider.blog,
+                    "name": NavbarTabNames.blog,
                     "submenu_items": [
                         {
                             "name": "Adicionar novo post",
@@ -88,7 +88,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": NavbarTabNamesProvider.customers,
+                    "name": NavbarTabNames.customers,
                     "submenu_items": [
                         {
                             "name": "Cadastrados",
@@ -101,7 +101,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": NavbarTabNamesProvider.images,
+                    "name": NavbarTabNames.images,
                     "submenu_items": [
                         {
                             "name": "Adicionar nova imagem",
@@ -114,7 +114,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": NavbarTabNamesProvider.content,
+                    "name": NavbarTabNames.content,
                     "submenu_items": [
                         {
                             "name": "Home",
@@ -135,7 +135,7 @@ class NavbarDataProvider:
                     ],
                 },
                 {
-                    "name": NavbarTabNamesProvider.attended_cities,
+                    "name": NavbarTabNames.attended_cities,
                     "submenu_items": [
                         {
                             "name": "Adicionar nova cidade",

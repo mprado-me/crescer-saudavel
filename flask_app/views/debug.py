@@ -213,26 +213,18 @@ if app.config["DEBUG"]:
                     <meta name="viewport" content="initial-scale=1.0, width=device-width">
 
                     <style>
-                        #example{
-                            margin-right: -20px;
-                            margin-top: 20px;
+                        p {
+                            color: red;
                         }
 
-                        .align-right {
-                            text-align: right;
+                        p#my-id-2 {
+                            color: blue;
                         }
                     </style>
                 </head>
                 <body>
-                    <div class="align-right">
-                        <a data-placement="bottom" id="example" tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" data-content="And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
-                    </div>
-
-                    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-                    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js' )}}"></script>
-                    <script>
-                        $('#example').popover()
-                    </script>
+                    <p id="my-id-1">Oiiiii</p>
+                    <p id="my-id-2">Oiiiii</span>
                 </body>
             """)
         # POST

@@ -24,7 +24,7 @@ from flask_app.models.subcategory import Subcategory
 
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
-from flask_app.utils.enums import AdminProductsTableSortMethod
+from flask_app.utils.enums import AdminProductsSortMethod
 from flask_app.utils.exceptions import InsecurePostException, InvalidQueryParamError, InvalidUrlParamError, log_unrecognized_exception
 from flask_app.utils.string import String
 
@@ -243,7 +243,7 @@ def admin_products(page):
         if not active:
             active = "True"
         if not sort_method:
-            sort_method = int(AdminProductsTableSortMethod.TITLE)
+            sort_method = int(AdminProductsSortMethod.TITLE)
 
         url_args = {
             "category_subcategory": category_subcategory,
