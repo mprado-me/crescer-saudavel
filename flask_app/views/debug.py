@@ -31,18 +31,34 @@ if app.config["DEBUG"]:
             log_unrecognized_exception(e)
             return "Falha ao reiniciar as imagens"
 
+
+    @app.route('/debug/images/remove-all', methods=["GET"])
+    @log_route
+    def remove_all_images():
+        try:
+            remove_all_images_implementation()
+            return redirect(url_for("admin_dashboard"))
+        except Exception as e:
+            log_unrecognized_exception(e)
+            return "Falha ao reiniciar as imagens"
+
+
+    destiny_folder_path = app.config["UPLOADED_IMAGES_FOLDER"]
+
     def restart_images_implementation():
-        destiny_folder_path = app.config["UPLOADED_IMAGES_FOLDER"]
-        for file_name in os.listdir(destiny_folder_path):
-            file_path = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], file_name)
-            if os.path.exists(file_path):
-                os.remove(file_path)
+        remove_all_images_implementation()
 
         src_folder_path = "/vagrant/images"
         for file_name in os.listdir(src_folder_path):
             file_path = os.path.join(src_folder_path, file_name)
             if os.path.exists(file_path):
                 shutil.copy(file_path, destiny_folder_path)
+
+    def remove_all_images_implementation():
+        for file_name in os.listdir(destiny_folder_path):
+            file_path = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], file_name)
+            if os.path.exists(file_path):
+                os.remove(file_path)
 
     @app.route('/debug/db/restart', methods=["GET"])
     @log_route
@@ -148,7 +164,7 @@ if app.config["DEBUG"]:
     def get_random_valid_subcategory_id(category_id):
         try:
             return random.choice(Subcategory.query.filter(Subcategory.category_id==category_id).with_entities(Subcategory.id).all())
-        except:
+        except Exception:
             return None
 
     def get_random_category_name():

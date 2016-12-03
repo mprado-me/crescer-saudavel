@@ -1,17 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, math
+import os
 
-from flask.ext.app.utils.utils import Utils
+from flask_app.utils.utils import Utils
 from flask_app import app
 
 from flask_app.data_providers.admin.shared.navbar import navbar_data_provider
 from flask_app.data_providers.admin.shared.navbar_tab_names import NavbarTabNames
 
 from flask_app.data_providers.shared.paginator import paginator_data_provider
-
-from flask import url_for
 
 
 class ImagesDataProvider:
