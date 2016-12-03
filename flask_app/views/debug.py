@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import random, string
+import os, random, shutil, string
 
 from decimal import Decimal
 
@@ -21,6 +21,29 @@ from flask_app.utils.decorators import log_route
 from flask import redirect, url_for, render_template_string, request
 
 if app.config["DEBUG"]:
+    @app.route('/debug/images/restart', methods=["GET"])
+    @log_route
+    def restart_images():
+        try:
+            restart_images_implementation()
+            return redirect(url_for("admin_dashboard"))
+        except Exception as e:
+            log_unrecognized_exception(e)
+            return "Falha ao reiniciar as imagens"
+
+    def restart_images_implementation():
+        destiny_folder_path = app.config["UPLOADED_IMAGES_FOLDER"]
+        for file_name in os.listdir(destiny_folder_path):
+            file_path = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], file_name)
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+        src_folder_path = "/vagrant/images"
+        for file_name in os.listdir(src_folder_path):
+            file_path = os.path.join(src_folder_path, file_name)
+            if os.path.exists(file_path):
+                shutil.copy(file_path, destiny_folder_path)
+
     @app.route('/debug/db/restart', methods=["GET"])
     @log_route
     def restart_db():
@@ -72,7 +95,7 @@ if app.config["DEBUG"]:
 
     def create_test_paginator_categories_and_products():
         per_page = app.config["ADMIN_N_PRODUCTS_PER_PAGE"]
-        for i in range(0, 20):
+        for i in range(0, 12):
             category = get_random_category()
             category.name = "categoria_%02d_paginas" % (i+1)
             db.session.add(category)

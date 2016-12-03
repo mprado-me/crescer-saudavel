@@ -101,9 +101,9 @@ def admin_remove_image(image_name):
         if not remove_form.validate_on_submit():
             raise InsecurePostException()
 
-        path_to_file = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], image_name)
-        if os.path.exists(path_to_file):
-            os.remove(path_to_file)
+        file_path = os.path.join(app.config['UPLOADED_IMAGES_FOLDER'], image_name)
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
         flash("Imagem \"%s\" foi removida com sucesso." % image_name, "success")
         return ('', 204)

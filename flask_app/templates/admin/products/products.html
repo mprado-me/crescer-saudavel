@@ -121,7 +121,7 @@
             {% if col.id == "actions" %}
                 {% set actions_idx = loop.index0 %}
                 {% for row in data.super_table_data.table_data.rows %}
-                    {% set actions_data = row[actions_idx] %}
+                    {% set actions_data = row[actions_idx].data %}
                     {% if actions_data.product_active %}
                         $("#reactivate-product-{0}".f({{ actions_data.product_id }})).hide();
                     {% else %}

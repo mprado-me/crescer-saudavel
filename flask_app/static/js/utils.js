@@ -43,7 +43,9 @@ function setAjaxFormHandlers(data) {
                 var delay = minResponseTime - (postReturnTime - form.clickTime);
                 setTimeout(function () {
                     success(data);
-                    complete();
+                    if(complete){
+                        complete();
+                    }
                 }, delay);
             },
             error: function (jqXHR) {
@@ -51,7 +53,9 @@ function setAjaxFormHandlers(data) {
                 var delay = minResponseTime - (postReturnTime - form.clickTime);
                 setTimeout(function () {
                     error(jqXHR.status);
-                    complete();
+                    if(complete){
+                        complete();
+                    }
                 }, delay);
             }
         });

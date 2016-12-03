@@ -336,6 +336,7 @@ select.sort-method {
 .title.page-header > a{
     font-size: 14px;
     align-self: flex-end;
+    margin-bottom: 10px;
 }
 
 img.images-table {
@@ -349,4 +350,8 @@ td.vertical-align-middle {
 
 #images-table th#image_name {
     width: 100%;
+}
+
+.without-filter.total-items {
+    margin-bottom: 0;
 }

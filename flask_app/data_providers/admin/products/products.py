@@ -190,13 +190,15 @@ class ProductsDataProvider():
                 product.min_stock,
                 product.sales_number,
                 {
-                    "product_id": product.id,
-                    "product_active": product.active,
-                    "row": idx,
                     "file_path": "admin/products/actions.html",
-                    "url_args": url_args,
-                    "simple_submit_form": simple_submit_form,
-                    "stock_operation_form": stock_operation_form,
+                    "data": {
+                        "product_id": product.id,
+                        "product_active": product.active,
+                        "row": idx,
+                        "url_args": url_args,
+                        "simple_submit_form": simple_submit_form,
+                        "stock_operation_form": stock_operation_form,
+                    }
                 }
             ])
 

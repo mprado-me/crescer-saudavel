@@ -6,6 +6,8 @@
             {% include "admin/shared/filter_form.html" %}
         {% endwith %}
     </div>
+{% elif data.n_items %}
+    <p class="without-filter total-items">{{ data.n_items }} item encontrados</p>
 {% endif %}
 
 {% if data.table_data.rows|length > 0 %}

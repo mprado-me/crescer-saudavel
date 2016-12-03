@@ -38,6 +38,7 @@ class ImagesDataProvider:
         data = {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.images),
             "super_table_data": {
+                "n_items": n_items,
                 "paginator_data": paginator_data_provider.get_data(
                     page=page,
                     n_items=n_items,
@@ -47,6 +48,7 @@ class ImagesDataProvider:
                 "table_data": self.get_table_data(
                     images_name=sliced_images_name,
                     remove_form=remove_form,
+                    url_args=url_args
                 ),
                 "empty_msg": "Nenhuma imagem foi encontrada.",
             },
@@ -58,7 +60,7 @@ class ImagesDataProvider:
         all_images_name.sort()
         return all_images_name
 
-    def get_table_data(self, images_name, remove_form):
+    def get_table_data(self, images_name, remove_form, url_args):
         rows = []
         for idx, image_name in enumerate(images_name):
             rows.append([
@@ -73,7 +75,9 @@ class ImagesDataProvider:
                     "file_path": "admin/images/actions.html",
                     "data": {
                         "image_name": image_name,
-                        "remove_form": remove_form
+                        "remove_form": remove_form,
+                        "row": idx,
+                        "url_args": url_args
                     }
                 }
             ])
