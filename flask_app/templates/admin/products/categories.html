@@ -1,61 +1,94 @@
 {% extends "admin/shared/base.html" %}
 
-{% block title %}Categorias de produto{% endblock %}
+{% import "shared/macros.html" as macros %}
+
+{% block title %}
+    Categorias de produto
+{% endblock %}
+{% block title_right_link %}
+    <a href="{{ url_for('admin_add_product_category') }}">+ Adicionar</a>
+{% endblock %}
 
 {% block content %}
-  <a href="{{url_for('admin_add_product_category')}}">Adicionar nova categoria</a>
-  <div class="br-8px"></div>
-
-  {% if not data["empty"] %}
-    {% with data=data["paginator_data"] %}
-      {% include "shared/paginator.html" %}
+    {% with data=data.super_table_data %}
+        {% include "admin/shared/super_table.html" %}
     {% endwith %}
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Nome</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for category in data["categories"] %}
-          <tr>
-            <td>#{{category.id}}</td>
-            <td>{{category.name}}</td>
-            <td>
-              <ul class="table-action-ul">
-                <li>
-                  <a href="{{url_for('admin_edit_product_category', category_id=category.id, url_args=data.url_args)}}">Editar</a>
-                </li>
-                <li>
-                  <form class="remove-form" action="{{url_for('admin_remove_product_category', category_id=category.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
-                    {{ data["remove_form"].csrf_token }}
-                    <input type=submit value=Remover>
-                  </form>
-                </li>
-              </ul>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    {% with data=data["paginator_data"] %}
-      {% include "shared/paginator.html" %}
-    {% endwith %}
-  {% else %}
-    <p>Nenhuma categoria foi encontrada.</p>
-  {% endif %}
-
 {% endblock %}
 
 {% block scripts %}
-<script>
-  $(".remove-form").submit(function() {
-      var c = confirm("Tem certeza que deseja remover a categoria? Ficará difícil para o usuário encontrar os produtos que pertencem a esta categoria e todas as subcategorias dessa categoria também serão removidas.");
-      return c;
-  });
-</script>
+    <script>
+        {% for col in data.super_table_data.table_data.cols %}
+            {% if col.id == "actions" %}
+                {% set actions_idx = loop.index0 %}
+                {% for row in data.super_table_data.table_data.rows %}
+                    {% set actions_data = row[actions_idx].data %}
+                    {% if actions_data.category_active %}
+                        $("#activate-category-{0}".f({{ actions_data.category_id }})).hide();
+                    {% else %}
+                        $("#disable-category-{0}".f({{ actions_data.category_id }})).hide();
+                        $("#row-{0}".f({{ loop.index0 }})).addClass("inactive");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        $("form.disable-category").each(function () {
+            var form = $(this);
+            var submitInput = form.find("input[type='submit']");
+            var row = form.attr("row");
+            var category_id = form.attr("category_id");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                confirmMessage: "Tem certeza que deseja desativar essa categoria? Ao desativar uma categoria, todos produtos dessa categoria não estarão mais visíveis no site.",
+                submit: function () {
+                    submitInput.prop("disabled", true);
+                    submitInput.attr("value", "Desativando...");
+                },
+                success: function () {
+                    $("#row-{0}".f(row)).addClass("inactive");
+                    form.hide();
+                    updateTableData("active", row, "{{ macros.get_bool_glyphicon(False) }}");
+                    $("#activate-category-{0}".f(category_id)).show();
+                    throwSuccessOpToast('A categoria #{0} foi desativada com sucesso.'.f(category_id));
+                },
+                error: function () {
+                    throwErrorOpToast('Ocorreu uma falha ao desativar a categoria #{0}. Tente novamente.'.f(category_id));
+                },
+                complete: function () {
+                    submitInput.prop("disabled", false);
+                    submitInput.attr("value", "Desativar categoria");
+                }
+            })
+        });
+
+        $("form.activate-category").each(function () {
+            var form = $(this);
+            var submitInput = form.find("input[type='submit']");
+            var row = form.attr("row");
+            var category_id = form.attr("category_id");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                submit: function () {
+                    submitInput.prop("disabled", true);
+                    submitInput.attr("value", "Ativando...");
+                },
+                success: function () {
+                    $("#row-{0}".f(row)).removeClass("inactive");
+                    form.hide();
+                    updateTableData("active", row, "{{ macros.get_bool_glyphicon(True) }}");
+                    $("#disable-category-{0}".f(category_id)).show();
+                    throwSuccessOpToast('A categoria #{0} foi ativada com sucesso.'.f(category_id));
+                },
+                error: function () {
+                    throwErrorOpToast('Ocorreu uma falha ao ativar a categoria #{0}. Tente novamente.'.f(category_id));
+                },
+                complete: function () {
+                    submitInput.prop("disabled", false);
+                    submitInput.attr("value", "Ativar categoria");
+                }
+            })
+        })
+    </script>
 {% endblock %}

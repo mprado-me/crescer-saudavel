@@ -16,7 +16,9 @@ from flask_app.data_providers.admin.products.categories import categories_data_p
 from flask_app.data_providers.admin.products.products import products_data_provider
 from flask_app.data_providers.admin.products.subcategories import subcategories_data_provider
 
-from flask_app.forms.admin import StockOperationForm, AddSubcategoryForm, AddCategoryForm, AddProductForm, EditSubcategoryForm, EditCategoryForm, EditProductForm, FilterProductForm, FilterCategoryForm, SimpleSubmitForm
+from flask_app.forms.admin import StockOperationForm, AddSubcategoryForm, AddCategoryForm, AddProductForm, \
+    EditSubcategoryForm, EditCategoryForm, EditProductForm, FilterProductForm, FilterCategoryForm, SimpleSubmitForm, \
+    CategoryFilterForm
 
 from flask_app.models.category import Category
 from flask_app.models.product import Product
@@ -25,7 +27,8 @@ from flask_app.models.subcategory import Subcategory
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
 from flask_app.utils.enums import AdminProductsSortMethod
-from flask_app.utils.exceptions import InsecurePostException, InvalidQueryParamError, InvalidUrlParamError, log_unrecognized_exception
+from flask_app.utils.exceptions import InsecurePostException, InvalidQueryParamError, InvalidUrlArgError, \
+    log_unrecognized_exception
 from flask_app.utils.string import String
 
 
@@ -41,7 +44,7 @@ def admin_add_product():
         try:
             form.add_choices()
 
-            data = products_data_provider.get_add_data(form = form)
+            data = products_data_provider.get_add_data(form=form)
             return render_template("admin/products/add_product.html", data=data)
         except Exception as e:
             log_unrecognized_exception(e)
@@ -109,7 +112,9 @@ def admin_add_product():
             db_manager.commit()
 
             db_manager.refresh(product)
-            flash("Produto \"%s\" foi adicionado com sucesso. Clique <a target='_blank' href=%s>aqui</a> para ver o produto." % (form.title.data, url_for("product", product_id=product.id)), "success")
+            flash(
+                "Produto \"%s\" foi adicionado com sucesso. Clique <a target='_blank' href=%s>aqui</a> para ver o produto." % (
+                form.title.data, url_for("product", product_id=product.id)), "success")
             return redirect(url_for("admin_add_product"))
         except Exception as e:
             db_manager.rollback()
@@ -139,7 +144,7 @@ def admin_edit_product(product_id):
         try:
             product = db_manager.get_product(product_id)
             if not product:
-                raise InvalidUrlParamError()
+                raise InvalidUrlArgError()
 
             form.add_choices()
 
@@ -154,7 +159,7 @@ def admin_edit_product(product_id):
         try:
             product = db_manager.get_product(product_id)
             if not product:
-                raise InvalidUrlParamError()
+                raise InvalidUrlArgError()
 
             form.add_choices()
 
@@ -169,45 +174,45 @@ def admin_edit_product(product_id):
             if subcategory_id == 0:
                 subcategory_id = None
 
-            product.title=form.title.data,
-            product.category_id=category_id,
-            product.subcategory_id=subcategory_id,
-            product.price=Decimal(form.price.data.replace(',', '.')),
-            product.stock_quantity=int(form.stock_quantity.data),
-            product.stop_sell_stock_quantity=int(form.stop_sell_stock_quantity.data)
-            product.summary=form.summary.data,
+            product.title = form.title.data,
+            product.category_id = category_id,
+            product.subcategory_id = subcategory_id,
+            product.price = Decimal(form.price.data.replace(',', '.')),
+            product.stock_quantity = int(form.stock_quantity.data),
+            product.stop_sell_stock_quantity = int(form.stop_sell_stock_quantity.data)
+            product.summary = form.summary.data,
 
-            product.image_1=form.image_1.data,
-            product.image_2=form.image_2.data,
-            product.image_3=form.image_3.data,
-            product.image_4=form.image_4.data,
-            product.image_5=form.image_5.data,
-            product.image_6=form.image_6.data,
-            product.image_7=form.image_7.data,
-            product.image_8=form.image_8.data,
-            product.image_9=form.image_9.data,
-            product.image_10=form.image_10.data,
+            product.image_1 = form.image_1.data,
+            product.image_2 = form.image_2.data,
+            product.image_3 = form.image_3.data,
+            product.image_4 = form.image_4.data,
+            product.image_5 = form.image_5.data,
+            product.image_6 = form.image_6.data,
+            product.image_7 = form.image_7.data,
+            product.image_8 = form.image_8.data,
+            product.image_9 = form.image_9.data,
+            product.image_10 = form.image_10.data,
 
-            product.tab_1_title=form.tab_1_title.data,
-            product.tab_1_content=form.tab_1_content.data,
-            product.tab_2_title=form.tab_2_title.data,
-            product.tab_2_content=form.tab_2_content.data,
-            product.tab_3_title=form.tab_3_title.data,
-            product.tab_3_content=form.tab_3_content.data,
-            product.tab_4_title=form.tab_4_title.data,
-            product.tab_4_content=form.tab_4_content.data,
-            product.tab_5_title=form.tab_5_title.data,
-            product.tab_5_content=form.tab_5_content.data,
-            product.tab_6_title=form.tab_6_title.data,
-            product.tab_6_content=form.tab_6_content.data,
-            product.tab_7_title=form.tab_7_title.data,
-            product.tab_7_content=form.tab_7_content.data,
-            product.tab_8_title=form.tab_8_title.data,
-            product.tab_8_content=form.tab_8_content.data,
-            product.tab_9_title=form.tab_9_title.data,
-            product.tab_9_content=form.tab_9_content.data,
-            product.tab_10_title=form.tab_10_title.data,
-            product.tab_10_content=form.tab_10_content.data,
+            product.tab_1_title = form.tab_1_title.data,
+            product.tab_1_content = form.tab_1_content.data,
+            product.tab_2_title = form.tab_2_title.data,
+            product.tab_2_content = form.tab_2_content.data,
+            product.tab_3_title = form.tab_3_title.data,
+            product.tab_3_content = form.tab_3_content.data,
+            product.tab_4_title = form.tab_4_title.data,
+            product.tab_4_content = form.tab_4_content.data,
+            product.tab_5_title = form.tab_5_title.data,
+            product.tab_5_content = form.tab_5_content.data,
+            product.tab_6_title = form.tab_6_title.data,
+            product.tab_6_content = form.tab_6_content.data,
+            product.tab_7_title = form.tab_7_title.data,
+            product.tab_7_content = form.tab_7_content.data,
+            product.tab_8_title = form.tab_8_title.data,
+            product.tab_8_content = form.tab_8_content.data,
+            product.tab_9_title = form.tab_9_title.data,
+            product.tab_9_content = form.tab_9_content.data,
+            product.tab_10_title = form.tab_10_title.data,
+            product.tab_10_content = form.tab_10_content.data,
 
             db_manager.add(product)
             db_manager.commit()
@@ -314,14 +319,13 @@ def admin_remove_product(product_id):
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
-            raise InvalidUrlParamError("Product not found")
+            raise InvalidUrlArgError("Product not found")
 
         product.active = False
         db_manager.add(product)
         db_manager.commit()
 
-        flash("Produto #%s \"%s\" foi removido." % (product.id, product.title), "success")
-        return redirect(url_for("admin_products", **url_args))
+        return "", 204
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -352,14 +356,13 @@ def admin_reactivate_product(product_id):
         product = db_manager.get_product(product_id=product_id)
 
         if not product:
-            raise InvalidUrlParamError("Product not found")
+            raise InvalidUrlArgError("Product not found")
 
         product.active = True
         db_manager.add(product)
         db_manager.commit()
 
-        flash("Produto #%s \"%s\" foi reativado." % (product.id, product.title), "success")
-        return redirect(url_for("admin_products", **url_args))
+        return "", 204
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -539,7 +542,7 @@ def admin_edit_product_category(category_id):
             category = db_manager.get_category(category_id=category_id)
 
             if not category:
-                raise InvalidUrlParamError("Category not found")
+                raise InvalidUrlArgError("Category not found")
 
             category.name = form.category.data
             db_manager.add(category)
@@ -553,37 +556,56 @@ def admin_edit_product_category(category_id):
             abort(500)
 
 
-@app.route('/painel-administrativo/remover-categoria-de-produto/<int:category_id>', methods=['POST'])
+@app.route('/painel-administrativo/desativar-categoria-de-produto/<int:category_id>', methods=['POST'])
 @login_required
 @admin
 @log_route
-def admin_remove_product_category(category_id):
-    remove_form = SimpleSubmitForm()
+def admin_disable_product_category(category_id):
+    disable_form = SimpleSubmitForm()
 
     try:
-        # Getting optional parameters
-        url_args = request.args.get('url_args')
-
-        # Setting default value to optional parameters
-        # Converting optional parameters from string type to its corresponded python type
-        if not url_args:
-            url_args = {}
-        else:
-            url_args = ast.literal_eval(url_args)
-
-        if not remove_form.validate_on_submit():
+        if not disable_form.validate_on_submit():
             raise InsecurePostException()
 
         category = db_manager.get_category(category_id=category_id)
 
         if not category:
-            raise InvalidUrlParamError("Category not found")
+            raise InvalidUrlArgError("Category not found")
 
-        db_manager.delete(category)
+        category.active = False
+
+        db_manager.add(category)
         db_manager.commit()
 
-        flash("Categoria #%s \"%s\" foi removida com sucesso." % (category.id, category.name), "success")
-        return redirect(url_for("admin_product_categories", **url_args))
+        return "", 204
+    except Exception as e:
+        db_manager.rollback()
+        log_unrecognized_exception(e)
+        abort(500)
+
+
+@app.route('/painel-administrativo/ativar-categoria-de-produto/<int:category_id>', methods=['POST'])
+@login_required
+@admin
+@log_route
+def admin_activate_product_category(category_id):
+    activate_form = SimpleSubmitForm()
+
+    try:
+        if not activate_form.validate_on_submit():
+            raise InsecurePostException()
+
+        category = db_manager.get_category(category_id=category_id)
+
+        if not category:
+            raise InvalidUrlArgError("Category not found")
+
+        category.active = True
+
+        db_manager.add(category)
+        db_manager.commit()
+
+        return "", 204
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
@@ -595,13 +617,32 @@ def admin_remove_product_category(category_id):
 @admin
 @log_route
 def admin_product_categories(page):
-    remove_form = SimpleSubmitForm()
-    url_args = {
-        "page": page
-    }
+    simple_submit_form = SimpleSubmitForm()
+    filter_form = CategoryFilterForm()
 
     try:
-        data = categories_data_provider.get_data(page=page, remove_form=remove_form, url_args=url_args)
+        # Getting optional parameters
+        active = request.args.get('active')
+
+        # Setting default value to optional parameters
+        if not active:
+            active = "True"
+
+        url_args = {
+            "active": active,
+            "page": page,
+        }
+
+        # Converting query parameters from string type to his respective python type
+        active = ast.literal_eval(active)
+
+        data = categories_data_provider.get_data(
+            page=page,
+            filter_form=filter_form,
+            simple_submit_form=simple_submit_form,
+            url_args=url_args,
+            active=active
+        )
         return render_template("admin/products/categories.html", data=data)
     except Exception as e:
         log_unrecognized_exception(e)
@@ -672,7 +713,7 @@ def admin_edit_product_subcategory(subcategory_id):
         try:
             subcategory = db_manager.get_subcategory(subcategory_id)
             if not subcategory:
-                raise InvalidUrlParamError()
+                raise InvalidUrlArgError()
 
             form.add_category_choices()
 
@@ -687,7 +728,7 @@ def admin_edit_product_subcategory(subcategory_id):
         try:
             subcategory = db_manager.get_subcategory(subcategory_id)
             if not subcategory:
-                raise InvalidUrlParamError()
+                raise InvalidUrlArgError()
 
             form.add_category_choices()
 
@@ -732,7 +773,7 @@ def admin_remove_product_subcategory(subcategory_id):
         subcategory = db_manager.get_subcategory(subcategory_id=subcategory_id)
 
         if not subcategory:
-            raise InvalidUrlParamError("Subcategory not found")
+            raise InvalidUrlArgError("Subcategory not found")
 
         db_manager.delete(subcategory)
         db_manager.commit()
@@ -774,7 +815,7 @@ def admin_product_subcategories(page):
 
         data = subcategories_data_provider.get_data(
             page=page,
-            remove_form=remove_form,
+            disable_form=remove_form,
             filter_category_form=filter_category_form,
             category_id=category_id,
             url_args=url_args)

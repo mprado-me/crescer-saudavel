@@ -1,0 +1,13 @@
+<form id="disable-category-{{ data.category_id }}" row="{{ data.row }}" category_id="{{ data.category_id }}"
+      class="disable-category"
+      action="{{ url_for('admin_disable_product_category', category_id=data.category_id) }}" method=post>
+    {{ data.simple_submit_form.csrf_token }}
+    <input class="btn btn-default category action" type=submit value="Desativar categoria">
+</form>
+<form id="activate-category-{{ data.category_id }}" row="{{ data.row }}" category_id="{{ data.category_id }}"
+      class="activate-category"
+      action="{{ url_for('admin_activate_product_category', category_id=data.category_id) }}"
+      method=post>
+    {{ data.simple_submit_form.csrf_token }}
+    <input class="btn btn-default category action" type=submit value="Ativar categoria">
+</form>

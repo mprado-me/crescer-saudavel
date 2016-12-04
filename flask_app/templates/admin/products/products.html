@@ -18,6 +18,21 @@
 {% block scripts %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/super_table.js' ) }}"></script>
     <script>
+        {% for col in data.super_table_data.table_data.cols %}
+            {% if col.id == "actions" %}
+                {% set actions_idx = loop.index0 %}
+                {% for row in data.super_table_data.table_data.rows %}
+                    {% set actions_data = row[actions_idx].data %}
+                    {% if actions_data.product_active %}
+                        $("#reactivate-product-{0}".f({{ actions_data.product_id }})).hide();
+                    {% else %}
+                        $("#desactivate-product-{0}".f({{ actions_data.product_id }})).hide();
+                        $("#row-{0}".f({{ loop.index0 }})).addClass("inactive");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
         $("form.add-to-stock").each(function () {
             var form = $(this);
             var stockQuantityInput = form.find("input[type='number']");
@@ -116,21 +131,6 @@
                 }
             })
         });
-
-        {% for col in data.super_table_data.table_data.cols %}
-            {% if col.id == "actions" %}
-                {% set actions_idx = loop.index0 %}
-                {% for row in data.super_table_data.table_data.rows %}
-                    {% set actions_data = row[actions_idx].data %}
-                    {% if actions_data.product_active %}
-                        $("#reactivate-product-{0}".f({{ actions_data.product_id }})).hide();
-                    {% else %}
-                        $("#desactivate-product-{0}".f({{ actions_data.product_id }})).hide();
-                        $("#row-{0}".f({{ loop.index0 }})).addClass("inactive");
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
 
         $("form.desactivate-product").each(function () {
             var form = $(this);

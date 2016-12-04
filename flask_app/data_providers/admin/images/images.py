@@ -33,7 +33,7 @@ class ImagesDataProvider:
         range = Utils.get_page_range(page=page, n_items=n_items, per_page=per_page)
         sliced_images_name = all_images_name[range[0]:range[1]]
 
-        data = {
+        return {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.images),
             "super_table_data": {
                 "n_items": n_items,
@@ -46,19 +46,17 @@ class ImagesDataProvider:
                 "table_data": self.get_table_data(
                     images_name=sliced_images_name,
                     remove_form=remove_form,
-                    url_args=url_args
                 ),
                 "empty_msg": "Nenhuma imagem foi encontrada.",
             },
         }
-        return data
 
     def get_images_name_sorted(self):
         all_images_name = os.listdir(app.config["UPLOADED_IMAGES_FOLDER"])
         all_images_name.sort()
         return all_images_name
 
-    def get_table_data(self, images_name, remove_form, url_args):
+    def get_table_data(self, images_name, remove_form):
         rows = []
         for idx, image_name in enumerate(images_name):
             rows.append([
@@ -75,7 +73,6 @@ class ImagesDataProvider:
                         "image_name": image_name,
                         "remove_form": remove_form,
                         "row": idx,
-                        "url_args": url_args
                     }
                 }
             ])

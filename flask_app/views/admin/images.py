@@ -84,20 +84,7 @@ def admin_images(page):
 def admin_remove_image(image_name):
     remove_form = SimpleSubmitForm()
 
-    # if random.uniform(0,1) < 0.5:
-    #     return ("", 500)
-
     try:
-        # Getting optional parameters
-        url_args = request.args.get('url_args')
-
-        # Setting default value to optional parameters
-        # Converting optional parameters from string type to its corresponded python type
-        if not url_args:
-            url_args = {}
-        else:
-            url_args = ast.literal_eval(url_args)
-
         if not remove_form.validate_on_submit():
             raise InsecurePostException()
 
@@ -105,9 +92,7 @@ def admin_remove_image(image_name):
         if os.path.exists(file_path):
             os.remove(file_path)
 
-        flash("Imagem \"%s\" foi removida com sucesso." % image_name, "success")
         return ('', 204)
-        # return redirect(url_for("admin_images", **url_args))
     except Exception as e:
         log_unrecognized_exception(e)
         return ("", 500)

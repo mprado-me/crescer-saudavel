@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import math
+from flask import url_for
+from sqlalchemy import asc
 
+from flask_app.utils.utils import Utils
 from flask_app import app
 
 from flask_app.data_providers.admin.shared.navbar import navbar_data_provider
@@ -43,43 +45,97 @@ class CategoriesDataProvider():
         }
         return data
 
-    def get_data(self, page, remove_form, url_args):
-        all_categories = self.get_categories_sorted()
+    def get_data(self, page, simple_submit_form, filter_form, url_args, active):
+        q = self.get_filtered_query(active=active)
+        q = q.order_by(asc(Category.name))
 
-        empty = False
-        if len(all_categories) == 0:
-            empty = True
+        n_items = q.count()
 
-        total_n_pages = int(math.ceil(float(len(all_categories)) / app.config["DEFAULT_N_ITEMS_PER_PAGE"]))
-        total_n_pages = max(1, total_n_pages)
+        per_page = app.config["ADMIN_N_CATEGORIES_PER_PAGE"]
 
-        # page between 1 and total_n_pages
-        page = max(1, page)
-        page = min(total_n_pages, page)
+        filter_form.active.data = str(url_args["active"])
 
-        first = (page - 1) * app.config["DEFAULT_N_ITEMS_PER_PAGE"]
-        last_plus_one = first + app.config["DEFAULT_N_ITEMS_PER_PAGE"]
-
-        data = {
-            "url_args": url_args,
-            "remove_form": remove_form,
-            "empty": empty,
-            "page": page,
+        return {
             "navbar_data": navbar_data_provider.get_data(active_tab_name=NavbarTabNames.products),
-            "paginator_data": paginator_data_provider.get_data(
-                page=page,
-                n_pages=app.config["DEFAULT_PAGINATOR_SIZE"],
-                total_n_pages=total_n_pages,
-                url_endpoint="admin_product_categories",
-                url_args={
-                }
-            ),
-            "categories": all_categories[first:last_plus_one],
+            "super_table_data": {
+                "filter_data": {
+                    "form": filter_form,
+                    "action": url_for("admin_product_categories", **(Utils.new_merged_dic(url_args, {"page": 1}))),
+                    "n_items": n_items
+                },
+                "paginator_data": paginator_data_provider.get_data(
+                    page=page,
+                    n_items=n_items,
+                    per_page=per_page,
+                    url_endpoint="admin_product_categories",
+                    url_args=url_args
+                ),
+                "table_data": self.get_table_data(
+                    categories=q.slice(*Utils.get_page_range(
+                        page=page,
+                        n_items=n_items,
+                        per_page=per_page)).all(),
+                    simple_submit_form=simple_submit_form
+                ),
+                "empty_msg": "Nenhuma categoria de produto foi encontrada.",
+            },
         }
-        return data
 
     def get_categories_sorted(self):
         return Category.query.order_by(Category.name).all()
+
+    def get_table_data(self, categories, simple_submit_form):
+        rows = []
+        for idx, category in enumerate(categories):
+            rows.append([
+                "#" + str(category.id),
+                category.active,
+                category.name,
+                {
+                    "file_path": "admin/products/category_actions.html",
+                    "data": {
+                        "category_id": category.id,
+                        "category_active": category.active,
+                        "simple_submit_form": simple_submit_form,
+                        "row": idx,
+                    }
+                }
+            ])
+
+        return {
+            "id": "categories-table",
+            "settings": {
+                "vertical_align_middle": True,
+            },
+            "cols": [
+                {
+                    "id": "id",
+                    "title": "Id",
+                },
+                {
+                    "id": "active",
+                    "title": "Ativa",
+                    "type": "bool"
+                },
+                {
+                    "id": "name",
+                    "title": "Nome",
+                },
+                {
+                    "id": "actions",
+                    "type": "actions",
+                    "expandable": False,
+                },
+            ],
+            "rows": rows,
+        }
+
+    def get_filtered_query(self, active):
+        q = Category.query
+
+        q = q.filter(Category.active == active)
+
+        return q
 
 
 categories_data_provider = CategoriesDataProvider()

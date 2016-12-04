@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, random, shutil, string
+import os, random, shutil, string, time
 
 from decimal import Decimal
 
@@ -65,7 +65,9 @@ if app.config["DEBUG"]:
     def restart_db():
         try:
             clear_db_implementation()
+            time.sleep(0.1)
             create_db_implementation()
+            time.sleep(0.1)
             fill_db_implementation()
             return redirect(url_for("admin_dashboard"))
         except Exception as e:

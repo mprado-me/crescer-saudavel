@@ -38,10 +38,10 @@ class InvalidParamError(Exception):
         log_exception(name="InvalidParamError", message=message)
 
 
-class InvalidUrlParamError(Exception):
+class InvalidUrlArgError(Exception):
     def __init__(self, message=""):
-        super(InvalidUrlParamError, self).__init__(message)
-        log_exception(name="InvalidUrlParamError", message=message)
+        super(InvalidUrlArgError, self).__init__(message)
+        log_exception(name="InvalidUrlArgError", message=message)
 
 
 class InvalidFormError(Exception):

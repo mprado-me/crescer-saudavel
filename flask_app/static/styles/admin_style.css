@@ -355,3 +355,7 @@ td.vertical-align-middle {
 .without-filter.total-items {
     margin-bottom: 0;
 }
+
+.btn.category.action {
+    width: 145px;
+}

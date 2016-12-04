@@ -34,6 +34,16 @@ class AddCategoryForm(CategoryForm):
 
 class EditCategoryForm(CategoryForm):
     edit = SubmitField(label="Editar")
+
+
+class CategoryFilterForm(FlaskForm):
+    active = SelectField(
+        label="Status da categoria",
+        choices=[("True", "Ativa"), ("False", "Inativa")],
+        validators=[
+            DataRequired(message=error_msg_provider.data_required())
+        ])
+    filter = SubmitField(label="Filtrar")
 # Category -- end --
 
 # Subcategory -- begin --
