@@ -177,7 +177,7 @@ input.stock-amount {
     width: 100%;
 }
 
-table .btn.action {
+table .btn.expand-actions {
     width: 130px;
     float: right;
 }
@@ -204,10 +204,6 @@ table .btn.action {
 
 .actions-container > a.last,form.last {
     margin-bottom: 0;
-}
-
-.hidden {
-    display: none;
 }
 
 .table {

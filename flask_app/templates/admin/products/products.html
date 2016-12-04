@@ -18,21 +18,6 @@
 {% block scripts %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/super_table.js' ) }}"></script>
     <script>
-        {% for col in data.super_table_data.table_data.cols %}
-            {% if col.id == "actions" %}
-                {% set actions_idx = loop.index0 %}
-                {% for row in data.super_table_data.table_data.rows %}
-                    {% set actions_data = row[actions_idx].data %}
-                    {% if actions_data.product_active %}
-                        $("#reactivate-product-{0}".f({{ actions_data.product_id }})).hide();
-                    {% else %}
-                        $("#desactivate-product-{0}".f({{ actions_data.product_id }})).hide();
-                        $("#row-{0}".f({{ loop.index0 }})).addClass("inactive");
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
-
         $("form.add-to-stock").each(function () {
             var form = $(this);
             var stockQuantityInput = form.find("input[type='number']");
@@ -132,7 +117,7 @@
             })
         });
 
-        $("form.desactivate-product").each(function () {
+        $("form.disable-product").each(function () {
             var form = $(this);
             var submitInput = form.find("input[type='submit']");
             setAjaxFormHandlers({
@@ -146,7 +131,7 @@
                     $("#row-{0}".f(form.attr("row_idx"))).addClass("inactive");
                     form.hide();
                     updateTableData("active", form.attr("row_idx"), "{{ macros.get_bool_glyphicon(False) }}");
-                    $("#reactivate-product-{0}".f(form.attr("product_id"))).show();
+                    $("#activate-product-{0}".f(form.attr("product_id"))).show();
                     throwSuccessOpToast('O produto #{0} foi desativado com sucesso.'.f(form.attr("product_id")));
                 },
                 error: function () {
@@ -159,7 +144,7 @@
             })
         });
 
-        $("form.reactivate-product").each(function () {
+        $("form.activate-product").each(function () {
             var form = $(this);
             var submitInput = form.find("input[type='submit']");
             setAjaxFormHandlers({
@@ -167,21 +152,21 @@
                 minResponseTime: DEFAULT_RESPONSE_TIME,
                 submit: function () {
                     submitInput.prop("disabled", true);
-                    submitInput.attr("value", "Reativando...");
+                    submitInput.attr("value", "Ativando...");
                 },
                 success: function () {
                     $("#row-{0}".f(form.attr("row_idx"))).removeClass("inactive");
                     form.hide();
                     updateTableData("active", form.attr("row_idx"), "{{ macros.get_bool_glyphicon(True) }}");
-                    $("#desactivate-product-{0}".f(form.attr("product_id"))).show();
-                    throwSuccessOpToast('O produto #{0} foi reativado com sucesso.'.f(form.attr("product_id")));
+                    $("#disable-product-{0}".f(form.attr("product_id"))).show();
+                    throwSuccessOpToast('O produto #{0} foi ativado com sucesso.'.f(form.attr("product_id")));
                 },
                 error: function () {
-                    throwErrorOpToast('Ocorreu uma falha ao reativar o produto #{0}. Tente novamente.'.f(form.attr("product_id")));
+                    throwErrorOpToast('Ocorreu uma falha ao ativar o produto #{0}. Tente novamente.'.f(form.attr("product_id")));
                 },
                 complete: function () {
                     submitInput.prop("disabled", false);
-                    submitInput.attr("value", "Reativar produto");
+                    submitInput.attr("value", "Ativar produto");
                 }
             })
         })

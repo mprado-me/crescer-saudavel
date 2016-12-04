@@ -190,7 +190,7 @@ class ProductsDataProvider():
                 product.min_stock,
                 product.sales_number,
                 {
-                    "file_path": "admin/products/actions.html",
+                    "file_path": "admin/products/product_actions.html",
                     "data": {
                         "product_id": product.id,
                         "product_active": product.active,

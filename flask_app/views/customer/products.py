@@ -7,7 +7,7 @@ from flask_app.data_providers.customer.products.product import product_data_prov
 from flask_app.data_providers.customer.products.products import products_data_provider
 from flask_app import app
 from flask_app.utils.decorators import log_route
-from flask_app.utils.exceptions import InvalidQueryParamError, log_unrecognized_exception
+from flask_app.utils.exceptions import InvalidQueryArgError, log_unrecognized_exception
 from flask_app.utils.query_params_validators import ValidCategoryIdSubcategoryId
 
 
@@ -39,7 +39,7 @@ def products(page, sort_method):
             category_id=category_id,
             subcategory_id=subcategory_id)
         return render_template('customer/products/products.html', data=data)
-    except InvalidQueryParamError:
+    except InvalidQueryArgError:
         abort(404)
     except Exception as e:
         log_unrecognized_exception(e)

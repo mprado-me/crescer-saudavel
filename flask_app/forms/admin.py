@@ -68,8 +68,16 @@ class EditSubcategoryForm(SubcategoryForm):
     edit = SubmitField(label="Editar")
 
 
-class FilterCategoryForm(FlaskForm):
-    category_id = SelectField(label="Categoria", coerce=int)
+class FilterSubcategoryForm(FlaskForm):
+    category_id = SelectField(label="Categoria", coerce=int, validators=[
+        DataRequired(error_msg_provider.data_required())
+    ])
+    active = SelectField(
+        label="Status da categoria",
+        choices=[("True", "Ativa"), ("False", "Inativa")],
+        validators=[
+            DataRequired(message=error_msg_provider.data_required())
+        ])
     filter = SubmitField(label="Filtrar")
 
     def add_category_choices(self):

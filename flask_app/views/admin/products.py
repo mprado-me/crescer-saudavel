@@ -17,8 +17,8 @@ from flask_app.data_providers.admin.products.products import products_data_provi
 from flask_app.data_providers.admin.products.subcategories import subcategories_data_provider
 
 from flask_app.forms.admin import StockOperationForm, AddSubcategoryForm, AddCategoryForm, AddProductForm, \
-    EditSubcategoryForm, EditCategoryForm, EditProductForm, FilterProductForm, FilterCategoryForm, SimpleSubmitForm, \
-    CategoryFilterForm
+    EditSubcategoryForm, EditCategoryForm, EditProductForm, FilterProductForm, SimpleSubmitForm, \
+    CategoryFilterForm, FilterSubcategoryForm
 
 from flask_app.models.category import Category
 from flask_app.models.product import Product
@@ -27,7 +27,7 @@ from flask_app.models.subcategory import Subcategory
 from flask_app.utils.db_manager import db_manager
 from flask_app.utils.decorators import admin, log_route
 from flask_app.utils.enums import AdminProductsSortMethod
-from flask_app.utils.exceptions import InsecurePostException, InvalidQueryParamError, InvalidUrlArgError, \
+from flask_app.utils.exceptions import InsecurePostException,  InvalidUrlArgError, \
     log_unrecognized_exception
 from flask_app.utils.string import String
 
@@ -299,20 +299,10 @@ def admin_products(page):
 @login_required
 @admin
 @log_route
-def admin_remove_product(product_id):
+def admin_disable_product(product_id):
     remove_form = SimpleSubmitForm()
 
     try:
-        # Getting optional parameters
-        url_args = request.args.get('url_args')
-
-        # Setting default value to optional parameters
-        # Converting optional parameters from string type to its corresponded python type
-        if not url_args:
-            url_args = {}
-        else:
-            url_args = ast.literal_eval(url_args)
-
         if not remove_form.validate_on_submit():
             return "", 422
 
@@ -336,20 +326,10 @@ def admin_remove_product(product_id):
 @login_required
 @admin
 @log_route
-def admin_reactivate_product(product_id):
+def admin_activate_product(product_id):
     reactivate_form = SimpleSubmitForm()
 
     try:
-        # Getting optional parameters
-        url_args = request.args.get('url_args')
-
-        # Setting default value to optional parameters
-        # Converting optional parameters from string type to its corresponded python type
-        if not url_args:
-            url_args = {}
-        else:
-            url_args = ast.literal_eval(url_args)
-
         if not reactivate_form.validate_on_submit():
             raise InsecurePostException()
 
@@ -749,25 +729,15 @@ def admin_edit_product_subcategory(subcategory_id):
             abort(500)
 
 
-@app.route('/painel-administrativo/remover-subcategoria-de-produto/<int:subcategory_id>', methods=['POST'])
+@app.route('/painel-administrativo/desativar-subcategoria-de-produto/<int:subcategory_id>', methods=['POST'])
 @login_required
 @admin
 @log_route
-def admin_remove_product_subcategory(subcategory_id):
-    remove_form = SimpleSubmitForm()
+def admin_disable_product_subcategory(subcategory_id):
+    simple_submit_form = SimpleSubmitForm()
 
     try:
-        # Getting optional parameters
-        url_args = request.args.get('url_args')
-
-        # Setting default value to optional parameters
-        # Converting optional parameters from string type to its corresponded python type
-        if not url_args:
-            url_args = {}
-        else:
-            url_args = ast.literal_eval(url_args)
-
-        if not remove_form.validate_on_submit():
+        if not simple_submit_form.validate_on_submit():
             raise InsecurePostException()
 
         subcategory = db_manager.get_subcategory(subcategory_id=subcategory_id)
@@ -775,15 +745,44 @@ def admin_remove_product_subcategory(subcategory_id):
         if not subcategory:
             raise InvalidUrlArgError("Subcategory not found")
 
-        db_manager.delete(subcategory)
+        subcategory.active = False
+
+        db_manager.add(subcategory)
         db_manager.commit()
 
-        flash("Subcategoria #%s \"%s\" foi removida com sucesso." % (subcategory.id, subcategory.name), "success")
-        return redirect(url_for("admin_product_subcategories", **url_args))
+        return "", 204
     except Exception as e:
         db_manager.rollback()
         log_unrecognized_exception(e)
-        abort(500)
+        return "", 500
+
+
+@app.route('/painel-administrativo/ativar-subcategoria-de-produto/<int:subcategory_id>', methods=['POST'])
+@login_required
+@admin
+@log_route
+def admin_activate_product_subcategory(subcategory_id):
+    simple_submit_form = SimpleSubmitForm()
+
+    try:
+        if not simple_submit_form.validate_on_submit():
+            raise InsecurePostException()
+
+        subcategory = db_manager.get_subcategory(subcategory_id=subcategory_id)
+
+        if not subcategory:
+            raise InvalidUrlArgError("Subcategory not found")
+
+        subcategory.active = True
+
+        db_manager.add(subcategory)
+        db_manager.commit()
+
+        return "", 204
+    except Exception as e:
+        db_manager.rollback()
+        log_unrecognized_exception(e)
+        return "", 500
 
 
 @app.route('/painel-administrativo/subcategorias-de-produto/pagina/<int:page>')
@@ -791,33 +790,38 @@ def admin_remove_product_subcategory(subcategory_id):
 @admin
 @log_route
 def admin_product_subcategories(page):
-    filter_category_form = FilterCategoryForm()
-    remove_form = SimpleSubmitForm()
+    filter_subcategory_form = FilterSubcategoryForm()
+    simple_submit_form = SimpleSubmitForm()
 
     try:
         # Getting optional parameters
         category_id = request.args.get('category_id')
+        active = request.args.get('active')
 
         # Setting default value to optional parameters
-        try:
-            category_id_as_int = int(category_id)
-            if category_id_as_int <= 0:
-                raise InvalidQueryParamError()
-        except Exception:
-            category_id = None
+        if not category_id:
+            category_id = "0"
+        if not active:
+            active = "True"
 
         url_args = {
             "page": page,
-            "category_id": category_id
+            "category_id": category_id,
+            "active": active,
         }
 
-        filter_category_form.add_category_choices()
+        # Converting query parameters from string type to his respective python type
+        category_id = int(category_id)
+        active = ast.literal_eval(active)
+
+        filter_subcategory_form.add_category_choices()
 
         data = subcategories_data_provider.get_data(
             page=page,
-            disable_form=remove_form,
-            filter_category_form=filter_category_form,
+            simple_submit_form=simple_submit_form,
+            filter_subcategory_form=filter_subcategory_form,
             category_id=category_id,
+            active=active,
             url_args=url_args)
         return render_template("admin/products/subcategories.html", data=data)
     except Exception as e:

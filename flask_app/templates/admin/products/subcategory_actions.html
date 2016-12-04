@@ -1,0 +1,23 @@
+{% import "shared/macros.html" as macros %}
+
+<div class="actions-container subcategory">
+    <a class="btn btn-default"
+       href="{{ url_for('admin_edit_product_subcategory', subcategory_id=data.subcategory_id, url_args=data.url_args) }}">Editar
+        subcategoria</a>
+    <form id="disable-subcategory-{{ data.subcategory_id }}" row="{{ data.row }}"
+          subcategory_id="{{ data.subcategory_id }}"
+          class="disable-subcategory last"
+          action="{{ url_for('admin_disable_product_subcategory', subcategory_id=data.subcategory_id) }}" method=post
+          style="{{ macros.get_display_none_if(not data.subcategory_active) }}">
+        {{ data.simple_submit_form.csrf_token }}
+        <input class="btn btn-default subcategory action" type=submit value="Desativar subcategoria">
+    </form>
+    <form id="activate-subcategory-{{ data.subcategory_id }}" row="{{ data.row }}"
+          subcategory_id="{{ data.subcategory_id }}"
+          class="activate-subcategory last"
+          action="{{ url_for('admin_activate_product_subcategory', subcategory_id=data.subcategory_id) }}"
+          method=post style="{{ macros.get_display_none_if(data.subcategory_active) }}">
+        {{ data.simple_submit_form.csrf_token }}
+        <input class="btn btn-default subcategory action" type=submit value="Ativar subcategoria">
+    </form>
+</div>

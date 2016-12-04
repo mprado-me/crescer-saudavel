@@ -45,7 +45,7 @@
             <tbody>
             {% for row in data.table_data.rows %}
                 {% set row_idx = loop.index0 %}
-                <tr id="row-{{ row_idx }}">
+                <tr id="row-{{ row_idx }}" class="{{ macros.get_if_row_is_inactive('inactive', data.table_data.cols, row) }}">
                     {% for td in row %}
                         {% set vertical_align_middle = data.table_data|ignore_undefined("settings.vertical_align_middle") %}
 {#                        {% set vertical_align_middle = data|attr("table_data")|attr("settings")|attr("vertical_align_middle") %}#}
@@ -55,7 +55,7 @@
                             {% if col_type == "actions" %}
                                 {% set expandable=data.table_data.cols[loop.index0].expandable %}
                                 {% if expandable %}
-                                    <button class="btn btn-default action" type="button" id="action-btn-{{ row_idx }}"
+                                    <button class="btn btn-default expand-actions" type="button" id="action-btn-{{ row_idx }}"
                                             target_id="collapsible-row-{{ row_idx }}">
                                         Exibir ações <span class="glyphicon glyphicon-menu-down"></span>
                                     </button>

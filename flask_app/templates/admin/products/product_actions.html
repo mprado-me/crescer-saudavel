@@ -44,15 +44,18 @@
                       </span>
         </div>
     </form>
-    <form id="desactivate-product-{{ data.product_id }}" row_idx="{{ row_idx }}" product_id="{{ data.product_id }}" class="desactivate-product last"
-          action="{{ url_for('admin_remove_product', product_id=data.product_id) }}" method=post>
+    <form id="disable-product-{{ data.product_id }}" row_idx="{{ row_idx }}" product_id="{{ data.product_id }}"
+          class="disable-product last"
+          action="{{ url_for('admin_disable_product', product_id=data.product_id) }}" method=post
+          style="{{ macros.get_display_none_if(not data.product_active) }}">
         {{ data["simple_submit_form"].csrf_token }}
         <input class="btn btn-default" type=submit value="Desativar produto">
     </form>
-    <form id="reactivate-product-{{ data.product_id }}" row_idx="{{ row_idx }}" product_id="{{ data.product_id }}" class="reactivate-product"
-          action="{{ url_for('admin_reactivate_product', product_id=data.product_id) }}"
-          method=post>
+    <form id="activate-product-{{ data.product_id }}" row_idx="{{ row_idx }}" product_id="{{ data.product_id }}"
+          class="activate-product"
+          action="{{ url_for('admin_activate_product', product_id=data.product_id) }}"
+          method=post style="{{ macros.get_display_none_if(data.product_active) }}">
         {{ data["simple_submit_form"].csrf_token }}
-        <input class="btn btn-default" type=submit value="Reativar produto">
+        <input class="btn btn-default" type=submit value="Ativar produto">
     </form>
 {% endblock %}

@@ -26,10 +26,10 @@ class InsecurePostException(Exception):
         log_exception(name="InsecurePostException", message=message)
 
 
-class InvalidQueryParamError(Exception):
+class InvalidQueryArgError(Exception):
     def __init__(self, message=""):
-        super(InvalidQueryParamError, self).__init__(message)
-        log_exception(name="InvalidQueryParamError", message=message)
+        super(InvalidQueryArgError, self).__init__(message)
+        log_exception(name="InvalidQueryArgError", message=message)
 
 
 class InvalidParamError(Exception):

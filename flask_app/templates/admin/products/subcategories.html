@@ -1,73 +1,81 @@
 {% extends "admin/shared/base.html" %}
 
-{% block title %}Subcategorias de produto{% endblock %}
+{% import "shared/macros.html" as macros %}
+
+{% block title %}
+    Subcategorias de produto
+{% endblock %}
+{% block title_right_link %}
+    <a href="{{ url_for('admin_add_product_subcategory') }}">+ Adicionar</a>
+{% endblock %}
 
 {% block content %}
-  <a href="{{url_for('admin_add_product_subcategory')}}">Adicionar nova subcategoria</a>
-  <div class="br-8px"></div>
-
-  <div class="jumbotron filter">
-    <form action="{{url_for('admin_product_subcategories', page=1)}}" method=get enctype=multipart/form-data>
-      {% with form = data["filter_category_form"] %}
-        {% include "admin/shared/form-fields.html" %}
-      {% endwith %}
-    </form>
-  </div>
-
-  {% if not data["empty"] %}
-    {% with data=data["paginator_data"] %}
-      {% include "shared/paginator.html" %}
+    {% with data=data.super_table_data %}
+        {% include "admin/shared/super_table.html" %}
     {% endwith %}
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Id (Categoria)</th>
-          <th>Nome (Categoria)</th>
-          <th>Id (Subcategoria)</th>
-          <th>Nome (Subcategoria)</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for subcategory in data["subcategories"] %}
-          <tr>
-            <td>#{{subcategory.category.id}}</td>
-            <td>{{subcategory.category.name}}</td>
-            <td>#{{subcategory.id}}</td>
-            <td>{{subcategory.name}}</td>
-            <td>
-              <ul class="table-action-ul">
-                <li>
-                  <a href="{{url_for('admin_edit_product_subcategory', subcategory_id=subcategory.id, url_args=data.url_args)}}">Editar</a>
-                </li>
-                <li>
-                  <form class="remove-form" action="{{url_for('admin_remove_product_subcategory', subcategory_id=subcategory.id, url_args=data.url_args)}}" method=post enctype=multipart/form-data>
-                    {{ data["remove_form"].csrf_token }}
-                    <input type=submit value=Remover>
-                  </form>
-                </li>
-              </ul>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    {% with data=data["paginator_data"] %}
-      {% include "shared/paginator.html" %}
-    {% endwith %}
-  {% else %}
-    <p>Nenhuma subcategoria foi encontrada.</p>
-  {% endif %}
-
 {% endblock %}
 
 {% block scripts %}
-<script>
-  $(".remove-form").submit(function() {
-      var c = confirm("Tem certeza que deseja remover a subcategoria? Ficará difícil para o usuário encontrar os produtos que pertencem a esta subcategoria.");
-      return c;
-  });
-</script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/super_table.js' ) }}"></script>
+    <script>
+
+        $("form.disable-subcategory").each(function () {
+            var form = $(this);
+            var submitInput = form.find("input[type='submit']");
+            var row = form.attr("row");
+            var subcategory_id = form.attr("subcategory_id");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                confirmMessage: "Tem certeza que deseja desativar essa subcategoria? Ao desativar uma subcategoria, todos produtos dessa subcategoria não estarão mais visíveis no site.",
+                submit: function () {
+                    submitInput.prop("disabled", true);
+                    submitInput.attr("value", "Desativando...");
+                },
+                success: function () {
+                    $("#row-{0}".f(row)).addClass("inactive");
+                    form.hide();
+                    updateTableData("active", row, "{{ macros.get_bool_glyphicon(False) }}");
+                    $("#activate-subcategory-{0}".f(subcategory_id)).show();
+                    throwSuccessOpToast('A subcategoria #{0} foi desativada com sucesso.'.f(subcategory_id));
+                },
+                error: function () {
+                    throwErrorOpToast('Ocorreu uma falha ao desativar a subcategoria #{0}. Tente novamente.'.f(category_id));
+                },
+                complete: function () {
+                    submitInput.prop("disabled", false);
+                    submitInput.attr("value", "Desativar subcategoria");
+                }
+            })
+        });
+
+        $("form.activate-subcategory").each(function () {
+            var form = $(this);
+            var submitInput = form.find("input[type='submit']");
+            var row = form.attr("row");
+            var subcategory_id = form.attr("subcategory_id");
+            setAjaxFormHandlers({
+                form: form,
+                minResponseTime: DEFAULT_RESPONSE_TIME,
+                submit: function () {
+                    submitInput.prop("disabled", true);
+                    submitInput.attr("value", "Ativando...");
+                },
+                success: function () {
+                    $("#row-{0}".f(row)).removeClass("inactive");
+                    form.hide();
+                    updateTableData("active", row, "{{ macros.get_bool_glyphicon(True) }}");
+                    $("#disable-subcategory-{0}".f(subcategory_id)).show();
+                    throwSuccessOpToast('A subcategoria #{0} foi ativada com sucesso.'.f(subcategory_id));
+                },
+                error: function () {
+                    throwErrorOpToast('Ocorreu uma falha ao ativar a subcategoria #{0}. Tente novamente.'.f(subcategory_id));
+                },
+                complete: function () {
+                    submitInput.prop("disabled", false);
+                    submitInput.attr("value", "Ativar subcategoria");
+                }
+            })
+        })
+    </script>
 {% endblock %}

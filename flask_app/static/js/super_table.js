@@ -6,7 +6,7 @@ $(document).ready(function () {
     $('form.filter-container input.sort-method').attr("value", $('select.sort-method').val());
 });
 
-$("button.action").on('click', function () {
+$("button.expand-actions").on('click', function () {
     var actionButton = $(this);
     var collapsibleRow = $("#{0}".f(actionButton.attr("target_id")));
     if( collapsibleRow.is(":visible") ){
@@ -27,7 +27,6 @@ $(".filter-item select").each(function(){
 
 $('select.sort-method').on('change', function () {
     select = $(this);
-    console.log(select.val());
     $('form.filter-container input.sort-method').attr("value", select.val());
     $("form.filter-container input[type='submit']").click();
 });

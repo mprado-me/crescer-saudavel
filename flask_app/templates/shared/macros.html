@@ -66,3 +66,15 @@
 {% macro get_bool_glyphicon(value) -%}
     {% if value %}<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>{% else %}<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>{% endif %}
 {%- endmacro %}
+
+{% macro get_if_row_is_inactive(value, cols, row) -%}
+    {% for col in cols %}
+        {% if col.id == "active" and not row[loop.index0] %}
+            {{ value }}
+        {% endif %}
+    {% endfor %}
+{%- endmacro %}
+
+{% macro get_display_none_if(condition) -%}
+    {% if condition %}display: none;{% endif %}
+{%- endmacro %}

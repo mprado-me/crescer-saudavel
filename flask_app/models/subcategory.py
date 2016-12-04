@@ -11,6 +11,7 @@ from sqlalchemy.orm import relationship
 
 class Subcategory(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    active = db.Column(db.Boolean, default=True, nullable=False)
     name = db.Column(db.String(64))
     category_id = db.Column(db.Integer, ForeignKey("category.id"))
     category = relationship("Category", back_populates="subcategories")
